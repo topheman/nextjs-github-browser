@@ -1,0 +1,7 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "clinyong.vscode-css-modules",
+    "bradlc.vscode-tailwindcss"
+  ]
+}
