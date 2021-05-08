@@ -13,7 +13,13 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log("[GraphQL-proxy]", "Incoming IntrospectionQuery ignored");
     return res.status(405).json({ error: "IntrospectionQuery not allowed" });
   }
-  console.log("[GraphQL-proxy]", "fetching", req.method, req.url);
+  console.log(
+    "[GraphQL-proxy]",
+    "fetching",
+    req.method,
+    req.url,
+    req.body.variables
+  );
   try {
     const result = await fetch(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT, {
       method: "POST",
