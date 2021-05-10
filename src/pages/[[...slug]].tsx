@@ -1,8 +1,9 @@
 import { useRouter } from "next/router";
 import type { NextPageContext } from "next";
-import { ApolloQueryResult, gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
+import type { ApolloClient, ApolloQueryResult } from "@apollo/client";
 
-import apolloClient from "../libs/apollo-client";
+import { initializeApollo, addApolloState } from "../libs/apollo-client";
 import TheHeader from "../components/TheHeader";
 
 function extractInfosFromQuery(query: NextPageContext["query"]) {
@@ -19,60 +20,77 @@ function extractInfosFromQuery(query: NextPageContext["query"]) {
   return null;
 }
 
-async function retrieveUserOrOrganization(login) {
+const SIMPLE_USER_QUERY = gql`
+  query GetSimpleUser($login: String!) {
+    user(login: $login) {
+      websiteUrl
+    }
+  }
+`;
+
+const SIMPLE_ORGANIZATION_QUERY = gql`
+  query GetSimpleOrganization($login: String!) {
+    organization(login: $login) {
+      websiteUrl
+    }
+  }
+`;
+
+async function retrieveUserOrOrganization(client: ApolloClient<any>, login) {
   const userQuery = {
-    query: gql`
-      query GetSimpleUser($login: String!) {
-        user(login: $login) {
-          websiteUrl
-        }
-      }
-    `,
+    query: SIMPLE_USER_QUERY,
     variables: {
       login,
     },
   };
   const organizationQuery = {
-    query: gql`
-      query GetSimpleOrganization($login: String!) {
-        organization(login: $login) {
-          websiteUrl
-        }
-      }
-    `,
+    query: SIMPLE_ORGANIZATION_QUERY,
     variables: {
       login,
     },
   };
   const allResults = await Promise.allSettled([
-    apolloClient.query(userQuery),
-    apolloClient.query(organizationQuery),
+    client.query(userQuery),
+    client.query(organizationQuery),
   ]);
-  const [successResult] = allResults
+  const successResults = allResults
     .filter((result) => result.status === "fulfilled" && result.value)
     .map(
       (result) =>
         (result as PromiseFulfilledResult<ApolloQueryResult<any>>).value.data
     );
-  return successResult || {};
+  if (successResults.length === 0) {
+    throw new Error(`No User nor Organization found for "${login}"`);
+  }
+  return successResults[0] || {};
 }
 
 export async function getServerSideProps({ query }: NextPageContext) {
+  const apolloClient = initializeApollo();
   const preparedInfos = extractInfosFromQuery(query);
   if (preparedInfos) {
     const result = await retrieveUserOrOrganization(
+      apolloClient,
       preparedInfos.graphqlVariables.login
     );
     console.log("getServerSideProps", {
       user: result.user || null,
       organization: result.organization || null,
     });
-    return {
+    return addApolloState(apolloClient, {
       props: {
-        user: result.user || null,
-        organization: result.organization || null,
+        user: result.user
+          ? {
+              login: preparedInfos.graphqlVariables.login,
+            }
+          : null,
+        organization: result.organization
+          ? {
+              login: preparedInfos.graphqlVariables.login,
+            }
+          : null,
       },
-    };
+    });
   }
   console.log("getServerSideProps", {
     user: null,
@@ -89,15 +107,21 @@ export async function getServerSideProps({ query }: NextPageContext) {
 const GenericHandler = (props) => {
   console.log("page render", props);
   const { user, organization } = props;
+  const userResult = useQuery(SIMPLE_USER_QUERY, {
+    variables: {
+      login: props.user?.login,
+    },
+  });
+  console.log(userResult);
   const router = useRouter();
   const { slug } = router.query;
   return (
     <>
       <TheHeader />
       <p>Route: /{((slug || []) as string[]).join("/")}</p>
-      {(user || organization) && (
+      {userResult?.data?.user && (
         <div className="bg-red-100">
-          <p>{(user || organization).websiteUrl}</p>
+          <p>{userResult?.data.user?.websiteUrl}</p>
         </div>
       )}
     </>
