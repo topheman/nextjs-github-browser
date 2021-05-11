@@ -1,12 +1,19 @@
+/**
+ * Inpired by https://github.com/vercel/next.js/blob/canary/examples/with-apollo/lib/apolloClient.js
+ * Well explained in this video: https://www.youtube.com/watch?v=y34ym0-KZ8A by Leigh Halliday
+ */
 import { useMemo } from "react";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
-import { concatPagination } from "@apollo/client/utilities";
+import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
+// import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-let apolloClient;
+let apolloClient:
+  | ApolloClient<NormalizedCache>
+  | ApolloClient<NormalizedCacheObject>;
 
 function createApolloClient() {
   return new ApolloClient({
@@ -15,15 +22,7 @@ function createApolloClient() {
       uri: "http://localhost:3000/api/github/graphql", // Server URL (must be absolute)
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
     }),
-    cache: new InMemoryCache({
-      typePolicies: {
-        Query: {
-          fields: {
-            allPosts: concatPagination(),
-          },
-        },
-      },
-    }),
+    cache: new InMemoryCache(),
   });
 }
 
@@ -37,7 +36,7 @@ export function initializeApollo(initialState = null) {
     const existingCache = _apolloClient.extract();
 
     // Merge the existing cache into data passed from getStaticProps/getServerSideProps
-    const data = merge(initialState, existingCache, {
+    const data = merge<any>(initialState, existingCache, {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
