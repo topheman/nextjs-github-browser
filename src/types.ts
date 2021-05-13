@@ -18,7 +18,7 @@ export type AppAppoloClient =
   | ApolloClient<NormalizedCache>
   | ApolloClient<NormalizedCacheObject>;
 
-export type GetServerSideGraphQLProps = (
+export type FetchServerSideGraphQLQuery = (
   apolloClient: AppAppoloClient,
   { variables }: { variables: AppGraphQLVariables }
-) => Promise<any>;
+) => Promise<void>;

@@ -15,9 +15,13 @@ export async function getServerSideProps({ query }: NextPageContext) {
   if (parsedQuery) {
     const apolloClient = initializeApollo();
     const {
-      getServerSideGraphQLProps,
+      fetchServerSideGraphQLQuery,
     } = require(`../components/${parsedQuery.componentName}`);
-    const result = await getServerSideGraphQLProps(apolloClient, {
+    /**
+     * Fetch GraphQL query server-side then populate pageProps
+     * in order that `useApollo` will initilize with this state
+     */
+    await fetchServerSideGraphQLQuery(apolloClient, {
       variables: parsedQuery.variables,
     });
     return addApolloState(apolloClient, {
