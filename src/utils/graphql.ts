@@ -9,6 +9,7 @@ type QueryOptions = {
 
 /**
  * You might need to do parallel call for some edge cases.
+ * @todo remove in no use cases
  */
 export async function fetchMultipleGraphQLQuery(
   apolloClient: AppAppoloClient,

@@ -3,9 +3,13 @@ import React from "react";
 
 const links = [
   ["/", "Home"],
-  ["/topheman", "User topheman"],
-  ["/warpdesign", "User warpdesign"],
-  ["/facebook", "Organization facebook"],
+  ["/topheman", "/topheman"],
+  ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser"],
+  ["/warpdesign", "/warpdesign"],
+  ["/warpdesign/react-explorer", "/warpdesign/react-explorer"],
+  ["/facebook", "/facebook"],
+  ["/facebook/react", "/facebook/react"],
+  ["/a", "/a (no profile readme)"],
   ["/about", "About"],
 ];
 
