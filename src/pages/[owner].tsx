@@ -8,18 +8,86 @@ import TheHeader from "../components/TheHeader";
 
 const REPOSITORY_OWNER_QUERY = gql`
   query GetRepositoryOwner($owner: String!) {
+    rateLimit {
+      limit
+      cost
+      remaining
+      resetAt
+    }
     repositoryOwner(login: $owner) {
       ... on User {
         __typename
+        name
         login
         bio
+        createdAt
         websiteUrl
+        twitterUsername
+        avatarUrl
+        location
+        followers {
+          totalCount
+        }
+        following {
+          totalCount
+        }
+        pinnedItems(first: 6, types: REPOSITORY) {
+          nodes {
+            ... on Repository {
+              name
+              description
+              primaryLanguage {
+                name
+                color
+              }
+              stargazerCount
+              forkCount
+            }
+          }
+        }
+        contributionsCollection {
+          totalIssueContributions
+          totalCommitContributions
+          totalRepositoryContributions
+        }
       }
       ... on Organization {
         __typename
+        name
         login
-        description
+        createdAt
         websiteUrl
+        twitterUsername
+        avatarUrl
+        location
+        people: membersWithRole(first: 20) {
+          totalCount
+          edges {
+            node {
+              avatarUrl
+            }
+          }
+        }
+        repositories(first: 30) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          totalCount
+          edges {
+            node {
+              primaryLanguage {
+                name
+                color
+              }
+              name
+              description
+            }
+            cursor
+          }
+        }
       }
     }
   }
