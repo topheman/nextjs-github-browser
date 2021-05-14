@@ -4,7 +4,7 @@ import { gql, useQuery } from "@apollo/client";
 
 import type { PageBaseProps } from "../../types";
 import { initializeApollo, addApolloState } from "../../libs/apollo-client";
-import TheHeader from "../../components/TheHeader";
+import TheHeader from "../../components/TheHeader/TheHeader";
 
 const REPOSITORY_QUERY = gql`
   query GetSpecificRepo($owner: String!, $repository: String!) {

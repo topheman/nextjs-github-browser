@@ -4,7 +4,7 @@ import { gql, useQuery } from "@apollo/client";
 
 import type { PageBaseProps } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
-import TheHeader from "../components/TheHeader";
+import TheHeader from "../components/TheHeader/TheHeader";
 
 const REPOSITORY_OWNER_QUERY = gql`
   query GetRepositoryOwner($owner: String!) {
