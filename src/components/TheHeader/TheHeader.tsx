@@ -18,7 +18,7 @@ const links = [
 export default function TheHeader(props: React.HTMLProps<HTMLElement>) {
   return (
     <header {...props} className={styles.root}>
-      <ul>
+      <ul className="bg-yellow-300">
         {links.map(([href, title]) => (
           <li key={href}>
             <Link href={href}>{title}</Link>
