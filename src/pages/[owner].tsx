@@ -1,114 +1,28 @@
 import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next";
-import { gql, useQuery } from "@apollo/client";
 
-import type { PageBaseProps } from "../types";
+import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
 import TheHeader from "../components/TheHeader/TheHeader";
+import TheOwnerProfile, {
+  REPOSITORY_OWNER_QUERY,
+  PROFILE_README_QUERY,
+} from "../components/TheOwnerProfile/TheOwnerProfile";
 
-const REPOSITORY_OWNER_QUERY = gql`
-  query GetRepositoryOwner($owner: String!) {
-    rateLimit {
-      limit
-      cost
-      remaining
-      resetAt
-    }
-    repositoryOwner(login: $owner) {
-      ... on User {
-        __typename
-        id
-        name
-        login
-        bio
-        createdAt
-        websiteUrl
-        twitterUsername
-        avatarUrl
-        location
-        followers {
-          totalCount
-        }
-        following {
-          totalCount
-        }
-        pinnedItems(first: 6, types: REPOSITORY) {
-          nodes {
-            ... on Repository {
-              name
-              description
-              primaryLanguage {
-                name
-                color
-              }
-              stargazerCount
-              forkCount
-            }
-          }
-        }
-        contributionsCollection {
-          totalIssueContributions
-          totalCommitContributions
-          totalRepositoryContributions
-        }
-      }
-      ... on Organization {
-        __typename
-        id
-        name
-        login
-        createdAt
-        websiteUrl
-        twitterUsername
-        avatarUrl
-        location
-        people: membersWithRole(first: 20) {
-          totalCount
-          edges {
-            node {
-              avatarUrl
-            }
-          }
-        }
-        repositories(first: 30) {
-          pageInfo {
-            hasNextPage
-            hasPreviousPage
-            startCursor
-            endCursor
-          }
-          totalCount
-          edges {
-            node {
-              primaryLanguage {
-                name
-                color
-              }
-              name
-              description
-            }
-            cursor
-          }
-        }
-      }
-    }
-  }
-`;
+type MyPageProps = {
+  skipProfileReadme: boolean;
+};
 
-const PROFILE_README_QUERY = gql`
-  query GetProfileReadme($owner: String!) {
-    profileReadme: repository(owner: $owner, name: $owner) {
-      object(expression: "master:README.md") {
-        ... on Blob {
-          text
-        }
-      }
-    }
-  }
-`;
+// necessary typeguard as query.owner is of type string | string[]
+const parseQuery: ParseQuery = (query) => ({
+  owner: typeof query.owner === "string" ? query.owner : "",
+});
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { owner } = context.query;
+  const { owner } = parseQuery(context.query);
+  const baseProps: MyPageProps = {
+    skipProfileReadme: false,
+  };
   // bug specific in development
   if (
     process.env.NODE_ENV === "development" &&
@@ -116,24 +30,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   ) {
     return {
       props: {
-        graphQLVariables: {
-          owner: null,
-        },
+        ...baseProps,
       },
     };
   }
-  const baseProps = {
-    graphQLVariables: {
-      owner,
-    },
-    skipProfileReadme: false,
-  };
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();
   let skipProfileReadme = false;
   const repositoryOwnerResult = await apolloClient.query({
     query: REPOSITORY_OWNER_QUERY,
-    variables: baseProps.graphQLVariables,
+    variables: { owner },
   });
   // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
   if (repositoryOwnerResult.data.repositoryOwner.__typename === "User") {
@@ -141,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
       await apolloClient.query({
         query: PROFILE_README_QUERY,
-        variables: baseProps.graphQLVariables,
+        variables: { owner },
       });
     } catch (e) {
       skipProfileReadme = true;
@@ -159,28 +65,14 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 };
 
-export default function PageOwner({
-  graphQLVariables,
-  skipProfileReadme,
-}: PageBaseProps<{ skipProfileReadme: boolean }>) {
-  const repositoryOwnerResult = useQuery(REPOSITORY_OWNER_QUERY, {
-    variables: graphQLVariables,
-  });
-  const profileReadmeResult = useQuery(PROFILE_README_QUERY, {
-    variables: graphQLVariables,
-    skip: skipProfileReadme,
-  });
+export default function PageOwner({ skipProfileReadme }: MyPageProps) {
   const router = useRouter();
-  const { owner } = router.query;
+  const { owner } = parseQuery(router.query);
   return (
     <>
       <h1>Owner: "{owner}"</h1>
       <TheHeader />
-      <ul>
-        <li>{repositoryOwnerResult?.data?.repositoryOwner?.__typename}</li>
-        <li>{repositoryOwnerResult?.data?.repositoryOwner?.websiteUrl}</li>
-      </ul>
-      {profileReadmeResult?.data?.profileReadme.object.text}
+      <TheOwnerProfile owner={owner} skipProfileReadme={skipProfileReadme} />
     </>
   );
 }

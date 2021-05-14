@@ -4,12 +4,10 @@ import type {
   NormalizedCacheObject,
 } from "@apollo/client";
 
-export type AppGraphQLVariables = Record<string, string>;
+import type { ParsedUrlQuery } from "querystring";
 
 export type AppAppoloClient =
   | ApolloClient<NormalizedCache>
   | ApolloClient<NormalizedCacheObject>;
 
-export type PageBaseProps<T> = {
-  graphQLVariables: AppGraphQLVariables;
-} & T;
+export type ParseQuery = (query: ParsedUrlQuery) => Record<string, string>;
