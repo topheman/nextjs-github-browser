@@ -17,6 +17,7 @@ const REPOSITORY_OWNER_QUERY = gql`
     repositoryOwner(login: $owner) {
       ... on User {
         __typename
+        id
         name
         login
         bio
@@ -53,6 +54,7 @@ const REPOSITORY_OWNER_QUERY = gql`
       }
       ... on Organization {
         __typename
+        id
         name
         login
         createdAt
@@ -113,7 +115,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     (!owner || owner === "<no source>")
   ) {
     return {
-      props: {},
+      props: {
+        graphQLVariables: {
+          owner: null,
+        },
+      },
     };
   }
   const baseProps = {
