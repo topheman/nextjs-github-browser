@@ -9,7 +9,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "lint": "eslint --ext js,jsx,ts,tsx --no-fix .",
-    "lint:fix": "eslint --ext js,jsx,ts,tsx --fix ."
+    "lint:fix": "eslint --ext js,jsx,ts,tsx --fix .",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit"
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
