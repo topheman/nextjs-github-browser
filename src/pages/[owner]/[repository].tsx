@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
-import type { GetServerSideProps } from "next";
 import { gql, useQuery } from "@apollo/client";
+import type { GetServerSideProps } from "next";
 
 import { initializeApollo, addApolloState } from "../../libs/apollo-client";
 import TheHeader from "../../components/TheHeader/TheHeader";

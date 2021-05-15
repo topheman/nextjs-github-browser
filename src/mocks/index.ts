@@ -1,3 +1,4 @@
+/* eslint-disable global-require */
 /**
  * For the moment, it won't work directly on NextJS due to the bug describe here:
  * https://github.com/mswjs/msw/issues/642

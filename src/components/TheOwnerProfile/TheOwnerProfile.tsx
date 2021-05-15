@@ -30,8 +30,8 @@ export const makeRepositoryOwnerQuery = (
         following {
           totalCount
         }
-        ${((tab) => {
-          switch (tab) {
+        ${((_tab) => {
+          switch (_tab) {
             case "default":
               return `
         pinnedItems(first: 6, types: REPOSITORY) {
@@ -79,7 +79,7 @@ export const makeRepositoryOwnerQuery = (
         `;
             default:
               throw new Error(
-                `makeRepositoryOwnerQuery only accepts "default" or "repositories", you passed "${tab}"`
+                `makeRepositoryOwnerQuery only accepts "default" or "repositories", you passed "${_tab}"`
               );
           }
         })(tab)}
@@ -162,6 +162,7 @@ export default function TheOwnerProfile({
     <>
       <p>TheOwnerProfile</p>
       <ul>
+        {/* eslint-disable-next-line no-underscore-dangle */}
         <li>{repositoryOwnerResult?.data?.repositoryOwner?.__typename}</li>
         <li>{repositoryOwnerResult?.data?.repositoryOwner?.websiteUrl}</li>
       </ul>

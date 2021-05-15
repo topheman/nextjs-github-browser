@@ -1,3 +1,4 @@
+/* eslint-disable global-require,no-console */
 import { graphql } from "msw";
 
 const github =

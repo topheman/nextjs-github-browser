@@ -6,6 +6,7 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 
 if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
+  // eslint-disable-next-line no-console
   console.log(
     "Mocks can't be enabled for the moment on NextJS due to : https://github.com/mswjs/msw/issues/642"
   );

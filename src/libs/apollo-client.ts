@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /**
  * Inpired by https://github.com/vercel/next.js/blob/canary/examples/with-apollo/lib/apolloClient.js
  * Well explained in this video: https://www.youtube.com/watch?v=y34ym0-KZ8A by Leigh Halliday
@@ -5,10 +6,10 @@
 import { useMemo } from "react";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
 // import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
+import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
@@ -30,6 +31,7 @@ if (typeof window === "undefined") {
   // client-side mode
   // Only generate this code in storybook mode (passing directly through google apis / not via /api/github/graphql proxy)
   // needs auth
+  // eslint-disable-next-line no-lonely-if
   if (process.env.STORYBOOK) {
     const httpLink = makeHttpLink(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT);
     const authlink = setContext((_, { headers }) => {
@@ -56,6 +58,7 @@ function createApolloClient() {
 }
 
 export function initializeApollo(initialState = null) {
+  // eslint-disable-next-line no-underscore-dangle
   const _apolloClient = apolloClient ?? createApolloClient();
 
   // If your page has Next.js data fetching methods that use Apollo Client, the initial state
@@ -88,6 +91,7 @@ export function initializeApollo(initialState = null) {
 
 export function addApolloState(client, pageProps) {
   if (pageProps?.props) {
+    // eslint-disable-next-line no-param-reassign
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
   }
 

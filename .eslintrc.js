@@ -33,7 +33,7 @@ module.exports = {
     "import/extensions": "off",
     "react/prop-types": "off",
     "jsx-a11y/anchor-is-valid": "off",
-    "react/jsx-props-no-spreading": ["error", { custom: "ignore" }],
+    "react/jsx-props-no-spreading": "off", // ["error", { custom: "ignore" }],
     "react/no-unescaped-entities": "off",
     "import/no-cycle": [0, { ignoreExternal: true }],
     // "prefer-const": "off",
@@ -47,5 +47,14 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["error"],
     "import/prefer-default-export": "off",
+    // weird - thinks "react" is "@types/react"
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        devDependencies: true,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
   },
 };

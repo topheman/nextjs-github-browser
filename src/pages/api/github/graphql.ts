@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -31,9 +32,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (result.ok) {
       const response = await result.text();
       return res.status(result.status).json(response);
-    } else {
-      throw new Error("Couldn't call github API");
     }
+    throw new Error("Couldn't call github API");
   } catch (e) {
     // return same shaped error object
     console.error("[GraphQL-proxy]", e.message);

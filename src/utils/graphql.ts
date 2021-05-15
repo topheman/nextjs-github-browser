@@ -21,6 +21,7 @@ export async function fetchMultipleGraphQLQuery(
   const allResults = await Promise.allSettled(promises);
   const successResults = allResults.reduce((acc, result) => {
     if (result.status === "fulfilled" && result.value) {
+      // eslint-disable-next-line no-param-reassign
       acc = {
         ...acc,
         ...result.value.data,

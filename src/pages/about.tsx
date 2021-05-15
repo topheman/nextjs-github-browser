@@ -3,6 +3,7 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 
 export default function Home({ user }) {
+  // eslint-disable-next-line no-console
   console.log(user);
   return (
     <div className={styles.container}>

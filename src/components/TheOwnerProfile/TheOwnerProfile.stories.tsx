@@ -5,6 +5,7 @@ import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../../libs/apollo-client";
 
 import TheOwnerProfile, { TheOwnerProfileProps } from "./TheOwnerProfile";
+
 export default {
   title: "TheOwnerProfile",
   component: TheOwnerProfile,

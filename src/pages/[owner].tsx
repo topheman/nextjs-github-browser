@@ -17,9 +17,8 @@ type MyPageProps = {
 function normalizeTab(tab: string): TheOwnerProfileProps["tab"] {
   if (tab === "repositories") {
     return tab;
-  } else {
-    return "default";
   }
+  return "default";
 }
 
 // necessary typeguard as query.owner is of type string | string[]
@@ -48,7 +47,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();
-  let skipProfileReadme = baseProps.skipProfileReadme;
+  let { skipProfileReadme } = baseProps;
   const repositoryOwnerResult = await apolloClient.query({
     query: makeRepositoryOwnerQuery(tab),
     variables: { owner },
@@ -56,6 +55,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
   if (
     !skipProfileReadme &&
+    // eslint-disable-next-line no-underscore-dangle
     repositoryOwnerResult.data.repositoryOwner.__typename === "User"
   ) {
     // if it errors, tell `useQuery` to skip it clientSide (otherwise the query will be played as there won't be anything in cache)
