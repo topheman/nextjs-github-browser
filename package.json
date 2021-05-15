@@ -55,8 +55,5 @@
   },
   "msw": {
     "workerDirectory": "public"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint --cache --fix"
   }
 }
