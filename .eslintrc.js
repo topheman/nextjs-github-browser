@@ -43,6 +43,9 @@ module.exports = {
       "error",
       { functions: false, classes: false, variables: true },
     ],
+    // needed because of https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "import/prefer-default-export": "off",
   },
 };
