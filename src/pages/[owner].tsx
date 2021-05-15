@@ -5,23 +5,35 @@ import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
 import TheHeader from "../components/TheHeader/TheHeader";
 import TheOwnerProfile, {
-  REPOSITORY_OWNER_QUERY,
+  makeRepositoryOwnerQuery,
   PROFILE_README_QUERY,
 } from "../components/TheOwnerProfile/TheOwnerProfile";
+import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
 
 type MyPageProps = {
   skipProfileReadme: boolean;
 };
 
+function normalizeTab(tab: string): TheOwnerProfileProps["tab"] {
+  if (tab === "repositories") {
+    return tab;
+  } else {
+    return "default";
+  }
+}
+
 // necessary typeguard as query.owner is of type string | string[]
-const parseQuery: ParseQuery = (query) => ({
+const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
+  query
+) => ({
   owner: typeof query.owner === "string" ? query.owner : "",
+  tab: normalizeTab(query.tab as string),
 });
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { owner } = parseQuery(context.query);
+  const { owner, tab } = parseQuery(context.query);
   const baseProps: MyPageProps = {
-    skipProfileReadme: false,
+    skipProfileReadme: tab === "repositories",
   };
   // bug specific in development
   if (
@@ -36,13 +48,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();
-  let skipProfileReadme = false;
+  let skipProfileReadme = baseProps.skipProfileReadme;
   const repositoryOwnerResult = await apolloClient.query({
-    query: REPOSITORY_OWNER_QUERY,
+    query: makeRepositoryOwnerQuery(tab),
     variables: { owner },
   });
   // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
-  if (repositoryOwnerResult.data.repositoryOwner.__typename === "User") {
+  if (
+    !skipProfileReadme &&
+    repositoryOwnerResult.data.repositoryOwner.__typename === "User"
+  ) {
     // if it errors, tell `useQuery` to skip it clientSide (otherwise the query will be played as there won't be anything in cache)
     try {
       await apolloClient.query({
@@ -67,12 +82,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
 
 export default function PageOwner({ skipProfileReadme }: MyPageProps) {
   const router = useRouter();
-  const { owner } = parseQuery(router.query);
+  const { owner, tab } = parseQuery(router.query);
   return (
     <>
       <h1>Owner: "{owner}"</h1>
       <TheHeader />
-      <TheOwnerProfile owner={owner} skipProfileReadme={skipProfileReadme} />
+      <TheOwnerProfile
+        owner={owner}
+        tab={tab}
+        skipProfileReadme={skipProfileReadme}
+      />
     </>
   );
 }

@@ -6,8 +6,10 @@ import styles from "./TheHeader.module.css";
 const links = [
   ["/", "Home"],
   ["/topheman", "/topheman"],
+  ["/topheman?tab=repositories", "/topheman?tab=repositories"],
   ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser"],
   ["/warpdesign", "/warpdesign"],
+  ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories"],
   ["/warpdesign/react-explorer", "/warpdesign/react-explorer"],
   ["/facebook", "/facebook"],
   ["/facebook/react", "/facebook/react"],

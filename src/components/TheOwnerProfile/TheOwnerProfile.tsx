@@ -1,7 +1,11 @@
 import { gql, useQuery } from "@apollo/client";
 
-export const REPOSITORY_OWNER_QUERY = gql`
-  query GetRepositoryOwner($owner: String!) {
+export const makeRepositoryOwnerQuery = (
+  tab: "default" | "repositories"
+) => gql`
+  query GetRepositoryOwner${
+    tab === "repositories" ? "WithRepositories" : ""
+  }($owner: String!) {
     rateLimit {
       limit
       cost
@@ -26,6 +30,10 @@ export const REPOSITORY_OWNER_QUERY = gql`
         following {
           totalCount
         }
+        ${((tab) => {
+          switch (tab) {
+            case "default":
+              return `
         pinnedItems(first: 6, types: REPOSITORY) {
           nodes {
             ... on Repository {
@@ -45,6 +53,36 @@ export const REPOSITORY_OWNER_QUERY = gql`
           totalCommitContributions
           totalRepositoryContributions
         }
+        `;
+            case "repositories":
+              return `
+        repositories(first: 30) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+            endCursor
+          }
+          totalCount
+          edges {
+            node {
+              primaryLanguage {
+                name
+                color
+              }
+              name
+              description
+            }
+            cursor
+          }
+        }
+        `;
+            default:
+              throw new Error(
+                `makeRepositoryOwnerQuery only accepts "default" or "repositories", you passed "${tab}"`
+              );
+          }
+        })(tab)}
       }
       ... on Organization {
         __typename
@@ -101,19 +139,24 @@ export const PROFILE_README_QUERY = gql`
   }
 `;
 
+export type TheOwnerProfileProps = {
+  owner: string;
+  tab: "default" | "repositories";
+  skipProfileReadme: boolean;
+};
+
 export default function TheOwnerProfile({
   owner,
+  tab,
   skipProfileReadme,
-}: {
-  owner: string;
-  skipProfileReadme: boolean;
-}) {
-  const repositoryOwnerResult = useQuery(REPOSITORY_OWNER_QUERY, {
+}: TheOwnerProfileProps) {
+  const repositoryOwnerResult = useQuery(makeRepositoryOwnerQuery(tab), {
     variables: { owner },
   });
   const profileReadmeResult = useQuery(PROFILE_README_QUERY, {
     variables: { owner },
-    skip: skipProfileReadme,
+    // skip this request for the default tab anyway - or if the getServerSideProps found out there wasn't any profile
+    skip: tab === "repositories" || skipProfileReadme,
   });
   return (
     <>
