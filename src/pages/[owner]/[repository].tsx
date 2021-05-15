@@ -2,7 +2,6 @@ import { useRouter } from "next/router";
 import type { GetServerSideProps } from "next";
 import { gql, useQuery } from "@apollo/client";
 
-import type { PageBaseProps } from "../../types";
 import { initializeApollo, addApolloState } from "../../libs/apollo-client";
 import TheHeader from "../../components/TheHeader/TheHeader";
 
@@ -40,9 +39,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 };
 
-export default function PageRepository({
-  graphQLVariables,
-}: PageBaseProps<{}>) {
+export default function PageRepository({ graphQLVariables }) {
   const repositoryResult = useQuery(REPOSITORY_QUERY, {
     variables: graphQLVariables,
   });
