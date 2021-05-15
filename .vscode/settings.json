@@ -1,4 +1,7 @@
 {
   "editor.formatOnSave": true,
-  "tslint.jsEnable": true // to lint .js in vscode with https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin
+  "tslint.jsEnable": true, // to lint .js in vscode with https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
