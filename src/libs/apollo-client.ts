@@ -4,6 +4,7 @@
  */
 import { useMemo } from "react";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import { setContext } from "@apollo/client/link/context";
 import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
 // import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
@@ -15,16 +16,41 @@ let apolloClient:
   | ApolloClient<NormalizedCache>
   | ApolloClient<NormalizedCacheObject>;
 
+const makeHttpLink = (uri): HttpLink =>
+  new HttpLink({
+    uri,
+    credentials: "same-origin",
+  });
+
+let link = null;
+// ssr mode - calling the serverless endpoint with an absolute url
+if (typeof window === "undefined") {
+  link = makeHttpLink("http://localhost:3000/api/github/graphql");
+} else {
+  // client-side mode
+  // Only generate this code in storybook mode (passing directly through google apis / not via /api/github/graphql proxy)
+  // needs auth
+  if (process.env.STORYBOOK) {
+    const httpLink = makeHttpLink(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT);
+    const authlink = setContext((_, { headers }) => {
+      return {
+        headers: {
+          ...headers,
+          authorization: `Bearer ${process.env.GITHUB_GRAPHQL_API_TOKEN}`,
+        },
+      };
+    });
+    link = authlink.concat(httpLink);
+  } else {
+    // nextjs dev/production mode client-side
+    link = makeHttpLink("/api/github/graphql");
+  }
+}
+
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
-    link: new HttpLink({
-      uri:
-        typeof window === "undefined"
-          ? "http://localhost:3000/api/github/graphql"
-          : "/api/github/graphql",
-      credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
-    }),
+    link,
     cache: new InMemoryCache(),
   });
 }
