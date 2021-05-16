@@ -1,3 +1,4 @@
+import React from "react";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../libs/apollo-client";
 import { parseBooleanEnvVar } from "../../utils";
@@ -13,7 +14,13 @@ if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
   // require("../mocks");
 }
 
-function MyApp({ Component, pageProps }) {
+function MyApp({
+  Component,
+  pageProps,
+}: {
+  Component: React.FunctionComponent | React.ComponentClass;
+  pageProps;
+}): JSX.Element {
   const apolloClient = useApollo(pageProps);
   return (
     <ApolloProvider client={apolloClient}>

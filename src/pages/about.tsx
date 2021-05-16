@@ -2,9 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import styles from "../styles/Home.module.css";
 
-export default function Home({ user }) {
-  // eslint-disable-next-line no-console
-  console.log(user);
+export default function PageAbout(): JSX.Element {
   return (
     <div className={styles.container}>
       <Head>
@@ -21,6 +19,7 @@ export default function Home({ user }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>nextjs-github-browser</h1>
+        <h2>About page</h2>
       </main>
     </div>
   );

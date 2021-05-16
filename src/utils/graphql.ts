@@ -14,7 +14,7 @@ type QueryOptions = {
 export async function fetchMultipleGraphQLQuery(
   apolloClient: AppAppoloClient,
   queriesOptions: QueryOptions[]
-) {
+): Promise<Record<string, unknown>> {
   const promises = queriesOptions.map((queryOptions) => {
     return apolloClient.query(queryOptions);
   });

@@ -6,16 +6,15 @@
 import { useMemo } from "react";
 import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-// import { concatPagination } from "@apollo/client/utilities";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
 
+import type { AppAppoloClient } from "../types";
+
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
-let apolloClient:
-  | ApolloClient<NormalizedCache>
-  | ApolloClient<NormalizedCacheObject>;
+let apolloClient: AppAppoloClient;
 
 const makeHttpLink = (uri): HttpLink =>
   new HttpLink({
@@ -60,7 +59,7 @@ function createApolloClient() {
   });
 }
 
-export function initializeApollo(initialState = null) {
+export function initializeApollo(initialState = null): AppAppoloClient {
   // eslint-disable-next-line no-underscore-dangle
   const _apolloClient = apolloClient ?? createApolloClient();
 
@@ -71,7 +70,7 @@ export function initializeApollo(initialState = null) {
     const existingCache = _apolloClient.extract();
 
     // Merge the existing cache into data passed from getStaticProps/getServerSideProps
-    const data = merge<any>(initialState, existingCache, {
+    const data = merge<unknown>(initialState, existingCache, {
       // combine arrays using object equality (like in sets)
       arrayMerge: (destinationArray, sourceArray) => [
         ...sourceArray,
@@ -82,7 +81,9 @@ export function initializeApollo(initialState = null) {
     });
 
     // Restore the cache with the merged data
-    _apolloClient.cache.restore(data);
+    _apolloClient.cache.restore(
+      data as NormalizedCacheObject & NormalizedCache
+    );
   }
   // For SSG and SSR always create a new Apollo Client
   if (typeof window === "undefined") return _apolloClient;
@@ -92,7 +93,10 @@ export function initializeApollo(initialState = null) {
   return _apolloClient;
 }
 
-export function addApolloState(client, pageProps) {
+export function addApolloState(
+  client: AppAppoloClient,
+  pageProps: { props: Record<string, unknown> }
+): { props: Record<string, unknown> } {
   if (pageProps?.props) {
     // eslint-disable-next-line no-param-reassign
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
@@ -101,7 +105,7 @@ export function addApolloState(client, pageProps) {
   return pageProps;
 }
 
-export function useApollo(pageProps) {
+export function useApollo(pageProps: Record<string, unknown>): AppAppoloClient {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;

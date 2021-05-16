@@ -3,7 +3,10 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse
+): Promise<void> => {
   // @warn what about clients that do GET requests ?
   if (typeof req.method === "string" && req.method.toLowerCase() !== "post") {
     console.warn("[GraphQL-proxy]", "Method not allowed", req.method, req.url);

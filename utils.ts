@@ -1,4 +1,7 @@
-export function parseBooleanEnvVar(boolValueFromENV, defaultValue = false) {
+export function parseBooleanEnvVar(
+  boolValueFromENV: string,
+  defaultValue = false
+): boolean {
   let result;
   try {
     result = Boolean(JSON.parse(boolValueFromENV));

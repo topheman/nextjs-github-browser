@@ -1,8 +1,8 @@
-import { gql, useQuery } from "@apollo/client";
+import { DocumentNode, gql, useQuery } from "@apollo/client";
 
 export const makeRepositoryOwnerQuery = (
   tab: "default" | "repositories"
-) => gql`
+): DocumentNode => gql`
   query GetRepositoryOwner${
     tab === "repositories" ? "WithRepositories" : ""
   }($owner: String!) {
@@ -149,7 +149,7 @@ export default function TheOwnerProfile({
   owner,
   tab,
   skipProfileReadme,
-}: TheOwnerProfileProps) {
+}: TheOwnerProfileProps): JSX.Element {
   const repositoryOwnerResult = useQuery(makeRepositoryOwnerQuery(tab), {
     variables: { owner },
   });

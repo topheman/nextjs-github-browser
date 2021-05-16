@@ -39,7 +39,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 };
 
-export default function PageRepository({ graphQLVariables }) {
+export default function PageRepository({
+  graphQLVariables,
+}: {
+  graphQLVariables: Record<string, string | number>;
+}): JSX.Element {
   const repositoryResult = useQuery(REPOSITORY_QUERY, {
     variables: graphQLVariables,
   });

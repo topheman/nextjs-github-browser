@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
 import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
@@ -29,7 +29,9 @@ const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
   tab: normalizeTab(query.tab as string),
 });
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (
+  context
+): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
   const { owner, tab } = parseQuery(context.query);
   const baseProps: MyPageProps = {
     skipProfileReadme: tab === "repositories",
@@ -80,7 +82,9 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   });
 };
 
-export default function PageOwner({ skipProfileReadme }: MyPageProps) {
+export default function PageOwner({
+  skipProfileReadme,
+}: MyPageProps): JSX.Element {
   const router = useRouter();
   const { owner, tab } = parseQuery(router.query);
   return (

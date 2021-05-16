@@ -15,7 +15,9 @@ const links = [
   ["/about", "About"],
 ];
 
-export default function TheHeader(props: React.HTMLProps<HTMLElement>) {
+export default function TheHeader(
+  props: React.HTMLProps<HTMLElement>
+): JSX.Element {
   return (
     <header {...props}>
       <ul className="bg-primary text-primary">
