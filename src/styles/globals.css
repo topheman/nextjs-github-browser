@@ -1,3 +1,25 @@
+body,
+body.default-mode {
+  --color-brand-primary: #900000;
+  --color-brand-primary-light: #900000;
+  --color-brand-secondary: #eee;
+  --color-text-primary: black;
+  --color-text-secondary: gray;
+  --color-bg-primary: white;
+  --color-border-primary: gray;
+  --color-border-secondary: darkgray;
+}
+body.dark-mode {
+  --color-brand-primary: #900000;
+  --color-brand-primary-light: #900000;
+  --color-brand-secondary: #eee;
+  --color-text-primary: white;
+  --color-text-secondary: gray;
+  --color-bg-primary: black;
+  --color-border-primary: gray;
+  --color-border-secondary: darkgray;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

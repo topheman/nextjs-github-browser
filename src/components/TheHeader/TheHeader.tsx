@@ -1,8 +1,6 @@
 import Link from "next/link";
 import React from "react";
 
-import styles from "./TheHeader.module.css";
-
 const links = [
   ["/", "Home"],
   ["/topheman", "/topheman"],
@@ -19,10 +17,10 @@ const links = [
 
 export default function TheHeader(props: React.HTMLProps<HTMLElement>) {
   return (
-    <header {...props} className={styles.root}>
-      <ul className="bg-yellow-300">
+    <header {...props}>
+      <ul className="bg-primary text-primary">
         {links.map(([href, title]) => (
-          <li key={href}>
+          <li key={href} className="hover:text-secondary">
             <Link href={href}>{title}</Link>
           </li>
         ))}

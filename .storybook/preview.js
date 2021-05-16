@@ -11,4 +11,11 @@ export const parameters = {
   docs: {
     inlineStories: false,
   },
+  themes: {
+    default: "default",
+    list: [
+      { name: "default", class: ["default-mode"], color: "#F8F8F8" },
+      { name: "dark", class: ["dark-mode"], color: "black" },
+    ],
+  },
 };
