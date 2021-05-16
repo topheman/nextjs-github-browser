@@ -3,6 +3,9 @@
 # tools
 .eslintcache
 
+# public build of storybook available in /explore/storybook
+/public/explore/storybook
+
 # dependencies
 /node_modules
 /.pnp

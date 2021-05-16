@@ -32,7 +32,10 @@ if (typeof window === "undefined") {
   // Only generate this code in storybook mode (passing directly through google apis / not via /api/github/graphql proxy)
   // needs auth
   // eslint-disable-next-line no-lonely-if
-  if (process.env.STORYBOOK) {
+  if (
+    process.env.STORYBOOK &&
+    !process.env.STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN // to not expose token when publishing storybook
+  ) {
     const httpLink = makeHttpLink(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT);
     const authlink = setContext((_, { headers }) => {
       return {
