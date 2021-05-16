@@ -1,13 +1,20 @@
 module.exports = {
-  ignorePatterns: ["node_modules/*", ".next/*", ".out/*"],
+  ignorePatterns: [
+    "node_modules/*",
+    ".next/*",
+    ".out/*",
+    "public/explore/storybook/*",
+  ],
   env: {
     browser: true,
     es2021: true,
     node: true,
   },
   extends: [
-    "plugin:react/recommended",
     "airbnb",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
   ],
   parser: "@typescript-eslint/parser",
