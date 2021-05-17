@@ -4,6 +4,7 @@ module.exports = {
     ".next/*",
     ".out/*",
     "public/explore/storybook/*",
+    "src/generated/*",
   ],
   env: {
     browser: true,

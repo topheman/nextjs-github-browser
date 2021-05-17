@@ -4,10 +4,17 @@ import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
 import TheHeader from "../components/TheHeader/TheHeader";
-import TheOwnerProfile, {
-  makeRepositoryOwnerQuery,
-  PROFILE_README_QUERY,
-} from "../components/TheOwnerProfile/TheOwnerProfile";
+import TheOwnerProfile from "../components/TheOwnerProfile/TheOwnerProfile";
+import {
+  GetRepositoryOwnerWithPinnedItemsQueryResult,
+  GetRepositoryOwnerWithPinnedItemsQuery,
+  GetRepositoryOwnerWithPinnedItemsDocument,
+  GetRepositoryOwnerWithRepositoriesQueryResult,
+  GetRepositoryOwnerWithRepositoriesQuery,
+  GetRepositoryOwnerWithRepositoriesDocument,
+  GetProfileReadmeQuery,
+  GetProfileReadmeDocument,
+} from "../generated/graphql";
 import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
 
 type MyPageProps = {
@@ -50,10 +57,24 @@ export const getServerSideProps: GetServerSideProps = async (
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();
   let { skipProfileReadme } = baseProps;
-  const repositoryOwnerResult = await apolloClient.query({
-    query: makeRepositoryOwnerQuery(tab),
-    variables: { owner },
-  });
+  let repositoryOwnerResult:
+    | GetRepositoryOwnerWithPinnedItemsQueryResult
+    | GetRepositoryOwnerWithRepositoriesQueryResult;
+  if (tab === "default") {
+    repositoryOwnerResult = (await apolloClient.query<GetRepositoryOwnerWithPinnedItemsQuery>(
+      {
+        query: GetRepositoryOwnerWithPinnedItemsDocument,
+        variables: { owner },
+      }
+    )) as GetRepositoryOwnerWithPinnedItemsQueryResult;
+  } else {
+    repositoryOwnerResult = (await apolloClient.query<GetRepositoryOwnerWithRepositoriesQuery>(
+      {
+        query: GetRepositoryOwnerWithRepositoriesDocument,
+        variables: { owner },
+      }
+    )) as GetRepositoryOwnerWithRepositoriesQueryResult;
+  }
   // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
   if (
     !skipProfileReadme &&
@@ -62,8 +83,8 @@ export const getServerSideProps: GetServerSideProps = async (
   ) {
     // if it errors, tell `useQuery` to skip it clientSide (otherwise the query will be played as there won't be anything in cache)
     try {
-      await apolloClient.query({
-        query: PROFILE_README_QUERY,
+      await apolloClient.query<GetProfileReadmeQuery>({
+        query: GetProfileReadmeDocument,
         variables: { owner },
       });
     } catch (e) {

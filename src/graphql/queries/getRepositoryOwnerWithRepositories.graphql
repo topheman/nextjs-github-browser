@@ -1,0 +1,87 @@
+query GetRepositoryOwnerWithRepositories($owner: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  repositoryOwner(login: $owner) {
+    ... on User {
+      __typename
+      id
+      name
+      login
+      bio
+      createdAt
+      websiteUrl
+      twitterUsername
+      avatarUrl
+      location
+      followers {
+        totalCount
+      }
+      following {
+        totalCount
+      }
+      repositories(first: 30) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        totalCount
+        edges {
+          node {
+            primaryLanguage {
+              name
+              color
+            }
+            name
+            description
+          }
+          cursor
+        }
+      }
+    }
+    ... on Organization {
+      __typename
+      id
+      name
+      login
+      createdAt
+      websiteUrl
+      twitterUsername
+      avatarUrl
+      location
+      people: membersWithRole(first: 20) {
+        totalCount
+        edges {
+          node {
+            avatarUrl
+          }
+        }
+      }
+      repositories(first: 30) {
+        pageInfo {
+          hasNextPage
+          hasPreviousPage
+          startCursor
+          endCursor
+        }
+        totalCount
+        edges {
+          node {
+            primaryLanguage {
+              name
+              color
+            }
+            name
+            description
+          }
+          cursor
+        }
+      }
+    }
+  }
+}

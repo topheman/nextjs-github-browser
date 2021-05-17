@@ -1,0 +1,12 @@
+overwrite: true
+schema: "src/generated/github-schema-loader.js"
+documents:
+  - "src/graphql/**/*.graphql"
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+      # - "typescript-graphql-files-modules"
+      # - "typescript-document-nodes"
