@@ -1,10 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import {
-  GetRepositoryOwnerWithPinnedItemsQueryResult,
   useGetRepositoryOwnerWithPinnedItemsQuery,
-  GetRepositoryOwnerWithRepositoriesQueryResult,
   useGetRepositoryOwnerWithRepositoriesQuery,
   useGetProfileReadmeQuery,
   Blob,
+  User,
+  Organization,
 } from "../../generated/graphql";
 
 export type TheOwnerProfileProps = {
@@ -13,20 +14,56 @@ export type TheOwnerProfileProps = {
   skipProfileReadme: boolean;
 };
 
-/**
- * Typeguard since we have two requests we need to chose and cast
- */
-function extractResult(
-  result: {
-    default: GetRepositoryOwnerWithPinnedItemsQueryResult;
-    repositories: GetRepositoryOwnerWithRepositoriesQueryResult;
-  },
-  mode: TheOwnerProfileProps["tab"]
-) {
-  if (mode === "repositories") {
-    return result.default;
+type AppUserProfileProps = {
+  user?: User;
+  profileReadme?: string;
+  mode: "default" | "repositories";
+};
+AppUserProfile.defaultProps = {
+  user: null,
+  profileReadme: "",
+};
+function AppUserProfile({ user, profileReadme, mode }: AppUserProfileProps) {
+  if (!user) {
+    return null;
   }
-  return result.repositories;
+  return (
+    <>
+      <p>AppUserProfile/{mode}</p>
+      <ul>
+        {/* eslint-disable-next-line no-underscore-dangle */}
+        <li>{user.__typename}</li>
+        <li>{user.login}</li>
+        <li>{user.name}</li>
+        <li>{user.avatarUrl}</li>
+      </ul>
+      {profileReadme}
+    </>
+  );
+}
+
+type AppOrganizationProfileProps = {
+  organization?: Organization;
+};
+AppOrganizationProfile.defaultProps = {
+  organization: null,
+};
+function AppOrganizationProfile({ organization }: AppOrganizationProfileProps) {
+  if (!organization) {
+    return null;
+  }
+  return (
+    <>
+      <p>AppOrganizationProfile</p>
+      <ul>
+        {/* eslint-disable-next-line no-underscore-dangle */}
+        <li>{organization.__typename}</li>
+        <li>{organization.login}</li>
+        <li>{organization.name}</li>
+        <li>{organization.avatarUrl}</li>
+      </ul>
+    </>
+  );
 }
 
 export default function TheOwnerProfile({
@@ -46,13 +83,6 @@ export default function TheOwnerProfile({
       skip: tab === "default",
     }
   );
-  const result = extractResult(
-    {
-      default: repositoryOwnerDefaultModeResult,
-      repositories: repositoryOwnerRepositoriesModeResult,
-    },
-    tab
-  );
   const profileReadmeResult = useGetProfileReadmeQuery({
     variables: { owner },
     // skip this request for the default tab anyway - or if the getServerSideProps found out there wasn't any profile
@@ -60,13 +90,44 @@ export default function TheOwnerProfile({
   });
   return (
     <>
-      <p>TheOwnerProfile</p>
-      <ul>
-        {/* eslint-disable-next-line no-underscore-dangle */}
-        <li>{result?.data?.repositoryOwner?.__typename}</li>
-        <li>{result?.data?.repositoryOwner?.websiteUrl}</li>
-      </ul>
-      {(profileReadmeResult?.data?.profileReadme?.object as Blob)?.text}
+      <h2>TheOwnerProfile</h2>
+      {tab === "repositories" &&
+        repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
+          .__typename === "User" && (
+          <AppUserProfile
+            user={
+              repositoryOwnerRepositoriesModeResult?.data
+                ?.repositoryOwner as User
+            }
+            profileReadme={
+              (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+            }
+            mode={tab}
+          />
+        )}
+      {tab === "default" &&
+        repositoryOwnerDefaultModeResult?.data?.repositoryOwner.__typename ===
+          "User" && (
+          <AppUserProfile
+            user={
+              repositoryOwnerDefaultModeResult?.data?.repositoryOwner as User
+            }
+            profileReadme={
+              (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+            }
+            mode={tab}
+          />
+        )}
+      {tab === "default" &&
+        repositoryOwnerDefaultModeResult?.data?.repositoryOwner.__typename ===
+          "Organization" && (
+          <AppOrganizationProfile
+            organization={
+              (repositoryOwnerDefaultModeResult?.data
+                ?.repositoryOwner as unknown) as Organization
+            }
+          />
+        )}
     </>
   );
 }
