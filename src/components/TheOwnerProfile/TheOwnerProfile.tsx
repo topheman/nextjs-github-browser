@@ -4,68 +4,16 @@ import {
   useGetRepositoryOwnerWithRepositoriesQuery,
   useGetProfileReadmeQuery,
   Blob,
-  User,
-  Organization,
 } from "../../generated/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
+import AppUserProfile from "../AppUserProfile/AppUserProfile";
+import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
 
 export type TheOwnerProfileProps = {
   owner: string;
   tab: "default" | "repositories";
   skipProfileReadme: boolean;
 };
-
-type AppUserProfileProps = {
-  user?: User;
-  profileReadme?: string;
-  mode: "default" | "repositories";
-};
-AppUserProfile.defaultProps = {
-  user: null,
-  profileReadme: "",
-};
-function AppUserProfile({ user, profileReadme, mode }: AppUserProfileProps) {
-  if (!user) {
-    return null;
-  }
-  return (
-    <>
-      <p>AppUserProfile/{mode}</p>
-      <ul>
-        {/* eslint-disable-next-line no-underscore-dangle */}
-        <li>{user.__typename}</li>
-        <li>{user.login}</li>
-        <li>{user.name}</li>
-        <li>{user.avatarUrl}</li>
-      </ul>
-      {profileReadme}
-    </>
-  );
-}
-
-type AppOrganizationProfileProps = {
-  organization?: Organization;
-};
-AppOrganizationProfile.defaultProps = {
-  organization: null,
-};
-function AppOrganizationProfile({ organization }: AppOrganizationProfileProps) {
-  if (!organization) {
-    return null;
-  }
-  return (
-    <>
-      <p>AppOrganizationProfile</p>
-      <ul>
-        {/* eslint-disable-next-line no-underscore-dangle */}
-        <li>{organization.__typename}</li>
-        <li>{organization.login}</li>
-        <li>{organization.name}</li>
-        <li>{organization.avatarUrl}</li>
-      </ul>
-    </>
-  );
-}
 
 export default function TheOwnerProfile({
   owner,
