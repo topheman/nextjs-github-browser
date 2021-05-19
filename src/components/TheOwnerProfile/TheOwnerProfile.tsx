@@ -7,6 +7,7 @@ import {
   User,
   Organization,
 } from "../../generated/graphql";
+import { isUser, isOrganization } from "../../utils/type-guards";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -92,13 +93,11 @@ export default function TheOwnerProfile({
     <>
       <h2>TheOwnerProfile</h2>
       {tab === "repositories" &&
-        repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
-          .__typename === "User" && (
+        isUser(
+          repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
+        ) && (
           <AppUserProfile
-            user={
-              repositoryOwnerRepositoriesModeResult?.data
-                ?.repositoryOwner as User
-            }
+            user={repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner}
             profileReadme={
               (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
             }
@@ -106,12 +105,9 @@ export default function TheOwnerProfile({
           />
         )}
       {tab === "default" &&
-        repositoryOwnerDefaultModeResult?.data?.repositoryOwner.__typename ===
-          "User" && (
+        isUser(repositoryOwnerDefaultModeResult?.data?.repositoryOwner) && (
           <AppUserProfile
-            user={
-              repositoryOwnerDefaultModeResult?.data?.repositoryOwner as User
-            }
+            user={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
             profileReadme={
               (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
             }
@@ -119,12 +115,12 @@ export default function TheOwnerProfile({
           />
         )}
       {tab === "default" &&
-        repositoryOwnerDefaultModeResult?.data?.repositoryOwner.__typename ===
-          "Organization" && (
+        isOrganization(
+          repositoryOwnerDefaultModeResult?.data?.repositoryOwner
+        ) && (
           <AppOrganizationProfile
             organization={
-              (repositoryOwnerDefaultModeResult?.data
-                ?.repositoryOwner as unknown) as Organization
+              repositoryOwnerDefaultModeResult?.data?.repositoryOwner
             }
           />
         )}
