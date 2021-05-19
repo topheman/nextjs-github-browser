@@ -1,10 +1,10 @@
 export function parseBooleanEnvVar(
-  boolValueFromENV: string,
+  boolValueFromENV?: string,
   defaultValue = false
 ): boolean {
   let result;
   try {
-    result = Boolean(JSON.parse(boolValueFromENV));
+    result = Boolean(JSON.parse(boolValueFromENV as string));
   } catch (_) {
     result = defaultValue;
   }

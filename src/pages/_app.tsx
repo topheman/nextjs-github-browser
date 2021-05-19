@@ -2,6 +2,7 @@ import React from "react";
 import { ApolloProvider } from "@apollo/client";
 import { useApollo } from "../libs/apollo-client";
 import { parseBooleanEnvVar } from "../../utils";
+import type { PageProps } from "../types";
 
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
@@ -18,8 +19,10 @@ function MyApp({
   Component,
   pageProps,
 }: {
-  Component: React.FunctionComponent | React.ComponentClass;
-  pageProps;
+  Component:
+    | React.FunctionComponent<PageProps>
+    | React.ComponentClass<PageProps>;
+  pageProps: PageProps;
 }): JSX.Element {
   const apolloClient = useApollo(pageProps);
   return (

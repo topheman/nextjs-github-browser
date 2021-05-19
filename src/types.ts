@@ -15,3 +15,8 @@ export type AppAppoloClient =
 export type ParseQuery<T> = (
   query: ParsedUrlQuery
 ) => Record<string, string> & T;
+
+export type PageProps = {
+  __APOLLO_STATE__?: { [key: string]: unknown };
+  [key: string]: unknown;
+};

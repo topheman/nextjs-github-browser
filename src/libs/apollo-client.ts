@@ -4,25 +4,30 @@
  * Well explained in this video: https://www.youtube.com/watch?v=y34ym0-KZ8A by Leigh Halliday
  */
 import { useMemo } from "react";
-import { ApolloClient, HttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  ApolloLink,
+  HttpLink,
+  InMemoryCache,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import merge from "deepmerge";
 import isEqual from "lodash/isEqual";
 import type { NormalizedCache, NormalizedCacheObject } from "@apollo/client";
 
-import type { AppAppoloClient } from "../types";
+import type { AppAppoloClient, PageProps } from "../types";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
 let apolloClient: AppAppoloClient;
 
-const makeHttpLink = (uri): HttpLink =>
+const makeHttpLink = (uri: string): HttpLink =>
   new HttpLink({
     uri,
     credentials: "same-origin",
   });
 
-let link = null;
+let link: ApolloLink;
 // ssr mode - calling the serverless endpoint with an absolute url
 if (typeof window === "undefined") {
   link = makeHttpLink("http://localhost:3000/api/github/graphql");
@@ -35,6 +40,9 @@ if (typeof window === "undefined") {
     process.env.STORYBOOK &&
     !process.env.STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN // to not expose token when publishing storybook
   ) {
+    if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
+      throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
+    }
     const httpLink = makeHttpLink(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT);
     const authlink = setContext((_, { headers }) => {
       return {
@@ -59,7 +67,9 @@ function createApolloClient() {
   });
 }
 
-export function initializeApollo(initialState = null): AppAppoloClient {
+export function initializeApollo(
+  initialState: { [key: string]: unknown } | null = null
+): AppAppoloClient {
   // eslint-disable-next-line no-underscore-dangle
   const _apolloClient = apolloClient ?? createApolloClient();
 
@@ -95,8 +105,10 @@ export function initializeApollo(initialState = null): AppAppoloClient {
 
 export function addApolloState(
   client: AppAppoloClient,
-  pageProps: { props: Record<string, unknown> }
-): { props: Record<string, unknown> } {
+  pageProps: { props: { [key: string]: unknown } }
+): {
+  props: PageProps;
+} {
   if (pageProps?.props) {
     // eslint-disable-next-line no-param-reassign
     pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
@@ -105,7 +117,7 @@ export function addApolloState(
   return pageProps;
 }
 
-export function useApollo(pageProps: Record<string, unknown>): AppAppoloClient {
+export function useApollo(pageProps: PageProps): AppAppoloClient {
   const state = pageProps[APOLLO_STATE_PROP_NAME];
   const store = useMemo(() => initializeApollo(state), [state]);
   return store;

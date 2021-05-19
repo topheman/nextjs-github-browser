@@ -7,7 +7,7 @@ import { User, Organization } from "../generated/graphql";
  */
 
 export function isUser(userLikeObject: unknown): userLikeObject is User {
-  if ((userLikeObject as User).__typename === "User") {
+  if ((userLikeObject as User)?.__typename === "User") {
     return true;
   }
   return false;
@@ -16,7 +16,7 @@ export function isUser(userLikeObject: unknown): userLikeObject is User {
 export function isOrganization(
   organizationLikeObject: unknown
 ): organizationLikeObject is Organization {
-  if ((organizationLikeObject as Organization).__typename === "Organization") {
+  if ((organizationLikeObject as Organization)?.__typename === "Organization") {
     return true;
   }
   return false;

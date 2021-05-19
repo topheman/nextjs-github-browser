@@ -1,10 +1,10 @@
-import type { DefaultOptions } from "@apollo/client";
+import type { QueryOptions } from "@apollo/client/core/watchQueryOptions";
 
 import type { AppAppoloClient } from "../types";
 
-type QueryOptions = {
-  query: DefaultOptions["query"]["query"];
-  variables: DefaultOptions["query"]["variables"];
+type MyQueryOptions = {
+  query: QueryOptions["query"];
+  variables: QueryOptions["variables"];
 };
 
 /**
@@ -13,7 +13,7 @@ type QueryOptions = {
  */
 export async function fetchMultipleGraphQLQuery(
   apolloClient: AppAppoloClient,
-  queriesOptions: QueryOptions[]
+  queriesOptions: MyQueryOptions[]
 ): Promise<Record<string, unknown>> {
   const promises = queriesOptions.map((queryOptions) => {
     return apolloClient.query(queryOptions);

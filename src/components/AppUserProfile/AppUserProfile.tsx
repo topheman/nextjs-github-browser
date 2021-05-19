@@ -2,7 +2,7 @@ import { User } from "../../generated/graphql";
 
 export type AppUserProfileProps = {
   user?: User;
-  profileReadme?: string;
+  profileReadme: string | null;
   mode: "default" | "repositories";
 };
 
@@ -15,7 +15,7 @@ export default function AppUserProfile({
   user,
   profileReadme,
   mode,
-}: AppUserProfileProps): JSX.Element {
+}: AppUserProfileProps): JSX.Element | null {
   if (!user) {
     return null;
   }

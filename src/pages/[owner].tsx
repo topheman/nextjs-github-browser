@@ -15,6 +15,7 @@ import {
   GetProfileReadmeQuery,
   GetProfileReadmeDocument,
 } from "../generated/graphql";
+import { isUser } from "../utils/type-guards";
 import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
 
 type MyPageProps = {
@@ -78,8 +79,7 @@ export const getServerSideProps: GetServerSideProps = async (
   // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
   if (
     !skipProfileReadme &&
-    // eslint-disable-next-line no-underscore-dangle
-    repositoryOwnerResult.data.repositoryOwner.__typename === "User"
+    isUser(repositoryOwnerResult?.data?.repositoryOwner)
   ) {
     // if it errors, tell `useQuery` to skip it clientSide (otherwise the query will be played as there won't be anything in cache)
     try {

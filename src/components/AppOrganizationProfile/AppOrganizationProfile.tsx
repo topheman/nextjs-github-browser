@@ -10,7 +10,7 @@ AppOrganizationProfile.defaultProps = {
 
 export default function AppOrganizationProfile({
   organization,
-}: AppOrganizationProfileProps): JSX.Element {
+}: AppOrganizationProfileProps): JSX.Element | null {
   if (!organization) {
     return null;
   }
