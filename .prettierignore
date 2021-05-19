@@ -12,3 +12,4 @@ out
 *.fixtures.json
 react-modules/*
 bin/yarn*
+src/generated/*
