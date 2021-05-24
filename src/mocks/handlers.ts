@@ -7,11 +7,25 @@ const github =
     : graphql.link("/api/github/graphql");
 
 export const handlers = [
-  github.query("GetRepositoryOwner", (req, res, ctx) => {
-    console.log("[GraphQLMock] GetRepositoryOwner", req.variables);
+  github.query("GetRepositoryOwnerWithPinnedItems", (req, res, ctx) => {
+    console.log(
+      "[GraphQLMock] GetRepositoryOwnerWithPinnedItems",
+      req.variables
+    );
     return res(
       ctx.data({
-        ...require("./data/GetRepositoryOwner.json"),
+        ...require("./data/GetRepositoryOwnerWithPinnedItems.json"),
+      })
+    );
+  }),
+  github.query("GetRepositoryOwnerWithRepositories", (req, res, ctx) => {
+    console.log(
+      "[GraphQLMock] GetRepositoryOwnerWithRepositories",
+      req.variables
+    );
+    return res(
+      ctx.data({
+        ...require("./data/GetRepositoryOwnerWithRepositories.json"),
       })
     );
   }),
