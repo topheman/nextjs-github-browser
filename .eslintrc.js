@@ -68,7 +68,13 @@ module.exports = {
     "no-restricted-imports": [
       "error",
       {
-        patterns: ["*/generated/graphql"],
+        patterns: [
+          {
+            group: ["*/generated/graphql"],
+            message:
+              "Don't import generated modules directly, import from src/libs/graphql",
+          },
+        ],
       },
     ],
   },
