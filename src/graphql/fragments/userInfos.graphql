@@ -1,0 +1,18 @@
+fragment UserInfos on User {
+  __typename
+  id
+  name
+  login
+  bio
+  createdAt
+  websiteUrl
+  twitterUsername
+  avatarUrl
+  location
+  followers {
+    totalCount
+  }
+  following {
+    totalCount
+  }
+}

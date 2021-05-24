@@ -19691,6 +19691,34 @@ export type ViewerHovercardContext = HovercardContext & {
 };
 
 
+export type OrganizationInfosFragment = (
+  { __typename: 'Organization' }
+  & Pick<Organization, 'id' | 'name' | 'login' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
+  & { people: (
+    { __typename?: 'OrganizationMemberConnection' }
+    & Pick<OrganizationMemberConnection, 'totalCount'>
+    & { edges?: Maybe<Array<Maybe<(
+      { __typename?: 'OrganizationMemberEdge' }
+      & { node?: Maybe<(
+        { __typename?: 'User' }
+        & Pick<User, 'avatarUrl'>
+      )> }
+    )>>> }
+  ) }
+);
+
+export type UserInfosFragment = (
+  { __typename: 'User' }
+  & Pick<User, 'id' | 'name' | 'login' | 'bio' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
+  & { followers: (
+    { __typename?: 'FollowerConnection' }
+    & Pick<FollowerConnection, 'totalCount'>
+  ), following: (
+    { __typename?: 'FollowingConnection' }
+    & Pick<FollowingConnection, 'totalCount'>
+  ) }
+);
+
 export type GetProfileReadmeQueryVariables = Exact<{
   owner: Scalars['String'];
 }>;
@@ -19718,19 +19746,8 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
     { __typename?: 'RateLimit' }
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repositoryOwner?: Maybe<(
-    { __typename: 'Organization' }
-    & Pick<Organization, 'id' | 'name' | 'login' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
-    & { people: (
-      { __typename?: 'OrganizationMemberConnection' }
-      & Pick<OrganizationMemberConnection, 'totalCount'>
-      & { edges?: Maybe<Array<Maybe<(
-        { __typename?: 'OrganizationMemberEdge' }
-        & { node?: Maybe<(
-          { __typename?: 'User' }
-          & Pick<User, 'avatarUrl'>
-        )> }
-      )>>> }
-    ), repositories: (
+    { __typename?: 'Organization' }
+    & { repositories: (
       { __typename?: 'RepositoryConnection' }
       & Pick<RepositoryConnection, 'totalCount'>
       & { pageInfo: (
@@ -19749,16 +19766,10 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
         )> }
       )>>> }
     ) }
+    & OrganizationInfosFragment
   ) | (
-    { __typename: 'User' }
-    & Pick<User, 'id' | 'name' | 'login' | 'bio' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
-    & { followers: (
-      { __typename?: 'FollowerConnection' }
-      & Pick<FollowerConnection, 'totalCount'>
-    ), following: (
-      { __typename?: 'FollowingConnection' }
-      & Pick<FollowingConnection, 'totalCount'>
-    ), pinnedItems: (
+    { __typename?: 'User' }
+    & { pinnedItems: (
       { __typename?: 'PinnableItemConnection' }
       & { nodes?: Maybe<Array<Maybe<{ __typename?: 'Gist' } | (
         { __typename?: 'Repository' }
@@ -19768,10 +19779,8 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
           & Pick<Language, 'name' | 'color'>
         )> }
       )>>> }
-    ), contributionsCollection: (
-      { __typename?: 'ContributionsCollection' }
-      & Pick<ContributionsCollection, 'totalIssueContributions' | 'totalCommitContributions' | 'totalRepositoryContributions'>
     ) }
+    & UserInfosFragment
   )> }
 );
 
@@ -19786,19 +19795,8 @@ export type GetRepositoryOwnerWithRepositoriesQuery = (
     { __typename?: 'RateLimit' }
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repositoryOwner?: Maybe<(
-    { __typename: 'Organization' }
-    & Pick<Organization, 'id' | 'name' | 'login' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
-    & { people: (
-      { __typename?: 'OrganizationMemberConnection' }
-      & Pick<OrganizationMemberConnection, 'totalCount'>
-      & { edges?: Maybe<Array<Maybe<(
-        { __typename?: 'OrganizationMemberEdge' }
-        & { node?: Maybe<(
-          { __typename?: 'User' }
-          & Pick<User, 'avatarUrl'>
-        )> }
-      )>>> }
-    ), repositories: (
+    { __typename?: 'Organization' }
+    & { repositories: (
       { __typename?: 'RepositoryConnection' }
       & Pick<RepositoryConnection, 'totalCount'>
       & { pageInfo: (
@@ -19817,16 +19815,10 @@ export type GetRepositoryOwnerWithRepositoriesQuery = (
         )> }
       )>>> }
     ) }
+    & OrganizationInfosFragment
   ) | (
-    { __typename: 'User' }
-    & Pick<User, 'id' | 'name' | 'login' | 'bio' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
-    & { followers: (
-      { __typename?: 'FollowerConnection' }
-      & Pick<FollowerConnection, 'totalCount'>
-    ), following: (
-      { __typename?: 'FollowingConnection' }
-      & Pick<FollowingConnection, 'totalCount'>
-    ), repositories: (
+    { __typename?: 'User' }
+    & { repositories: (
       { __typename?: 'RepositoryConnection' }
       & Pick<RepositoryConnection, 'totalCount'>
       & { pageInfo: (
@@ -19845,10 +19837,51 @@ export type GetRepositoryOwnerWithRepositoriesQuery = (
         )> }
       )>>> }
     ) }
+    & UserInfosFragment
   )> }
 );
 
-
+export const OrganizationInfosFragmentDoc = gql`
+    fragment OrganizationInfos on Organization {
+  __typename
+  id
+  name
+  login
+  createdAt
+  websiteUrl
+  twitterUsername
+  avatarUrl
+  location
+  people: membersWithRole(first: 20) {
+    totalCount
+    edges {
+      node {
+        avatarUrl
+      }
+    }
+  }
+}
+    `;
+export const UserInfosFragmentDoc = gql`
+    fragment UserInfos on User {
+  __typename
+  id
+  name
+  login
+  bio
+  createdAt
+  websiteUrl
+  twitterUsername
+  avatarUrl
+  location
+  followers {
+    totalCount
+  }
+  following {
+    totalCount
+  }
+}
+    `;
 export const GetProfileReadmeDocument = gql`
     query GetProfileReadme($owner: String!) {
   profileReadme: repository(owner: $owner, name: $owner) {
@@ -19898,22 +19931,7 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
   }
   repositoryOwner(login: $owner) {
     ... on User {
-      __typename
-      id
-      name
-      login
-      bio
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      followers {
-        totalCount
-      }
-      following {
-        totalCount
-      }
+      ...UserInfos
       pinnedItems(first: 6, types: REPOSITORY) {
         nodes {
           ... on Repository {
@@ -19928,30 +19946,9 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
           }
         }
       }
-      contributionsCollection {
-        totalIssueContributions
-        totalCommitContributions
-        totalRepositoryContributions
-      }
     }
     ... on Organization {
-      __typename
-      id
-      name
-      login
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      people: membersWithRole(first: 20) {
-        totalCount
-        edges {
-          node {
-            avatarUrl
-          }
-        }
-      }
+      ...OrganizationInfos
       repositories(first: 30) {
         pageInfo {
           hasNextPage
@@ -19975,7 +19972,8 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
     }
   }
 }
-    `;
+    ${UserInfosFragmentDoc}
+${OrganizationInfosFragmentDoc}`;
 
 /**
  * __useGetRepositoryOwnerWithPinnedItemsQuery__
@@ -20014,22 +20012,7 @@ export const GetRepositoryOwnerWithRepositoriesDocument = gql`
   }
   repositoryOwner(login: $owner) {
     ... on User {
-      __typename
-      id
-      name
-      login
-      bio
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      followers {
-        totalCount
-      }
-      following {
-        totalCount
-      }
+      ...UserInfos
       repositories(first: 30) {
         pageInfo {
           hasNextPage
@@ -20052,23 +20035,7 @@ export const GetRepositoryOwnerWithRepositoriesDocument = gql`
       }
     }
     ... on Organization {
-      __typename
-      id
-      name
-      login
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      people: membersWithRole(first: 20) {
-        totalCount
-        edges {
-          node {
-            avatarUrl
-          }
-        }
-      }
+      ...OrganizationInfos
       repositories(first: 30) {
         pageInfo {
           hasNextPage
@@ -20092,7 +20059,8 @@ export const GetRepositoryOwnerWithRepositoriesDocument = gql`
     }
   }
 }
-    `;
+    ${UserInfosFragmentDoc}
+${OrganizationInfosFragmentDoc}`;
 
 /**
  * __useGetRepositoryOwnerWithRepositoriesQuery__

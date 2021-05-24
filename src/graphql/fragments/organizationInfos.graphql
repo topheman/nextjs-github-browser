@@ -1,0 +1,19 @@
+fragment OrganizationInfos on Organization {
+  __typename
+  id
+  name
+  login
+  createdAt
+  websiteUrl
+  twitterUsername
+  avatarUrl
+  location
+  people: membersWithRole(first: 20) {
+    totalCount
+    edges {
+      node {
+        avatarUrl
+      }
+    }
+  }
+}

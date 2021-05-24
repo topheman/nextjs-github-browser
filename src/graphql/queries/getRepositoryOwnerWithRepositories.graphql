@@ -7,22 +7,7 @@ query GetRepositoryOwnerWithRepositories($owner: String!) {
   }
   repositoryOwner(login: $owner) {
     ... on User {
-      __typename
-      id
-      name
-      login
-      bio
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      followers {
-        totalCount
-      }
-      following {
-        totalCount
-      }
+      ...UserInfos
       repositories(first: 30) {
         pageInfo {
           hasNextPage
@@ -45,23 +30,7 @@ query GetRepositoryOwnerWithRepositories($owner: String!) {
       }
     }
     ... on Organization {
-      __typename
-      id
-      name
-      login
-      createdAt
-      websiteUrl
-      twitterUsername
-      avatarUrl
-      location
-      people: membersWithRole(first: 20) {
-        totalCount
-        edges {
-          node {
-            avatarUrl
-          }
-        }
-      }
+      ...OrganizationInfos
       repositories(first: 30) {
         pageInfo {
           hasNextPage
