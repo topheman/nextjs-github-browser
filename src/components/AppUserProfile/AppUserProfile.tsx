@@ -1,4 +1,4 @@
-import { User } from "../../generated/graphql";
+import { User } from "../../libs/graphql";
 
 export type AppUserProfileProps = {
   user?: User;

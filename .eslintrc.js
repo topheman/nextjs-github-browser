@@ -65,5 +65,11 @@ module.exports = {
         peerDependencies: false,
       },
     ],
+    "no-restricted-imports": [
+      "error",
+      {
+        patterns: ["*/generated/graphql"],
+      },
+    ],
   },
 };

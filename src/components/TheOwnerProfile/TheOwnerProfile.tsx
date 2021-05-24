@@ -4,7 +4,7 @@ import {
   useGetRepositoryOwnerWithRepositoriesQuery,
   useGetProfileReadmeQuery,
   Blob,
-} from "../../generated/graphql";
+} from "../../libs/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";

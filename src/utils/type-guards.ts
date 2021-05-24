@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { User, Organization } from "../generated/graphql";
+import { User, Organization } from "../libs/graphql";
 
 /**
  * - Using type predicates: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates

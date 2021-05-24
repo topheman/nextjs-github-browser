@@ -14,7 +14,7 @@ import {
   GetRepositoryOwnerWithRepositoriesDocument,
   GetProfileReadmeQuery,
   GetProfileReadmeDocument,
-} from "../generated/graphql";
+} from "../libs/graphql";
 import { isUser } from "../utils/type-guards";
 import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
 

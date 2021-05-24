@@ -1,4 +1,4 @@
-import { Organization } from "../../generated/graphql";
+import { Organization } from "../../libs/graphql";
 
 export type AppOrganizationProfileProps = {
   organization?: Organization;
