@@ -1,3 +1,11 @@
+const brandColors = {
+  "brand-primary": {
+    DEFAULT: "var(--color-brand-primary)",
+    light: "var(--color-brand-primary-light)",
+  },
+  "brand-secondary": "var(--color-brand-secondary)",
+};
+
 module.exports = {
   mode: "jit",
   purge: [
@@ -7,20 +15,19 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     colors: {
-      "brand-primary": {
-        DEFAULT: "var(--color-brand-primary)",
-        light: "var(--color-brand-primary-light)",
-      },
-      "brand-secondary": "var(--color-brand-secondary)",
+      ...brandColors,
     },
     textColor: {
+      ...brandColors,
       primary: "var(--color-text-primary)",
       secondary: "var(--color-text-secondary)",
     },
     backgroundColor: {
+      ...brandColors,
       primary: "var(--color-bg-primary)",
     },
     borderColor: {
+      ...brandColors,
       primary: "var(--color-border-primary)",
       secondary: "var(--color-border-secondary)",
     },
