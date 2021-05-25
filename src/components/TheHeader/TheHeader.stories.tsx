@@ -13,3 +13,6 @@ const Template: Story<React.HTMLProps<HTMLElement>> = (args) => (
 );
 
 export const Base = Template.bind({});
+Base.parameters = {
+  layout: "fullscreen",
+};
