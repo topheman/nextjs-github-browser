@@ -26,17 +26,17 @@ export default function TheHeader(): JSX.Element {
   const close = () => setShowDrawer(false);
   return (
     <>
-      <header className="bg-brand-primary h-12 shadow-lg">
-        <div className="flex h-full items-center p-2">
+      <header className="h-12 bg-brand-primary shadow-lg">
+        <div className="flex items-center p-2 h-full">
           <button
             type="button"
-            className="h-10 w-10 rounded-full text-brand-secondary focus:outline-none focus:bg-brand-primary-light hover:bg-brand-primary-light"
+            className="w-10 h-10 text-brand-secondary hover:bg-brand-primary-light focus:bg-brand-primary-light rounded-full focus:outline-none"
             onClick={open}
             aria-label="Open"
           >
-            <HamburgerIcon className="h-6 w-6 inline-block text-center fill-current" />
+            <HamburgerIcon className="inline-block w-6 h-6 text-center fill-current" />
           </button>
-          <h1 className="text-brand-secondary m-2">
+          <h1 className="m-2 text-brand-secondary">
             <Link href="/">nextjs-github-browser</Link>
           </h1>
         </div>
@@ -54,14 +54,14 @@ export default function TheHeader(): JSX.Element {
           <div className="pt-4">
             <button
               type="button"
-              className="h-10 w-10 absolute top-1 left-2 rounded-full text-brand-secondary focus:outline-none focus:text-primary hover:bg-brand-primary-light hover:text-brand-secondary"
+              className="absolute top-1 left-2 w-10 h-10 text-brand-secondary hover:text-brand-secondary focus:text-primary hover:bg-brand-primary-light rounded-full focus:outline-none"
               onClick={close}
               aria-label="Close"
             >
-              <CloseIcon className="h-6 w-6 fill-current text-center inline-block" />
+              <CloseIcon className="inline-block w-6 h-6 text-center fill-current" />
             </button>
             {links.map(([href, title]) => (
-              <li key={href} className="text-s list-none hover:text-secondary">
+              <li key={href} className="list-none hover:text-secondary">
                 <Link href={href}>{title}</Link>
               </li>
             ))}

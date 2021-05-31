@@ -27,7 +27,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "tailwindcss"],
   // other configuration are omitted for brevity
   settings: {
     "import/resolver": {
@@ -77,5 +77,8 @@ module.exports = {
         ],
       },
     ],
+    "tailwindcss/classnames-order": "error",
+    "tailwindcss/no-custom-classname": "warn",
+    "tailwindcss/no-contradicting-classname": "error",
   },
 };
