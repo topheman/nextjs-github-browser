@@ -3,7 +3,6 @@ import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
 import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
-import TheHeader from "../components/TheHeader/TheHeader";
 import TheOwnerProfile from "../components/TheOwnerProfile/TheOwnerProfile";
 import {
   GetRepositoryOwnerWithPinnedItemsQueryResult,
@@ -111,7 +110,6 @@ export default function PageOwner({
   return (
     <>
       <h1>Owner: "{owner}"</h1>
-      <TheHeader />
       <TheOwnerProfile
         owner={owner}
         tab={tab}

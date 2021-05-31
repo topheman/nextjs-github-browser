@@ -3,7 +3,6 @@ import { gql, useQuery } from "@apollo/client";
 import type { GetServerSideProps } from "next";
 
 import { initializeApollo, addApolloState } from "../../libs/apollo-client";
-import TheHeader from "../../components/TheHeader/TheHeader";
 
 const REPOSITORY_QUERY = gql`
   query GetSpecificRepo($owner: String!, $repository: String!) {
@@ -54,7 +53,6 @@ export default function PageRepository({
       <h1>
         Owner: "{owner}" / Repository: "{repository}"
       </h1>
-      <TheHeader />
       <ul>
         <li>{repositoryResult?.data?.repository.description}</li>
         <li>{repositoryResult?.data?.repository.primaryLanguage.name}</li>

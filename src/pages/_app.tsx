@@ -6,6 +6,7 @@ import type { PageProps } from "../types";
 
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
+import TheHeader from "../components/TheHeader/TheHeader";
 
 if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
   // eslint-disable-next-line no-console
@@ -27,7 +28,10 @@ function MyApp({
   const apolloClient = useApollo(pageProps);
   return (
     <ApolloProvider client={apolloClient}>
-      <Component {...pageProps} />
+      <TheHeader />
+      <div className="p-3 md:p-6">
+        <Component {...pageProps} />
+      </div>
     </ApolloProvider>
   );
 }
