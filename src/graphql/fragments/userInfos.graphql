@@ -15,4 +15,7 @@ fragment UserInfos on User {
   following {
     totalCount
   }
+  starredRepositories {
+    totalCount
+  }
 }

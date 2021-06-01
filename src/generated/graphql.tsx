@@ -19716,6 +19716,9 @@ export type UserInfosFragment = (
   ), following: (
     { __typename?: 'FollowingConnection' }
     & Pick<FollowingConnection, 'totalCount'>
+  ), starredRepositories: (
+    { __typename?: 'StarredRepositoryConnection' }
+    & Pick<StarredRepositoryConnection, 'totalCount'>
   ) }
 );
 
@@ -19878,6 +19881,9 @@ export const UserInfosFragmentDoc = gql`
     totalCount
   }
   following {
+    totalCount
+  }
+  starredRepositories {
     totalCount
   }
 }

@@ -23,3 +23,7 @@ body.dark-mode {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: Roboto, Arial, sans-serif;
+}
