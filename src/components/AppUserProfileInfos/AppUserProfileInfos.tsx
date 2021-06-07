@@ -1,5 +1,13 @@
+import {
+  PeopleIcon,
+  StarIcon,
+  LocationIcon,
+  LinkIcon,
+} from "@primer/octicons-react";
+
 import { User } from "../../libs/graphql";
 import AppAvatarImage from "../AppAvatarImage/AppAvatarImage";
+import TwitterIcon from "../icons/TwitterIcon";
 
 export type AppUserProfileInfosProps = {
   user?: User;
@@ -39,7 +47,7 @@ export default function AppUserProfileInfos({
         <ul>
           {user.followers.totalCount ? (
             <li>
-              {user.followers.totalCount} follower
+              <PeopleIcon /> {user.followers.totalCount} follower
               {user.followers.totalCount > 1 ? "s" : ""}
             </li>
           ) : null}
@@ -48,20 +56,21 @@ export default function AppUserProfileInfos({
           ) : null}
           {user.starredRepositories.totalCount > 0 ? (
             <li>
-              <span role="img" aria-label="star">
-                ⭐️
-              </span>{" "}
-              {user.starredRepositories.totalCount}
+              <StarIcon /> {user.starredRepositories.totalCount}
             </li>
           ) : null}
         </ul>
       </div>
       <ul>
-        {user.location ? <li>{user.location}</li> : null}
+        {user.location ? (
+          <li>
+            <LocationIcon /> {user.location}
+          </li>
+        ) : null}
         {user.websiteUrl ? (
           <li>
             <a rel="nofollow me" href={user.websiteUrl}>
-              {user.websiteUrl}
+              <LinkIcon /> {user.websiteUrl}
             </a>
           </li>
         ) : null}
@@ -71,7 +80,7 @@ export default function AppUserProfileInfos({
               rel="nofollow me"
               href={`https://twitter.com/${user.twitterUsername}`}
             >
-              @{user.twitterUsername}
+              <TwitterIcon /> @{user.twitterUsername}
             </a>
           </li>
         ) : null}
