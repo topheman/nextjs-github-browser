@@ -10,6 +10,7 @@ module.exports = {
     browser: true,
     es2021: true,
     node: true,
+    jest: true,
   },
   extends: [
     "airbnb",
@@ -18,6 +19,7 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
+    "plugin:jest-dom/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -27,7 +29,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "tailwindcss"],
+  plugins: ["react", "@typescript-eslint", "tailwindcss", "jest-dom"],
   // other configuration are omitted for brevity
   settings: {
     "import/resolver": {
@@ -80,5 +82,10 @@ module.exports = {
     "tailwindcss/classnames-order": "error",
     "tailwindcss/no-custom-classname": "warn",
     "tailwindcss/no-contradicting-classname": "error",
+    // https://github.com/testing-library/eslint-plugin-jest-dom#usage
+    "jest-dom/prefer-checked": "error",
+    "jest-dom/prefer-enabled-disabled": "error",
+    "jest-dom/prefer-required": "error",
+    "jest-dom/prefer-to-have-attribute": "error",
   },
 };
