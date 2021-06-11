@@ -72,7 +72,13 @@ module.exports = {
       {
         patterns: [
           {
-            group: ["*/generated/graphql"],
+            group: [
+              "../generated/graphql",
+              "../../generated/graphql",
+              "../../../generated/graphql",
+              "../../../../generated/graphql",
+              "../../../../../generated/graphql",
+            ],
             message:
               "Don't import generated modules directly, import from src/libs/graphql",
           },

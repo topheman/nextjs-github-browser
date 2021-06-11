@@ -1,9 +1,16 @@
-const identity = <T extends unknown>(i: T) => i;
+import { render } from "@testing-library/react";
 
-describe("AppUserProfileInfos", () => {
-  it("fake test", () => {
-    const trueBolean = identity(true);
-    expect(trueBolean).toBe(true);
+import { makeUser } from "../../mocks/helpers";
+import AppUserProfileInfos from "./AppUserProfileInfos";
+
+describe("components/AppUserProfileInfos", () => {
+  it("it not render if no user passed", () => {
+    const { container } = render(<AppUserProfileInfos />);
+    expect(container).toBeEmptyDOMElement();
+  });
+  it("it shoud render a basic user", () => {
+    const { container } = render(<AppUserProfileInfos user={makeUser()} />);
+    expect(container).toBeTruthy();
   });
 });
 export {};
