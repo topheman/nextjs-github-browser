@@ -53,7 +53,7 @@ export default function AppProfileNavTab({
         return (
           <Component
             key={label}
-            className={`pl-4 pr-4 pt-2 pb-2 leading-6 ${
+            className={`px-4 py-2 leading-6 ${
               currentTab === tab ? "border-brand-primary border-b-2" : ""
             }`}
           >

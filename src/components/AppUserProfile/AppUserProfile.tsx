@@ -35,10 +35,10 @@ export default function AppUserProfile({
         </div>
       </div>
       <div className="flex flex-col md:flex-row">
-        <div className="z-10 pr-4 pl-4 mt-0 md:-mt-8 w-full md:w-1/4">
+        <div className="z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4">
           <AppUserProfileInfos user={user} />
         </div>
-        <div className="md:hidden pr-3 pl-3 border-b border-light">
+        <div className="md:hidden px-3 border-b border-light">
           <AppProfileNavTab
             owner={user.login}
             currentTab={currentTab}

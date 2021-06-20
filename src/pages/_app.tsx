@@ -29,7 +29,7 @@ function MyApp({
   return (
     <ApolloProvider client={apolloClient}>
       <TheHeader />
-      <div className="p-3 md:p-6">
+      <div className="mx-auto max-w-screen-xl">
         <Component {...pageProps} />
       </div>
     </ApolloProvider>

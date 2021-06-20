@@ -29,3 +29,8 @@ body.dark-mode {
 body {
   font-family: Roboto, Arial, sans-serif;
 }
+
+/** Ensures the drawer goes over if any z-index is set */
+[data-focus-lock-disabled] div {
+  z-index: 1000;
+}

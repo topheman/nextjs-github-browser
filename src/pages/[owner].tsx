@@ -109,7 +109,6 @@ export default function PageOwner({
   const { owner, tab } = parseQuery(router.query);
   return (
     <>
-      <h1>Owner: "{owner}"</h1>
       <TheOwnerProfile
         owner={owner}
         tab={tab}
