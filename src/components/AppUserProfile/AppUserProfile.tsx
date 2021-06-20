@@ -6,7 +6,7 @@ import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 export type AppUserProfileProps = {
   user?: User;
   profileReadme: string | null;
-  mode: "default" | "repositories";
+  currentTab: "default" | "repositories";
 };
 
 AppUserProfile.defaultProps = {
@@ -17,20 +17,22 @@ AppUserProfile.defaultProps = {
 export default function AppUserProfile({
   user,
   profileReadme,
-  mode,
+  currentTab,
 }: AppUserProfileProps): JSX.Element | null {
   if (!user) {
     return null;
   }
   return (
     <>
-      <AppProfileNavTab />
-      <AppUserProfileInfos user={user} />
-      <AppUserProfileOverview
-        user={user}
-        profileReadme={profileReadme}
-        mode={mode}
+      <AppProfileNavTab
+        owner={user.login}
+        currentTab={currentTab}
+        reposTotalCount={user.repositories.totalCount}
       />
+      <AppUserProfileInfos user={user} />
+      {currentTab === "default" ? (
+        <AppUserProfileOverview user={user} profileReadme={profileReadme} />
+      ) : null}
     </>
   );
 }

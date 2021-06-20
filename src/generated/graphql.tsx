@@ -19782,6 +19782,9 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
           & Pick<Language, 'name' | 'color'>
         )> }
       )>>> }
+    ), repositories: (
+      { __typename?: 'RepositoryConnection' }
+      & Pick<RepositoryConnection, 'totalCount'>
     ) }
     & UserInfosFragment
   )> }
@@ -19951,6 +19954,9 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
             forkCount
           }
         }
+      }
+      repositories(first: 1) {
+        totalCount
       }
     }
     ... on Organization {

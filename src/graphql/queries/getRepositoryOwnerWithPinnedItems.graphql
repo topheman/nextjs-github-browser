@@ -22,6 +22,9 @@ query GetRepositoryOwnerWithPinnedItems($owner: String!) {
           }
         }
       }
+      repositories(first: 1) {
+        totalCount
+      }
     }
     ... on Organization {
       ...OrganizationInfos

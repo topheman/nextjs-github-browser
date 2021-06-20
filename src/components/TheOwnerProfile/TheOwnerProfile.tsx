@@ -49,7 +49,7 @@ export default function TheOwnerProfile({
             profileReadme={
               (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
             }
-            mode={tab}
+            currentTab={tab}
           />
         )}
       {tab === "default" &&
@@ -59,7 +59,7 @@ export default function TheOwnerProfile({
             profileReadme={
               (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
             }
-            mode={tab}
+            currentTab={tab}
           />
         )}
       {tab === "default" &&

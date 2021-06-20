@@ -18,6 +18,9 @@ export const makeUser = (props: Partial<User> = {}): User => {
     starredRepositories: {
       totalCount: 363,
     },
+    repositories: {
+      totalCount: 78,
+    },
     ...props,
   } as User;
 };
