@@ -12,7 +12,7 @@ export type AppProfileNavTabProps = {
 
 type LinksDataType = {
   label: string;
-  icon: React.FunctionComponent;
+  icon: React.FunctionComponent<{ className?: string }>;
   badge?: string | number;
   tab?: string;
 };
@@ -28,7 +28,7 @@ export default function AppProfileNavTab({
   reposTotalCount,
 }: AppProfileNavTabProps): JSX.Element | null {
   const links: LinksDataType[] = [
-    { label: "Overview", icon: BookIcon },
+    { label: "Overview", icon: BookIcon, tab: "default" },
     {
       label: "Repositories",
       tab: "repositories",
@@ -37,28 +37,33 @@ export default function AppProfileNavTab({
     },
   ];
   return (
-    <nav>
+    <nav className="flex">
       {links.map(({ label, icon: Icon, badge, tab }) => {
         const Component: TabComponent = tab
-          ? ({ children, ...props }) => (
+          ? ({ children, className, ...props }) => (
               <Link
                 key={label}
                 href={tab !== "default" ? `/${owner}?tab=${tab}` : `/${owner}`}
                 {...props}
               >
-                <a>{children}</a>
+                <a className={className}>{children}</a>
               </Link>
             )
           : ({ children, ...props }) => <span {...props}>{children}</span>;
         return (
-          <Component key={label} className={currentTab === tab ? "active" : ""}>
-            <>
-              {Icon ? <Icon /> : null}
+          <Component
+            key={label}
+            className={`pl-4 pr-4 pt-2 pb-2 leading-6 ${
+              currentTab === tab ? "border-brand-primary border-b-2" : ""
+            }`}
+          >
+            <span>
+              {Icon ? <Icon className="mr-1" /> : null}
               {label}
               {badge !== undefined ? (
                 <BaseBadge badgeContent={badge} className="ml-2" />
               ) : null}
-            </>
+            </span>
           </Component>
         );
       })}
