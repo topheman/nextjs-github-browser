@@ -47,48 +47,60 @@ export default function AppUserProfileInfos({
       </div>
       <div className="flex flex-col">
         <p className="mb-4">{user.bio}</p>
-        <ul className="order-1 md:order-none">
+        <ul className="order-1 md:order-none mb-4">
           {user.followers.totalCount ? (
-            <li className="inline mr-2">
-              <PeopleIcon /> {user.followers.totalCount}{" "}
-              <span className="text-secondary">
-                follower
-                {user.followers.totalCount > 1 ? "s" : ""}
+            <li className="inline">
+              <span className="whitespace-nowrap">
+                <PeopleIcon className="mr-1" />
+                {user.followers.totalCount}{" "}
+                <span className="text-secondary">
+                  follower
+                  {user.followers.totalCount > 1 ? "s" : ""}
+                </span>
               </span>
+              {" · "}
             </li>
           ) : null}
           {user.following.totalCount ? (
-            <li className="inline mr-2">
-              {user.following.totalCount}{" "}
-              <span className="text-secondary">following</span>
+            <li className="inline">
+              <span className="whitespace-nowrap">
+                {user.following.totalCount}{" "}
+                <span className="text-secondary">following</span>
+              </span>
+              {" · "}
             </li>
           ) : null}
           {user.starredRepositories.totalCount > 0 ? (
-            <li className="inline mr-2">
-              <StarIcon /> {user.starredRepositories.totalCount}
+            <li className="inline">
+              <span className="whitespace-nowrap">
+                <StarIcon className="mr-1" />
+                {user.starredRepositories.totalCount}
+              </span>
             </li>
           ) : null}
         </ul>
         <ul>
           {user.location ? (
-            <li className="hidden md:inline-block">
-              <LocationIcon /> {user.location}
+            <li className="inline-block overflow-hidden w-full overflow-ellipsis whitespace-nowrap">
+              <LocationIcon className="mr-1" />
+              {user.location}
             </li>
           ) : null}
           {user.websiteUrl ? (
-            <li>
+            <li className="hidden md:inline-block overflow-hidden w-full overflow-ellipsis whitespace-nowrap">
+              <LinkIcon className="mr-1" />
               <a rel="nofollow me" href={user.websiteUrl}>
-                <LinkIcon /> {user.websiteUrl}
+                {user.websiteUrl}
               </a>
             </li>
           ) : null}
           {user.twitterUsername ? (
-            <li className="hidden md:inline-block">
+            <li className="hidden md:inline-block overflow-hidden w-full overflow-ellipsis whitespace-nowrap">
               <a
                 rel="nofollow me"
                 href={`https://twitter.com/${user.twitterUsername}`}
               >
-                <TwitterIcon /> @{user.twitterUsername}
+                <TwitterIcon className="mr-1" />@{user.twitterUsername}
               </a>
             </li>
           ) : null}

@@ -24,9 +24,9 @@ export default function AppUserProfile({
   }
   return (
     <>
-      <div className="flex sticky top-0 border-b border-light">
-        <div className="w-1/4" />
-        <div className="pt-3 pb-3 w-3/4 bg-primary">
+      <div className="hidden md:flex sticky top-0 border-b border-light">
+        <div className="w-0 md:w-1/4" />
+        <div className="pt-3 pb-3 w-full md:w-3/4 bg-primary">
           <AppProfileNavTab
             owner={user.login}
             currentTab={currentTab}
@@ -34,11 +34,18 @@ export default function AppUserProfile({
           />
         </div>
       </div>
-      <div className="flex">
-        <div className="z-10 pr-4 pl-4 -mt-8 w-1/4">
+      <div className="flex flex-col md:flex-row">
+        <div className="z-10 pr-4 pl-4 mt-0 md:-mt-8 w-full md:w-1/4">
           <AppUserProfileInfos user={user} />
         </div>
-        <div className="m-3 w-3/4">
+        <div className="m-3 w-full md:w-3/4">
+          <div className="md:hidden">
+            <AppProfileNavTab
+              owner={user.login}
+              currentTab={currentTab}
+              reposTotalCount={user.repositories.totalCount}
+            />
+          </div>
           {currentTab === "default" ? (
             <AppUserProfileOverview user={user} profileReadme={profileReadme} />
           ) : null}

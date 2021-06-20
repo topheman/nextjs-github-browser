@@ -15,7 +15,7 @@ export default function AppUserProfileOverview({
   return (
     <div>
       <p>Profile overview / list repo pinned items</p>
-      {profileReadme}
+      <div>{profileReadme}</div>
     </div>
   );
 }
