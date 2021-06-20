@@ -22,7 +22,7 @@ export default function AppUserProfileInfos({
   return (
     <div itemScope itemType="http://schema.org/Person" className="text-primary">
       <div className="flex md:block items-center mb-4">
-        <div className="mr-2 md:-mr-0 w-20 md:w-auto">
+        <div className="mr-2 md:-mr-0 w-20 md:w-auto max-w-[260px]">
           <a itemProp="image" href={user.avatarUrl}>
             <AppAvatarImage
               avatarUrl={user.avatarUrl}

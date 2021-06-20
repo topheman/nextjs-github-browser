@@ -17,9 +17,9 @@ export default function AppAvatarImage({
     <img
       src={avatarUrl}
       alt={alt}
-      className={`${
+      className={`w-full h-auto ${
         rounded === "full" ? "rounded-full" : "rounded-xl"
-      } border-primary`}
+      } border-primary border`}
     />
   );
 }
