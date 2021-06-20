@@ -39,16 +39,12 @@ export default function TheOwnerProfile({
   });
   return (
     <>
-      <h2>TheOwnerProfile</h2>
       {tab === "repositories" &&
         isUser(
           repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
         ) && (
           <AppUserProfile
             user={repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner}
-            profileReadme={
-              (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
-            }
             currentTab={tab}
           />
         )}

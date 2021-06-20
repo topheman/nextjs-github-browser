@@ -8,6 +8,7 @@ body.default-mode {
   --color-bg-primary: white;
   --color-border-primary: gray;
   --color-border-secondary: darkgray;
+  --color-border-light: #d8d8d8;
 }
 body.dark-mode {
   --color-brand-primary: #900000;
@@ -18,6 +19,7 @@ body.dark-mode {
   --color-bg-primary: black;
   --color-border-primary: gray;
   --color-border-secondary: darkgray;
+  --color-border-light: #d8d8d8;
 }
 
 @tailwind base;

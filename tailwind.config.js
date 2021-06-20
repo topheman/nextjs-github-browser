@@ -31,6 +31,7 @@ module.exports = {
       ...brandColors,
       primary: "var(--color-border-primary)",
       secondary: "var(--color-border-secondary)",
+      light: "var(--color-border-light)",
     },
     extend: {},
   },
