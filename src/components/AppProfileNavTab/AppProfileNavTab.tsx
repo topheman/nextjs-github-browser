@@ -7,7 +7,7 @@ import BaseBadge from "../BaseBadge/BaseBadge";
 export type AppProfileNavTabProps = {
   owner: string;
   currentTab: "default" | "repositories";
-  reposTotalCount: number;
+  reposTotalCount?: number;
 };
 
 type LinksDataType = {

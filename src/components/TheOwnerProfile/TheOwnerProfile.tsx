@@ -7,6 +7,7 @@ import {
 } from "../../libs/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
+import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
 
 export type TheOwnerProfileProps = {
@@ -19,7 +20,7 @@ export default function TheOwnerProfile({
   owner,
   tab,
   skipProfileReadme,
-}: TheOwnerProfileProps): JSX.Element {
+}: TheOwnerProfileProps): JSX.Element | null {
   const repositoryOwnerDefaultModeResult = useGetRepositoryOwnerWithPinnedItemsQuery(
     {
       variables: { owner },
@@ -37,37 +38,61 @@ export default function TheOwnerProfile({
     // skip this request for the default tab anyway - or if the getServerSideProps found out there wasn't any profile
     skip: tab === "repositories" || skipProfileReadme,
   });
-  return (
-    <>
-      {tab === "repositories" &&
-        isUser(
-          repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
-        ) && (
-          <AppUserProfile
-            user={repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner}
-            currentTab={tab}
-          />
-        )}
-      {tab === "default" &&
-        isUser(repositoryOwnerDefaultModeResult?.data?.repositoryOwner) && (
-          <AppUserProfile
-            user={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
-            profileReadme={
-              (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
-            }
-            currentTab={tab}
-          />
-        )}
-      {tab === "default" &&
-        isOrganization(
-          repositoryOwnerDefaultModeResult?.data?.repositoryOwner
-        ) && (
-          <AppOrganizationProfile
-            organization={
-              repositoryOwnerDefaultModeResult?.data?.repositoryOwner
-            }
-          />
-        )}
-    </>
-  );
+  if (
+    tab === "repositories" &&
+    isUser(repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner)
+  ) {
+    return (
+      <AppUserProfile
+        user={repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner}
+        currentTab={tab}
+        profileReadme={
+          (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+        }
+      >
+        <AppProfileNavTab
+          owner={owner}
+          currentTab={tab}
+          reposTotalCount={
+            repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
+              .repositories.totalCount
+          }
+        />
+      </AppUserProfile>
+    );
+  }
+  if (
+    tab === "default" &&
+    isUser(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)
+  ) {
+    return (
+      <AppUserProfile
+        user={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
+        currentTab={tab}
+        profileReadme={
+          (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+        }
+      >
+        <AppProfileNavTab
+          owner={owner}
+          currentTab={tab}
+          reposTotalCount={
+            repositoryOwnerDefaultModeResult?.data?.repositoryOwner.repositories
+              .totalCount
+          }
+        />
+      </AppUserProfile>
+    );
+  }
+  if (
+    tab === "default" &&
+    isOrganization(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)
+  ) {
+    return (
+      <AppOrganizationProfile
+        organization={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
+      />
+    );
+  }
+  return null;
 }
