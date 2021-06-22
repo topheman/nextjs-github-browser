@@ -9,7 +9,9 @@ export default {
 } as Meta;
 
 const Template: Story<AppAvatarImageProps> = (args) => (
-  <AppAvatarImage {...args} />
+  <div className="w-[260px]">
+    <AppAvatarImage {...args} />
+  </div>
 );
 
 export const Base = Template.bind({});
