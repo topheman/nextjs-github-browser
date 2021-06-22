@@ -1,8 +1,8 @@
-import { User } from "../../libs/graphql";
+import { User, Maybe } from "../../libs/graphql";
 
 export type AppUserProfileOverviewProps = {
   user?: User;
-  profileReadme: string | null;
+  profileReadme: Maybe<string> | undefined;
 };
 
 export default function AppUserProfileOverview({

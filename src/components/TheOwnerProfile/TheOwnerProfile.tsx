@@ -9,6 +9,7 @@ import { isUser, isOrganization } from "../../utils/type-guards";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
+import AppUserProfileOverview from "../AppUserProfileOverview/AppUserProfileOverview";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -40,47 +41,54 @@ export default function TheOwnerProfile({
   });
   if (
     tab === "repositories" &&
-    isUser(repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner)
+    repositoryOwnerRepositoriesModeResult &&
+    repositoryOwnerRepositoriesModeResult.data &&
+    repositoryOwnerRepositoriesModeResult.data.repositoryOwner &&
+    isUser(repositoryOwnerRepositoriesModeResult.data.repositoryOwner)
   ) {
+    const user = repositoryOwnerRepositoriesModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile
-        user={repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner}
-        currentTab={tab}
-        profileReadme={
-          (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
-        }
-      >
-        <AppProfileNavTab
-          owner={owner}
-          currentTab={tab}
-          reposTotalCount={
-            repositoryOwnerRepositoriesModeResult?.data?.repositoryOwner
-              .repositories.totalCount
-          }
-        />
+      <AppUserProfile user={user}>
+        {() => ({
+          nav: (
+            <AppProfileNavTab
+              owner={owner}
+              currentTab={tab}
+              reposTotalCount={user.repositories.totalCount}
+            />
+          ),
+          main: <p>There will be a repository list</p>,
+        })}
       </AppUserProfile>
     );
   }
   if (
     tab === "default" &&
-    isUser(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)
+    repositoryOwnerDefaultModeResult &&
+    repositoryOwnerDefaultModeResult.data &&
+    repositoryOwnerDefaultModeResult.data.repositoryOwner &&
+    isUser(repositoryOwnerDefaultModeResult.data.repositoryOwner)
   ) {
+    const user = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile
-        user={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
-        currentTab={tab}
-        profileReadme={
-          (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
-        }
-      >
-        <AppProfileNavTab
-          owner={owner}
-          currentTab={tab}
-          reposTotalCount={
-            repositoryOwnerDefaultModeResult?.data?.repositoryOwner.repositories
-              .totalCount
-          }
-        />
+      <AppUserProfile user={user}>
+        {() => ({
+          nav: (
+            <AppProfileNavTab
+              owner={owner}
+              currentTab={tab}
+              reposTotalCount={user.repositories.totalCount}
+            />
+          ),
+          main: (
+            <AppUserProfileOverview
+              user={user}
+              profileReadme={
+                (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+              }
+            />
+          ),
+        })}
       </AppUserProfile>
     );
   }
