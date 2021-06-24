@@ -1,4 +1,5 @@
 import { User, Maybe } from "../../libs/graphql";
+import AppUserProfileCustomDescription from "../AppUserProfileCustomDescription/AppUserProfileCustomDescription";
 
 export type AppUserProfileOverviewProps = {
   user?: User;
@@ -15,7 +16,7 @@ export default function AppUserProfileOverview({
   return (
     <div>
       <p>Profile overview / list repo pinned items</p>
-      <div>{profileReadme}</div>
+      <AppUserProfileCustomDescription profileReadme={profileReadme} />
     </div>
   );
 }

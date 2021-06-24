@@ -30,6 +30,11 @@ body {
   font-family: Roboto, Arial, sans-serif;
 }
 
+.markdown-body img,
+.markdown-body svg {
+  display: inline;
+}
+
 /** Ensures the drawer goes over if any z-index is set */
 [data-focus-lock-disabled] div {
   z-index: 1000;

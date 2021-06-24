@@ -6,6 +6,7 @@ import type { PageProps } from "../types";
 
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
+import "github-markdown-css";
 import TheHeader from "../components/TheHeader/TheHeader";
 
 if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
