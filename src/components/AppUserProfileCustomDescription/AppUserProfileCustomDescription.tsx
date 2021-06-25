@@ -15,6 +15,7 @@ export default function AppUserProfileCustomDescription({
 }: AppUserProfileCustomDescriptionProps): JSX.Element | null {
   if (profileReadme) {
     return (
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       <div className="markdown-body">
         <ReactMarkdown rehypePlugins={[raw, sanitize]} remarkPlugins={[gfm]}>
           {profileReadme}
