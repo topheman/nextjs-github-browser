@@ -14,8 +14,7 @@ export default function AppUserProfileOverview({
     return null;
   }
   return (
-    <div>
-      <p>Profile overview / list repo pinned items</p>
+    <div className="p-4 rounded-md border border-light">
       <AppUserProfileCustomDescription profileReadme={profileReadme} />
     </div>
   );

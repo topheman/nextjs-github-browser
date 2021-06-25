@@ -32,8 +32,8 @@ export default function AppUserProfile({
         <div className="z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4">
           <AppUserProfileInfos user={user} />
         </div>
-        <div className="md:hidden px-3 border-b border-light">{children}</div>
-        <div className="m-3 w-full md:w-3/4">{main}</div>
+        <div className="md:hidden px-3 border-b border-light">{nav}</div>
+        <div className="mt-5 w-full md:w-3/4">{main}</div>
       </div>
     </>
   );
