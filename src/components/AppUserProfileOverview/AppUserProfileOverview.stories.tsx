@@ -1,7 +1,7 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import { makeUser } from "../../mocks/helpers";
+import { makeUser, makeProfileReadMe } from "../../mocks/helpers";
 import AppUserProfileOverview, {
   AppUserProfileOverviewProps,
 } from "./AppUserProfileOverview";
@@ -21,4 +21,5 @@ Base.parameters = {
 };
 Base.args = {
   user: makeUser(),
+  profileReadme: makeProfileReadMe(),
 };

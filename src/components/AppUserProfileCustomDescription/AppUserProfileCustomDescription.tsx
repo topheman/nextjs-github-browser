@@ -1,4 +1,4 @@
-/* eslint-disable react/no-danger */
+import BaseBox from "../BaseBox/BaseBox";
 import BaseMarkdownDisplay, {
   BaseMarkdownDisplayProps,
 } from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
@@ -13,9 +13,9 @@ export default function AppUserProfileCustomDescription({
   if (profileReadme) {
     return (
       // eslint-disable-next-line tailwindcss/no-custom-classname
-      <div className="p-4 rounded-md border border-light">
+      <BaseBox className="p-4">
         <BaseMarkdownDisplay markdown={profileReadme} />
-      </div>
+      </BaseBox>
     );
   }
   return null;
