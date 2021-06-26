@@ -15,11 +15,11 @@ const Template: Story<TheOwnerProfileProps> = (args) => {
   const pageProps = {};
   const apolloClient = useApollo(pageProps);
   return (
-    <div className="mx-auto max-w-screen-xl">
+    <>
       <ApolloProvider client={apolloClient}>
         <TheOwnerProfile {...args} />
       </ApolloProvider>
-    </div>
+    </>
   );
 };
 
