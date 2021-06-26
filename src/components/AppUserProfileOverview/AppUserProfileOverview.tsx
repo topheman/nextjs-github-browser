@@ -1,5 +1,6 @@
 import { User, Maybe } from "../../libs/graphql";
-import AppUserProfileCustomDescription from "../AppUserProfileCustomDescription/AppUserProfileCustomDescription";
+import BaseBox from "../BaseBox/BaseBox";
+import BaseMarkdownDisplay from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
 
 export type AppUserProfileOverviewProps = {
   user?: User;
@@ -15,7 +16,9 @@ export default function AppUserProfileOverview({
   }
   return (
     <div>
-      <AppUserProfileCustomDescription profileReadme={profileReadme} />
+      <BaseBox className="p-4">
+        <BaseMarkdownDisplay markdown={profileReadme} />
+      </BaseBox>
     </div>
   );
 }
