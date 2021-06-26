@@ -30,9 +30,7 @@ function MyApp({
   return (
     <ApolloProvider client={apolloClient}>
       <TheHeader />
-      <div className="mx-auto max-w-screen-xl">
-        <Component {...pageProps} />
-      </div>
+      <Component {...pageProps} />
     </ApolloProvider>
   );
 }
