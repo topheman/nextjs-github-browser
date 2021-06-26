@@ -14,7 +14,7 @@ export default function AppUserProfileOverview({
     return null;
   }
   return (
-    <div className="p-4 rounded-md border border-light">
+    <div>
       <AppUserProfileCustomDescription profileReadme={profileReadme} />
     </div>
   );
