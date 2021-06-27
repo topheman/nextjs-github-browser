@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { User, Organization } from "../libs/graphql";
+import { User, Organization, Repository } from "../libs/graphql";
 
 /**
  * - Using type predicates: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#using-type-predicates
@@ -17,6 +17,15 @@ export function isOrganization(
   organizationLikeObject: unknown
 ): organizationLikeObject is Organization {
   if ((organizationLikeObject as Organization)?.__typename === "Organization") {
+    return true;
+  }
+  return false;
+}
+
+export function isRepository(
+  repositoryLikeObject: unknown
+): repositoryLikeObject is Repository {
+  if ((repositoryLikeObject as Repository)?.__typename === "Repository") {
     return true;
   }
   return false;

@@ -1,6 +1,8 @@
 import { RepoIcon } from "@primer/octicons-react";
 
+import AppTag from "../AppTag/AppTag";
 import { PinnableItem } from "../../libs/graphql";
+import { isRepository } from "../../utils/type-guards";
 
 export type AppPinnedItemProps = {
   ownerLogin: string;
@@ -25,7 +27,23 @@ export default function AppPinnedItem({
       <p className="mt-1 mb-1 h-[32px] text-xs text-secondary">
         {item.description}
       </p>
-      <p>toto</p>
+      <p>
+        <AppTag
+          ownerLogin={ownerLogin}
+          repositoryName={item.name}
+          type="stargazers"
+          count={item.stargazerCount}
+        />
+        {isRepository(item) ? (
+          <AppTag
+            ownerLogin={ownerLogin}
+            repositoryName={item.name}
+            type="forks"
+            count={item.forkCount}
+            className="ml-2"
+          />
+        ) : null}
+      </p>
     </div>
   );
 }
