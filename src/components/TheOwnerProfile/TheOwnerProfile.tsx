@@ -10,6 +10,7 @@ import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
 import AppUserProfileOverview from "../AppUserProfileOverview/AppUserProfileOverview";
+import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -57,6 +58,7 @@ export default function TheOwnerProfile({
               reposTotalCount={user.repositories.totalCount}
             />
           ),
+          sidebar: <AppUserProfileInfos user={user} />,
           main: <p>There will be a repository list</p>,
         })}
       </AppUserProfile>
@@ -80,6 +82,7 @@ export default function TheOwnerProfile({
               reposTotalCount={user.repositories.totalCount}
             />
           ),
+          sidebar: <AppUserProfileInfos user={user} />,
           main: (
             <AppUserProfileOverview
               user={user}
