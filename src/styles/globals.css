@@ -1,23 +1,37 @@
 body,
 body.default-mode {
+  --color-bg-canvas: white;
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
   --color-text-primary: black;
   --color-text-secondary: gray;
   --color-bg-primary: white;
+  --color-bg-primary-active: #ebecf0;
+  --color-bg-primary-hover: #f3f4f6;
+  --color-bg-primary-focus: #f3f4f6;
   --color-border-primary: gray;
+  --color-border-primary-active: gray;
+  --color-border-primary-hover: gray;
+  --color-border-primary-focus: gray;
   --color-border-secondary: darkgray;
   --color-border-light: #d8d8d8;
 }
 body.dark-mode {
+  --color-bg-canvas: black;
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
   --color-text-primary: white;
   --color-text-secondary: gray;
   --color-bg-primary: black;
+  --color-bg-primary-active: rgb(63, 63, 63);
+  --color-bg-primary-hover: rgb(63, 63, 63);
+  --color-bg-primary-focus: rgb(63, 63, 63);
   --color-border-primary: gray;
+  --color-border-primary-active: white;
+  --color-border-primary-hover: white;
+  --color-border-primary-focus: white;
   --color-border-secondary: darkgray;
   --color-border-light: #d8d8d8;
 }

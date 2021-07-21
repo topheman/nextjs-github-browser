@@ -25,11 +25,18 @@ module.exports = {
     },
     backgroundColor: {
       ...brandColors,
+      canvas: "var(--color-bg-canvas)",
       primary: "var(--color-bg-primary)",
+      "primary-active": "var(--color-bg-primary-active)",
+      "primary-hover": "var(--color-bg-primary-hover)",
+      "primary-focus": "var(--color-bg-primary-focus)",
     },
     borderColor: {
       ...brandColors,
       primary: "var(--color-border-primary)",
+      "primary-active": "var(--color-border-primary-active)",
+      "primary-hover": "var(--color-border-primary-hover)",
+      "primary-focus": "var(--color-border-primary-focus)",
       secondary: "var(--color-border-secondary)",
       light: "var(--color-border-light)",
     },
