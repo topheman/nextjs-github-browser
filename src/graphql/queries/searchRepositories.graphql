@@ -1,0 +1,3 @@
+query SearchRepositories($query: String!) {
+  ...SearchRepos
+}
