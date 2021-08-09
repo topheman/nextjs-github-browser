@@ -11,6 +11,7 @@ import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
 import AppUserProfileOverview from "../AppUserProfileOverview/AppUserProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
+import AppUserProfileRepositories from "../AppUserProfileRepositories/AppUserProfileRepositories";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -59,7 +60,7 @@ export default function TheOwnerProfile({
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,
-          main: <p>There will be a repository list</p>,
+          main: <AppUserProfileRepositories />,
         })}
       </AppUserProfile>
     );
