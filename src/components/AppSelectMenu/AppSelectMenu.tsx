@@ -9,6 +9,7 @@ export type AppSelectMenuProps<T extends string | number> = {
   buttonLabel: string;
   menuLabel?: string;
   onChange: (newValue: T) => void;
+  className?: string;
 };
 
 export default function AppSelectMenu<T extends string | number>({
@@ -17,6 +18,7 @@ export default function AppSelectMenu<T extends string | number>({
   buttonLabel,
   menuLabel,
   onChange,
+  className,
 }: AppSelectMenuProps<T>): JSX.Element {
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -55,7 +57,7 @@ export default function AppSelectMenu<T extends string | number>({
           ref={buttonRef}
           type="button"
           onClick={toggle}
-          className="py-1 px-3 font-semibold text-primary bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none"
+          className={`${className} py-1 px-3 font-semibold text-primary bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none`}
         >
           {buttonLabel}
           <TriangleDownIcon />
