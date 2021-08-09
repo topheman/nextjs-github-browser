@@ -18,4 +18,7 @@ fragment UserInfos on User {
   starredRepositories {
     totalCount
   }
+  allRepos: repositories(first: 1) {
+    totalCount
+  }
 }

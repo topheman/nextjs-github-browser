@@ -32,7 +32,7 @@ export default function TheOwnerProfile({
   );
   const repositoryOwnerRepositoriesModeResult = useGetRepositoryOwnerWithRepositoriesQuery(
     {
-      variables: { owner },
+      variables: { owner, query: "user:topheman fork:true sort:updated-desc" }, // todo dynamic
       skip: tab === "default",
     }
   );
@@ -56,7 +56,7 @@ export default function TheOwnerProfile({
             <AppProfileNavTab
               owner={owner}
               currentTab={tab}
-              reposTotalCount={user.repositories.totalCount}
+              reposTotalCount={user.allRepos.totalCount}
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,
@@ -80,7 +80,7 @@ export default function TheOwnerProfile({
             <AppProfileNavTab
               owner={owner}
               currentTab={tab}
-              reposTotalCount={user.repositories.totalCount}
+              reposTotalCount={user.allRepos.totalCount}
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,

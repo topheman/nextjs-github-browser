@@ -71,7 +71,10 @@ export const getServerSideProps: GetServerSideProps = async (
     repositoryOwnerResult = (await apolloClient.query<GetRepositoryOwnerWithRepositoriesQuery>(
       {
         query: GetRepositoryOwnerWithRepositoriesDocument,
-        variables: { owner },
+        variables: {
+          owner,
+          query: "user:topheman fork:true sort:updated-desc", // todo dynamic
+        },
       }
     )) as GetRepositoryOwnerWithRepositoriesQueryResult;
   }

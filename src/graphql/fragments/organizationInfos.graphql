@@ -16,4 +16,7 @@ fragment OrganizationInfos on Organization {
       }
     }
   }
+  allRepos: repositories(first: 1) {
+    totalCount
+  }
 }

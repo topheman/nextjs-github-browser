@@ -19704,6 +19704,48 @@ export type OrganizationInfosFragment = (
         & Pick<User, 'avatarUrl'>
       )> }
     )>>> }
+  ), allRepos: (
+    { __typename?: 'RepositoryConnection' }
+    & Pick<RepositoryConnection, 'totalCount'>
+  ) }
+);
+
+export type SearchReposFragment = (
+  { __typename?: 'Query' }
+  & { searchRepos: (
+    { __typename?: 'SearchResultItemConnection' }
+    & Pick<SearchResultItemConnection, 'repositoryCount'>
+    & { pageInfo: (
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'startCursor' | 'endCursor'>
+    ), edges?: Maybe<Array<Maybe<(
+      { __typename?: 'SearchResultItemEdge' }
+      & Pick<SearchResultItemEdge, 'cursor'>
+      & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
+        { __typename?: 'Repository' }
+        & Pick<Repository, 'name' | 'description'>
+        & { languages?: Maybe<(
+          { __typename?: 'LanguageConnection' }
+          & { edges?: Maybe<Array<Maybe<(
+            { __typename?: 'LanguageEdge' }
+            & Pick<LanguageEdge, 'size'>
+            & { node: (
+              { __typename?: 'Language' }
+              & Pick<Language, 'name' | 'color'>
+            ) }
+          )>>> }
+        )>, stargazers: (
+          { __typename?: 'StargazerConnection' }
+          & Pick<StargazerConnection, 'totalCount'>
+        ), licenseInfo?: Maybe<(
+          { __typename?: 'License' }
+          & Pick<License, 'name'>
+        )>, issues: (
+          { __typename?: 'IssueConnection' }
+          & Pick<IssueConnection, 'totalCount'>
+        ) }
+      ) | { __typename?: 'User' }> }
+    )>>> }
   ) }
 );
 
@@ -19719,6 +19761,9 @@ export type UserInfosFragment = (
   ), starredRepositories: (
     { __typename?: 'StarredRepositoryConnection' }
     & Pick<StarredRepositoryConnection, 'totalCount'>
+  ), allRepos: (
+    { __typename?: 'RepositoryConnection' }
+    & Pick<RepositoryConnection, 'totalCount'>
   ) }
 );
 
@@ -19792,6 +19837,7 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
 
 export type GetRepositoryOwnerWithRepositoriesQueryVariables = Exact<{
   owner: Scalars['String'];
+  query: Scalars['String'];
 }>;
 
 
@@ -19802,49 +19848,12 @@ export type GetRepositoryOwnerWithRepositoriesQuery = (
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repositoryOwner?: Maybe<(
     { __typename?: 'Organization' }
-    & { repositories: (
-      { __typename?: 'RepositoryConnection' }
-      & Pick<RepositoryConnection, 'totalCount'>
-      & { pageInfo: (
-        { __typename?: 'PageInfo' }
-        & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'startCursor' | 'endCursor'>
-      ), edges?: Maybe<Array<Maybe<(
-        { __typename?: 'RepositoryEdge' }
-        & Pick<RepositoryEdge, 'cursor'>
-        & { node?: Maybe<(
-          { __typename?: 'Repository' }
-          & Pick<Repository, 'name' | 'description'>
-          & { primaryLanguage?: Maybe<(
-            { __typename?: 'Language' }
-            & Pick<Language, 'name' | 'color'>
-          )> }
-        )> }
-      )>>> }
-    ) }
     & OrganizationInfosFragment
   ) | (
     { __typename?: 'User' }
-    & { repositories: (
-      { __typename?: 'RepositoryConnection' }
-      & Pick<RepositoryConnection, 'totalCount'>
-      & { pageInfo: (
-        { __typename?: 'PageInfo' }
-        & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'startCursor' | 'endCursor'>
-      ), edges?: Maybe<Array<Maybe<(
-        { __typename?: 'RepositoryEdge' }
-        & Pick<RepositoryEdge, 'cursor'>
-        & { node?: Maybe<(
-          { __typename?: 'Repository' }
-          & Pick<Repository, 'name' | 'description'>
-          & { primaryLanguage?: Maybe<(
-            { __typename?: 'Language' }
-            & Pick<Language, 'name' | 'color'>
-          )> }
-        )> }
-      )>>> }
-    ) }
     & UserInfosFragment
   )> }
+  & SearchReposFragment
 );
 
 export const OrganizationInfosFragmentDoc = gql`
@@ -19864,6 +19873,49 @@ export const OrganizationInfosFragmentDoc = gql`
       node {
         avatarUrl
       }
+    }
+  }
+  allRepos: repositories(first: 1) {
+    totalCount
+  }
+}
+    `;
+export const SearchReposFragmentDoc = gql`
+    fragment SearchRepos on Query {
+  searchRepos: search(query: $query, type: REPOSITORY, first: 15) {
+    repositoryCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        ... on Repository {
+          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+          stargazers {
+            totalCount
+          }
+          licenseInfo {
+            name
+          }
+          issues {
+            totalCount
+          }
+          name
+          description
+        }
+      }
+      cursor
     }
   }
 }
@@ -19887,6 +19939,9 @@ export const UserInfosFragmentDoc = gql`
     totalCount
   }
   starredRepositories {
+    totalCount
+  }
+  allRepos: repositories(first: 1) {
     totalCount
   }
 }
@@ -20015,63 +20070,25 @@ export type GetRepositoryOwnerWithPinnedItemsQueryHookResult = ReturnType<typeof
 export type GetRepositoryOwnerWithPinnedItemsLazyQueryHookResult = ReturnType<typeof useGetRepositoryOwnerWithPinnedItemsLazyQuery>;
 export type GetRepositoryOwnerWithPinnedItemsQueryResult = Apollo.QueryResult<GetRepositoryOwnerWithPinnedItemsQuery, GetRepositoryOwnerWithPinnedItemsQueryVariables>;
 export const GetRepositoryOwnerWithRepositoriesDocument = gql`
-    query GetRepositoryOwnerWithRepositories($owner: String!) {
+    query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!) {
   rateLimit {
     limit
     cost
     remaining
     resetAt
   }
+  ...SearchRepos
   repositoryOwner(login: $owner) {
     ... on User {
       ...UserInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        totalCount
-        edges {
-          node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
-          }
-          cursor
-        }
-      }
     }
     ... on Organization {
       ...OrganizationInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        totalCount
-        edges {
-          node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
-          }
-          cursor
-        }
-      }
     }
   }
 }
-    ${UserInfosFragmentDoc}
+    ${SearchReposFragmentDoc}
+${UserInfosFragmentDoc}
 ${OrganizationInfosFragmentDoc}`;
 
 /**
@@ -20087,6 +20104,7 @@ ${OrganizationInfosFragmentDoc}`;
  * const { data, loading, error } = useGetRepositoryOwnerWithRepositoriesQuery({
  *   variables: {
  *      owner: // value for 'owner'
+ *      query: // value for 'query'
  *   },
  * });
  */

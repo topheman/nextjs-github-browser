@@ -1,56 +1,17 @@
-query GetRepositoryOwnerWithRepositories($owner: String!) {
+query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!) {
   rateLimit {
     limit
     cost
     remaining
     resetAt
   }
+  ...SearchRepos
   repositoryOwner(login: $owner) {
     ... on User {
       ...UserInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        totalCount
-        edges {
-          node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
-          }
-          cursor
-        }
-      }
     }
     ... on Organization {
       ...OrganizationInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        totalCount
-        edges {
-          node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
-          }
-          cursor
-        }
-      }
     }
   }
 }

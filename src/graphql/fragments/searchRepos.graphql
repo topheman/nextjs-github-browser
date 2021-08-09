@@ -1,0 +1,38 @@
+fragment SearchRepos on Query {
+  searchRepos: search(query: $query, type: REPOSITORY, first: 15) {
+    repositoryCount
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    edges {
+      node {
+        ... on Repository {
+          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+            edges {
+              size
+              node {
+                name
+                color
+              }
+            }
+          }
+          stargazers {
+            totalCount
+          }
+          licenseInfo {
+            name
+          }
+          issues {
+            totalCount
+          }
+          name
+          description
+        }
+      }
+      cursor
+    }
+  }
+}
