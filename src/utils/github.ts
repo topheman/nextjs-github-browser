@@ -1,4 +1,5 @@
-import { useReducer } from "react";
+import { useRouter } from "next/router";
+import { useReducer, useEffect, useState } from "react";
 
 import { useDebounce } from "./hooks";
 
@@ -78,7 +79,21 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
-export function useSearchBar(
+function getNewLocation(searchParams: SearchParamsType): string {
+  if (typeof window === "undefined") {
+    throw new Error("Only use client side");
+  }
+  const newSearchParams = new URLSearchParams({
+    ...Object.fromEntries(
+      new URLSearchParams(window.location.search).entries()
+    ),
+    ...searchParams,
+  });
+  const url = `${window.location.pathname}?${newSearchParams.toString()}`;
+  return url;
+}
+
+export function useSearchRepos(
   user: string,
   searchParams: SearchParamsType
 ): {
@@ -86,6 +101,7 @@ export function useSearchBar(
   setSearchBarState: React.Dispatch<SearchParamsType>;
   graphqlSearchQuery: string;
 } {
+  // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useReducer<
     (state: SearchParamsType, newState: SearchParamsType) => SearchParamsType
   >(
@@ -97,11 +113,25 @@ export function useSearchBar(
       ...searchParams,
     }
   );
+  // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
   const graphqlSearchQuery = makeGraphqlSearchQuery(user, {
     ...searchBarState,
     q: debouncedQ,
   });
+  // update url
+  const router = useRouter();
+  const [bypassFirstEffect, setBypassFirstEffect] = useState(true);
+  // eslint-disable-next-line consistent-return
+  useEffect(() => {
+    if (bypassFirstEffect) {
+      return setBypassFirstEffect(false);
+    }
+    const newLocation = getNewLocation(searchBarState);
+    // shallow mode because we don't want to run any server-side hooks
+    router.push(newLocation, newLocation, { shallow: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [graphqlSearchQuery]);
   return {
     searchBarState,
     setSearchBarState,

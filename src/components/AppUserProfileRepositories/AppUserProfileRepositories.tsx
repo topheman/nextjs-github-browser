@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import { Repository, useSearchRepositoriesQuery } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
-import { useSearchBar, extractSearchParams } from "../../utils/github";
+import { useSearchRepos, extractSearchParams } from "../../utils/github";
 
 export type AppUserProfileRepositoriesProps = never;
 
@@ -12,11 +12,10 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchBarState,
     setSearchBarState,
     graphqlSearchQuery,
-  } = useSearchBar(
+  } = useSearchRepos(
     router.query.owner as string,
     extractSearchParams(router.asPath)
   );
-  console.log({ graphqlSearchQuery });
   const searchRepositoriesResult = useSearchRepositoriesQuery({
     variables: { query: graphqlSearchQuery },
   });
@@ -24,10 +23,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     <div>
       <div>
         <AppSearchBarRepositories
-          onUpdate={(params) => {
-            console.log(params);
-            setSearchBarState(params);
-          }}
+          onUpdate={setSearchBarState}
           params={searchBarState}
         />
       </div>
