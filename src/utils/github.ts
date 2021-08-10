@@ -1,3 +1,9 @@
+import { useReducer } from "react";
+
+import { useDebounce } from "./hooks";
+
+export type SearchParamsType = Partial<Record<"sort" | "type" | "q", string>>;
+
 const SELECT_TYPE_OPTIONS = Object.freeze([
   { value: "", label: "All" },
   { value: "source", label: "Sources" },
@@ -55,7 +61,7 @@ export function extractSearchParams(url: string): Record<string, string> {
 
 export function makeGraphqlSearchQuery(
   user: string,
-  searchParams: Partial<Record<"sort" | "type" | "q", string>>
+  searchParams: SearchParamsType
 ): string {
   const queries = [`user:${user}`];
   queries.push(
@@ -72,5 +78,33 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
-// maybe better to make and always return, not mutate - https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
-// function updateSearchParams() {}
+export function useSearchBar(
+  user: string,
+  searchParams: SearchParamsType
+): {
+  searchBarState: SearchParamsType;
+  setSearchBarState: React.Dispatch<SearchParamsType>;
+  graphqlSearchQuery: string;
+} {
+  const [searchBarState, setSearchBarState] = useReducer<
+    (state: SearchParamsType, newState: SearchParamsType) => SearchParamsType
+  >(
+    (state, newState) => ({
+      ...state,
+      ...newState,
+    }),
+    {
+      ...searchParams,
+    }
+  );
+  const debouncedQ = useDebounce(searchBarState.q, 1000);
+  const graphqlSearchQuery = makeGraphqlSearchQuery(user, {
+    ...searchBarState,
+    q: debouncedQ,
+  });
+  return {
+    searchBarState,
+    setSearchBarState,
+    graphqlSearchQuery,
+  };
+}

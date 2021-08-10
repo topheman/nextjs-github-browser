@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useReducer } from "react";
 import { Story, Meta } from "@storybook/react";
 
+import { SearchParamsType } from "../../utils/github";
 import AppSearchBarRepositories, {
   AppSearchBarRepositoriesProps,
 } from "./AppSearchBarRepositories";
@@ -10,15 +11,23 @@ export default {
   component: AppSearchBarRepositories,
 } as Meta;
 
-function onUpdate({ type, sort }: { type: string; sort: string }) {
-  // eslint-disable-next-line no-console
-  console.log({ type, sort });
-}
-
 const Template: Story<AppSearchBarRepositoriesProps> = () => {
+  const [state, setState] = useReducer<
+    (a: SearchParamsType, b: SearchParamsType) => SearchParamsType
+  >(
+    (previousState, nextState) => ({
+      ...previousState,
+      ...nextState,
+    }),
+    {
+      type: "",
+      sort: "",
+      q: "",
+    }
+  );
   return (
     <div style={{ width: 700 }}>
-      <AppSearchBarRepositories onUpdate={onUpdate} />
+      <AppSearchBarRepositories onUpdate={setState} params={state} />
     </div>
   );
 };

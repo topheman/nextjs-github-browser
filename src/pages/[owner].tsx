@@ -3,6 +3,7 @@ import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
 import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
+import { makeGraphqlSearchQuery } from "../utils/github";
 import TheOwnerProfile from "../components/TheOwnerProfile/TheOwnerProfile";
 import {
   GetRepositoryOwnerWithPinnedItemsQueryResult,
@@ -39,7 +40,7 @@ const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  const { owner, tab } = parseQuery(context.query);
+  const { owner, tab, ...searchParams } = parseQuery(context.query);
   const baseProps: MyPageProps = {
     skipProfileReadme: tab === "repositories",
   };
@@ -73,7 +74,7 @@ export const getServerSideProps: GetServerSideProps = async (
         query: GetRepositoryOwnerWithRepositoriesDocument,
         variables: {
           owner,
-          query: "user:topheman fork:true sort:updated-desc", // todo dynamic
+          query: makeGraphqlSearchQuery(owner, searchParams),
         },
       }
     )) as GetRepositoryOwnerWithRepositoriesQueryResult;
@@ -109,13 +110,14 @@ export default function PageOwner({
   skipProfileReadme,
 }: MyPageProps): JSX.Element {
   const router = useRouter();
-  const { owner, tab } = parseQuery(router.query);
+  const { owner, tab, ...searchParams } = parseQuery(router.query);
   return (
     <>
       <TheOwnerProfile
         owner={owner}
         tab={tab}
         skipProfileReadme={skipProfileReadme}
+        searchParams={searchParams}
       />
     </>
   );
