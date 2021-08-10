@@ -12,6 +12,20 @@ const SELECT_SORT_OPTIONS = Object.freeze([
   { value: "stargazers", label: "Stars" },
 ]);
 
+const TYPE_MAPPING = Object.freeze({
+  default: "fork:true",
+  source: "fork:false",
+  fork: "fork:only",
+  archived: "archived:true",
+  mirror: "mirror:true",
+});
+
+const SORT_MAPPING = Object.freeze({
+  default: "sort:updated-desc",
+  stargazers: "sort:stars-desc",
+  name: "sort:name-asc",
+});
+
 export function getSearchFieldOptions(
   fieldName: "sort" | "type"
 ): {
@@ -28,7 +42,35 @@ export function getSearchFieldOptions(
   }
 }
 
-// function makeQraphqlSearchQuery() {}
+export function extractSearchParams(url: string): Record<string, string> {
+  const searchQueryMatch = url.match(/\?(.*)/);
+  let searchParamsFromUrl: URLSearchParams;
+  if (searchQueryMatch) {
+    searchParamsFromUrl = new URLSearchParams(searchQueryMatch[0]);
+  } else {
+    searchParamsFromUrl = new URLSearchParams();
+  }
+  return Object.fromEntries(searchParamsFromUrl.entries());
+}
+
+export function makeGraphqlSearchQuery(
+  user: string,
+  searchParams: Partial<Record<"sort" | "type" | "q", string>>
+): string {
+  const queries = [`user:${user}`];
+  queries.push(
+    SORT_MAPPING[searchParams.sort as keyof typeof SORT_MAPPING] ||
+      SORT_MAPPING.default
+  );
+  queries.push(
+    TYPE_MAPPING[searchParams.type as keyof typeof TYPE_MAPPING] ||
+      TYPE_MAPPING.default
+  );
+  if (searchParams.q) {
+    queries.push(searchParams.q);
+  }
+  return queries.join(" ");
+}
 
 // maybe better to make and always return, not mutate - https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
 // function updateSearchParams() {}
