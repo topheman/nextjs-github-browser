@@ -1,3 +1,4 @@
+import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useReducer, useEffect, useState } from "react";
 
@@ -111,7 +112,6 @@ export function getPaginationInfos(
   const last = before && !after ? perPage : undefined;
   // when you use after, ask for `first` - should be default
   const first = after || !last ? perPage : undefined;
-  console.log("getCursor", { after, before });
   return {
     before,
     after,
@@ -267,12 +267,10 @@ export function useSearchRepos(
   // update url
   const router = useRouter();
   const [bypassFirstEffect, setBypassFirstEffect] = useState(true);
-  const { loading } = searchRepositoriesResult;
   // eslint-disable-next-line consistent-return
   useEffect(() => {
     // do not change location on first mount
     if (bypassFirstEffect) {
-      console.log("first", query, searchUrlParams);
       if (searchUrlParams.after || searchUrlParams.before) {
         setPaginationState({
           after: searchUrlParams.after,
@@ -281,19 +279,21 @@ export function useSearchRepos(
       }
       return setBypassFirstEffect(false);
     }
-    console.log({ paginationState });
     const newLocation = getNewLocation({
       ...searchBarState,
       ...paginationState,
     });
-    console.log(newLocation);
-    // wait for the graphql request to be finished to update the location
-    if (!loading) {
+    // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
+    if (searchRepositoriesResult.networkStatus === NetworkStatus.ready) {
       // shallow mode because we don't want to run any server-side hooks
       router.push(newLocation, newLocation, { shallow: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]); // todo warn - what if it is in cache ?
+  }, [
+    searchRepositoriesResult.networkStatus,
+    paginationState.after,
+    paginationState.before,
+  ]);
   return {
     searchBarState,
     setSearchBarState,
