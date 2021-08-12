@@ -1,17 +1,9 @@
+import { encodeBase64 } from "./common";
 import {
   extractSearchParams,
   makeGraphqlSearchQuery,
   getPaginationInfos,
 } from "./github";
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function decodeCursor(str: string) {
-  return Buffer.from(str, "base64").toString();
-}
-
-function encodeCursor(str: string) {
-  return Buffer.from(str, "utf-8").toString("base64");
-}
 
 describe("utils/github", () => {
   describe("extractSearchParams", () => {
@@ -71,7 +63,7 @@ describe("utils/github", () => {
       });
     });
     it("correct before cursor - should return `before` and `last`", () => {
-      const before = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const before = encodeBase64("cursor:30"); // Y3Vyc29yOjMw
       const result = getPaginationInfos({ before });
       expect(result).toStrictEqual({
         after: undefined,
@@ -81,7 +73,7 @@ describe("utils/github", () => {
       });
     });
     it("correct after cursor - should return `after` and `first`", () => {
-      const after = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const after = encodeBase64("cursor:30"); // Y3Vyc29yOjMw
       const result = getPaginationInfos({ after });
       expect(result).toStrictEqual({
         after: "Y3Vyc29yOjMw",
@@ -91,7 +83,7 @@ describe("utils/github", () => {
       });
     });
     it("after should take precedence", () => {
-      const after = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const after = encodeBase64("cursor:30"); // Y3Vyc29yOjMw
       const result = getPaginationInfos({ after, before: after });
       expect(result).toStrictEqual({
         after: "Y3Vyc29yOjMw",

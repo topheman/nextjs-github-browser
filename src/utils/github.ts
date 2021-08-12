@@ -2,6 +2,7 @@ import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useReducer, useEffect, useState } from "react";
 
+import { encodeBase64 } from "./common";
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
@@ -56,7 +57,7 @@ function decodeCursor(cursor?: string): string | undefined {
 
 export function getSearchRepoGraphqlVariables(
   user: string,
-  searchParams: SearchUrlParamsType,
+  searchUrlParams: SearchUrlParamsType,
   options?: { perPage?: number }
 ): {
   query: string;
@@ -66,8 +67,8 @@ export function getSearchRepoGraphqlVariables(
   first?: number;
 } {
   return {
-    ...getPaginationInfos(searchParams, options),
-    query: makeGraphqlSearchQuery(user, searchParams),
+    ...getPaginationInfos(searchUrlParams, options),
+    query: makeGraphqlSearchQuery(user, searchUrlParams),
   };
 }
 
@@ -87,7 +88,7 @@ export function getPaginationInfos(
   // convert "page" into graphql cursor - will be overriden by before/after if passed
   if (paginationParams.page) {
     const pageNumber = Number(paginationParams.page) || 1; // get rid of NaN
-    after = `cursor:${(pageNumber - 1) * perPage}`;
+    after = encodeBase64(`cursor:${(pageNumber - 1) * perPage}`);
   }
   // check for before/after cursor passed (github website uses v2, which is unsupported in the API)
   if (decodedBefore && /cursor:\d+/.test(decodedBefore)) {
@@ -182,7 +183,7 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
-// todo merge with `makeGraphqlSearchQuery` and return `{query, after, before}` ?
+// todo remove ?
 export function extractPaginationInfo(
   searchUrlParams: SearchUrlParamsType
 ): PaginationParamsType {
@@ -284,16 +285,14 @@ export function useSearchRepos(
       ...paginationState,
     });
     // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
+    console.log(searchRepositoriesResult);
     if (searchRepositoriesResult.networkStatus === NetworkStatus.ready) {
+      // console.log(searchRepositoriesResult.data);
       // shallow mode because we don't want to run any server-side hooks
       router.push(newLocation, newLocation, { shallow: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    searchRepositoriesResult.networkStatus,
-    paginationState.after,
-    paginationState.before,
-  ]);
+  }, [searchRepositoriesResult.networkStatus, after, before, query]);
   return {
     searchBarState,
     setSearchBarState,

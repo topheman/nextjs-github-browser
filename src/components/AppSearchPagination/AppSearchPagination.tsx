@@ -26,8 +26,7 @@ export default function AppSearchPagination({
           }}
           disabled={!hasPreviousPage}
         >
-          &lt; Previous {startCursor} (
-          {startCursor && decodeBase64(startCursor)})
+          &lt; Previous {startCursor} ({decodeBase64(startCursor)})
         </button>{" "}
         -{" "}
         <button
@@ -38,7 +37,7 @@ export default function AppSearchPagination({
           }}
           disabled={!hasNextPage}
         >
-          {endCursor} ({endCursor && decodeBase64(endCursor)}) Next &gt;
+          {endCursor} ({decodeBase64(endCursor)}) Next &gt;
         </button>
       </p>
     </div>
