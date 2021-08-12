@@ -232,6 +232,7 @@ export function useSearchRepos(
     user,
     {
       ...searchBarState,
+      ...paginationState,
       q: debouncedQ,
     }
   );

@@ -1,3 +1,4 @@
+import { decodeBase64 } from "../../utils/common";
 import { PaginationParamsType } from "../../utils/github";
 import { PageInfo } from "../../libs/graphql";
 
@@ -11,7 +12,7 @@ export type AppSearchPaginationProps = {
 };
 
 export default function AppSearchPagination({
-  pageInfo: { startCursor, endCursor },
+  pageInfo: { startCursor, endCursor, hasPreviousPage, hasNextPage },
   params: { after, before },
   onUpdate,
 }: AppSearchPaginationProps): JSX.Element {
@@ -20,16 +21,29 @@ export default function AppSearchPagination({
   return (
     <div className="">
       <p>
-        <button type="button" onClick={() => onUpdate({ before })}>
-          &gt; {before}
+        <button
+          className={`${!hasPreviousPage ? "text-secondary" : ""}`}
+          type="button"
+          onClick={() => {
+            if (startCursor)
+              onUpdate({ before: startCursor, after: undefined });
+          }}
+          disabled={!hasPreviousPage}
+        >
+          &lt; Previous {startCursor} (
+          {startCursor && decodeBase64(startCursor)})
         </button>{" "}
-        /
-        <button type="button" onClick={() => onUpdate({ after })}>
-          &gt; {after}
+        -{" "}
+        <button
+          className={`${!hasNextPage ? "text-secondary" : ""}`}
+          type="button"
+          onClick={() => {
+            if (endCursor) onUpdate({ after: endCursor, before: undefined });
+          }}
+          disabled={!hasNextPage}
+        >
+          {endCursor} ({endCursor && decodeBase64(endCursor)}) Next &gt;
         </button>
-      </p>
-      <p>
-        {startCursor} - {endCursor}
       </p>
     </div>
   );
