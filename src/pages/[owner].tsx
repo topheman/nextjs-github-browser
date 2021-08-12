@@ -33,18 +33,18 @@ function normalizeTab(tab: string): TheOwnerProfileProps["tab"] {
 const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
   query
 ) => {
-  const { owner, tab, ...searchParams } = query;
+  const { owner, tab, ...searchUrlParams } = query;
   return {
     owner: typeof owner === "string" ? owner : "",
     tab: normalizeTab(tab as string),
-    ...searchParams,
+    ...searchUrlParams,
   };
 };
 
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  const { owner, tab, ...searchParams } = parseQuery(context.query);
+  const { owner, tab, ...searchUrlParams } = parseQuery(context.query);
   const baseProps: MyPageProps = {
     skipProfileReadme: tab === "repositories",
   };
@@ -78,7 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (
         query: GetRepositoryOwnerWithRepositoriesDocument,
         variables: {
           owner,
-          query: makeGraphqlSearchQuery(owner, searchParams),
+          query: makeGraphqlSearchQuery(owner, searchUrlParams),
         },
       }
     )) as GetRepositoryOwnerWithRepositoriesQueryResult;
@@ -114,14 +114,14 @@ export default function PageOwner({
   skipProfileReadme,
 }: MyPageProps): JSX.Element {
   const router = useRouter();
-  const { owner, tab, ...searchParams } = parseQuery(router.query);
+  const { owner, tab, ...searchUrlParams } = parseQuery(router.query);
   return (
     <>
       <TheOwnerProfile
         owner={owner}
         tab={tab}
         skipProfileReadme={skipProfileReadme}
-        searchParams={searchParams}
+        searchUrlParams={searchUrlParams}
       />
     </>
   );

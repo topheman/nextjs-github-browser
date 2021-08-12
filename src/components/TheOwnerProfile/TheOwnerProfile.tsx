@@ -6,7 +6,10 @@ import {
   Blob,
 } from "../../libs/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
-import { makeGraphqlSearchQuery, SearchParamsType } from "../../utils/github";
+import {
+  makeGraphqlSearchQuery,
+  SearchUrlParamsType,
+} from "../../utils/github";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
@@ -18,14 +21,14 @@ export type TheOwnerProfileProps = {
   owner: string;
   tab: "default" | "repositories";
   skipProfileReadme: boolean;
-  searchParams: SearchParamsType;
+  searchUrlParams: SearchUrlParamsType;
 };
 
 export default function TheOwnerProfile({
   owner,
   tab,
   skipProfileReadme,
-  searchParams,
+  searchUrlParams,
 }: TheOwnerProfileProps): JSX.Element | null {
   const repositoryOwnerDefaultModeResult = useGetRepositoryOwnerWithPinnedItemsQuery(
     {
@@ -35,7 +38,10 @@ export default function TheOwnerProfile({
   );
   const repositoryOwnerRepositoriesModeResult = useGetRepositoryOwnerWithRepositoriesQuery(
     {
-      variables: { owner, query: makeGraphqlSearchQuery(owner, searchParams) },
+      variables: {
+        owner,
+        query: makeGraphqlSearchQuery(owner, searchUrlParams),
+      },
       skip: tab === "default",
     }
   );

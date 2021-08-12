@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 
 import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
+import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
 import { useSearchRepos, extractSearchParams } from "../../utils/github";
 
 export type AppUserProfileRepositoriesProps = never;
@@ -23,6 +24,13 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           onUpdate={setSearchBarState}
           params={searchBarState}
         />
+      </div>
+      <div>
+        {searchRepositoriesResult.data?.searchRepos.pageInfo && (
+          <AppSearchPagination
+            pageInfo={searchRepositoriesResult.data?.searchRepos.pageInfo}
+          />
+        )}
       </div>
       {searchRepositoriesResult.data?.searchRepos.edges ? (
         <>

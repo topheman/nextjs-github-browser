@@ -8,6 +8,8 @@ import {
 import { useDebounce } from "./hooks";
 
 export type SearchParamsType = Partial<Record<"sort" | "type" | "q", string>>;
+export type PaginationParamsType = Partial<Record<"before" | "after", string>>;
+export type SearchUrlParamsType = SearchParamsType & PaginationParamsType;
 
 const SELECT_TYPE_OPTIONS = Object.freeze([
   { value: "", label: "All" },
@@ -99,7 +101,7 @@ function getNewLocation(searchParams: SearchParamsType): string {
 
 export function useSearchRepos(
   user: string,
-  searchParams: SearchParamsType
+  searchUrlParams: SearchUrlParamsType
 ): {
   searchBarState: SearchParamsType;
   setSearchBarState: React.Dispatch<SearchParamsType>;
