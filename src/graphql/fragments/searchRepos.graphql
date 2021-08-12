@@ -1,5 +1,11 @@
 fragment SearchRepos on Query {
-  searchRepos: search(query: $query, type: REPOSITORY, first: 15) {
+  searchRepos: search(
+    query: $query
+    type: REPOSITORY
+    first: 15
+    after: $after
+    before: $before
+  ) {
     repositoryCount
     pageInfo {
       hasNextPage

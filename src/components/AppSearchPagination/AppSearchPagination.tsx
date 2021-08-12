@@ -5,12 +5,16 @@ export type AppSearchPaginationProps = {
     PageInfo,
     "endCursor" | "startCursor" | "hasNextPage" | "hasPreviousPage"
   >;
+  after?: string;
+  before?: string;
 };
 
 export default function AppSearchPagination({
   pageInfo: { startCursor, endCursor },
-  perPage,
+  after,
+  before,
 }: AppSearchPaginationProps): JSX.Element {
+  console.log({ after, before });
   // todo dynamic
   return (
     <div className="flex flex-row w-full">

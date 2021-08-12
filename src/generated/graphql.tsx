@@ -19838,6 +19838,8 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
 export type GetRepositoryOwnerWithRepositoriesQueryVariables = Exact<{
   owner: Scalars['String'];
   query: Scalars['String'];
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -19858,6 +19860,8 @@ export type GetRepositoryOwnerWithRepositoriesQuery = (
 
 export type SearchRepositoriesQueryVariables = Exact<{
   query: Scalars['String'];
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
 }>;
 
 
@@ -19892,7 +19896,13 @@ export const OrganizationInfosFragmentDoc = gql`
     `;
 export const SearchReposFragmentDoc = gql`
     fragment SearchRepos on Query {
-  searchRepos: search(query: $query, type: REPOSITORY, first: 15) {
+  searchRepos: search(
+    query: $query
+    type: REPOSITORY
+    first: 15
+    after: $after
+    before: $before
+  ) {
     repositoryCount
     pageInfo {
       hasNextPage
@@ -20080,7 +20090,7 @@ export type GetRepositoryOwnerWithPinnedItemsQueryHookResult = ReturnType<typeof
 export type GetRepositoryOwnerWithPinnedItemsLazyQueryHookResult = ReturnType<typeof useGetRepositoryOwnerWithPinnedItemsLazyQuery>;
 export type GetRepositoryOwnerWithPinnedItemsQueryResult = Apollo.QueryResult<GetRepositoryOwnerWithPinnedItemsQuery, GetRepositoryOwnerWithPinnedItemsQueryVariables>;
 export const GetRepositoryOwnerWithRepositoriesDocument = gql`
-    query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!) {
+    query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!, $after: String, $before: String) {
   rateLimit {
     limit
     cost
@@ -20115,6 +20125,8 @@ ${OrganizationInfosFragmentDoc}`;
  *   variables: {
  *      owner: // value for 'owner'
  *      query: // value for 'query'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
  *   },
  * });
  */
@@ -20130,7 +20142,7 @@ export type GetRepositoryOwnerWithRepositoriesQueryHookResult = ReturnType<typeo
 export type GetRepositoryOwnerWithRepositoriesLazyQueryHookResult = ReturnType<typeof useGetRepositoryOwnerWithRepositoriesLazyQuery>;
 export type GetRepositoryOwnerWithRepositoriesQueryResult = Apollo.QueryResult<GetRepositoryOwnerWithRepositoriesQuery, GetRepositoryOwnerWithRepositoriesQueryVariables>;
 export const SearchRepositoriesDocument = gql`
-    query SearchRepositories($query: String!) {
+    query SearchRepositories($query: String!, $after: String, $before: String) {
   ...SearchRepos
 }
     ${SearchReposFragmentDoc}`;
@@ -20148,6 +20160,8 @@ export const SearchRepositoriesDocument = gql`
  * const { data, loading, error } = useSearchRepositoriesQuery({
  *   variables: {
  *      query: // value for 'query'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
  *   },
  * });
  */

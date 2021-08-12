@@ -12,6 +12,9 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
   const {
     searchBarState,
     setSearchBarState,
+    paginationState,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    setPaginationState,
     searchRepositoriesResult,
   } = useSearchRepos(
     router.query.owner as string,
@@ -28,6 +31,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       <div>
         {searchRepositoriesResult.data?.searchRepos.pageInfo && (
           <AppSearchPagination
+            {...paginationState}
             pageInfo={searchRepositoriesResult.data?.searchRepos.pageInfo}
           />
         )}

@@ -1,4 +1,9 @@
-query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!) {
+query GetRepositoryOwnerWithRepositories(
+  $owner: String!
+  $query: String!
+  $after: String
+  $before: String
+) {
   rateLimit {
     limit
     cost

@@ -41,6 +41,8 @@ export default function TheOwnerProfile({
       variables: {
         owner,
         query: makeGraphqlSearchQuery(owner, searchUrlParams),
+        after: searchUrlParams.after,
+        before: searchUrlParams.before,
       },
       skip: tab === "default",
     }

@@ -79,6 +79,8 @@ export const getServerSideProps: GetServerSideProps = async (
         variables: {
           owner,
           query: makeGraphqlSearchQuery(owner, searchUrlParams),
+          after: searchUrlParams.after,
+          before: searchUrlParams.before,
         },
       }
     )) as GetRepositoryOwnerWithRepositoriesQueryResult;

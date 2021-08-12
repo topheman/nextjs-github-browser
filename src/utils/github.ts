@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useReducer, useEffect, useState } from "react";
+import React, { useReducer, useEffect, useState } from "react";
 
 import {
   SearchRepositoriesQueryResult,
@@ -85,6 +85,17 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
+// todo merge with `makeGraphqlSearchQuery` and return `{query, after, before}` ?
+export function extractPaginationInfo(
+  searchUrlParams: SearchUrlParamsType
+): PaginationParamsType {
+  return Object.fromEntries(
+    Object.entries(searchUrlParams).filter(([key]) =>
+      ["after", "before"].includes(key)
+    )
+  );
+}
+
 function getNewLocation(searchParams: SearchParamsType): string {
   if (typeof window === "undefined") {
     throw new Error("Only use client side");
@@ -105,6 +116,8 @@ export function useSearchRepos(
 ): {
   searchBarState: SearchParamsType;
   setSearchBarState: React.Dispatch<SearchParamsType>;
+  paginationState: PaginationParamsType;
+  setPaginationState: React.Dispatch<PaginationParamsType>;
   searchRepositoriesResult: SearchRepositoriesQueryResult;
 } {
   // manage searchBar fields state
@@ -116,8 +129,21 @@ export function useSearchRepos(
       ...newState,
     }),
     {
-      ...searchParams,
+      ...searchUrlParams,
     }
+  );
+  // manage pagination fields state
+  const [paginationState, setPaginationState] = useReducer<
+    (
+      state: PaginationParamsType,
+      newState: PaginationParamsType
+    ) => PaginationParamsType
+  >(
+    (state, newState) => ({
+      ...state,
+      ...newState,
+    }),
+    {}
   );
   // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
@@ -127,7 +153,11 @@ export function useSearchRepos(
   });
   // call graphql API
   const searchRepositoriesResult = useSearchRepositoriesQuery({
-    variables: { query: graphqlSearchQuery },
+    variables: {
+      query: graphqlSearchQuery,
+      after: searchUrlParams.after,
+      before: searchUrlParams.before,
+    },
   });
   // update url
   const router = useRouter();
@@ -137,9 +167,16 @@ export function useSearchRepos(
   useEffect(() => {
     // do not change location on first mount
     if (bypassFirstEffect) {
+      console.log("first", graphqlSearchQuery, searchUrlParams);
+      if (searchUrlParams.after || searchUrlParams.before) {
+        setPaginationState({
+          after: searchUrlParams.after,
+          before: searchUrlParams.before,
+        });
+      }
       return setBypassFirstEffect(false);
     }
-    const newLocation = getNewLocation(searchBarState);
+    const newLocation = getNewLocation(searchBarState); // todo process with pagination
     // wait for the graphql request to be finished to update the location
     if (!loading) {
       // shallow mode because we don't want to run any server-side hooks
@@ -150,6 +187,8 @@ export function useSearchRepos(
   return {
     searchBarState,
     setSearchBarState,
+    paginationState,
+    setPaginationState,
     searchRepositoriesResult,
   };
 }
