@@ -10,7 +10,9 @@ import { useDebounce } from "./hooks";
 export const DEFAULT_REPOS_PER_PAGE = 30;
 
 export type SearchParamsType = Partial<Record<"sort" | "type" | "q", string>>;
-export type PaginationParamsType = Partial<Record<"before" | "after", string>>;
+export type PaginationParamsType = Partial<
+  Record<"before" | "after" | "page", string>
+>;
 export type SearchUrlParamsType = SearchParamsType & PaginationParamsType;
 
 const SELECT_TYPE_OPTIONS = Object.freeze([
@@ -41,11 +43,65 @@ const SORT_MAPPING = Object.freeze({
   name: "sort:name-asc",
 });
 
-// todo
+function decodeCursor(cursor?: string): string | undefined {
+  if (cursor) {
+    if (typeof window === "undefined") {
+      return Buffer.from(cursor, "base64").toString();
+    }
+    return atob(cursor);
+  }
+  return undefined;
+}
 
-// function getCursor(paginationParams: PaginationParamsType, {perPage}) {
-
-// }
+export function getPaginationInfos(
+  paginationParams: PaginationParamsType,
+  { perPage = DEFAULT_REPOS_PER_PAGE }: { perPage?: number } = {}
+): {
+  before?: string;
+  after?: string;
+  last?: number;
+  first?: number;
+} {
+  let before;
+  let after;
+  const decodedBefore = decodeCursor(paginationParams.before);
+  const decodeAfter = decodeCursor(paginationParams.after);
+  // convert "page" into graphql cursor - will be overriden by before/after if passed
+  if (paginationParams.page) {
+    const pageNumber = Number(paginationParams.page) || 1; // get rid of NaN
+    after = `cursor:${(pageNumber - 1) * perPage}`;
+  }
+  // check for before/after cursor passed (github website uses v2, which is unsupported in the API)
+  if (decodedBefore && /cursor:\d+/.test(decodedBefore)) {
+    before = paginationParams.before;
+  } else if (paginationParams.before) {
+    console.warn(
+      `"before" cursor not supported - decoded : "${decodedBefore}", falling back`
+    );
+  }
+  if (paginationParams.after && decodeAfter && /cursor:\d+/.test(decodeAfter)) {
+    after = paginationParams.after;
+  } else if (paginationParams.after) {
+    console.warn(
+      `"after" cursor not supported - decoded : "${decodeAfter}", falling back`
+    );
+  }
+  // after should override before
+  if (before && after) {
+    before = undefined;
+  }
+  // when you use before, ask for `last`
+  const last = before && !after ? perPage : undefined;
+  // when you use after, ask for `first` - should be default
+  const first = after || !last ? perPage : undefined;
+  console.log("getCursor", { after, before });
+  return {
+    before,
+    after,
+    last,
+    first,
+  };
+}
 
 export function getSearchFieldOptions(
   fieldName: "sort" | "type"

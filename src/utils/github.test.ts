@@ -1,4 +1,17 @@
-import { extractSearchParams, makeGraphqlSearchQuery } from "./github";
+import {
+  extractSearchParams,
+  makeGraphqlSearchQuery,
+  getPaginationInfos,
+} from "./github";
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function decodeCursor(str: string) {
+  return Buffer.from(str, "base64").toString();
+}
+
+function encodeCursor(str: string) {
+  return Buffer.from(str, "utf-8").toString("base64");
+}
 
 describe("utils/github", () => {
   describe("extractSearchParams", () => {
@@ -45,6 +58,47 @@ describe("utils/github", () => {
       expect(result).toBe(
         "user:topheman sort:updated-desc fork:true my awesome repo"
       );
+    });
+  });
+  describe("getPaginationInfos", () => {
+    it("default case", () => {
+      const result = getPaginationInfos({});
+      expect(result).toStrictEqual({
+        after: undefined,
+        before: undefined,
+        first: 30,
+        last: undefined,
+      });
+    });
+    it("correct before cursor - should return `before` and `last`", () => {
+      const before = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const result = getPaginationInfos({ before });
+      expect(result).toStrictEqual({
+        after: undefined,
+        before: "Y3Vyc29yOjMw",
+        first: undefined,
+        last: 30,
+      });
+    });
+    it("correct after cursor - should return `after` and `first`", () => {
+      const after = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const result = getPaginationInfos({ after });
+      expect(result).toStrictEqual({
+        after: "Y3Vyc29yOjMw",
+        before: undefined,
+        first: 30,
+        last: undefined,
+      });
+    });
+    it("after should take precedence", () => {
+      const after = encodeCursor("cursor:30"); // Y3Vyc29yOjMw
+      const result = getPaginationInfos({ after, before: after });
+      expect(result).toStrictEqual({
+        after: "Y3Vyc29yOjMw",
+        before: undefined,
+        first: 30,
+        last: undefined,
+      });
     });
   });
 });
