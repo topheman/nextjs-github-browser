@@ -4,7 +4,6 @@ import { PageInfo } from "../../libs/graphql";
 
 export type AppSearchPaginationProps = {
   onUpdate: ({ after, before }: PaginationParamsType) => void;
-  params: PaginationParamsType;
   pageInfo: Pick<
     PageInfo,
     "endCursor" | "startCursor" | "hasNextPage" | "hasPreviousPage"
@@ -13,11 +12,8 @@ export type AppSearchPaginationProps = {
 
 export default function AppSearchPagination({
   pageInfo: { startCursor, endCursor, hasPreviousPage, hasNextPage },
-  params: { after, before },
   onUpdate,
 }: AppSearchPaginationProps): JSX.Element {
-  console.log({ after, before });
-  // todo dynamic
   return (
     <div className="">
       <p>

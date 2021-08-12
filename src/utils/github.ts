@@ -147,6 +147,22 @@ export function extractSearchParams(url: string): Record<string, string> {
   return Object.fromEntries(searchParamsFromUrl.entries());
 }
 
+function cleanupPaginationParams(
+  searchUrlParams: SearchUrlParamsType
+): SearchUrlParamsType {
+  const { after, before, page, ...searchParams } = searchUrlParams;
+  if (after) {
+    return { after, ...searchParams };
+  }
+  if (before) {
+    return { before, ...searchParams };
+  }
+  if (page) {
+    return { page, ...searchParams };
+  }
+  return { ...searchParams };
+}
+
 export function makeGraphqlSearchQuery(
   user: string,
   searchParams: SearchParamsType
@@ -177,17 +193,19 @@ export function extractPaginationInfo(
   );
 }
 
-function getNewLocation(searchParams: SearchParamsType): string {
+function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
   if (typeof window === "undefined") {
     throw new Error("Only use client side");
   }
-  const newSearchParams = new URLSearchParams({
-    ...Object.fromEntries(
-      new URLSearchParams(window.location.search).entries()
-    ),
-    ...searchParams,
-  });
-  const url = `${window.location.pathname}?${newSearchParams.toString()}`;
+  const newSearchUrlParams = new URLSearchParams(
+    cleanupPaginationParams({
+      ...Object.fromEntries(
+        new URLSearchParams(window.location.search).entries()
+      ),
+      ...searchUrlParams,
+    })
+  );
+  const url = `${window.location.pathname}?${newSearchUrlParams.toString()}`;
   return url;
 }
 
@@ -263,14 +281,19 @@ export function useSearchRepos(
       }
       return setBypassFirstEffect(false);
     }
-    const newLocation = getNewLocation(searchBarState); // todo process with pagination
+    console.log({ paginationState });
+    const newLocation = getNewLocation({
+      ...searchBarState,
+      ...paginationState,
+    });
+    console.log(newLocation);
     // wait for the graphql request to be finished to update the location
     if (!loading) {
       // shallow mode because we don't want to run any server-side hooks
       router.push(newLocation, newLocation, { shallow: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading]);
+  }, [loading]); // todo warn - what if it is in cache ?
   return {
     searchBarState,
     setSearchBarState,
