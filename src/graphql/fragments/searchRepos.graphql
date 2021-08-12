@@ -2,7 +2,8 @@ fragment SearchRepos on Query {
   searchRepos: search(
     query: $query
     type: REPOSITORY
-    first: $perPage
+    first: $first
+    last: $last
     after: $after
     before: $before
   ) {

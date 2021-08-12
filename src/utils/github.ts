@@ -53,6 +53,23 @@ function decodeCursor(cursor?: string): string | undefined {
   return undefined;
 }
 
+export function getSearchRepoGraphqlVariables(
+  user: string,
+  searchParams: SearchUrlParamsType,
+  options?: { perPage?: number }
+): {
+  query: string;
+  before?: string;
+  after?: string;
+  last?: number;
+  first?: number;
+} {
+  return {
+    ...getPaginationInfos(searchParams, options),
+    query: makeGraphqlSearchQuery(user, searchParams),
+  };
+}
+
 export function getPaginationInfos(
   paginationParams: PaginationParamsType,
   { perPage = DEFAULT_REPOS_PER_PAGE }: { perPage?: number } = {}
@@ -211,17 +228,21 @@ export function useSearchRepos(
   );
   // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
-  const graphqlSearchQuery = makeGraphqlSearchQuery(user, {
-    ...searchBarState,
-    q: debouncedQ,
-  });
+  const { query, before, after, first, last } = getSearchRepoGraphqlVariables(
+    user,
+    {
+      ...searchBarState,
+      q: debouncedQ,
+    }
+  );
   // call graphql API
   const searchRepositoriesResult = useSearchRepositoriesQuery({
     variables: {
-      query: graphqlSearchQuery,
-      after: searchUrlParams.after,
-      before: searchUrlParams.before,
-      perPage: DEFAULT_REPOS_PER_PAGE,
+      query,
+      before,
+      after,
+      first,
+      last,
     },
   });
   // update url
@@ -232,7 +253,7 @@ export function useSearchRepos(
   useEffect(() => {
     // do not change location on first mount
     if (bypassFirstEffect) {
-      console.log("first", graphqlSearchQuery, searchUrlParams);
+      console.log("first", query, searchUrlParams);
       if (searchUrlParams.after || searchUrlParams.before) {
         setPaginationState({
           after: searchUrlParams.after,

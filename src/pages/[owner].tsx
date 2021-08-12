@@ -3,10 +3,7 @@ import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
 import type { ParseQuery } from "../types";
 import { initializeApollo, addApolloState } from "../libs/apollo-client";
-import {
-  makeGraphqlSearchQuery,
-  DEFAULT_REPOS_PER_PAGE,
-} from "../utils/github";
+import { getSearchRepoGraphqlVariables } from "../utils/github";
 import TheOwnerProfile from "../components/TheOwnerProfile/TheOwnerProfile";
 import {
   GetRepositoryOwnerWithPinnedItemsQueryResult,
@@ -81,10 +78,7 @@ export const getServerSideProps: GetServerSideProps = async (
         query: GetRepositoryOwnerWithRepositoriesDocument,
         variables: {
           owner,
-          query: makeGraphqlSearchQuery(owner, searchUrlParams),
-          after: searchUrlParams.after,
-          before: searchUrlParams.before,
-          perPage: DEFAULT_REPOS_PER_PAGE,
+          ...getSearchRepoGraphqlVariables(owner, searchUrlParams),
         },
       }
     )) as GetRepositoryOwnerWithRepositoriesQueryResult;

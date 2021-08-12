@@ -3,7 +3,8 @@ query GetRepositoryOwnerWithRepositories(
   $query: String!
   $after: String
   $before: String
-  $perPage: Int!
+  $first: Int
+  $last: Int
 ) {
   rateLimit {
     limit

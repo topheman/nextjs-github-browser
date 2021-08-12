@@ -7,9 +7,8 @@ import {
 } from "../../libs/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
 import {
-  makeGraphqlSearchQuery,
+  getSearchRepoGraphqlVariables,
   SearchUrlParamsType,
-  DEFAULT_REPOS_PER_PAGE,
 } from "../../utils/github";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
@@ -41,10 +40,7 @@ export default function TheOwnerProfile({
     {
       variables: {
         owner,
-        query: makeGraphqlSearchQuery(owner, searchUrlParams),
-        after: searchUrlParams.after,
-        before: searchUrlParams.before,
-        perPage: DEFAULT_REPOS_PER_PAGE,
+        ...getSearchRepoGraphqlVariables(owner, searchUrlParams),
       },
       skip: tab === "default",
     }
