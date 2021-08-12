@@ -32,10 +32,14 @@ function normalizeTab(tab: string): TheOwnerProfileProps["tab"] {
 // necessary typeguard as query.owner is of type string | string[]
 const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
   query
-) => ({
-  owner: typeof query.owner === "string" ? query.owner : "",
-  tab: normalizeTab(query.tab as string),
-});
+) => {
+  const { owner, tab, ...searchParams } = query;
+  return {
+    owner: typeof owner === "string" ? owner : "",
+    tab: normalizeTab(tab as string),
+    ...searchParams,
+  };
+};
 
 export const getServerSideProps: GetServerSideProps = async (
   context

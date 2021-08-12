@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 
-import { Repository, useSearchRepositoriesQuery } from "../../libs/graphql";
+import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import { useSearchRepos, extractSearchParams } from "../../utils/github";
 
@@ -11,14 +11,11 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
   const {
     searchBarState,
     setSearchBarState,
-    graphqlSearchQuery,
+    searchRepositoriesResult,
   } = useSearchRepos(
     router.query.owner as string,
     extractSearchParams(router.asPath)
   );
-  const searchRepositoriesResult = useSearchRepositoriesQuery({
-    variables: { query: graphqlSearchQuery },
-  });
   return (
     <div>
       <div>

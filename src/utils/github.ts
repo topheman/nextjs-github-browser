@@ -1,6 +1,10 @@
 import { useRouter } from "next/router";
 import { useReducer, useEffect, useState } from "react";
 
+import {
+  SearchRepositoriesQueryResult,
+  useSearchRepositoriesQuery,
+} from "../libs/graphql";
 import { useDebounce } from "./hooks";
 
 export type SearchParamsType = Partial<Record<"sort" | "type" | "q", string>>;
@@ -99,7 +103,7 @@ export function useSearchRepos(
 ): {
   searchBarState: SearchParamsType;
   setSearchBarState: React.Dispatch<SearchParamsType>;
-  graphqlSearchQuery: string;
+  searchRepositoriesResult: SearchRepositoriesQueryResult;
 } {
   // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useReducer<
@@ -119,22 +123,31 @@ export function useSearchRepos(
     ...searchBarState,
     q: debouncedQ,
   });
+  // call graphql API
+  const searchRepositoriesResult = useSearchRepositoriesQuery({
+    variables: { query: graphqlSearchQuery },
+  });
   // update url
   const router = useRouter();
   const [bypassFirstEffect, setBypassFirstEffect] = useState(true);
+  const { loading } = searchRepositoriesResult;
   // eslint-disable-next-line consistent-return
   useEffect(() => {
+    // do not change location on first mount
     if (bypassFirstEffect) {
       return setBypassFirstEffect(false);
     }
     const newLocation = getNewLocation(searchBarState);
-    // shallow mode because we don't want to run any server-side hooks
-    router.push(newLocation, newLocation, { shallow: true });
+    // wait for the graphql request to be finished to update the location
+    if (!loading) {
+      // shallow mode because we don't want to run any server-side hooks
+      router.push(newLocation, newLocation, { shallow: true });
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graphqlSearchQuery]);
+  }, [loading]);
   return {
     searchBarState,
     setSearchBarState,
-    graphqlSearchQuery,
+    searchRepositoriesResult,
   };
 }
