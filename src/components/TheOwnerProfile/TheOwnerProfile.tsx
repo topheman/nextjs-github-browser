@@ -9,6 +9,7 @@ import { isUser, isOrganization } from "../../utils/type-guards";
 import {
   makeGraphqlSearchQuery,
   SearchUrlParamsType,
+  DEFAULT_REPOS_PER_PAGE,
 } from "../../utils/github";
 import AppUserProfile from "../AppUserProfile/AppUserProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
@@ -43,6 +44,7 @@ export default function TheOwnerProfile({
         query: makeGraphqlSearchQuery(owner, searchUrlParams),
         after: searchUrlParams.after,
         before: searchUrlParams.before,
+        perPage: DEFAULT_REPOS_PER_PAGE,
       },
       skip: tab === "default",
     }

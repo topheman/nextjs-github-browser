@@ -7,6 +7,8 @@ import {
 } from "../libs/graphql";
 import { useDebounce } from "./hooks";
 
+export const DEFAULT_REPOS_PER_PAGE = 30;
+
 export type SearchParamsType = Partial<Record<"sort" | "type" | "q", string>>;
 export type PaginationParamsType = Partial<Record<"before" | "after", string>>;
 export type SearchUrlParamsType = SearchParamsType & PaginationParamsType;
@@ -38,6 +40,12 @@ const SORT_MAPPING = Object.freeze({
   stargazers: "sort:stars-desc",
   name: "sort:name-asc",
 });
+
+// todo
+
+// function getCursor(paginationParams: PaginationParamsType, {perPage}) {
+
+// }
 
 export function getSearchFieldOptions(
   fieldName: "sort" | "type"
@@ -157,6 +165,7 @@ export function useSearchRepos(
       query: graphqlSearchQuery,
       after: searchUrlParams.after,
       before: searchUrlParams.before,
+      perPage: DEFAULT_REPOS_PER_PAGE,
     },
   });
   // update url

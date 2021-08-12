@@ -31,7 +31,8 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       <div>
         {searchRepositoriesResult.data?.searchRepos.pageInfo && (
           <AppSearchPagination
-            {...paginationState}
+            params={paginationState}
+            onUpdate={setPaginationState}
             pageInfo={searchRepositoriesResult.data?.searchRepos.pageInfo}
           />
         )}

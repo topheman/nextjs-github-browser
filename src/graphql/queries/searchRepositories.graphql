@@ -1,3 +1,8 @@
-query SearchRepositories($query: String!, $after: String, $before: String) {
+query SearchRepositories(
+  $query: String!
+  $after: String
+  $before: String
+  $perPage: Int!
+) {
   ...SearchRepos
 }

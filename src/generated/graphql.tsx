@@ -19840,6 +19840,7 @@ export type GetRepositoryOwnerWithRepositoriesQueryVariables = Exact<{
   query: Scalars['String'];
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
+  perPage: Scalars['Int'];
 }>;
 
 
@@ -19862,6 +19863,7 @@ export type SearchRepositoriesQueryVariables = Exact<{
   query: Scalars['String'];
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
+  perPage: Scalars['Int'];
 }>;
 
 
@@ -19899,7 +19901,7 @@ export const SearchReposFragmentDoc = gql`
   searchRepos: search(
     query: $query
     type: REPOSITORY
-    first: 15
+    first: $perPage
     after: $after
     before: $before
   ) {
@@ -20090,7 +20092,7 @@ export type GetRepositoryOwnerWithPinnedItemsQueryHookResult = ReturnType<typeof
 export type GetRepositoryOwnerWithPinnedItemsLazyQueryHookResult = ReturnType<typeof useGetRepositoryOwnerWithPinnedItemsLazyQuery>;
 export type GetRepositoryOwnerWithPinnedItemsQueryResult = Apollo.QueryResult<GetRepositoryOwnerWithPinnedItemsQuery, GetRepositoryOwnerWithPinnedItemsQueryVariables>;
 export const GetRepositoryOwnerWithRepositoriesDocument = gql`
-    query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!, $after: String, $before: String) {
+    query GetRepositoryOwnerWithRepositories($owner: String!, $query: String!, $after: String, $before: String, $perPage: Int!) {
   rateLimit {
     limit
     cost
@@ -20127,6 +20129,7 @@ ${OrganizationInfosFragmentDoc}`;
  *      query: // value for 'query'
  *      after: // value for 'after'
  *      before: // value for 'before'
+ *      perPage: // value for 'perPage'
  *   },
  * });
  */
@@ -20142,7 +20145,7 @@ export type GetRepositoryOwnerWithRepositoriesQueryHookResult = ReturnType<typeo
 export type GetRepositoryOwnerWithRepositoriesLazyQueryHookResult = ReturnType<typeof useGetRepositoryOwnerWithRepositoriesLazyQuery>;
 export type GetRepositoryOwnerWithRepositoriesQueryResult = Apollo.QueryResult<GetRepositoryOwnerWithRepositoriesQuery, GetRepositoryOwnerWithRepositoriesQueryVariables>;
 export const SearchRepositoriesDocument = gql`
-    query SearchRepositories($query: String!, $after: String, $before: String) {
+    query SearchRepositories($query: String!, $after: String, $before: String, $perPage: Int!) {
   ...SearchRepos
 }
     ${SearchReposFragmentDoc}`;
@@ -20162,6 +20165,7 @@ export const SearchRepositoriesDocument = gql`
  *      query: // value for 'query'
  *      after: // value for 'after'
  *      before: // value for 'before'
+ *      perPage: // value for 'perPage'
  *   },
  * });
  */
