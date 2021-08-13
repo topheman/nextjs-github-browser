@@ -1,26 +1,25 @@
 import { encodeBase64 } from "./common";
 import {
-  extractSearchParams,
+  extractSearchUrlParams,
   makeGraphqlSearchQuery,
   getPaginationInfos,
 } from "./github";
 
 describe("utils/github", () => {
-  describe("extractSearchParams", () => {
-    it("should extract searchParams from `/topheman?tab=repositories&type=fork`", () => {
-      const result = extractSearchParams(
+  describe("extractSearchUrlParams", () => {
+    it("should extract only searchUrlParams from `/topheman?tab=repositories&type=fork`", () => {
+      const result = extractSearchUrlParams(
         "/topheman?tab=repositories&type=fork"
       );
       expect(result).toStrictEqual({
-        tab: "repositories",
         type: "fork",
       });
     });
     it("should accept empty params `/topheman?`", () => {
-      expect(extractSearchParams("/topheman?")).toStrictEqual({});
+      expect(extractSearchUrlParams("/topheman?")).toStrictEqual({});
     });
     it("should accept url with no trailing `?` : `/topheman`", () => {
-      expect(extractSearchParams("/topheman")).toStrictEqual({});
+      expect(extractSearchUrlParams("/topheman")).toStrictEqual({});
     });
   });
   describe("makeGraphqlSearchQuery", () => {

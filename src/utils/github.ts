@@ -137,7 +137,7 @@ export function getSearchFieldOptions(
   }
 }
 
-export function extractSearchParams(url: string): SearchUrlParamsType {
+export function extractSearchUrlParams(url: string): SearchUrlParamsType {
   const searchQueryMatch = url.match(/\?(.*)/);
   let searchParamsFromUrl: URLSearchParams;
   if (searchQueryMatch) {

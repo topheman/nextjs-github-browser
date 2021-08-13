@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
-import { useSearchRepos, extractSearchParams } from "../../utils/github";
+import { useSearchRepos, extractSearchUrlParams } from "../../utils/github";
 
 export type AppUserProfileRepositoriesProps = never;
 
@@ -16,7 +16,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchRepositoriesResult,
   } = useSearchRepos(
     router.query.owner as string,
-    extractSearchParams(router.asPath) // todo rename
+    extractSearchUrlParams(router.asPath)
   );
   return (
     <div>
