@@ -137,7 +137,7 @@ export function getSearchFieldOptions(
   }
 }
 
-export function extractSearchParams(url: string): Record<string, string> {
+export function extractSearchParams(url: string): SearchUrlParamsType {
   const searchQueryMatch = url.match(/\?(.*)/);
   let searchParamsFromUrl: URLSearchParams;
   if (searchQueryMatch) {
@@ -145,7 +145,18 @@ export function extractSearchParams(url: string): Record<string, string> {
   } else {
     searchParamsFromUrl = new URLSearchParams();
   }
-  return Object.fromEntries(searchParamsFromUrl.entries());
+  return Object.fromEntries(
+    [...searchParamsFromUrl.entries()].filter(([key]) => {
+      if (
+        (["after", "before", "page", "q", "sort", "type"] as Array<
+          keyof SearchUrlParamsType
+        >).includes(<keyof SearchUrlParamsType>key)
+      ) {
+        return true;
+      }
+      return false;
+    })
+  );
 }
 
 function cleanupPaginationParams(
@@ -183,17 +194,6 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
-// todo remove ?
-export function extractPaginationInfo(
-  searchUrlParams: SearchUrlParamsType
-): PaginationParamsType {
-  return Object.fromEntries(
-    Object.entries(searchUrlParams).filter(([key]) =>
-      ["after", "before"].includes(key)
-    )
-  );
-}
-
 function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
   if (typeof window === "undefined") {
     throw new Error("Only use client side");
@@ -222,12 +222,21 @@ export function useSearchRepos(
 } {
   // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useReducer<
-    (state: SearchParamsType, newState: SearchParamsType) => SearchParamsType
+    (
+      state: SearchParamsType,
+      newState: SearchParamsType | null
+    ) => SearchParamsType
   >(
-    (state, newState) => ({
-      ...state,
-      ...newState,
-    }),
+    (state, newState) => {
+      // calling without arguments resets state
+      if (!newState) {
+        return {};
+      }
+      return {
+        ...state,
+        ...newState,
+      };
+    },
     {
       ...searchUrlParams,
     }
@@ -236,15 +245,40 @@ export function useSearchRepos(
   const [paginationState, setPaginationState] = useReducer<
     (
       state: PaginationParamsType,
-      newState: PaginationParamsType
+      newState: PaginationParamsType | null
     ) => PaginationParamsType
-  >(
-    (state, newState) => ({
+  >((state, newState) => {
+    // calling without arguments resets state
+    if (!newState) {
+      return {};
+    }
+    return {
       ...state,
       ...newState,
-    }),
-    {}
-  );
+    };
+  }, {});
+  // reset local state if nothing should be tracked anymore
+  console.log("not-effect", "searchUrlParams", searchUrlParams, "state", {
+    ...searchBarState,
+    ...paginationState,
+  });
+  useEffect(() => {
+    console.log("effect", "searchUrlParams", searchUrlParams, "state", {
+      ...searchBarState,
+      ...paginationState,
+    });
+    if (Object.keys(searchUrlParams).length === 0) {
+      setSearchBarState(null);
+      setPaginationState(null);
+    }
+  }, [
+    searchUrlParams.q,
+    searchUrlParams.type,
+    searchUrlParams.sort,
+    searchUrlParams.after,
+    searchUrlParams.before,
+    searchUrlParams.page,
+  ]);
   // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
   const { query, before, after, first, last } = getSearchRepoGraphqlVariables(

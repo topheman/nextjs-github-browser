@@ -43,7 +43,13 @@ export default function AppProfileNavTab({
           ? ({ children, className, ...props }) => (
               <Link
                 key={label}
-                href={tab !== "default" ? `/${owner}?tab=${tab}` : `/${owner}`}
+                href={{
+                  pathname: `/${owner}`,
+                  query: {
+                    ...(tab !== "default" ? { tab } : {}),
+                  },
+                }}
+                // href={tab !== "default" ? `/${owner}?tab=${tab}` : `/${owner}`}
                 {...props}
               >
                 <a className={className}>{children}</a>

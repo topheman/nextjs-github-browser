@@ -16,7 +16,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchRepositoriesResult,
   } = useSearchRepos(
     router.query.owner as string,
-    extractSearchParams(router.asPath)
+    extractSearchParams(router.asPath) // todo rename
   );
   return (
     <div>
