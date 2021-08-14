@@ -3,7 +3,7 @@ import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
-import { encodeBase64 } from "./common";
+import { encodeBase64, decodeBase64 } from "./common";
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
@@ -54,17 +54,6 @@ function cleanupUndefinedValues<T>(obj: T): T {
   }
 }
 
-// todo remove - use decodeBase64 from common
-function decodeCursor(cursor?: string): string | undefined {
-  if (cursor) {
-    if (typeof window === "undefined") {
-      return Buffer.from(cursor, "base64").toString();
-    }
-    return atob(cursor);
-  }
-  return undefined;
-}
-
 export function getSearchRepoGraphqlVariables(
   user: string,
   searchUrlParams: SearchUrlParamsType,
@@ -93,8 +82,8 @@ export function getPaginationInfos(
 } {
   let before;
   let after;
-  const decodedBefore = decodeCursor(paginationParams.before);
-  const decodeAfter = decodeCursor(paginationParams.after);
+  const decodedBefore = decodeBase64(paginationParams.before);
+  const decodeAfter = decodeBase64(paginationParams.after);
   // convert "page" into graphql cursor - will be overriden by before/after if passed
   if (paginationParams.page) {
     const pageNumber = Number(paginationParams.page) || 1; // get rid of NaN
