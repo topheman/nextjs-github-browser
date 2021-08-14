@@ -93,6 +93,7 @@ export function getPaginationInfos(
   if (decodedBefore && /cursor:\d+/.test(decodedBefore)) {
     before = paginationParams.before;
   } else if (paginationParams.before) {
+    // eslint-disable-next-line no-console
     console.warn(
       `"before" cursor not supported - decoded : "${decodedBefore}", falling back`
     );
@@ -100,6 +101,7 @@ export function getPaginationInfos(
   if (paginationParams.after && decodeAfter && /cursor:\d+/.test(decodeAfter)) {
     after = paginationParams.after;
   } else if (paginationParams.after) {
+    // eslint-disable-next-line no-console
     console.warn(
       `"after" cursor not supported - decoded : "${decodeAfter}", falling back`
     );
@@ -269,6 +271,7 @@ export function useSearchRepos(
       setSearchBarState(() => newSearchBarState);
       setPaginationState(() => newPaginationState);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     searchUrlParams.q,
     searchUrlParams.type,
