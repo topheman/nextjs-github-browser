@@ -1,14 +1,14 @@
 import isEqual from "lodash/isEqual";
 import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
-import React, { useReducer, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { encodeBase64 } from "./common";
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
 } from "../libs/graphql";
-import { useDebounce } from "./hooks";
+import { useDebounce, useStateReducer } from "./hooks";
 
 export const DEFAULT_REPOS_PER_PAGE = 30;
 
@@ -237,28 +237,6 @@ function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
   );
   const url = `${window.location.pathname}?${newSearchUrlParams.toString()}`;
   return url;
-}
-
-// todo move to common
-function stateReducer<T extends Record<string, unknown>>(
-  state: T,
-  action: T | ((previousState: T) => T)
-): T {
-  if (typeof action === "function") {
-    return action(state);
-  }
-  return {
-    ...state,
-    ...action,
-  };
-}
-
-// todo move to common
-function useStateReducer<T extends Record<string, unknown>>(initialState: T) {
-  return useReducer<(previousState: T, nextState: T | ((p: T) => T)) => T>(
-    stateReducer,
-    initialState
-  );
 }
 
 export function useSearchRepos(
