@@ -26,17 +26,21 @@ const Template: Story<TheOwnerProfileProps> = (args) => {
 export const User = Template.bind({});
 User.parameters = {
   layout: "fullscreen",
+  searchUrlParams: {},
 };
 User.args = {
   owner: "topheman",
   tab: "default",
+  searchUrlParams: {},
 };
 
 export const Organization = Template.bind({});
 Organization.parameters = {
   layout: "fullscreen",
+  searchUrlParams: {},
 };
 Organization.args = {
   owner: "facebook",
   tab: "default",
+  searchUrlParams: {},
 };
