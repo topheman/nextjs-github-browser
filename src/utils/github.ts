@@ -1,3 +1,4 @@
+import isEqual from "lodash/isEqual";
 import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useReducer, useEffect, useState } from "react";
@@ -45,6 +46,15 @@ const SORT_MAPPING = Object.freeze({
   name: "sort:name-asc",
 });
 
+function cleanupUndefinedValues<T>(obj: T): T {
+  try {
+    return JSON.parse(JSON.stringify(obj));
+  } catch (_) {
+    return obj;
+  }
+}
+
+// todo remove - use decodeBase64 from common
 function decodeCursor(cursor?: string): string | undefined {
   if (cursor) {
     if (typeof window === "undefined") {
@@ -159,6 +169,25 @@ export function extractSearchUrlParams(url: string): SearchUrlParamsType {
   );
 }
 
+const onlyParams = <T extends SearchUrlParamsType>(
+  searchUrlParams: SearchUrlParamsType,
+  mode: "search" | "pagination"
+): T => {
+  const mapping = {
+    search: ["q", "sort", "type"],
+    pagination: ["after", "before", "page"],
+  };
+  const result = Object.fromEntries(
+    Object.entries(searchUrlParams).filter(([key]) => {
+      if (mapping[mode].includes(key)) {
+        return true;
+      }
+      return false;
+    })
+  ) as T;
+  return result;
+};
+
 function cleanupPaginationParams(
   searchUrlParams: SearchUrlParamsType
 ): SearchUrlParamsType {
@@ -210,10 +239,33 @@ function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
   return url;
 }
 
+// todo move to common
+function stateReducer<T extends Record<string, unknown>>(
+  state: T,
+  action: T | ((previousState: T) => T)
+): T {
+  if (typeof action === "function") {
+    return action(state);
+  }
+  return {
+    ...state,
+    ...action,
+  };
+}
+
+// todo move to common
+function useStateReducer<T extends Record<string, unknown>>(initialState: T) {
+  return useReducer<(previousState: T, nextState: T | ((p: T) => T)) => T>(
+    stateReducer,
+    initialState
+  );
+}
+
 export function useSearchRepos(
   user: string,
   searchUrlParams: SearchUrlParamsType
 ): {
+  // todo : return clearFilters ?
   searchBarState: SearchParamsType;
   setSearchBarState: React.Dispatch<SearchParamsType>;
   paginationState: PaginationParamsType;
@@ -221,55 +273,34 @@ export function useSearchRepos(
   searchRepositoriesResult: SearchRepositoriesQueryResult;
 } {
   // manage searchBar fields state
-  const [searchBarState, setSearchBarState] = useReducer<
-    (
-      state: SearchParamsType,
-      newState: SearchParamsType | null
-    ) => SearchParamsType
-  >(
-    (state, newState) => {
-      // calling without arguments resets state
-      if (!newState) {
-        return {};
-      }
-      return {
-        ...state,
-        ...newState,
-      };
-    },
+  const [searchBarState, setSearchBarState] = useStateReducer<SearchParamsType>(
     {
       ...searchUrlParams,
     }
   );
   // manage pagination fields state
-  const [paginationState, setPaginationState] = useReducer<
-    (
-      state: PaginationParamsType,
-      newState: PaginationParamsType | null
-    ) => PaginationParamsType
-  >((state, newState) => {
-    // calling without arguments resets state
-    if (!newState) {
-      return {};
-    }
-    return {
-      ...state,
-      ...newState,
-    };
-  }, {});
-  // reset local state if nothing should be tracked anymore
-  console.log("not-effect", "searchUrlParams", searchUrlParams, "state", {
-    ...searchBarState,
-    ...paginationState,
-  });
+  const [
+    paginationState,
+    setPaginationState,
+  ] = useStateReducer<PaginationParamsType>({});
+  // reset local state if not in sync with searchUrlParams (from the router)
   useEffect(() => {
-    console.log("effect", "searchUrlParams", searchUrlParams, "state", {
-      ...searchBarState,
-      ...paginationState,
-    });
-    if (Object.keys(searchUrlParams).length === 0) {
-      setSearchBarState(null);
-      setPaginationState(null);
+    if (
+      !isEqual(
+        cleanupUndefinedValues({ ...searchUrlParams, ...paginationState }),
+        cleanupUndefinedValues(searchUrlParams)
+      )
+    ) {
+      const newSearchBarState = onlyParams<SearchParamsType>(
+        searchUrlParams,
+        "search"
+      );
+      const newPaginationState = onlyParams<PaginationParamsType>(
+        searchUrlParams,
+        "pagination"
+      );
+      setSearchBarState(() => newSearchBarState);
+      setPaginationState(() => newPaginationState);
     }
   }, [
     searchUrlParams.q,

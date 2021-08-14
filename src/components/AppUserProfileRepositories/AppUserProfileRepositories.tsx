@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 
+import { decodeBase64 } from "../../utils/common";
 import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
@@ -34,6 +35,20 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           />
         )}
       </div>
+      <div className="font-bold">TODO : filter result infos</div>
+      {searchRepositoriesResult.data?.searchRepos.edges ? (
+        <p>
+          First :{" "}
+          {decodeBase64(
+            [...searchRepositoriesResult.data?.searchRepos.edges].shift()
+              ?.cursor
+          )}{" "}
+          / Last :{" "}
+          {decodeBase64(
+            [...searchRepositoriesResult.data?.searchRepos.edges].pop()?.cursor
+          )}
+        </p>
+      ) : null}
       {searchRepositoriesResult.data?.searchRepos.edges ? (
         <>
           <div>
