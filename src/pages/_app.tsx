@@ -11,10 +11,9 @@ import TheHeader from "../components/TheHeader/TheHeader";
 
 if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
   // eslint-disable-next-line no-console
-  console.log(
-    "Mocks can't be enabled for the moment on NextJS due to : https://github.com/mswjs/msw/issues/642"
-  );
-  // require("../mocks");
+  console.log("Mocks enabled");
+  // eslint-disable-next-line global-require
+  require("../mocks");
 }
 
 function MyApp({
