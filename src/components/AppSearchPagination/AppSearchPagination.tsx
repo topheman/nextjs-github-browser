@@ -8,10 +8,12 @@ export type AppSearchPaginationProps = {
     PageInfo,
     "endCursor" | "startCursor" | "hasNextPage" | "hasPreviousPage"
   >;
+  loading: boolean;
 };
 
 export default function AppSearchPagination({
   pageInfo: { startCursor, endCursor, hasPreviousPage, hasNextPage },
+  loading,
   onUpdate,
 }: AppSearchPaginationProps): JSX.Element {
   return (
@@ -39,6 +41,7 @@ export default function AppSearchPagination({
         >
           {endCursor} ({decodeBase64(endCursor)}) Next &gt;
         </button>
+        {loading ? " ..." : ""}
       </p>
     </div>
   );

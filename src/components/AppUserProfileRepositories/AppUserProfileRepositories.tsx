@@ -14,7 +14,8 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchBarState,
     setSearchBarState,
     setPaginationState,
-    rawResult,
+    data,
+    loading,
   } = useSearchRepos(
     router.query.owner as string,
     extractSearchUrlParams(router.asPath)
@@ -28,27 +29,26 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
         />
       </div>
       <div>
-        {rawResult.data?.searchRepos.pageInfo && (
+        {data?.searchRepos.pageInfo && (
           <AppSearchPagination
+            loading={loading}
             onUpdate={setPaginationState}
-            pageInfo={rawResult.data?.searchRepos.pageInfo}
+            pageInfo={data?.searchRepos.pageInfo}
           />
         )}
       </div>
       <div className="font-bold">TODO : filter result infos</div>
-      {rawResult.data?.searchRepos.edges ? (
+      {data?.searchRepos.edges ? (
         <p>
-          First :{" "}
-          {decodeBase64([...rawResult.data?.searchRepos.edges].shift()?.cursor)}{" "}
-          / Last :{" "}
-          {decodeBase64([...rawResult.data?.searchRepos.edges].pop()?.cursor)}
+          First : {decodeBase64([...data?.searchRepos.edges].shift()?.cursor)} /
+          Last : {decodeBase64([...data?.searchRepos.edges].pop()?.cursor)}
         </p>
       ) : null}
-      {rawResult.data?.searchRepos.edges ? (
+      {data?.searchRepos.edges ? (
         <>
-          <div>Total found: {rawResult.data?.searchRepos.repositoryCount}</div>
+          <div>Total found: {data?.searchRepos.repositoryCount}</div>
           <ul>
-            {rawResult.data?.searchRepos.edges.map((repo) => (
+            {data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>
                 {(repo?.node as Repository).name}
               </li>

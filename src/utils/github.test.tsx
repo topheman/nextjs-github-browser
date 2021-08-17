@@ -26,8 +26,8 @@ describe("utils/github", () => {
         const { result } = renderHook(() => useSearchRepos("topheman", {}), {
           wrapper,
         });
-        expect(result.current.rawResult.loading).toBeTruthy();
-        expect(result.current.rawResult.data).toBeFalsy();
+        expect(result.current.loading).toBeTruthy();
+        expect(result.current.data).toBeFalsy();
         expect(result.current.rawResult.variables).toStrictEqual({
           query: "user:topheman sort:updated-desc fork:true",
           first: 30,
@@ -36,11 +36,11 @@ describe("utils/github", () => {
           before: undefined,
         });
         await waitFor(() => {
-          expect(result.current.rawResult.loading).toBeFalsy();
-          expect(result.current.rawResult.data).toBeTruthy();
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
           expect(
-            (result.current.rawResult.data?.searchRepos.edges?.[0]
-              ?.node as Repository).name
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
           ).toBe("rust-wasm-experiments");
         });
         server.close();
@@ -55,8 +55,8 @@ describe("utils/github", () => {
             wrapper,
           }
         );
-        expect(result.current.rawResult.loading).toBeTruthy();
-        expect(result.current.rawResult.data).toBeFalsy();
+        expect(result.current.loading).toBeTruthy();
+        expect(result.current.data).toBeFalsy();
         expect(result.current.rawResult.variables).toStrictEqual({
           query: "user:topheman sort:name-asc fork:true",
           first: 30,
@@ -65,11 +65,11 @@ describe("utils/github", () => {
           before: undefined,
         });
         await waitFor(() => {
-          expect(result.current.rawResult.loading).toBeFalsy();
-          expect(result.current.rawResult.data).toBeTruthy();
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
           expect(
-            (result.current.rawResult.data?.searchRepos.edges?.[0]
-              ?.node as Repository).name
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
           ).toBe("angular-yeoman-sass-compass");
         });
         server.close();
@@ -87,8 +87,8 @@ describe("utils/github", () => {
             wrapper,
           }
         );
-        expect(result.current.rawResult.loading).toBeTruthy();
-        expect(result.current.rawResult.data).toBeFalsy();
+        expect(result.current.loading).toBeTruthy();
+        expect(result.current.data).toBeFalsy();
         expect(result.current.rawResult.variables).toStrictEqual({
           query: "user:topheman sort:name-asc fork:true",
           first: 30,
@@ -97,11 +97,11 @@ describe("utils/github", () => {
           before: undefined,
         });
         await waitFor(() => {
-          expect(result.current.rawResult.loading).toBeFalsy();
-          expect(result.current.rawResult.data).toBeTruthy();
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
           expect(
-            (result.current.rawResult.data?.searchRepos.edges?.[0]
-              ?.node as Repository).name
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
           ).toBe("lite-router");
         });
         server.close();
@@ -122,8 +122,8 @@ describe("utils/github", () => {
             wrapper,
           }
         );
-        expect(result.current.rawResult.loading).toBeTruthy();
-        expect(result.current.rawResult.data).toBeFalsy();
+        expect(result.current.loading).toBeTruthy();
+        expect(result.current.data).toBeFalsy();
         expect(result.current.rawResult.variables).toStrictEqual({
           query: "user:topheman sort:name-asc fork:true",
           first: undefined,
@@ -132,11 +132,11 @@ describe("utils/github", () => {
           before: "Y3Vyc29yOjYx",
         });
         await waitFor(() => {
-          expect(result.current.rawResult.loading).toBeFalsy();
-          expect(result.current.rawResult.data).toBeTruthy();
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
           expect(
-            (result.current.rawResult.data?.searchRepos.edges?.[0]
-              ?.node as Repository).name
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
           ).toBe("lite-router");
         });
         server.close();

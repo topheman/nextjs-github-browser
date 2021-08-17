@@ -239,6 +239,10 @@ export function useSearchRepos(
   setSearchBarState: React.Dispatch<SearchParamsType>;
   paginationState: PaginationParamsType;
   setPaginationState: React.Dispatch<PaginationParamsType>;
+  loading: boolean;
+  data:
+    | SearchRepositoriesQueryResult["data"]
+    | SearchRepositoriesQueryResult["previousData"];
   rawResult: SearchRepositoriesQueryResult;
 } {
   // manage searchBar fields state
@@ -343,6 +347,8 @@ export function useSearchRepos(
     setSearchBarState,
     paginationState,
     setPaginationState,
+    loading: rawResult.loading,
+    data: rawResult.data || rawResult.previousData, // keep the previous data while requesting
     rawResult,
   };
 }
