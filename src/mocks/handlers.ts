@@ -1,13 +1,15 @@
 /* eslint-disable global-require,no-console */
-import { graphql } from "msw";
+import path from "path";
+import { graphql, GraphQLHandler } from "msw";
 
-const github =
-  typeof window === "undefined"
-    ? graphql.link("http://localhost:3000/api/github/graphql")
-    : graphql.link("/api/github/graphql");
+import { GRAPHQL_URI } from "../utils/tests";
+import { SearchRepositoriesQueryResult } from "../libs/graphql";
+import { SearchParamsType, PaginationParamsType } from "../utils/github";
 
-export const handlers = [
-  github.query("GetRepositoryOwnerWithPinnedItems", (req, res, ctx) => {
+const apolloLink = graphql.link(GRAPHQL_URI);
+
+export const baseHandlers = (): GraphQLHandler[] => [
+  apolloLink.query("GetRepositoryOwnerWithPinnedItems", (req, res, ctx) => {
     console.log(
       "[GraphQLMock] GetRepositoryOwnerWithPinnedItems",
       req.variables
@@ -18,7 +20,7 @@ export const handlers = [
       })
     );
   }),
-  github.query("GetRepositoryOwnerWithRepositories", (req, res, ctx) => {
+  apolloLink.query("GetRepositoryOwnerWithRepositories", (req, res, ctx) => {
     console.log(
       "[GraphQLMock] GetRepositoryOwnerWithRepositories",
       req.variables
@@ -29,7 +31,7 @@ export const handlers = [
       })
     );
   }),
-  github.query("GetProfileReadme", (req, res, ctx) => {
+  apolloLink.query("GetProfileReadme", (req, res, ctx) => {
     console.log("[GraphQLMock] GetProfileReadme", req.variables);
     return res(
       ctx.data({
@@ -38,3 +40,26 @@ export const handlers = [
     );
   }),
 ];
+
+export const searchRepoHandler = (
+  searchParams: SearchParamsType,
+  paginationParams: PaginationParamsType
+): GraphQLHandler => {
+  let fileName = path.join(__dirname, "data/SearchRepositories.json");
+  if (Object.keys({ ...searchParams, ...paginationParams }).length > 0) {
+    const query = Object.entries({ ...searchParams, ...paginationParams })
+      .map(([key, value]) => `${key}=${value}`)
+      .join("|");
+    fileName = path.join(__dirname, `data/SearchRepositories/${query}.json`);
+  }
+  // eslint-disable-next-line import/no-dynamic-require,@typescript-eslint/no-var-requires
+  const result = require(fileName) as SearchRepositoriesQueryResult;
+  return apolloLink.query("SearchRepositories", (req, res, ctx) => {
+    console.log("[GraphQLMock] SearchRepositories", req.variables);
+    return res(
+      ctx.data({
+        ...result,
+      })
+    );
+  });
+};

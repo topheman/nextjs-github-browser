@@ -14,7 +14,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchBarState,
     setSearchBarState,
     setPaginationState,
-    searchRepositoriesResult,
+    rawResult,
   } = useSearchRepos(
     router.query.owner as string,
     extractSearchUrlParams(router.asPath)
@@ -28,35 +28,27 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
         />
       </div>
       <div>
-        {searchRepositoriesResult.data?.searchRepos.pageInfo && (
+        {rawResult.data?.searchRepos.pageInfo && (
           <AppSearchPagination
             onUpdate={setPaginationState}
-            pageInfo={searchRepositoriesResult.data?.searchRepos.pageInfo}
+            pageInfo={rawResult.data?.searchRepos.pageInfo}
           />
         )}
       </div>
       <div className="font-bold">TODO : filter result infos</div>
-      {searchRepositoriesResult.data?.searchRepos.edges ? (
+      {rawResult.data?.searchRepos.edges ? (
         <p>
           First :{" "}
-          {decodeBase64(
-            [...searchRepositoriesResult.data?.searchRepos.edges].shift()
-              ?.cursor
-          )}{" "}
+          {decodeBase64([...rawResult.data?.searchRepos.edges].shift()?.cursor)}{" "}
           / Last :{" "}
-          {decodeBase64(
-            [...searchRepositoriesResult.data?.searchRepos.edges].pop()?.cursor
-          )}
+          {decodeBase64([...rawResult.data?.searchRepos.edges].pop()?.cursor)}
         </p>
       ) : null}
-      {searchRepositoriesResult.data?.searchRepos.edges ? (
+      {rawResult.data?.searchRepos.edges ? (
         <>
-          <div>
-            Total found:{" "}
-            {searchRepositoriesResult.data?.searchRepos.repositoryCount}
-          </div>
+          <div>Total found: {rawResult.data?.searchRepos.repositoryCount}</div>
           <ul>
-            {searchRepositoriesResult.data?.searchRepos.edges.map((repo) => (
+            {rawResult.data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>
                 {(repo?.node as Repository).name}
               </li>

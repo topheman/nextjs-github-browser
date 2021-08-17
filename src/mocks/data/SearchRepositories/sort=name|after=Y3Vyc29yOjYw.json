@@ -1,0 +1,866 @@
+{
+  "searchRepos": {
+    "__typename": "SearchResultItemConnection",
+    "repositoryCount": 78,
+    "pageInfo": {
+      "__typename": "PageInfo",
+      "hasNextPage": false,
+      "hasPreviousPage": true,
+      "startCursor": "Y3Vyc29yOjYx",
+      "endCursor": "Y3Vyc29yOjc4"
+    },
+    "edges": [
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 100334,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5455,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 4
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "squares",
+          "description": "An adaptation in HTML5/Javascript - based on the memories I have, of a game I used to play in the 90s on our IIvi (our first color computer)."
+        },
+        "cursor": "Y3Vyc29yOjYx"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 6299,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1241,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 399,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "street-facing",
+          "description": "A Google Maps Streetview application in which head tracking is used to change point of view."
+        },
+        "cursor": "Y3Vyc29yOjYy"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 1236838,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1229364,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 410498,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 366,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "talks",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjYz"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 82572,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "BSD 3-Clause \"New\" or \"Revised\" License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "ternary-tree",
+          "description": "A Rust implementation of Ternary Search Trees, with no unsafe blocks"
+        },
+        "cursor": "Y3Vyc29yOjY0"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "test-bare",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjY1"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 6970,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 435,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 3
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "threejs-cone",
+          "description": "A little test on threejs ..."
+        },
+        "cursor": "Y3Vyc29yOjY2"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "topheman",
+          "description": "Profile repository"
+        },
+        "cursor": "Y3Vyc29yOjY3"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 74233,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 2453,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1529,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 4
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "topheman-apis-proxy",
+          "description": "Access your public APIs on the same server, benefite from the existing proxies developed or create yours."
+        },
+        "cursor": "Y3Vyc29yOjY4"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 97948,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 24139,
+                "node": {
+                  "__typename": "Language",
+                  "name": "ApacheConf",
+                  "color": "#d12127"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 18376,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 7240,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 77
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 2
+          },
+          "name": "topheman-datavisual",
+          "description": "Realtime datavisualization with Angular, d3, and nodejs based on Twitter Stream API"
+        },
+        "cursor": "Y3Vyc29yOjY5"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 1322,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 688,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "topheman.github.com",
+          "description": "My Github pages"
+        },
+        "cursor": "Y3Vyc29yOjcw"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 42732,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 71
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 5
+          },
+          "name": "twitter-stream-channels",
+          "description": "Lets you manage multiple channels of keywords on the same twitter stream"
+        },
+        "cursor": "Y3Vyc29yOjcx"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 7862,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "twitter-to-neo4j",
+          "description": "A quick and dirty way to pull down a small web of friends/followers from Twitter and load it into Neo4j"
+        },
+        "cursor": "Y3Vyc29yOjcy"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 52876,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 6275,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 6105,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 3348,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 181
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 4
+          },
+          "name": "vanilla-es6-jspm",
+          "description": "Seed project for ES6 / jspm based apps with full production workflow"
+        },
+        "cursor": "Y3Vyc29yOjcz"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 2951,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1958,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1868,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "webassembly-first-try",
+          "description": "My first steps on WebAssembly with Rust"
+        },
+        "cursor": "Y3Vyc29yOjc0"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 8690,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Makefile",
+                  "color": "#427819"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 6097,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5887,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4639,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Python",
+                  "color": "#3572A5"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1439,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Dockerfile",
+                  "color": "#384d54"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 701,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 542,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 537,
+                "node": {
+                  "__typename": "Language",
+                  "name": "C",
+                  "color": "#555555"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 13
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "webassembly-wasi-experiments",
+          "description": "Discover WebAssembly System Interface (WASI) with C/Rust use cases"
+        },
+        "cursor": "Y3Vyc29yOjc1"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 22677,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4294,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 3713,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1022,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 103
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 2
+          },
+          "name": "webpack-babel-starter",
+          "description": "Webpack 2 / Babel starter kit with full development & build workflow"
+        },
+        "cursor": "Y3Vyc29yOjc2"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 49017,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4202,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 3620,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 5
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 5
+          },
+          "name": "webrtc-experiments",
+          "description": "An example of how you could use WebRTC on the web, based on the PeerJS library"
+        },
+        "cursor": "Y3Vyc29yOjc3"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 11670,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5516,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 1
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "webRtcFirstSteps",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjc4"
+      }
+    ]
+  },
+  "__typename": "Query"
+}
