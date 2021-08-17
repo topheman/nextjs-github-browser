@@ -309,7 +309,6 @@ export function useSearchRepos(
   const [bypassFirstEffect, setBypassFirstEffect] = useState(true);
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    console.log("use-effect", bypassFirstEffect);
     // do not change location on first mount
     if (bypassFirstEffect) {
       if (searchUrlParams.after || searchUrlParams.before) {
@@ -327,16 +326,6 @@ export function useSearchRepos(
     // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
     // console.log(rawResult);
     if (rawResult.networkStatus === NetworkStatus.ready) {
-      console.log(
-        "use-effect - if",
-        "bypassFirstEffect",
-        bypassFirstEffect,
-        "networkStatus",
-        rawResult.networkStatus
-      );
-      console.log(window.location.href, window.location.search);
-      console.log(newLocation);
-      // console.log(rawResult.data);
       // shallow mode because we don't want to run any server-side hooks
       router.push(newLocation, newLocation, { shallow: true });
     }

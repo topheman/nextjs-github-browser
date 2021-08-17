@@ -1,10 +1,10 @@
-import { renderHook } from "@testing-library/react-hooks";
+import router from "next/router";
+import { renderHook, act } from "@testing-library/react-hooks";
 import { waitFor } from "@testing-library/react";
 
 import { makeApolloProviderWrapper } from "./tests";
 import { encodeBase64 } from "./common";
 import { server } from "../mocks/server";
-import { searchRepoHandler } from "../mocks/handlers";
 import {
   useSearchRepos,
   extractSearchUrlParams,
@@ -19,9 +19,13 @@ jest.mock("next/router", () => require("next-router-mock"));
 describe("utils/github", () => {
   describe("useSearchRepos", () => {
     describe("basic render", () => {
-      it("default case", async () => {
+      beforeEach(() => {
         server.listen();
-        server.use(searchRepoHandler({}, {}));
+      });
+      afterEach(() => {
+        server.close();
+      });
+      it("default case", async () => {
         const wrapper = makeApolloProviderWrapper();
         const { result } = renderHook(() => useSearchRepos("topheman", {}), {
           wrapper,
@@ -43,11 +47,8 @@ describe("utils/github", () => {
               .name
           ).toBe("rust-wasm-experiments");
         });
-        server.close();
       });
       it("sort by name", async () => {
-        server.listen();
-        server.use(searchRepoHandler({ sort: "name" }, {}));
         const wrapper = makeApolloProviderWrapper();
         const { result } = renderHook(
           () => useSearchRepos("topheman", { sort: "name" }),
@@ -72,13 +73,8 @@ describe("utils/github", () => {
               .name
           ).toBe("angular-yeoman-sass-compass");
         });
-        server.close();
       });
       it("sort by name & after Y3Vyc29yOjMw", async () => {
-        server.listen();
-        server.use(
-          searchRepoHandler({ sort: "name" }, { after: "Y3Vyc29yOjMw" })
-        );
         const wrapper = makeApolloProviderWrapper();
         const { result } = renderHook(
           () =>
@@ -104,13 +100,8 @@ describe("utils/github", () => {
               .name
           ).toBe("lite-router");
         });
-        server.close();
       });
       it("sort by name & before Y3Vyc29yOjYx", async () => {
-        server.listen();
-        server.use(
-          searchRepoHandler({ sort: "name" }, { before: "Y3Vyc29yOjYx" })
-        );
         const wrapper = makeApolloProviderWrapper();
         const { result } = renderHook(
           () =>
@@ -139,7 +130,67 @@ describe("utils/github", () => {
               .name
           ).toBe("lite-router");
         });
+      });
+    });
+    describe("behaviour", () => {
+      beforeEach(() => {
+        server.listen();
+      });
+      afterEach(() => {
         server.close();
+      });
+      it("should load next page + sync router state", async () => {
+        const wrapper = makeApolloProviderWrapper();
+        const { result } = renderHook(
+          () => useSearchRepos("topheman", { sort: "name" }),
+          {
+            wrapper,
+          }
+        );
+        expect(result.current.loading).toBeTruthy();
+        expect(result.current.data).toBeFalsy();
+        expect(result.current.rawResult.variables).toStrictEqual({
+          query: "user:topheman sort:name-asc fork:true",
+          first: 30,
+          last: undefined,
+          after: undefined,
+          before: undefined,
+        });
+        await waitFor(() => {
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
+          expect(
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
+          ).toBe("angular-yeoman-sass-compass");
+        });
+        // update pagination via the hook
+        act(() => {
+          result.current.setPaginationState({ after: "Y3Vyc29yOjMw" });
+        });
+        // should now be loading
+        expect(result.current.loading).toBeTruthy();
+        // data should use previousData
+        expect(result.current.data).toBeTruthy();
+        // still loading, we shouldn't have change page yet
+        expect(
+          (result.current.data?.searchRepos.edges?.[0]?.node as Repository).name
+        ).toBe("angular-yeoman-sass-compass");
+        await waitFor(() => {
+          // loading should be finished
+          expect(result.current.loading).toBeFalsy();
+          expect(result.current.data).toBeTruthy();
+          // new data should now be available (next page)
+          expect(
+            (result.current.data?.searchRepos.edges?.[0]?.node as Repository)
+              .name
+          ).toBe("lite-router");
+          // router should be synced
+          expect(router.query).toEqual({
+            after: "Y3Vyc29yOjMw",
+            sort: "name",
+          });
+        });
       });
     });
   });

@@ -4,9 +4,37 @@ import { graphql, GraphQLHandler } from "msw";
 
 import { GRAPHQL_URI } from "../utils/tests";
 import { SearchRepositoriesQueryResult } from "../libs/graphql";
-import { SearchParamsType, PaginationParamsType } from "../utils/github";
 
 const apolloLink = graphql.link(GRAPHQL_URI);
+
+const searchRepoHandler = (): GraphQLHandler => {
+  return apolloLink.query("SearchRepositories", (req, res, ctx) => {
+    const fileName = [
+      __dirname,
+      "data",
+      "SearchRepositories",
+      req.variables.query,
+      `data${
+        // eslint-disable-next-line no-nested-ternary
+        req.variables.after
+          ? `|after=${req.variables.after}`
+          : "" || req.variables.before
+          ? `|before=${req.variables.before}`
+          : ""
+      }.json`,
+    ];
+    // eslint-disable-next-line import/no-dynamic-require,@typescript-eslint/no-var-requires
+    const result = require(path.join(
+      ...fileName
+    )) as SearchRepositoriesQueryResult;
+    console.log(`[GraphQLMock] SearchRepositories`, req.variables);
+    return res(
+      ctx.data({
+        ...result,
+      })
+    );
+  });
+};
 
 export const baseHandlers = (): GraphQLHandler[] => [
   apolloLink.query("GetRepositoryOwnerWithPinnedItems", (req, res, ctx) => {
@@ -39,27 +67,5 @@ export const baseHandlers = (): GraphQLHandler[] => [
       })
     );
   }),
+  searchRepoHandler(),
 ];
-
-export const searchRepoHandler = (
-  searchParams: SearchParamsType,
-  paginationParams: PaginationParamsType
-): GraphQLHandler => {
-  let fileName = path.join(__dirname, "data/SearchRepositories.json");
-  if (Object.keys({ ...searchParams, ...paginationParams }).length > 0) {
-    const query = Object.entries({ ...searchParams, ...paginationParams })
-      .map(([key, value]) => `${key}=${value}`)
-      .join("|");
-    fileName = path.join(__dirname, `data/SearchRepositories/${query}.json`);
-  }
-  // eslint-disable-next-line import/no-dynamic-require,@typescript-eslint/no-var-requires
-  const result = require(fileName) as SearchRepositoriesQueryResult;
-  return apolloLink.query("SearchRepositories", (req, res, ctx) => {
-    console.log("[GraphQLMock] SearchRepositories", req.variables);
-    return res(
-      ctx.data({
-        ...result,
-      })
-    );
-  });
-};

@@ -1,0 +1,1529 @@
+{
+  "searchRepos": {
+    "__typename": "SearchResultItemConnection",
+    "repositoryCount": 78,
+    "pageInfo": {
+      "__typename": "PageInfo",
+      "hasNextPage": true,
+      "hasPreviousPage": false,
+      "startCursor": "Y3Vyc29yOjE=",
+      "endCursor": "Y3Vyc29yOjMw"
+    },
+    "edges": [
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 17247,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 12384,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 410,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 17
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "Other"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 3
+          },
+          "name": "rust-wasm-experiments",
+          "description": "Discover how to use Rust to generate WebAssembly, called by JavaScript"
+        },
+        "cursor": "Y3Vyc29yOjE="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 189546,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 21075,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 42
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 1
+          },
+          "name": "nextjs-movie-browser",
+          "description": "A NextJS implementation of the themoviedb.org website"
+        },
+        "cursor": "Y3Vyc29yOjI="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 200790,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 3624,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 2591,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 497,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 99
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 3
+          },
+          "name": "npm-registry-browser",
+          "description": "Browse the npm registry with an SPA made in React, with full dev workflow."
+        },
+        "cursor": "Y3Vyc29yOjM="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 7525,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "deno-weather",
+          "description": "🦕🌦A deno cli/wrapper around wttr.in to discover deno"
+        },
+        "cursor": "Y3Vyc29yOjQ="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 14863,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1721,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 366,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "react-typescript-sandbox",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjU="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 6752,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1721,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 930,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "react-app-ts-template",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjY="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 39529,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 14024,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 6718,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 39
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "rxjs-experiments",
+          "description": "Playing with RxJS"
+        },
+        "cursor": "Y3Vyc29yOjc="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 1236838,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1229364,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 410498,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 366,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "talks",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjg="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 18797,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 2915,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1041,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "matterjs-poc",
+          "description": "matterjs-poc"
+        },
+        "cursor": "Y3Vyc29yOjk="
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 33260,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 11005,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 8483,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "playground",
+          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)"
+        },
+        "cursor": "Y3Vyc29yOjEw"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 35009,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 11028,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 8127,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 8
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 1
+          },
+          "name": "playground2",
+          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)"
+        },
+        "cursor": "Y3Vyc29yOjEx"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 8690,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Makefile",
+                  "color": "#427819"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 6097,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5887,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4639,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Python",
+                  "color": "#3572A5"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1439,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Dockerfile",
+                  "color": "#384d54"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 701,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 542,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 537,
+                "node": {
+                  "__typename": "Language",
+                  "name": "C",
+                  "color": "#555555"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 13
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "webassembly-wasi-experiments",
+          "description": "Discover WebAssembly System Interface (WASI) with C/Rust use cases"
+        },
+        "cursor": "Y3Vyc29yOjEy"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 87597,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 10070,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 7340,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 6
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 1
+          },
+          "name": "bombs",
+          "description": "HTML5 / Javascript game that takes advantage of the canvas element and the accelerometer on your device."
+        },
+        "cursor": "Y3Vyc29yOjEz"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 813,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "jest-esm-experiments",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjE0"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 49017,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4202,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 3620,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 5
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 5
+          },
+          "name": "webrtc-experiments",
+          "description": "An example of how you could use WebRTC on the web, based on the PeerJS library"
+        },
+        "cursor": "Y3Vyc29yOjE1"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "topheman",
+          "description": "Profile repository"
+        },
+        "cursor": "Y3Vyc29yOjE2"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 41483,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 156,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "component-compiler-utils",
+          "description": "Lower level utilities for compiling Vue single file components"
+        },
+        "cursor": "Y3Vyc29yOjE3"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "test-bare",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjE4"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 13249,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1783,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1752,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "react-hooks-implementation",
+          "description": "Use this project to demonstrate react hooks implementation"
+        },
+        "cursor": "Y3Vyc29yOjE5"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 855,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 737,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 498,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 78,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Makefile",
+                  "color": "#427819"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 1
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "rust-wasm-examples",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjIw"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "aws-cloud-practitioner-certification-notes",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjIx"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 164406,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 2711,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 2199,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 26
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "react-fiber-experiments",
+          "description": "Discover the latest features of React fiber like \"Suspense\""
+        },
+        "cursor": "Y3Vyc29yOjIy"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": []
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "awesome-nextjs",
+          "description": ":notebook_with_decorative_cover: :books: A curated list of awesome resources : books, videos, articles about using Next.js (A minimalistic framework for universal server-rendered React applications) "
+        },
+        "cursor": "Y3Vyc29yOjIz"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 463907,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 98052,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1294,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 184,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HCL",
+                  "color": null
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 128,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "next.js",
+          "description": "The React Framework"
+        },
+        "cursor": "Y3Vyc29yOjI0"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 82572,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "BSD 3-Clause \"New\" or \"Revised\" License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "ternary-tree",
+          "description": "A Rust implementation of Ternary Search Trees, with no unsafe blocks"
+        },
+        "cursor": "Y3Vyc29yOjI1"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 2951,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1958,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1868,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "webassembly-first-try",
+          "description": "My first steps on WebAssembly with Rust"
+        },
+        "cursor": "Y3Vyc29yOjI2"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 23892,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Rust",
+                  "color": "#dea584"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 2
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "rustlang-first-try",
+          "description": "Starting out in rust"
+        },
+        "cursor": "Y3Vyc29yOjI3"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 7929,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4963,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Makefile",
+                  "color": "#427819"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 4098,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Go",
+                  "color": "#00ADD8"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1942,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Dockerfile",
+                  "color": "#384d54"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1686,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1590,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 850,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 93
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 1
+          },
+          "name": "docker-experiments",
+          "description": "Discover docker with a simple use case in development, production (local kubernetes) and CI"
+        },
+        "cursor": "Y3Vyc29yOjI4"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 4322627,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 1572,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 848,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": null,
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "fullstack-setup",
+          "description": null
+        },
+        "cursor": "Y3Vyc29yOjI5"
+      },
+      {
+        "__typename": "SearchResultItemEdge",
+        "node": {
+          "__typename": "Repository",
+          "languages": {
+            "__typename": "LanguageConnection",
+            "edges": [
+              {
+                "__typename": "LanguageEdge",
+                "size": 2375402,
+                "node": {
+                  "__typename": "Language",
+                  "name": "JavaScript",
+                  "color": "#f1e05a"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 47771,
+                "node": {
+                  "__typename": "Language",
+                  "name": "HTML",
+                  "color": "#e34c26"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 44278,
+                "node": {
+                  "__typename": "Language",
+                  "name": "C++",
+                  "color": "#f34b7d"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 20252,
+                "node": {
+                  "__typename": "Language",
+                  "name": "TypeScript",
+                  "color": "#2b7489"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 16077,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CoffeeScript",
+                  "color": "#244776"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 13958,
+                "node": {
+                  "__typename": "Language",
+                  "name": "CSS",
+                  "color": "#563d7c"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5860,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Shell",
+                  "color": "#89e051"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 5225,
+                "node": {
+                  "__typename": "Language",
+                  "name": "C",
+                  "color": "#555555"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 259,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Python",
+                  "color": "#3572A5"
+                }
+              },
+              {
+                "__typename": "LanguageEdge",
+                "size": 189,
+                "node": {
+                  "__typename": "Language",
+                  "name": "Makefile",
+                  "color": "#427819"
+                }
+              }
+            ]
+          },
+          "stargazers": {
+            "__typename": "StargazerConnection",
+            "totalCount": 0
+          },
+          "licenseInfo": {
+            "__typename": "License",
+            "name": "MIT License"
+          },
+          "issues": {
+            "__typename": "IssueConnection",
+            "totalCount": 0
+          },
+          "name": "react",
+          "description": "A declarative, efficient, and flexible JavaScript library for building user interfaces."
+        },
+        "cursor": "Y3Vyc29yOjMw"
+      }
+    ]
+  }
+}
