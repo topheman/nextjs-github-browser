@@ -1,13 +1,19 @@
 import AppSelectMenu from "../AppSelectMenu/AppSelectMenu";
-import { getSearchFieldOptions, SearchParamsType } from "../../utils/github";
+import {
+  getSearchFieldOptions,
+  SearchParamsType,
+  SetReducerStateType,
+} from "../../utils/github";
 
 export type AppSearchBarRepositoriesProps = {
-  onUpdate: ({ type, sort, q }: SearchParamsType) => void;
+  onUpdate: SetReducerStateType<Partial<Record<"sort" | "type" | "q", string>>>;
+  clearPaginationFilter: () => void;
   params: SearchParamsType;
 };
 
 export default function AppSearchBarRepositories({
   onUpdate,
+  clearPaginationFilter,
   params: { type, sort, q },
 }: AppSearchBarRepositoriesProps): JSX.Element {
   return (
@@ -17,11 +23,17 @@ export default function AppSearchBarRepositories({
         placeholder="Find a repository..."
         className="flex-1 pl-2 rounded border border-light"
         value={q}
-        onInput={(e) => onUpdate({ q: (e.target as HTMLInputElement).value })}
+        onInput={(e) => {
+          onUpdate({ q: (e.target as HTMLInputElement).value });
+          clearPaginationFilter();
+        }}
       />
       <AppSelectMenu
         value={type || ""}
-        onChange={(value) => onUpdate({ type: value })}
+        onChange={(value) => {
+          onUpdate({ type: value });
+          clearPaginationFilter();
+        }}
         options={getSearchFieldOptions("type")}
         buttonLabel="Type"
         menuLabel="Select type"
@@ -29,7 +41,10 @@ export default function AppSearchBarRepositories({
       />
       <AppSelectMenu
         value={sort || ""}
-        onChange={(value) => onUpdate({ sort: value })}
+        onChange={(value) => {
+          onUpdate({ sort: value });
+          clearPaginationFilter();
+        }}
         options={getSearchFieldOptions("sort")}
         buttonLabel="Sort"
         menuLabel="Select order"

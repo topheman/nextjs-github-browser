@@ -8,7 +8,7 @@ import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
 } from "../libs/graphql";
-import { useDebounce, useStateReducer } from "./hooks";
+import { useDebounce, useStateReducer, StateReducerActionType } from "./hooks";
 
 export const DEFAULT_REPOS_PER_PAGE = 30;
 
@@ -230,15 +230,19 @@ function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
   return url;
 }
 
+export type SetReducerStateType<T> = React.Dispatch<StateReducerActionType<T>>;
+
 export function useSearchRepos(
   user: string,
   searchUrlParams: SearchUrlParamsType
 ): {
-  // todo : return clearFilters ?
   searchBarState: SearchParamsType;
-  setSearchBarState: React.Dispatch<SearchParamsType>;
+  setSearchBarState: React.Dispatch<StateReducerActionType<SearchParamsType>>;
   paginationState: PaginationParamsType;
-  setPaginationState: React.Dispatch<PaginationParamsType>;
+  setPaginationState: React.Dispatch<
+    StateReducerActionType<PaginationParamsType>
+  >;
+  clearPaginationFilter: () => void;
   loading: boolean;
   data:
     | SearchRepositoriesQueryResult["data"]
@@ -248,7 +252,7 @@ export function useSearchRepos(
   // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useStateReducer<SearchParamsType>(
     {
-      ...searchUrlParams,
+      ...onlyParams<SearchParamsType>(searchUrlParams, "search"),
     }
   );
   // manage pagination fields state
@@ -256,6 +260,14 @@ export function useSearchRepos(
     paginationState,
     setPaginationState,
   ] = useStateReducer<PaginationParamsType>({});
+  const clearPaginationFilter = () => {
+    // todo
+    console.log("clearPaginationFilter", paginationState, searchBarState);
+    const newLocation = getNewLocation({
+      ...searchBarState,
+    });
+    console.log("newLocation", newLocation);
+  };
   // reset local state if not in sync with searchUrlParams (from the router)
   useEffect(() => {
     if (
@@ -294,6 +306,7 @@ export function useSearchRepos(
       q: debouncedQ,
     }
   );
+  console.log({ query, before, after, first, last });
   // call graphql API
   const rawResult = useSearchRepositoriesQuery({
     variables: {
@@ -336,6 +349,7 @@ export function useSearchRepos(
     setSearchBarState,
     paginationState,
     setPaginationState,
+    clearPaginationFilter,
     loading: rawResult.loading,
     data: rawResult.data || rawResult.previousData, // keep the previous data while requesting
     rawResult,

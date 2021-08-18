@@ -24,9 +24,11 @@ export function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
+export type StateReducerActionType<T> = T | ((previousState: T) => T);
+
 function stateReducer<T extends Record<string, unknown>>(
   state: T,
-  action: T | ((previousState: T) => T)
+  action: StateReducerActionType<T>
 ): T {
   if (typeof action === "function") {
     return action(state);
@@ -39,9 +41,8 @@ function stateReducer<T extends Record<string, unknown>>(
 
 export function useStateReducer<T extends Record<string, unknown>>(
   initialState: T
-): [T, Dispatch<T | ((p: T) => T)>] {
-  return useReducer<(previousState: T, nextState: T | ((p: T) => T)) => T>(
-    stateReducer,
-    initialState
-  );
+): [T, Dispatch<StateReducerActionType<T>>] {
+  return useReducer<
+    (previousState: T, nextState: StateReducerActionType<T>) => T
+  >(stateReducer, initialState);
 }
