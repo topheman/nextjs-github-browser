@@ -273,7 +273,7 @@ export function useSearchRepos(
     if (
       !isEqual(
         cleanupUndefinedValues({ ...searchUrlParams, ...paginationState }),
-        cleanupUndefinedValues(searchUrlParams)
+        cleanupUndefinedValues({ ...searchBarState, ...paginationState })
       )
     ) {
       const newSearchBarState = onlyParams<SearchParamsType>(
