@@ -13,6 +13,7 @@ module.exports = {
     jest: true,
   },
   extends: [
+    "next",
     "airbnb",
     "plugin:@typescript-eslint/recommended",
     "plugin:react/recommended",
