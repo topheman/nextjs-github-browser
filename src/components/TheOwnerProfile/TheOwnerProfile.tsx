@@ -97,7 +97,10 @@ export default function TheOwnerProfile({
             <AppUserProfileOverview
               user={user}
               profileReadme={
-                (profileReadmeResult?.data?.profileReadme?.object as Blob)?.text
+                // README.md for profile might be on a main or master branch
+                ((profileReadmeResult?.data?.profileReadme?.main ||
+                  profileReadmeResult?.data?.profileReadme?.master) as Blob)
+                  ?.text
               }
             />
           ),

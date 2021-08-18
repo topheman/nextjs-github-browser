@@ -1,6 +1,12 @@
 query GetProfileReadme($owner: String!) {
   profileReadme: repository(owner: $owner, name: $owner) {
-    object(expression: "master:README.md") {
+    # README.md for profile might be on a main or master branch
+    master: object(expression: "master:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+    main: object(expression: "main:README.md") {
       ... on Blob {
         text
       }

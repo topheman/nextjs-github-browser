@@ -19776,7 +19776,10 @@ export type GetProfileReadmeQuery = (
   { __typename?: 'Query' }
   & { profileReadme?: Maybe<(
     { __typename?: 'Repository' }
-    & { object?: Maybe<(
+    & { master?: Maybe<(
+      { __typename?: 'Blob' }
+      & Pick<Blob, 'text'>
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, main?: Maybe<(
       { __typename?: 'Blob' }
       & Pick<Blob, 'text'>
     ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }> }
@@ -19974,7 +19977,12 @@ export const UserInfosFragmentDoc = gql`
 export const GetProfileReadmeDocument = gql`
     query GetProfileReadme($owner: String!) {
   profileReadme: repository(owner: $owner, name: $owner) {
-    object(expression: "master:README.md") {
+    master: object(expression: "master:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+    main: object(expression: "main:README.md") {
       ... on Blob {
         text
       }
