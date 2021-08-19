@@ -1,12 +1,12 @@
 import { RepoIcon } from "@primer/octicons-react";
 
 import AppTag from "../AppTag/AppTag";
-import { PinnableItem } from "../../libs/graphql";
+import { PinnedItemInfosFragment } from "../../libs/graphql";
 import { isRepository } from "../../utils/type-guards";
 
 export type AppPinnedItemProps = {
   ownerLogin: string;
-  item: PinnableItem;
+  item: PinnedItemInfosFragment;
 };
 
 export default function AppPinnedItem({

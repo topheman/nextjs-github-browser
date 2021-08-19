@@ -1,0 +1,10 @@
+fragment PinnedItemInfos on Repository {
+  name
+  description
+  primaryLanguage {
+    name
+    color
+  }
+  stargazerCount
+  forkCount
+}

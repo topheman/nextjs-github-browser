@@ -19710,6 +19710,15 @@ export type OrganizationInfosFragment = (
   ) }
 );
 
+export type PinnedItemInfosFragment = (
+  { __typename?: 'Repository' }
+  & Pick<Repository, 'name' | 'description' | 'stargazerCount' | 'forkCount'>
+  & { primaryLanguage?: Maybe<(
+    { __typename?: 'Language' }
+    & Pick<Language, 'name' | 'color'>
+  )> }
+);
+
 export type SearchReposFragment = (
   { __typename?: 'Query' }
   & { searchRepos: (
@@ -19820,19 +19829,22 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
     & OrganizationInfosFragment
   ) | (
     { __typename?: 'User' }
-    & { pinnedItems: (
+    & { pinnedRepositories: (
       { __typename?: 'PinnableItemConnection' }
       & { nodes?: Maybe<Array<Maybe<{ __typename?: 'Gist' } | (
         { __typename?: 'Repository' }
-        & Pick<Repository, 'name' | 'description' | 'stargazerCount' | 'forkCount'>
-        & { primaryLanguage?: Maybe<(
-          { __typename?: 'Language' }
-          & Pick<Language, 'name' | 'color'>
-        )> }
+        & PinnedItemInfosFragment
       )>>> }
-    ), repositories: (
+    ), popularRepositories: (
       { __typename?: 'RepositoryConnection' }
       & Pick<RepositoryConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'RepositoryEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Repository' }
+          & PinnedItemInfosFragment
+        )> }
+      )>>> }
     ) }
     & UserInfosFragment
   )> }
@@ -19899,6 +19911,18 @@ export const OrganizationInfosFragmentDoc = gql`
   allRepos: repositories(first: 1) {
     totalCount
   }
+}
+    `;
+export const PinnedItemInfosFragmentDoc = gql`
+    fragment PinnedItemInfos on Repository {
+  name
+  description
+  primaryLanguage {
+    name
+    color
+  }
+  stargazerCount
+  forkCount
 }
     `;
 export const SearchReposFragmentDoc = gql`
@@ -20029,21 +20053,22 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
   repositoryOwner(login: $owner) {
     ... on User {
       ...UserInfos
-      pinnedItems(first: 6, types: REPOSITORY) {
+      pinnedRepositories: pinnedItems(first: 6, types: REPOSITORY) {
         nodes {
           ... on Repository {
-            name
-            description
-            primaryLanguage {
-              name
-              color
-            }
-            stargazerCount
-            forkCount
+            ...PinnedItemInfos
           }
         }
       }
-      repositories(first: 1) {
+      popularRepositories: repositories(
+        first: 6
+        orderBy: {field: STARGAZERS, direction: DESC}
+      ) {
+        edges {
+          node {
+            ...PinnedItemInfos
+          }
+        }
         totalCount
       }
     }
@@ -20073,6 +20098,7 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
   }
 }
     ${UserInfosFragmentDoc}
+${PinnedItemInfosFragmentDoc}
 ${OrganizationInfosFragmentDoc}`;
 
 /**

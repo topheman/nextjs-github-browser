@@ -4,6 +4,7 @@ import {
   useGetRepositoryOwnerWithRepositoriesQuery,
   useGetProfileReadmeQuery,
   Blob,
+  PinnedItemInfosFragment,
 } from "../../libs/graphql";
 import { isUser, isOrganization } from "../../utils/type-guards";
 import {
@@ -102,6 +103,12 @@ export default function TheOwnerProfile({
                   profileReadmeResult?.data?.profileReadme?.master) as Blob)
                   ?.text
               }
+              pinnedRepositories={user.pinnedRepositories?.nodes?.map(
+                (repo) => repo as PinnedItemInfosFragment
+              )}
+              popularRepositories={user.popularRepositories.edges?.map(
+                (edge) => edge?.node as PinnedItemInfosFragment
+              )}
             />
           ),
         })}
