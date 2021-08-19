@@ -19716,6 +19716,9 @@ export type PinnedItemInfosFragment = (
   & { primaryLanguage?: Maybe<(
     { __typename?: 'Language' }
     & Pick<Language, 'name' | 'color'>
+  )>, parent?: Maybe<(
+    { __typename?: 'Repository' }
+    & Pick<Repository, 'nameWithOwner'>
   )> }
 );
 
@@ -19752,7 +19755,10 @@ export type SearchReposFragment = (
         )>, issues: (
           { __typename?: 'IssueConnection' }
           & Pick<IssueConnection, 'totalCount'>
-        ) }
+        ), parent?: Maybe<(
+          { __typename?: 'Repository' }
+          & Pick<Repository, 'nameWithOwner'>
+        )> }
       ) | { __typename?: 'User' }> }
     )>>> }
   ) }
@@ -19923,6 +19929,9 @@ export const PinnedItemInfosFragmentDoc = gql`
   }
   stargazerCount
   forkCount
+  parent {
+    nameWithOwner
+  }
 }
     `;
 export const SearchReposFragmentDoc = gql`
@@ -19965,6 +19974,9 @@ export const SearchReposFragmentDoc = gql`
           }
           name
           description
+          parent {
+            nameWithOwner
+          }
         }
       }
       cursor

@@ -25,7 +25,9 @@ export default function AppPinnedItem({
         </a>
       </div>
       <p className="mt-1 mb-1 h-[32px] text-xs text-secondary">
-        {item.description}
+        {item.description ||
+          (item.parent?.nameWithOwner &&
+            `Forked from ${item.parent?.nameWithOwner}`)}
       </p>
       <p>
         <AppTag

@@ -37,6 +37,9 @@ fragment SearchRepos on Query {
           }
           name
           description
+          parent {
+            nameWithOwner
+          }
         }
       }
       cursor
