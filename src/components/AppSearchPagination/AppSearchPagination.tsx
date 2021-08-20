@@ -34,7 +34,11 @@ export default function AppSearchPagination({
         }}
       >
         <a
-          className={`${!hasPreviousPage ? "text-secondary" : ""}`}
+          className={`${
+            !hasPreviousPage
+              ? "text-brand-primary-light cursor-not-allowed"
+              : "text-brand-primary"
+          }`}
           onClick={(e) => {
             e.preventDefault();
             if (hasPreviousPage && startCursor && !loading)
@@ -59,7 +63,11 @@ export default function AppSearchPagination({
         }}
       >
         <a
-          className={`${!hasNextPage ? "text-secondary" : ""}`}
+          className={`${
+            !hasNextPage
+              ? "text-brand-primary-light cursor-not-allowed"
+              : "text-brand-primary"
+          }`}
           onClick={(e) => {
             e.preventDefault();
             if (hasNextPage && endCursor && !loading)
