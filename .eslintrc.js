@@ -94,5 +94,6 @@ module.exports = {
     "jest-dom/prefer-enabled-disabled": "error",
     "jest-dom/prefer-required": "error",
     "jest-dom/prefer-to-have-attribute": "error",
+    "jsx-a11y/click-events-have-key-events": "off",
   },
 };

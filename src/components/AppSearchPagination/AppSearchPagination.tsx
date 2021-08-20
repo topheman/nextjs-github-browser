@@ -1,3 +1,6 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
+
 import { decodeBase64 } from "../../utils/common";
 import { PaginationParamsType } from "../../utils/github";
 import { PageInfo } from "../../libs/graphql";
@@ -16,33 +19,60 @@ export default function AppSearchPagination({
   loading,
   onUpdate,
 }: AppSearchPaginationProps): JSX.Element {
+  const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { before, after, page, ...rest } = router.query;
   return (
-    <div className="">
-      <p>
-        <button
+    <div>
+      <Link
+        href={{
+          pathname: "/[owner]",
+          query: {
+            ...rest,
+            before: startCursor,
+          },
+        }}
+      >
+        <a
           className={`${!hasPreviousPage ? "text-secondary" : ""}`}
-          type="button"
-          onClick={() => {
-            if (startCursor)
+          onClick={(e) => {
+            e.preventDefault();
+            if (hasPreviousPage && startCursor && !loading)
               onUpdate({ before: startCursor, after: undefined });
           }}
-          disabled={!hasPreviousPage}
+          role="button"
+          tabIndex={0}
+          data-start-cursor={startCursor}
+          data-start-cursor-decoded={decodeBase64(startCursor)}
         >
-          &lt; Previous {startCursor} ({decodeBase64(startCursor)})
-        </button>{" "}
-        -{" "}
-        <button
+          Previous
+        </a>
+      </Link>
+      <span>{loading ? "..." : " . "}</span>
+      <Link
+        href={{
+          pathname: "/[owner]",
+          query: {
+            ...rest,
+            after: endCursor,
+          },
+        }}
+      >
+        <a
           className={`${!hasNextPage ? "text-secondary" : ""}`}
-          type="button"
-          onClick={() => {
-            if (endCursor) onUpdate({ after: endCursor, before: undefined });
+          onClick={(e) => {
+            e.preventDefault();
+            if (hasNextPage && endCursor && !loading)
+              onUpdate({ after: endCursor, before: undefined });
           }}
-          disabled={!hasNextPage}
+          role="button"
+          tabIndex={0}
+          data-end-cursor={endCursor}
+          data-end-cursor-decoded={decodeBase64(endCursor)}
         >
-          {endCursor} ({decodeBase64(endCursor)}) Next &gt;
-        </button>
-        {loading ? " ..." : ""}
-      </p>
+          Next
+        </a>
+      </Link>
     </div>
   );
 }
