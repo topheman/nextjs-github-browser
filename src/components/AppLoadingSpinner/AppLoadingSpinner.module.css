@@ -1,0 +1,57 @@
+.root {
+  --custom-width: 800px;
+  --calculated-height: calc(var(--custom-width) * 0.1625);
+  --custom-color: #900000;
+  display: inline-block;
+  position: relative;
+  width: var(--custom-width);
+  height: var(--calculated-height);
+}
+.root div {
+  position: absolute;
+  width: var(--calculated-height);
+  height: var(--calculated-height);
+  border-radius: 50%;
+  background: var(--custom-color);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.root div:nth-child(1) {
+  left: calc(var(--custom-width) * 0.1);
+  animation: anim1 0.6s infinite;
+}
+.root div:nth-child(2) {
+  left: calc(var(--custom-width) * 0.1);
+  animation: anim2 0.6s infinite;
+}
+.root div:nth-child(3) {
+  left: calc(var(--custom-width) * 0.4);
+  animation: anim2 0.6s infinite;
+}
+.root div:nth-child(4) {
+  left: calc(var(--custom-width) * 0.7);
+  animation: anim3 0.6s infinite;
+}
+@keyframes anim1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes anim3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes anim2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(calc(var(--custom-width) * 0.3), 0);
+  }
+}
