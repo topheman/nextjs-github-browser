@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { decodeBase64 } from "../../utils/common";
 import { PaginationParamsType } from "../../utils/github";
 import { PageInfo } from "../../libs/graphql";
+import AppLoadingSpinner from "../AppLoadingSpinner/AppLoadingSpinner";
 
 export type AppSearchPaginationProps = {
   onUpdate: ({ after, before }: PaginationParamsType) => void;
@@ -23,7 +24,7 @@ export default function AppSearchPagination({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { before, after, page, ...rest } = router.query;
   return (
-    <div>
+    <div className="flex">
       <Link
         href={{
           pathname: "/[owner]",
@@ -34,7 +35,7 @@ export default function AppSearchPagination({
         }}
       >
         <a
-          className={`${
+          className={`border p-1 rounded-l ${
             !hasPreviousPage
               ? "text-brand-primary-light cursor-not-allowed"
               : "text-brand-primary"
@@ -52,7 +53,13 @@ export default function AppSearchPagination({
           Previous
         </a>
       </Link>
-      <span>{loading ? "..." : " . "}</span>
+      <div className="p-1 w-14 text-center border-t border-b border-brand-primary">
+        {loading ? (
+          <AppLoadingSpinner width={50} />
+        ) : (
+          <span style={{ width: 50 }} />
+        )}
+      </div>
       <Link
         href={{
           pathname: "/[owner]",
@@ -63,7 +70,7 @@ export default function AppSearchPagination({
         }}
       >
         <a
-          className={`${
+          className={`border p-1 rounded-r ${
             !hasNextPage
               ? "text-brand-primary-light cursor-not-allowed"
               : "text-brand-primary"
