@@ -27,7 +27,7 @@ export default function AppUserProfile({
             {sidebar}
           </div>
           <div className="md:hidden px-3 border-b border-light">{nav}</div>
-          <div className="mt-5 w-full md:w-3/4">{main}</div>
+          <div className="p-4 w-full md:w-3/4">{main}</div>
         </div>
       </div>
     </>
