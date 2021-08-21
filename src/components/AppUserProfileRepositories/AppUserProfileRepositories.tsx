@@ -28,14 +28,16 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           onUpdate={setSearchBarState}
           clearPaginationFilter={clearPaginationFilter}
           params={searchBarState}
+          className="pb-4 mb-4 border-b border-light"
         />
       </div>
-      <div>
+      <div className="text-center">
         {data?.searchRepos.pageInfo && (
           <AppSearchPagination
             loading={loading}
             onUpdate={setPaginationState}
             pageInfo={data?.searchRepos.pageInfo}
+            className="inline-block"
           />
         )}
       </div>

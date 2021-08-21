@@ -9,15 +9,17 @@ export type AppSearchBarRepositoriesProps = {
   onUpdate: SetReducerStateType<Partial<Record<"sort" | "type" | "q", string>>>;
   clearPaginationFilter: () => void;
   params: SearchParamsType;
+  className?: string;
 };
 
 export default function AppSearchBarRepositories({
   onUpdate,
   clearPaginationFilter,
   params: { type, sort, q },
+  className,
 }: AppSearchBarRepositoriesProps): JSX.Element {
   return (
-    <div className="flex flex-row w-full">
+    <div className={`${className} flex flex-row w-full`}>
       <input
         type="text"
         placeholder="Find a repository..."
