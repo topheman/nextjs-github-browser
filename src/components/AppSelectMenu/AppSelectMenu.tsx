@@ -52,7 +52,7 @@ export default function AppSelectMenu<T extends string | number>({
   }, [open]);
   return (
     <>
-      <div className="relative">
+      <div className="sm:relative">
         <button
           ref={buttonRef}
           type="button"
@@ -65,7 +65,7 @@ export default function AppSelectMenu<T extends string | number>({
         <div
           className={`${
             !open ? "hidden" : ""
-          } overflow-hidden mt-1 right-0 absolute text-sm text-primary bg-primary rounded-md border border-light w-72`}
+          } overflow-hidden sm:mt-1 sm:right-0 top-1/2 sm:top-auto left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0 sm:absolute fixed text-lg sm:text-sm text-primary bg-primary rounded-md border border-light sm:w-72 w-11/12`}
         >
           {menuLabel ? (
             <header className="flex pl-1 w-full border-b border-light">
