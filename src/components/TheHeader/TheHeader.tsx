@@ -17,8 +17,11 @@ const links = [
   ["/facebook", "/facebook"],
   ["/facebook/react", "/facebook/react"],
   ["/a", "/a (no profile readme)"],
+  process.env.NODE_ENV === "production"
+    ? ["/explore/storybook/index.html", "explore storybook"]
+    : null,
   ["/about", "About"],
-];
+].filter(Boolean);
 
 export default function TheHeader(): JSX.Element {
   const [showDrawer, setShowDrawer] = useState(false);
