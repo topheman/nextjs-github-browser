@@ -6,6 +6,7 @@ body.default-mode {
   --color-brand-secondary: #eee;
   --color-text-primary: black;
   --color-text-secondary: #586069;
+  --color-text-brand-primary: #900000;
   --color-bg-primary: white;
   --color-bg-primary-active: #ebecf0;
   --color-bg-primary-hover: #f3f4f6;
@@ -24,7 +25,8 @@ body.dark-mode {
   --color-brand-secondary: #eee;
   --color-text-primary: white;
   --color-text-secondary: #8b949e;
-  --color-bg-primary: black;
+  --color-text-brand-primary: #ff3030;
+  --color-bg-primary: #0d1117;
   --color-bg-primary-active: rgb(63, 63, 63);
   --color-bg-primary-hover: rgb(63, 63, 63);
   --color-bg-primary-focus: rgb(63, 63, 63);
@@ -33,7 +35,7 @@ body.dark-mode {
   --color-border-primary-hover: white;
   --color-border-primary-focus: white;
   --color-border-secondary: darkgray;
-  --color-border-light: #d8d8d8;
+  --color-border-light: #8b949e;
 }
 
 @tailwind base;

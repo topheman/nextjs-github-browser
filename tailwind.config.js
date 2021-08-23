@@ -19,6 +19,7 @@ module.exports = {
     },
     textColor: {
       ...brandColors,
+      "brand-primary": "var(--color-text-brand-primary)",
       white: "white",
       primary: "var(--color-text-primary)",
       secondary: "var(--color-text-secondary)",

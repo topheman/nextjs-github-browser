@@ -37,7 +37,7 @@ export default function AppProfileNavTab({
     },
   ];
   return (
-    <nav className="flex">
+    <nav className="flex text-primary">
       {links.map(({ label, icon: Icon, badge, tab }) => {
         const Component: TabComponent = tab
           ? ({ children, className, ...props }) => (
