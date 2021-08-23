@@ -27,7 +27,7 @@ export default function AppSearchPagination({
   const { before, after, page, ...rest } = router.query;
   return (
     <div className={className || ""}>
-      <div className="flex">
+      <div className="flex text-brand-primary">
         <Link
           href={{
             pathname: "/[owner]",
@@ -39,9 +39,7 @@ export default function AppSearchPagination({
         >
           <a
             className={`border p-1 rounded-l ${
-              !hasPreviousPage
-                ? "text-brand-primary-light cursor-not-allowed"
-                : "text-brand-primary"
+              !hasPreviousPage ? "cursor-not-allowed" : ""
             }`}
             onClick={(e) => {
               e.preventDefault();
@@ -53,10 +51,12 @@ export default function AppSearchPagination({
             data-start-cursor={startCursor}
             data-start-cursor-decoded={decodeBase64(startCursor)}
           >
-            Previous
+            <span className={!hasPreviousPage ? "opacity-40" : ""}>
+              Previous
+            </span>
           </a>
         </Link>
-        <div className="p-1 w-14 text-center border-t border-b border-brand-primary">
+        <div className="p-1 w-14 text-center border-t border-b">
           {loading ? (
             <AppLoadingSpinner width={50} />
           ) : (
@@ -74,9 +74,7 @@ export default function AppSearchPagination({
         >
           <a
             className={`border p-1 rounded-r ${
-              !hasNextPage
-                ? "text-brand-primary-light cursor-not-allowed"
-                : "text-brand-primary"
+              !hasNextPage ? "cursor-not-allowed" : ""
             }`}
             onClick={(e) => {
               e.preventDefault();
@@ -88,7 +86,7 @@ export default function AppSearchPagination({
             data-end-cursor={endCursor}
             data-end-cursor-decoded={decodeBase64(endCursor)}
           >
-            Next
+            <span className={!hasNextPage ? "opacity-40" : ""}>Next</span>
           </a>
         </Link>
       </div>

@@ -1,7 +1,7 @@
 .root {
   --custom-width: 800px;
   --calculated-height: calc(var(--custom-width) * 0.1625);
-  --custom-color: #900000;
+  --custom-color: var(--color-text-brand-primary);
   display: inline-block;
   position: relative;
   width: var(--custom-width);

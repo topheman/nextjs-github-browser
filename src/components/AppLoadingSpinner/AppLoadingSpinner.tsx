@@ -10,7 +10,7 @@ export type AppLoadingSpinnerProps = {
 
 AppLoadingSpinner.defaultProps = {
   width: "100px",
-  color: "#900000",
+  color: "var(--color-text-brand-primary)",
 } as AppLoadingSpinnerProps;
 
 export default function AppLoadingSpinner({
