@@ -8,7 +8,7 @@ import Link from "next/link";
 
 type AllowedType = "stargazers" | "forks" | "issues" | "pulls";
 
-export type AppTagProps = {
+export type AppTagCountProps = {
   nameWithOwner: string;
   type: AllowedType;
   count?: number | string;
@@ -22,16 +22,16 @@ const iconMapping: Record<AllowedType, [typeof StarIcon, string]> = {
   pulls: [GitPullRequestIcon, "/pulls"],
 };
 
-AppTag.defaultProps = {
+AppTagCount.defaultProps = {
   className: "",
 };
 
-export default function AppTag({
+export default function AppTagCount({
   nameWithOwner,
   type,
   count,
   className,
-}: AppTagProps): JSX.Element | null {
+}: AppTagCountProps): JSX.Element | null {
   if (count === undefined || count === null) {
     return null;
   }

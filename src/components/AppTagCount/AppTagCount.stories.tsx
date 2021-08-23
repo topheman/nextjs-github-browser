@@ -1,14 +1,14 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import AppTag, { AppTagProps } from "./AppTag";
+import AppTagCount, { AppTagCountProps } from "./AppTagCount";
 
 export default {
-  title: "AppTag",
-  component: AppTag,
+  title: "AppTagCount",
+  component: AppTagCount,
 } as Meta;
 
-const Template: Story<AppTagProps> = (args) => <AppTag {...args} />;
+const Template: Story<AppTagCountProps> = (args) => <AppTagCount {...args} />;
 
 export const Base = Template.bind({});
 Base.parameters = {};

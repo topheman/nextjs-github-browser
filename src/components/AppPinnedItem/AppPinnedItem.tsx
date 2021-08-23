@@ -1,6 +1,6 @@
 import { RepoIcon } from "@primer/octicons-react";
 
-import AppTag from "../AppTag/AppTag";
+import AppTagCount from "../AppTagCount/AppTagCount";
 import { PinnedItemInfosFragment } from "../../libs/graphql";
 import { isRepository } from "../../utils/type-guards";
 
@@ -28,13 +28,13 @@ export default function AppPinnedItem({
             `Forked from ${repository.parent?.nameWithOwner}`)}
       </p>
       <p>
-        <AppTag
+        <AppTagCount
           nameWithOwner={repository.nameWithOwner}
           type="stargazers"
           count={repository.stargazerCount}
         />
         {isRepository(repository) ? (
-          <AppTag
+          <AppTagCount
             nameWithOwner={repository.nameWithOwner}
             type="forks"
             count={repository.forkCount}
