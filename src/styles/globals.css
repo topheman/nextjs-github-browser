@@ -18,7 +18,7 @@ body.default-mode {
   --color-border-light: #d8d8d8;
 }
 body.dark-mode {
-  --color-bg-canvas: black;
+  --color-bg-canvas: #0d1117;
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
@@ -42,6 +42,7 @@ body.dark-mode {
 
 body {
   font-family: Roboto, Arial, sans-serif;
+  background-color: var(--color-bg-canvas);
 }
 
 .markdown-body img,
