@@ -20,7 +20,7 @@ export default function AppDarkModeSwitch(): JSX.Element {
       <input
         id="dark-mode-switch"
         type="checkbox"
-        onInput={() => setDarkMode(!darkMode)}
+        onChange={() => setDarkMode(!darkMode)}
         checked={darkMode}
       />{" "}
       Dark mode
