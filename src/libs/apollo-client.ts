@@ -30,7 +30,13 @@ const makeHttpLink = (uri: string): HttpLink =>
 let link: ApolloLink;
 // ssr mode - calling the serverless endpoint with an absolute url
 if (typeof window === "undefined") {
-  link = makeHttpLink("http://localhost:3000/api/github/graphql");
+  let baseUrl;
+  if (process.env.VERCEL_URL) {
+    baseUrl = `https://${process.env.VERCEL_URL}`;
+  } else {
+    baseUrl = "http://localhost:3000";
+  }
+  link = makeHttpLink(`${baseUrl}/api/github/graphql`);
 } else {
   // client-side mode
   // Only generate this code in storybook mode (passing directly through google apis / not via /api/github/graphql proxy)
