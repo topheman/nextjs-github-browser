@@ -13,8 +13,7 @@ const Template: Story<AppTagProps> = (args) => <AppTag {...args} />;
 export const Base = Template.bind({});
 Base.parameters = {};
 Base.args = {
-  ownerLogin: "topheman",
-  repositoryName: "nextjs-github-browser",
+  nameWithOwner: "topheman/nextjs-github-browser",
   count: 12,
   type: "stargazers",
 };

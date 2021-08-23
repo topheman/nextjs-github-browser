@@ -38,11 +38,7 @@ export default function AppUserProfileOverview({
           ).map((item) => (
             <li className="flex p-2 w-full md:w-1/2" key={item.name}>
               <BaseBox className="px-4 pt-4 pb-2 w-full">
-                <AppPinnedItem
-                  item={item}
-                  key={item.name}
-                  ownerLogin={user.login}
-                />
+                <AppPinnedItem repository={item} key={item.name} />
               </BaseBox>
             </li>
           ))}

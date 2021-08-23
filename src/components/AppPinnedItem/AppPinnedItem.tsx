@@ -5,43 +5,39 @@ import { PinnedItemInfosFragment } from "../../libs/graphql";
 import { isRepository } from "../../utils/type-guards";
 
 export type AppPinnedItemProps = {
-  ownerLogin: string;
-  item: PinnedItemInfosFragment;
+  repository: PinnedItemInfosFragment;
 };
 
 export default function AppPinnedItem({
-  ownerLogin,
-  item,
+  repository,
 }: AppPinnedItemProps): JSX.Element {
   return (
     <div className="flex flex-col">
       <div className="flex items-center">
         <RepoIcon className="mr-1" />
         <a
-          href={`/${ownerLogin}/${item.name}`}
+          href={`/${repository.nameWithOwner}`}
           className="font-medium text-brand-primary hover:underline"
         >
-          {item.name}
+          {repository.name}
         </a>
       </div>
       <p className="mt-1 mb-1 h-[32px] text-xs text-secondary">
-        {item.description ||
-          (item.parent?.nameWithOwner &&
-            `Forked from ${item.parent?.nameWithOwner}`)}
+        {repository.description ||
+          (repository.parent?.nameWithOwner &&
+            `Forked from ${repository.parent?.nameWithOwner}`)}
       </p>
       <p>
         <AppTag
-          ownerLogin={ownerLogin}
-          repositoryName={item.name}
+          nameWithOwner={repository.nameWithOwner}
           type="stargazers"
-          count={item.stargazerCount}
+          count={repository.stargazerCount}
         />
-        {isRepository(item) ? (
+        {isRepository(repository) ? (
           <AppTag
-            ownerLogin={ownerLogin}
-            repositoryName={item.name}
+            nameWithOwner={repository.nameWithOwner}
             type="forks"
-            count={item.forkCount}
+            count={repository.forkCount}
             className="ml-2"
           />
         ) : null}

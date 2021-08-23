@@ -19712,7 +19712,7 @@ export type OrganizationInfosFragment = (
 
 export type PinnedItemInfosFragment = (
   { __typename?: 'Repository' }
-  & Pick<Repository, 'name' | 'description' | 'stargazerCount' | 'forkCount'>
+  & Pick<Repository, 'name' | 'description' | 'stargazerCount' | 'forkCount' | 'nameWithOwner'>
   & { primaryLanguage?: Maybe<(
     { __typename?: 'Language' }
     & Pick<Language, 'name' | 'color'>
@@ -19931,6 +19931,7 @@ export const PinnedItemInfosFragmentDoc = gql`
   }
   stargazerCount
   forkCount
+  nameWithOwner
   parent {
     nameWithOwner
   }

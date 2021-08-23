@@ -9,8 +9,7 @@ import Link from "next/link";
 type AllowedType = "stargazers" | "forks" | "issues" | "pulls";
 
 export type AppTagProps = {
-  ownerLogin: string;
-  repositoryName: string;
+  nameWithOwner: string;
   type: AllowedType;
   count?: number | string;
   className?: string;
@@ -28,8 +27,7 @@ AppTag.defaultProps = {
 };
 
 export default function AppTag({
-  ownerLogin,
-  repositoryName,
+  nameWithOwner,
   type,
   count,
   className,
@@ -39,7 +37,7 @@ export default function AppTag({
   }
   const [Icon, relativePath] = iconMapping[type];
   return (
-    <Link href={`/${ownerLogin}/${repositoryName}${relativePath}`}>
+    <Link href={`/${nameWithOwner}${relativePath}`}>
       <a
         className={`text-xs text-secondary hover:text-brand-primary ${className}`}
       >
