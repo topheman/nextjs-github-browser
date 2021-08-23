@@ -1,0 +1,52 @@
+# Prevent duplicate content (the goal of this project is an open source technical challenge,
+# not to take the place of github.com website)
+# Not disallowing social media crawlers, so that they could make thumbnails (part of the technical challenge - SSR)
+#
+# User agents from https://www.keycdn.com/blog/web-crawlers
+#
+# Inspired by https://github.com/topheman/nextjs-movie-browser/blob/master/static/robots.txt
+
+User-agent: googlebot
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: bingbot
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: slurp
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: duckduckbot
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: baiduspider
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: yandexbot
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: exabot
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: ia_archiver
+Allow: /$
+Allow: /about
+Disallow: /
+
+User-agent: sogou
+Allow: /$
+Allow: /about
+Disallow: /
