@@ -5,6 +5,7 @@ import "@reach/dialog/styles.css";
 
 import HamburgerIcon from "../icons/HamburgerIcon";
 import CloseIcon from "../icons/CloseIcon";
+import AppDarkModeSwitch from "../AppDarkModeSwitch/AppDarkModeSwitch";
 
 type LinkOptionsType = {
   target?: "_blank";
@@ -50,6 +51,7 @@ export default function TheHeader(): JSX.Element {
           <h1 className="m-2 text-brand-secondary">
             <Link href="/">nextjs-github-browser</Link>
           </h1>
+          <AppDarkModeSwitch />
         </div>
       </header>
       <DialogOverlay isOpen={showDrawer} onDismiss={close}>

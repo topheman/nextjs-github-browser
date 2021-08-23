@@ -14,11 +14,12 @@ export const Base = Template.bind({});
 Base.parameters = {};
 Base.args = {
   children: "Hello",
+  className: "text-primary",
 };
 
 export const OverrideClassName = Template.bind({});
 OverrideClassName.parameters = {};
 OverrideClassName.args = {
   children: "Hello",
-  className: "p-4",
+  className: "text-primary p-4",
 };

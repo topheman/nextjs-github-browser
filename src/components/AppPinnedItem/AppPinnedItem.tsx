@@ -14,7 +14,7 @@ export default function AppPinnedItem({
   return (
     <div className="flex flex-col">
       <div className="flex items-center">
-        <RepoIcon className="mr-1" />
+        <RepoIcon className="mr-1 text-secondary" />
         <a
           href={`/${repository.nameWithOwner}`}
           className="font-medium text-brand-primary hover:underline"
