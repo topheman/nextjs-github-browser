@@ -6,21 +6,29 @@ import "@reach/dialog/styles.css";
 import HamburgerIcon from "../icons/HamburgerIcon";
 import CloseIcon from "../icons/CloseIcon";
 
-const links = [
-  ["/", "Home"],
-  ["/topheman", "/topheman"],
-  ["/topheman?tab=repositories", "/topheman?tab=repositories"],
-  ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser"],
-  ["/warpdesign", "/warpdesign"],
-  ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories"],
-  ["/warpdesign/react-explorer", "/warpdesign/react-explorer"],
-  ["/facebook", "/facebook"],
-  ["/facebook/react", "/facebook/react"],
-  ["/a", "/a (no profile readme)"],
+type LinkOptionsType = {
+  target?: "_blank";
+};
+
+const links: [string, string, LinkOptionsType][] = [
+  ["/", "Home", {}],
+  ["/topheman", "/topheman", {}],
+  ["/topheman?tab=repositories", "/topheman?tab=repositories", {}],
+  ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser", {}],
+  ["/warpdesign", "/warpdesign", {}],
+  ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories", {}],
+  ["/warpdesign/react-explorer", "/warpdesign/react-explorer", {}],
+  ["/facebook", "/facebook", {}],
+  ["/facebook/react", "/facebook/react", {}],
+  ["/a", "/a (no profile readme)", {}],
   process.env.NODE_ENV === "production"
-    ? ["/explore/storybook/index.html", "explore storybook"]
+    ? [
+        "/explore/storybook/index.html",
+        "explore storybook",
+        { target: "_blank" },
+      ]
     : null,
-  ["/about", "About"],
+  ["/about", "About", {}],
 ].filter(Boolean);
 
 export default function TheHeader(): JSX.Element {
@@ -63,9 +71,11 @@ export default function TheHeader(): JSX.Element {
             >
               <CloseIcon className="inline-block w-6 h-6 text-center fill-current" />
             </button>
-            {links.map(([href, title]) => (
+            {links.map(([href, title, options]) => (
               <li key={href} className="list-none hover:text-secondary">
-                <Link href={href}>{title}</Link>
+                <Link href={href}>
+                  <a {...options}>{title}</a>
+                </Link>
               </li>
             ))}
           </div>
