@@ -17,18 +17,20 @@ fragment SearchRepos on Query {
     edges {
       node {
         ... on Repository {
-          languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+          primaryLanguage {
+            color
+            name
+          }
+          repositoryTopics(first: 10) {
             edges {
-              size
               node {
-                name
-                color
+                topic {
+                  name
+                }
               }
             }
           }
-          stargazers {
-            totalCount
-          }
+          stargazerCount
           licenseInfo {
             name
           }
@@ -36,7 +38,9 @@ fragment SearchRepos on Query {
             totalCount
           }
           name
+          nameWithOwner
           description
+          updatedAt
           parent {
             nameWithOwner
           }

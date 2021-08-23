@@ -4,6 +4,7 @@ import { decodeBase64 } from "../../utils/common";
 import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
+import AppRepositoryListItem from "../AppRepositoryListItem/AppRepositoryListItem";
 import { useSearchRepos, extractSearchUrlParams } from "../../utils/github";
 
 export type AppUserProfileRepositoriesProps = never;
@@ -54,7 +55,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           <ul>
             {data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>
-                {(repo?.node as Repository).name}
+                <AppRepositoryListItem repository={repo?.node as Repository} />
               </li>
             ))}
           </ul>

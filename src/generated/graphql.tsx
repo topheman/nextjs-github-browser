@@ -19735,20 +19735,22 @@ export type SearchReposFragment = (
       & Pick<SearchResultItemEdge, 'cursor'>
       & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
         { __typename?: 'Repository' }
-        & Pick<Repository, 'name' | 'description'>
-        & { languages?: Maybe<(
-          { __typename?: 'LanguageConnection' }
+        & Pick<Repository, 'stargazerCount' | 'name' | 'nameWithOwner' | 'description' | 'updatedAt'>
+        & { primaryLanguage?: Maybe<(
+          { __typename?: 'Language' }
+          & Pick<Language, 'color' | 'name'>
+        )>, repositoryTopics: (
+          { __typename?: 'RepositoryTopicConnection' }
           & { edges?: Maybe<Array<Maybe<(
-            { __typename?: 'LanguageEdge' }
-            & Pick<LanguageEdge, 'size'>
-            & { node: (
-              { __typename?: 'Language' }
-              & Pick<Language, 'name' | 'color'>
-            ) }
+            { __typename?: 'RepositoryTopicEdge' }
+            & { node?: Maybe<(
+              { __typename?: 'RepositoryTopic' }
+              & { topic: (
+                { __typename?: 'Topic' }
+                & Pick<Topic, 'name'>
+              ) }
+            )> }
           )>>> }
-        )>, stargazers: (
-          { __typename?: 'StargazerConnection' }
-          & Pick<StargazerConnection, 'totalCount'>
         ), licenseInfo?: Maybe<(
           { __typename?: 'License' }
           & Pick<License, 'name'>
@@ -19954,18 +19956,20 @@ export const SearchReposFragmentDoc = gql`
     edges {
       node {
         ... on Repository {
-          languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+          primaryLanguage {
+            color
+            name
+          }
+          repositoryTopics(first: 10) {
             edges {
-              size
               node {
-                name
-                color
+                topic {
+                  name
+                }
               }
             }
           }
-          stargazers {
-            totalCount
-          }
+          stargazerCount
           licenseInfo {
             name
           }
@@ -19973,7 +19977,9 @@ export const SearchReposFragmentDoc = gql`
             totalCount
           }
           name
+          nameWithOwner
           description
+          updatedAt
           parent {
             nameWithOwner
           }
