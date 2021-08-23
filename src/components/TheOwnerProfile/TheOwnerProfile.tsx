@@ -99,9 +99,7 @@ export default function TheOwnerProfile({
               user={user}
               profileReadme={
                 // README.md for profile might be on a main or master branch
-                ((profileReadmeResult?.data?.profileReadme?.main ||
-                  profileReadmeResult?.data?.profileReadme?.master) as Blob)
-                  ?.text
+                (profileReadmeResult?.data?.profileReadme?.file as Blob)?.text
               }
               pinnedRepositories={user.pinnedRepositories?.nodes?.map(
                 (repo) => repo as PinnedItemInfosFragment
