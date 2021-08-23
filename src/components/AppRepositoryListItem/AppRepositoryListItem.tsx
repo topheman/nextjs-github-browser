@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { DotFillIcon } from "@primer/octicons-react";
 
 import { Repository } from "../../libs/graphql";
+import AppTagLanguage from "../AppTagLanguage/AppTagLanguage";
+import AppTagCount from "../AppTagCount/AppTagCount";
 
 export type AppRepositoryListItemProps = {
   repository: Repository;
@@ -35,19 +36,31 @@ export default function AppRepositoryListItem({
             })}
           </ul>
         ) : null}
-        <ul>
-          {repository.primaryLanguage?.name ? (
-            <li className="text-sm text-secondary">
-              <DotFillIcon
-                fill={repository.primaryLanguage.color || "#900000"}
-                size={24}
-                className="-mr-1 -mb-1"
-              />
-              {repository.primaryLanguage?.name}
+        <ul className="flex text-sm text-secondary">
+          {repository.primaryLanguage ? (
+            <li className="mr-3">
+              <AppTagLanguage primaryLanguage={repository.primaryLanguage} />
             </li>
           ) : null}
           {repository.stargazerCount > 0 ? (
-            <li>{repository.stargazerCount}</li>
+            <li>
+              <AppTagCount
+                nameWithOwner={repository.nameWithOwner}
+                type="stargazers"
+                count={repository.stargazerCount}
+                className="mr-3"
+              />
+            </li>
+          ) : null}
+          {repository.forkCount > 0 ? (
+            <li>
+              <AppTagCount
+                nameWithOwner={repository.nameWithOwner}
+                type="forks"
+                count={repository.forkCount}
+                className="mr-3"
+              />
+            </li>
           ) : null}
         </ul>
       </div>

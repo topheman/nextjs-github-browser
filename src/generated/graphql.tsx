@@ -19735,7 +19735,7 @@ export type SearchReposFragment = (
       & Pick<SearchResultItemEdge, 'cursor'>
       & { node?: Maybe<{ __typename?: 'App' } | { __typename?: 'Issue' } | { __typename?: 'MarketplaceListing' } | { __typename?: 'Organization' } | { __typename?: 'PullRequest' } | (
         { __typename?: 'Repository' }
-        & Pick<Repository, 'stargazerCount' | 'name' | 'nameWithOwner' | 'description' | 'updatedAt'>
+        & Pick<Repository, 'stargazerCount' | 'forkCount' | 'name' | 'nameWithOwner' | 'description' | 'updatedAt'>
         & { primaryLanguage?: Maybe<(
           { __typename?: 'Language' }
           & Pick<Language, 'color' | 'name'>
@@ -19971,6 +19971,7 @@ export const SearchReposFragmentDoc = gql`
             }
           }
           stargazerCount
+          forkCount
           licenseInfo {
             name
           }

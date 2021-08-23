@@ -31,6 +31,7 @@ fragment SearchRepos on Query {
             }
           }
           stargazerCount
+          forkCount
           licenseInfo {
             name
           }
