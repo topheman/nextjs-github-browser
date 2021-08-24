@@ -4,6 +4,7 @@ import { Repository } from "../../libs/graphql";
 import AppTagLanguage from "../AppTagLanguage/AppTagLanguage";
 import AppTagCount from "../AppTagCount/AppTagCount";
 import AppTagLicense from "../AppTagLicense/AppTagLicense";
+import AppTagDate from "../AppTagDate/AppTagDate";
 
 export type AppRepositoryListItemProps = {
   repository: Repository;
@@ -66,6 +67,14 @@ export default function AppRepositoryListItem({
           {repository.licenseInfo ? (
             <li className="mr-4">
               <AppTagLicense license={repository.licenseInfo} />
+            </li>
+          ) : null}
+          {repository.updatedAt ? (
+            <li className="mr-4">
+              <AppTagDate
+                date={new Date(repository.updatedAt)}
+                mode="updated"
+              />
             </li>
           ) : null}
         </ul>
