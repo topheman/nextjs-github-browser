@@ -63,6 +63,16 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       ) : (
         <div>There will be a repository list.</div>
       )}
+      <div className="text-center">
+        {data?.searchRepos.pageInfo && (
+          <AppSearchPagination
+            loading={loading}
+            onUpdate={setPaginationState}
+            pageInfo={data?.searchRepos.pageInfo}
+            className="inline-block"
+          />
+        )}
+      </div>
     </div>
   );
 }
