@@ -20,20 +20,19 @@ const MONTHS = [
 export const formatDate = (
   date: Date
 ): { formattedDate: string; isRelative: boolean } => {
-  const originalDate = new Date(date); // do not mutate `date`
-  const now = new Date().setHours(0, 0, 0, 0);
-  const then = originalDate.setHours(0, 0, 0, 0);
-  const days = (then - now) / ONE_DAY_IN_SECONDS;
-  if (days < 30 && days > -30) {
+  const now = new Date();
+  const secondsLapsed = date.getTime() - now.getTime();
+  const daysLapsed = secondsLapsed / ONE_DAY_IN_SECONDS;
+  if (Math.abs(daysLapsed) < 30) {
     return {
       isRelative: true,
-      formattedDate: human(originalDate),
+      formattedDate: human(date),
     };
   }
   return {
     isRelative: false,
-    formattedDate: `${originalDate.getDate()} ${
-      MONTHS[originalDate.getMonth()]
-    } ${originalDate.getFullYear()}`,
+    formattedDate: `${date.getDate()} ${
+      MONTHS[date.getMonth()]
+    } ${date.getFullYear()}`,
   };
 };
