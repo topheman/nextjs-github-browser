@@ -259,7 +259,9 @@ export function useSearchRepos(
   const [
     paginationState,
     setPaginationState,
-  ] = useStateReducer<PaginationParamsType>({});
+  ] = useStateReducer<PaginationParamsType>({
+    ...onlyParams<PaginationParamsType>(searchUrlParams, "pagination"),
+  });
   const clearPaginationFilter = () => {
     // todo
     console.log("clearPaginationFilter", paginationState, searchBarState);
