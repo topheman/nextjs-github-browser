@@ -17,6 +17,12 @@ module.exports = {
     colors: {
       ...brandColors,
     },
+    // only targetting Roboto:300,400,700 in google fonts
+    fontWeight: {
+      light: 300,
+      normal: 400,
+      bold: 700,
+    },
     textColor: {
       ...brandColors,
       "brand-primary": "var(--color-text-brand-primary)",

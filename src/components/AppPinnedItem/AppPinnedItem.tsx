@@ -17,7 +17,7 @@ export default function AppPinnedItem({
         <RepoIcon className="mr-1 text-secondary" />
         <a
           href={`/${repository.nameWithOwner}`}
-          className="font-medium text-brand-primary hover:underline"
+          className="font-bold text-brand-primary hover:underline"
         >
           {repository.name}
         </a>

@@ -18,7 +18,7 @@ export default function AppRepositoryListItem({
       <div className="col-span-10">
         <h3>
           <Link href={`/${repository.nameWithOwner}`}>
-            <a className="text-lg font-bold text-brand-primary hover:underline">
+            <a className="text-xl font-bold text-brand-primary hover:underline">
               {repository.name}
             </a>
           </Link>
