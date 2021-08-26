@@ -274,7 +274,7 @@ export function useSearchRepos(
   useEffect(() => {
     if (
       !isEqual(
-        cleanupUndefinedValues({ ...searchUrlParams, ...paginationState }),
+        cleanupUndefinedValues({ ...searchUrlParams }),
         cleanupUndefinedValues({ ...searchBarState, ...paginationState })
       )
     ) {
