@@ -15,8 +15,13 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
+// eslint-disable-next-line import/no-unresolved,@typescript-eslint/no-var-requires
+const webpackPreprocessor = require("@cypress/webpack-preprocessor");
+
+module.exports = (on) => {
+  const options = {
+    // eslint-disable-next-line global-require
+    webpackOptions: require("../webpack.config"),
+  };
+  on("file:preprocessor", webpackPreprocessor(options));
 };
