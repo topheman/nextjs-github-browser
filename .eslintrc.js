@@ -5,12 +5,14 @@ module.exports = {
     ".out/*",
     "public/explore/storybook/*",
     "src/generated/*",
+    "cypress/integration/examples",
   ],
   env: {
     browser: true,
     es2021: true,
     node: true,
     jest: true,
+    "cypress/globals": true,
   },
   extends: [
     "next",
@@ -21,6 +23,7 @@ module.exports = {
     "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended",
     "plugin:jest-dom/recommended",
+    "plugin:cypress/recommended",
   ],
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -30,7 +33,13 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint", "tailwindcss", "jest-dom"],
+  plugins: [
+    "react",
+    "@typescript-eslint",
+    "tailwindcss",
+    "jest-dom",
+    "cypress",
+  ],
   // other configuration are omitted for brevity
   settings: {
     "import/resolver": {
