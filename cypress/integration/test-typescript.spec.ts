@@ -27,5 +27,8 @@ describe("test", () => {
     cy.get("main").should("have.length", 1);
     cy.url().should("eq", "http://localhost:3000/");
     expect("toto").to.be.equal("toto");
+    cy.get("main").within(() => {
+      cy.findByText("nextjs-github-browser").should("exist");
+    });
   });
 });
