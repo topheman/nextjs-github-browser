@@ -1,5 +1,3 @@
-/// <reference types="cypress" />
-
 // Welcome to Cypress!
 //
 // This spec file contains a variety of sample tests
@@ -27,5 +25,7 @@ describe("test", () => {
     // Then, we use `should` to assert that there are two matched items,
     // which are the two default items.
     cy.get("main").should("have.length", 1);
+    cy.url().should("eq", "http://localhost:3000/");
+    expect("toto").to.be.equal("toto");
   });
 });
