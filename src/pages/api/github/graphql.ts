@@ -2,6 +2,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import type { NextApiRequest, NextApiResponse } from "next";
+import { parseBooleanEnvVar } from "../../../../utils";
 
 export default async (
   req: NextApiRequest,
@@ -17,8 +18,9 @@ export default async (
     console.log("[GraphQL-proxy]", "Incoming IntrospectionQuery ignored");
     return res.status(405).json({ error: "IntrospectionQuery not allowed" });
   }
+  const recording = parseBooleanEnvVar(process.env.RECORD_MOCKS, false);
   console.log(
-    "[GraphQL-proxy]",
+    `[GraphQL-proxy]${recording ? "[Recording]" : ""}`,
     "fetching",
     req.method,
     req.url,
@@ -40,6 +42,15 @@ export default async (
     });
     if (result.ok) {
       const response = await result.text();
+      if (recording) {
+        // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
+        const mockFilePath = await require("../../../../utils/mocks").saveMock(
+          req.body.operationName,
+          req.body.variables,
+          response
+        );
+        console.log(`[GraphQL-proxy][Recording] Mock saved at ${mockFilePath}`);
+      }
       return res.status(result.status).json(response);
     }
     throw new Error("Couldn't call github API");

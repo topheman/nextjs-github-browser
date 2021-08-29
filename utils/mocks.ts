@@ -6,7 +6,7 @@
  */
 
 function getRootMockDirectory(): string {
-  return require("path").join(__dirname, "..", ".mocks");
+  return require("path").join(process.cwd(), ".tmp", ".mocks");
 }
 
 function generateMockIdFromGraphqlVariables(
@@ -50,12 +50,13 @@ export async function saveMock(
   body: string,
   endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   options: ManageMockOptionsType = {}
-): Promise<void> {
+): Promise<string> {
   const filePath = getMockFilePath(operationName, variables, endpoint, options);
   const folderPath = require("path").dirname(filePath);
   const fsPromises = require("fs/promises");
   await fsPromises.mkdir(folderPath, { recursive: true });
   await fsPromises.writeFile(filePath, body, "utf8");
+  return filePath;
 }
 
 export function loadMock(
