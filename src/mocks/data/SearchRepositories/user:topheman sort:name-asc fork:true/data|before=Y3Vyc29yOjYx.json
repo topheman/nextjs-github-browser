@@ -14,49 +14,68 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 16868,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "router"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 2312,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "history"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 1036,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "gh-pages"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "lite-router"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 4
-          },
+          "stargazerCount": 4,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "lite-router",
-          "description": "A very light router based on history package"
+          "nameWithOwner": "topheman/lite-router",
+          "description": "A very light router based on history package",
+          "updatedAt": "2018-08-21T08:10:54Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjMx"
       },
@@ -64,40 +83,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 3179,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 3088,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#89e051",
+            "name": "Shell"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 3
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 3,
+          "forkCount": 3,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 1
           },
           "name": "m102-notes",
-          "description": "My general notes taken on the fly while watching the M102 for DBA courses"
+          "nameWithOwner": "topheman/m102-notes",
+          "description": "My general notes taken on the fly while watching the M102 for DBA courses",
+          "updatedAt": "2019-03-08T13:18:48Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjMy"
       },
@@ -105,51 +111,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 1731350,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 30683,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 302,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 144,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -159,7 +131,13 @@
             "totalCount": 0
           },
           "name": "material-ui",
-          "description": "React components that implement Google's Material Design."
+          "nameWithOwner": "topheman/material-ui",
+          "description": "React components that implement Google's Material Design.",
+          "updatedAt": "2018-04-23T16:19:31Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "mui-org/material-ui"
+          }
         },
         "cursor": "Y3Vyc29yOjMz"
       },
@@ -167,42 +145,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 18797,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 2915,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1041,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#2b7489",
+            "name": "TypeScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -212,7 +165,10 @@
             "totalCount": 0
           },
           "name": "matterjs-poc",
-          "description": "matterjs-poc"
+          "nameWithOwner": "topheman/matterjs-poc",
+          "description": "matterjs-poc",
+          "updatedAt": "2020-09-18T20:07:33Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjM0"
       },
@@ -220,21 +176,23 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": null,
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": []
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 1
-          },
+          "stargazerCount": 1,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "my-docker-fullstack-project",
-          "description": null
+          "nameWithOwner": "topheman/my-docker-fullstack-project",
+          "description": null,
+          "updatedAt": "2019-03-13T16:51:43Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjM1"
       },
@@ -242,49 +200,68 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 12173,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 1601,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "create-react-app"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 694,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "eslint-config-airbnb"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "prettier"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 11
-          },
+          "stargazerCount": 11,
+          "forkCount": 3,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 2
           },
           "name": "my-react-app-starter",
-          "description": "eslint/prettier/other pre-configured and customisable create-react-app project"
+          "nameWithOwner": "topheman/my-react-app-starter",
+          "description": "eslint/prettier/other pre-configured and customisable create-react-app project",
+          "updatedAt": "2019-12-12T18:47:31Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjM2"
       },
@@ -292,60 +269,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 463907,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 98052,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1294,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 184,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HCL",
-                  "color": null
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 128,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -355,7 +289,13 @@
             "totalCount": 0
           },
           "name": "next.js",
-          "description": "The React Framework"
+          "nameWithOwner": "topheman/next.js",
+          "description": "The React Framework",
+          "updatedAt": "2019-03-13T07:13:11Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "vercel/next.js"
+          }
         },
         "cursor": "Y3Vyc29yOjM3"
       },
@@ -363,33 +303,78 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#2b7489",
+            "name": "TypeScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 189546,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "nextjs"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 21075,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "typescript"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "reactjs"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "ssr"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "i18n"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "i18next"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 42
-          },
+          "stargazerCount": 42,
+          "forkCount": 9,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -399,7 +384,10 @@
             "totalCount": 1
           },
           "name": "nextjs-movie-browser",
-          "description": "A NextJS implementation of the themoviedb.org website"
+          "nameWithOwner": "topheman/nextjs-movie-browser",
+          "description": "A NextJS implementation of the themoviedb.org website",
+          "updatedAt": "2021-07-31T17:37:58Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjM4"
       },
@@ -407,31 +395,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 4982,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "node-streams-experiments",
-          "description": "Experiments/tryouts on nodeJS streams"
+          "nameWithOwner": "topheman/node-streams-experiments",
+          "description": "Experiments/tryouts on nodeJS streams",
+          "updatedAt": "2015-07-31T14:34:39Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjM5"
       },
@@ -439,51 +423,78 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 200790,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 3624,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "create-react-app"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 2591,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "jest"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 497,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react-router"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "cypress"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "e2e-tests"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 99
-          },
+          "stargazerCount": 99,
+          "forkCount": 9,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -493,7 +504,10 @@
             "totalCount": 3
           },
           "name": "npm-registry-browser",
-          "description": "Browse the npm registry with an SPA made in React, with full dev workflow."
+          "nameWithOwner": "topheman/npm-registry-browser",
+          "description": "Browse the npm registry with an SPA made in React, with full dev workflow.",
+          "updatedAt": "2021-05-25T06:49:04Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQw"
       },
@@ -501,33 +515,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 39981,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1846,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 26
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 26,
+          "forkCount": 11,
           "licenseInfo": {
             "__typename": "License",
             "name": "Other"
@@ -537,7 +535,10 @@
             "totalCount": 2
           },
           "name": "PanoramaSensorsViewer",
-          "description": "Let Google Street View panoramas be browserable via the gyroscope+accelerometer of your mobile device"
+          "nameWithOwner": "topheman/PanoramaSensorsViewer",
+          "description": "Let Google Street View panoramas be browserable via the gyroscope+accelerometer of your mobile device",
+          "updatedAt": "2019-06-04T04:10:11Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQx"
       },
@@ -545,24 +546,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 101689,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 36
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 36,
+          "forkCount": 4,
           "licenseInfo": {
             "__typename": "License",
             "name": "Other"
@@ -572,7 +566,13 @@
             "totalCount": 0
           },
           "name": "parallax",
-          "description": "Simple, lightweight parallax engine that reacts to the orientation of a smart device NOW WITH HEADTRACKING support !"
+          "nameWithOwner": "topheman/parallax",
+          "description": "Simple, lightweight parallax engine that reacts to the orientation of a smart device NOW WITH HEADTRACKING support !",
+          "updatedAt": "2021-07-22T22:43:45Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "wagerfield/parallax"
+          }
         },
         "cursor": "Y3Vyc29yOjQy"
       },
@@ -580,42 +580,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 33260,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 11005,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 8483,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -625,7 +600,10 @@
             "totalCount": 0
           },
           "name": "playground",
-          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)"
+          "nameWithOwner": "topheman/playground",
+          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)",
+          "updatedAt": "2019-07-03T07:07:04Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQz"
       },
@@ -633,31 +611,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 66254,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "playground1",
-          "description": null
+          "nameWithOwner": "topheman/playground1",
+          "description": null,
+          "updatedAt": "2013-12-23T14:40:45Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQ0"
       },
@@ -665,42 +639,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 35009,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 11028,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 8127,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 8
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 8,
+          "forkCount": 3,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -710,7 +659,10 @@
             "totalCount": 1
           },
           "name": "playground2",
-          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)"
+          "nameWithOwner": "topheman/playground2",
+          "description": "An experiment with socket.io and accelerometer (control your desktop with multiple mobile devices)",
+          "updatedAt": "2019-06-29T19:21:37Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQ1"
       },
@@ -718,105 +670,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 2375402,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 47771,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 44278,
-                "node": {
-                  "__typename": "Language",
-                  "name": "C++",
-                  "color": "#f34b7d"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 20252,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 16077,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CoffeeScript",
-                  "color": "#244776"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 13958,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 5860,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 5225,
-                "node": {
-                  "__typename": "Language",
-                  "name": "C",
-                  "color": "#555555"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 259,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Python",
-                  "color": "#3572A5"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 189,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Makefile",
-                  "color": "#427819"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -826,7 +690,13 @@
             "totalCount": 0
           },
           "name": "react",
-          "description": "A declarative, efficient, and flexible JavaScript library for building user interfaces."
+          "nameWithOwner": "topheman/react",
+          "description": "A declarative, efficient, and flexible JavaScript library for building user interfaces.",
+          "updatedAt": "2018-10-25T08:02:37Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "facebook/react"
+          }
         },
         "cursor": "Y3Vyc29yOjQ2"
       },
@@ -834,49 +704,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 6752,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1721,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 930,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#2b7489",
+            "name": "TypeScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "react-app-ts-template",
-          "description": null
+          "nameWithOwner": "topheman/react-app-ts-template",
+          "description": null,
+          "updatedAt": "2020-01-01T10:42:31Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQ3"
       },
@@ -884,49 +732,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 52741,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 3735,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1615,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 44
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 44,
+          "forkCount": 6,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 5
           },
           "name": "react-es6-isomorphic",
-          "description": "A simple app to try React and ES6, using topheman-apis-proxy as data api backend NOW with isomorphism"
+          "nameWithOwner": "topheman/react-es6-isomorphic",
+          "description": "A simple app to try React and ES6, using topheman-apis-proxy as data api backend NOW with isomorphism",
+          "updatedAt": "2018-08-03T10:40:19Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQ4"
       },
@@ -934,58 +760,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 95791,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 6855,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 3681,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1359,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 158
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 158,
+          "forkCount": 28,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 17
           },
           "name": "react-es6-redux",
-          "description": "A simple app to try React, ES6 and redux, using topheman-apis-proxy as data api backend"
+          "nameWithOwner": "topheman/react-es6-redux",
+          "description": "A simple app to try React, ES6 and redux, using topheman-apis-proxy as data api backend",
+          "updatedAt": "2021-08-16T02:52:28Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjQ5"
       },
@@ -993,49 +788,58 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 164406,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 2711,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react-suspense"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 2199,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "react-fiber"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 26
-          },
+          "stargazerCount": 26,
+          "forkCount": 2,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "react-fiber-experiments",
-          "description": "Discover the latest features of React fiber like \"Suspense\""
+          "nameWithOwner": "topheman/react-fiber-experiments",
+          "description": "Discover the latest features of React fiber like \"Suspense\"",
+          "updatedAt": "2021-05-09T12:34:18Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjUw"
       },
@@ -1043,49 +847,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 13249,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1783,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1752,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "react-hooks-implementation",
-          "description": "Use this project to demonstrate react hooks implementation"
+          "nameWithOwner": "topheman/react-hooks-implementation",
+          "description": "Use this project to demonstrate react hooks implementation",
+          "updatedAt": "2019-09-21T16:38:41Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjUx"
       },
@@ -1093,49 +875,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 14863,
-                "node": {
-                  "__typename": "Language",
-                  "name": "TypeScript",
-                  "color": "#2b7489"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 1721,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 366,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#2b7489",
+            "name": "TypeScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "react-typescript-sandbox",
-          "description": null
+          "nameWithOwner": "topheman/react-typescript-sandbox",
+          "description": null,
+          "updatedAt": "2020-01-03T14:50:48Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjUy"
       },
@@ -1143,21 +903,30 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": []
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
-          },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "remote-tilt",
-          "description": "Remotely send device orientation and motion events"
+          "nameWithOwner": "topheman/remote-tilt",
+          "description": "Remotely send device orientation and motion events",
+          "updatedAt": "2013-08-02T12:48:02Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "remy/remote-tilt"
+          }
         },
         "cursor": "Y3Vyc29yOjUz"
       },
@@ -1165,58 +934,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 855,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 737,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 498,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Rust",
-                  "color": "#dea584"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 78,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Makefile",
-                  "color": "#427819"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 1
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 1,
+          "forkCount": 0,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "rust-wasm-examples",
-          "description": null
+          "nameWithOwner": "topheman/rust-wasm-examples",
+          "description": null,
+          "updatedAt": "2020-08-20T11:58:17Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjU0"
       },
@@ -1224,42 +962,58 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 17247,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "rust"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 12384,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "Rust",
-                  "color": "#dea584"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "webassembly"
+                  }
                 }
               },
               {
-                "__typename": "LanguageEdge",
-                "size": 410,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "wasm"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "wasm-bindgen"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 17
-          },
+          "stargazerCount": 17,
+          "forkCount": 3,
           "licenseInfo": {
             "__typename": "License",
             "name": "Other"
@@ -1269,7 +1023,10 @@
             "totalCount": 3
           },
           "name": "rust-wasm-experiments",
-          "description": "Discover how to use Rust to generate WebAssembly, called by JavaScript"
+          "nameWithOwner": "topheman/rust-wasm-experiments",
+          "description": "Discover how to use Rust to generate WebAssembly, called by JavaScript",
+          "updatedAt": "2021-07-30T20:13:04Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjU1"
       },
@@ -1277,31 +1034,48 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#dea584",
+            "name": "Rust"
+          },
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
             "edges": [
               {
-                "__typename": "LanguageEdge",
-                "size": 23892,
+                "__typename": "RepositoryTopicEdge",
                 "node": {
-                  "__typename": "Language",
-                  "name": "Rust",
-                  "color": "#dea584"
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "rust"
+                  }
+                }
+              },
+              {
+                "__typename": "RepositoryTopicEdge",
+                "node": {
+                  "__typename": "RepositoryTopic",
+                  "topic": {
+                    "__typename": "Topic",
+                    "name": "discover"
+                  }
                 }
               }
             ]
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 2
-          },
+          "stargazerCount": 2,
+          "forkCount": 2,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "rustlang-first-try",
-          "description": "Starting out in rust"
+          "nameWithOwner": "topheman/rustlang-first-try",
+          "description": "Starting out in rust",
+          "updatedAt": "2018-12-04T12:49:01Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjU2"
       },
@@ -1309,49 +1083,27 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 39529,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 14024,
-                "node": {
-                  "__typename": "Language",
-                  "name": "HTML",
-                  "color": "#e34c26"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 6718,
-                "node": {
-                  "__typename": "Language",
-                  "name": "CSS",
-                  "color": "#563d7c"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 39
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 39,
+          "forkCount": 4,
           "licenseInfo": null,
           "issues": {
             "__typename": "IssueConnection",
             "totalCount": 0
           },
           "name": "rxjs-experiments",
-          "description": "Playing with RxJS"
+          "nameWithOwner": "topheman/rxjs-experiments",
+          "description": "Playing with RxJS",
+          "updatedAt": "2019-07-03T17:37:41Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjU3"
       },
@@ -1359,24 +1111,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 5008,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 5
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 5,
+          "forkCount": 2,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -1386,7 +1131,10 @@
             "totalCount": 1
           },
           "name": "sensorsChecker.js",
-          "description": "Mostly all recent browsers expose an api for deviceorientation and devicemotion events. This module will let you check if there is really an accelerometer+gyroscope to rely on."
+          "nameWithOwner": "topheman/sensorsChecker.js",
+          "description": "Mostly all recent browsers expose an api for deviceorientation and devicemotion events. This module will let you check if there is really an accelerometer+gyroscope to rely on.",
+          "updatedAt": "2019-07-24T19:55:36Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjU4"
       },
@@ -1394,33 +1142,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 6671,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              },
-              {
-                "__typename": "LanguageEdge",
-                "size": 681,
-                "node": {
-                  "__typename": "Language",
-                  "name": "Shell",
-                  "color": "#89e051"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 0
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 0,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "Other"
@@ -1430,7 +1162,13 @@
             "totalCount": 0
           },
           "name": "signalmaster",
-          "description": "simple socket.io server for webrtc signaling"
+          "nameWithOwner": "topheman/signalmaster",
+          "description": "simple socket.io server for webrtc signaling",
+          "updatedAt": "2019-07-03T17:45:07Z",
+          "parent": {
+            "__typename": "Repository",
+            "nameWithOwner": "simplewebrtc/signalmaster"
+          }
         },
         "cursor": "Y3Vyc29yOjU5"
       },
@@ -1438,24 +1176,17 @@
         "__typename": "SearchResultItemEdge",
         "node": {
           "__typename": "Repository",
-          "languages": {
-            "__typename": "LanguageConnection",
-            "edges": [
-              {
-                "__typename": "LanguageEdge",
-                "size": 4401,
-                "node": {
-                  "__typename": "Language",
-                  "name": "JavaScript",
-                  "color": "#f1e05a"
-                }
-              }
-            ]
+          "primaryLanguage": {
+            "__typename": "Language",
+            "color": "#f1e05a",
+            "name": "JavaScript"
           },
-          "stargazers": {
-            "__typename": "StargazerConnection",
-            "totalCount": 1
+          "repositoryTopics": {
+            "__typename": "RepositoryTopicConnection",
+            "edges": []
           },
+          "stargazerCount": 1,
+          "forkCount": 0,
           "licenseInfo": {
             "__typename": "License",
             "name": "MIT License"
@@ -1465,7 +1196,10 @@
             "totalCount": 0
           },
           "name": "SoftLogger",
-          "description": "Simple logger that overrides console.log and let's you inject it in a canvas"
+          "nameWithOwner": "topheman/SoftLogger",
+          "description": "Simple logger that overrides console.log and let's you inject it in a canvas",
+          "updatedAt": "2014-08-09T23:41:28Z",
+          "parent": null
         },
         "cursor": "Y3Vyc29yOjYw"
       }
