@@ -22,6 +22,7 @@ export default async (
     "fetching",
     req.method,
     req.url,
+    req.body.operationName,
     req.body.variables
   );
   try {
