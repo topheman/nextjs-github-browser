@@ -1,4 +1,10 @@
-/* eslint-disable global-require,@typescript-eslint/no-var-requires */
+/* eslint-disable global-require,@typescript-eslint/no-var-requires,import/no-dynamic-require */
+/**
+ * Those are functions to be used server-side to:
+ * - record mocks (inside the /api/github/graphql handler) : `saveMock`
+ * - to setup mocks on a mock server / check api state : `loadMock`
+ */
+
 function getRootMockDirectory(): string {
   return require("path").join(__dirname, "..", ".mocks");
 }
@@ -41,6 +47,7 @@ export function getMockFilePath(
 export async function saveMock(
   operationName: string,
   variables: Record<string, unknown>,
+  body: string,
   endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   options: ManageMockOptionsType = {}
 ): Promise<void> {
@@ -48,5 +55,22 @@ export async function saveMock(
   const folderPath = require("path").dirname(filePath);
   const fsPromises = require("fs/promises");
   await fsPromises.mkdir(folderPath, { recursive: true });
-  await fsPromises.writeFile(filePath, "Hello World", "utf8");
+  await fsPromises.writeFile(filePath, body, "utf8");
+}
+
+export function loadMock(
+  operationName: string,
+  variables: Record<string, unknown>,
+  endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
+  options: ManageMockOptionsType = {}
+): unknown | null {
+  const filePath = getMockFilePath(operationName, variables, endpoint, options);
+  try {
+    return require(filePath);
+  } catch (e) {
+    if (e.code === "MODULE_NOT_FOUND") {
+      return null;
+    }
+    throw e;
+  }
 }

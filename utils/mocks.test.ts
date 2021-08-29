@@ -1,5 +1,5 @@
 /* eslint-disable global-require,@typescript-eslint/no-var-requires */
-import { getMockFilePath, saveMock } from "./mocks";
+import { getMockFilePath, saveMock, loadMock } from "./mocks";
 
 // only for tests
 function rootMockDirectory() {
@@ -66,9 +66,41 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
+        JSON.stringify({ foo: "bar" }),
         "http://api.github.com/graphql",
         { rootMockDirectory }
       );
+    });
+  });
+  describe("loadMock", () => {
+    beforeAll(async () => {
+      await require("fs/promises").rmdir(rootMockDirectory(), {
+        recursive: true,
+      });
+    });
+    it("should load mock in proper folder", async () => {
+      await saveMock(
+        "MyQueryName",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        JSON.stringify({ foo: "bar" }),
+        "http://api.github.com/graphql",
+        { rootMockDirectory }
+      );
+      const result = loadMock(
+        "MyQueryName",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        "http://api.github.com/graphql",
+        { rootMockDirectory }
+      );
+      expect(result).toStrictEqual({ foo: "bar" });
     });
   });
 });
