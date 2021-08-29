@@ -22,6 +22,8 @@ export default async (
     "fetching",
     req.method,
     req.url,
+    "->",
+    process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
     req.body.operationName,
     req.body.variables
   );
