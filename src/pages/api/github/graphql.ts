@@ -26,7 +26,6 @@ export default async (
       throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
     }
     if (replayMocks) {
-      console.log("try replay", req.body.variables);
       let result;
       try {
         // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires

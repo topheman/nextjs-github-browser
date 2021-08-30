@@ -1,10 +1,14 @@
 /* eslint-disable global-require,@typescript-eslint/no-var-requires */
 import { getMockFilePath, saveMock, loadMock } from "./mocks";
 
-// only for tests
 function rootMockDirectory() {
   return require("path").join(__dirname, "..", ".tmp/.mock-test");
 }
+
+const baseOptions = {
+  rootMockDirectory,
+  endpoint: "http://api.github.com/graphql",
+};
 
 describe("utils/mocks", () => {
   describe("getMockFilePath", () => {
@@ -15,8 +19,7 @@ describe("utils/mocks", () => {
           query: "some variable",
           foo: "other variable",
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
       expect(result).toContain(
         ".tmp/.mock-test/api.github.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
@@ -29,8 +32,7 @@ describe("utils/mocks", () => {
           foo: "other variable",
           query: "some variable",
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
       expect(result).toContain(
         ".tmp/.mock-test/api.github.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
@@ -44,8 +46,7 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
       expect(result).toContain(
         ".tmp/.mock-test/api.github.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
@@ -67,8 +68,7 @@ describe("utils/mocks", () => {
           someUndefinedVar: undefined,
         },
         JSON.stringify({ foo: "bar" }),
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
     });
   });
@@ -85,11 +85,10 @@ describe("utils/mocks", () => {
           someUndefinedVar: undefined,
         },
         JSON.stringify({ foo: "bar" }),
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
     });
-    it("should load mock in proper folder", async () => {
+    it("should load mock in proper folder (with parsing)", async () => {
       const result = await loadMock(
         "MyQueryName",
         {
@@ -97,12 +96,11 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory }
+        baseOptions
       );
       expect(result).toStrictEqual({ foo: "bar" });
     });
-    it("should load mock in proper folder without parsing", async () => {
+    it("should load mock in proper folder (without parsing) - return a buffer", async () => {
       const result = await loadMock(
         "MyQueryName",
         {
@@ -110,8 +108,10 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory, parse: false }
+        {
+          ...baseOptions,
+          parse: false,
+        }
       );
       expect(result).toBe('{"foo":"bar"}');
     });
@@ -123,8 +123,7 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        "http://api.github.com/graphql",
-        { rootMockDirectory, parse: false }
+        baseOptions
       );
       expect(result).toBeNull();
     });

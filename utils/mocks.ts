@@ -29,14 +29,18 @@ function generateMockIdFromGraphqlVariables(
   return hashed;
 }
 
-type ManageMockOptionsType = { rootMockDirectory?: () => string };
+type ManageMockOptionsType = {
+  rootMockDirectory?: () => string;
+  endpoint?: string;
+};
 
 export function getMockFilePath(
   operationName: string,
   variables: Record<string, unknown>,
-  // todo merge with options
-  endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
-  { rootMockDirectory = getRootMockDirectory }: ManageMockOptionsType = {}
+  {
+    rootMockDirectory = getRootMockDirectory,
+    endpoint = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
+  }: ManageMockOptionsType = {}
 ): string {
   const cleanEnpoint = endpoint.replace(/https?:\/\//, "");
   return path.join(
@@ -50,11 +54,9 @@ export async function saveMock(
   operationName: string,
   variables: Record<string, unknown>,
   body: string,
-  // todo merge with options
-  endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   options: ManageMockOptionsType = {}
 ): Promise<string> {
-  const filePath = getMockFilePath(operationName, variables, endpoint, options);
+  const filePath = getMockFilePath(operationName, variables, options);
   const folderPath = path.dirname(filePath);
   // const fsPromises = require("fs/promises");
   await fsPromises.mkdir(folderPath, { recursive: true });
@@ -65,8 +67,6 @@ export async function saveMock(
 export async function loadMock(
   operationName: string,
   variables: Record<string, unknown>,
-  // todo merge with options
-  endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   {
     parse = true,
     ...getMockFilePathOptions
@@ -75,7 +75,6 @@ export async function loadMock(
   const filePath = getMockFilePath(
     operationName,
     variables,
-    endpoint,
     getMockFilePathOptions
   );
   try {
