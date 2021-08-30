@@ -34,34 +34,51 @@ type ManageMockOptionsType = {
   endpoint?: string;
 };
 
+type GetMockFilePathOptionsType = ManageMockOptionsType & {
+  isRequest?: boolean;
+};
+
 export function getMockFilePath(
   operationName: string,
   variables: Record<string, unknown>,
   {
+    isRequest = false,
     rootMockDirectory = getRootMockDirectory,
     endpoint = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
-  }: ManageMockOptionsType = {}
+  }: GetMockFilePathOptionsType = {}
 ): string {
   const cleanEnpoint = endpoint.replace(/https?:\/\//, "");
   return path.join(
     rootMockDirectory(),
     cleanEnpoint,
-    `${operationName}_${generateMockIdFromGraphqlVariables(variables)}.json`
+    `${operationName}_${generateMockIdFromGraphqlVariables(variables)}${
+      isRequest ? "_request" : ""
+    }.json`
   );
 }
 
 export async function saveMock(
   operationName: string,
   variables: Record<string, unknown>,
-  body: string,
+  requestBody: string,
+  responseBody: string,
   options: ManageMockOptionsType = {}
 ): Promise<string> {
-  const filePath = getMockFilePath(operationName, variables, options);
-  const folderPath = path.dirname(filePath);
-  // const fsPromises = require("fs/promises");
+  const requestFilePath = getMockFilePath(operationName, variables, {
+    ...options,
+    isRequest: true,
+  });
+  const responseFilePath = getMockFilePath(operationName, variables, {
+    ...options,
+    isRequest: false,
+  });
+  const folderPath = path.dirname(requestFilePath);
   await fsPromises.mkdir(folderPath, { recursive: true });
-  await fsPromises.writeFile(filePath, body, "utf8");
-  return filePath;
+  await Promise.all([
+    fsPromises.writeFile(requestFilePath, requestBody, "utf8"),
+    fsPromises.writeFile(responseFilePath, responseBody, "utf8"),
+  ]);
+  return responseFilePath;
 }
 
 export async function loadMock(
@@ -70,7 +87,7 @@ export async function loadMock(
   {
     parse = true,
     ...getMockFilePathOptions
-  }: ManageMockOptionsType & { parse?: boolean } = {}
+  }: GetMockFilePathOptionsType & { parse?: boolean } = {}
 ): Promise<unknown | null> {
   const filePath = getMockFilePath(
     operationName,

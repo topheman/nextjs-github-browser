@@ -67,7 +67,8 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        JSON.stringify({ foo: "bar" }),
+        JSON.stringify({ someRequest: "foo" }),
+        JSON.stringify({ someResponse: "bar" }),
         baseOptions
       );
     });
@@ -84,11 +85,12 @@ describe("utils/mocks", () => {
           query: "some variable",
           someUndefinedVar: undefined,
         },
-        JSON.stringify({ foo: "bar" }),
+        JSON.stringify({ someRequest: "foo" }),
+        JSON.stringify({ someResponse: "bar" }),
         baseOptions
       );
     });
-    it("should load mock in proper folder (with parsing)", async () => {
+    it("should load mock (response) in proper folder (with parsing)", async () => {
       const result = await loadMock(
         "MyQueryName",
         {
@@ -98,9 +100,9 @@ describe("utils/mocks", () => {
         },
         baseOptions
       );
-      expect(result).toStrictEqual({ foo: "bar" });
+      expect(result).toStrictEqual({ someResponse: "bar" });
     });
-    it("should load mock in proper folder (without parsing) - return a buffer", async () => {
+    it("should load mock (response) in proper folder (without parsing) - return a buffer", async () => {
       const result = await loadMock(
         "MyQueryName",
         {
@@ -113,7 +115,38 @@ describe("utils/mocks", () => {
           parse: false,
         }
       );
-      expect(result).toBe('{"foo":"bar"}');
+      expect(result).toBe('{"someResponse":"bar"}');
+    });
+    it("should load mock (request) in proper folder (with parsing)", async () => {
+      const result = await loadMock(
+        "MyQueryName",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        {
+          ...baseOptions,
+          isRequest: true,
+        }
+      );
+      expect(result).toStrictEqual({ someRequest: "foo" });
+    });
+    it("should load mock (request) in proper folder (without parsing) - return a buffer", async () => {
+      const result = await loadMock(
+        "MyQueryName",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        {
+          ...baseOptions,
+          parse: false,
+          isRequest: true,
+        }
+      );
+      expect(result).toBe('{"someRequest":"foo"}');
     });
     it("should return null if not found", async () => {
       const result = await loadMock(

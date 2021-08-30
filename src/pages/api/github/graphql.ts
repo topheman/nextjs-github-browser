@@ -69,6 +69,7 @@ export default async (
         const mockFilePath = await saveMock(
           req.body.operationName,
           req.body.variables,
+          JSON.stringify(req.body),
           response
         );
         console.log(`[GraphQL-proxy][Record] Mock saved at ${mockFilePath}`);
