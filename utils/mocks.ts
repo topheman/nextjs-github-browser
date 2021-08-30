@@ -5,8 +5,9 @@
  * - to setup mocks on a mock server / check api state : `loadMock`
  */
 
-import fsPromises from "fs/promises";
-import path from "path";
+// using require so that it will work in a node process of cypress if needed
+const fsPromises = require("fs/promises");
+const path = require("path");
 
 function getRootMockDirectory(): string {
   return path.join(process.cwd(), ".tmp", ".mocks");

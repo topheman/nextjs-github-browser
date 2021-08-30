@@ -15,7 +15,9 @@
 /**
  * @type {Cypress.PluginConfig}
  */
-// eslint-disable-next-line import/no-unresolved,@typescript-eslint/no-var-requires
+
+import { loadMock } from "../../utils/mocks";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpackPreprocessor = require("@cypress/webpack-preprocessor");
 
 module.exports = (on) => {
@@ -23,5 +25,15 @@ module.exports = (on) => {
     // eslint-disable-next-line global-require
     webpackOptions: require("../webpack.config"),
   };
+  console.log(process.cwd());
   on("file:preprocessor", webpackPreprocessor(options));
+  on("task", {
+    loadMock: ([operationName, variables, loadMockOptions]) => {
+      console.log("loadMock", [operationName, variables, loadMockOptions]);
+      return loadMock(operationName, variables, {
+        ...loadMockOptions,
+        endpoint: "https://api.github.com/graphql", // must specify - we dont share .env
+      });
+    },
+  });
 };
