@@ -77,8 +77,6 @@ describe("utils/mocks", () => {
       await require("fs/promises").rmdir(rootMockDirectory(), {
         recursive: true,
       });
-    });
-    it("should load mock in proper folder", async () => {
       await saveMock(
         "MyQueryName",
         {
@@ -90,7 +88,9 @@ describe("utils/mocks", () => {
         "http://api.github.com/graphql",
         { rootMockDirectory }
       );
-      const result = loadMock(
+    });
+    it("should load mock in proper folder", async () => {
+      const result = await loadMock(
         "MyQueryName",
         {
           foo: "other variable",
@@ -101,6 +101,32 @@ describe("utils/mocks", () => {
         { rootMockDirectory }
       );
       expect(result).toStrictEqual({ foo: "bar" });
+    });
+    it("should load mock in proper folder without parsing", async () => {
+      const result = await loadMock(
+        "MyQueryName",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        "http://api.github.com/graphql",
+        { rootMockDirectory, parse: false }
+      );
+      expect(result).toBe('{"foo":"bar"}');
+    });
+    it("should return null if not found", async () => {
+      const result = await loadMock(
+        "MyQueryThatDoesntExist",
+        {
+          foo: "other variable",
+          query: "some variable",
+          someUndefinedVar: undefined,
+        },
+        "http://api.github.com/graphql",
+        { rootMockDirectory, parse: false }
+      );
+      expect(result).toBeNull();
     });
   });
 });

@@ -5,8 +5,11 @@
  * - to setup mocks on a mock server / check api state : `loadMock`
  */
 
+import fsPromises from "fs/promises";
+import path from "path";
+
 function getRootMockDirectory(): string {
-  return require("path").join(process.cwd(), ".tmp", ".mocks");
+  return path.join(process.cwd(), ".tmp", ".mocks");
 }
 
 function generateMockIdFromGraphqlVariables(
@@ -19,7 +22,6 @@ function generateMockIdFromGraphqlVariables(
     .sort(([a], [b]) => (a < b ? -1 : 1))
     .map(([key, value]) => `${key}|${value}`)
     .join("");
-  // return serializedVariablesSortedByKeyWithoutUndefined;
   const hashed = require("hash.js")
     .sha256()
     .update(serializedVariablesSortedByKeyWithoutUndefined)
@@ -32,10 +34,10 @@ type ManageMockOptionsType = { rootMockDirectory?: () => string };
 export function getMockFilePath(
   operationName: string,
   variables: Record<string, unknown>,
+  // todo merge with options
   endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   { rootMockDirectory = getRootMockDirectory }: ManageMockOptionsType = {}
 ): string {
-  const path = require("path");
   const cleanEnpoint = endpoint.replace(/https?:\/\//, "");
   return path.join(
     rootMockDirectory(),
@@ -48,28 +50,45 @@ export async function saveMock(
   operationName: string,
   variables: Record<string, unknown>,
   body: string,
+  // todo merge with options
   endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
   options: ManageMockOptionsType = {}
 ): Promise<string> {
   const filePath = getMockFilePath(operationName, variables, endpoint, options);
-  const folderPath = require("path").dirname(filePath);
-  const fsPromises = require("fs/promises");
+  const folderPath = path.dirname(filePath);
+  // const fsPromises = require("fs/promises");
   await fsPromises.mkdir(folderPath, { recursive: true });
   await fsPromises.writeFile(filePath, body, "utf8");
   return filePath;
 }
 
-export function loadMock(
+export async function loadMock(
   operationName: string,
   variables: Record<string, unknown>,
+  // todo merge with options
   endpoint: string = process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
-  options: ManageMockOptionsType = {}
-): unknown | null {
-  const filePath = getMockFilePath(operationName, variables, endpoint, options);
+  {
+    parse = true,
+    ...getMockFilePathOptions
+  }: ManageMockOptionsType & { parse?: boolean } = {}
+): Promise<unknown | null> {
+  const filePath = getMockFilePath(
+    operationName,
+    variables,
+    endpoint,
+    getMockFilePathOptions
+  );
   try {
-    return require(filePath);
+    // can't use `require` - it's not available via next
+    await fsPromises.stat(filePath); // check if file exists (readFile won't pass in catch)
+    const promise = fsPromises.readFile(filePath, "utf8");
+    if (!parse) {
+      return promise;
+    }
+    const result = await promise;
+    return JSON.parse(result.toString());
   } catch (e) {
-    if (e.code === "MODULE_NOT_FOUND") {
+    if (e.code === "ENOENT") {
       return null;
     }
     throw e;

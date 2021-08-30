@@ -3,6 +3,7 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parseBooleanEnvVar } from "../../../../utils";
+import { loadMock, saveMock } from "../../../../utils/mocks";
 
 export default async (
   req: NextApiRequest,
@@ -18,21 +19,43 @@ export default async (
     console.log("[GraphQL-proxy]", "Incoming IntrospectionQuery ignored");
     return res.status(405).json({ error: "IntrospectionQuery not allowed" });
   }
-  const recording = parseBooleanEnvVar(process.env.RECORD_MOCKS, false);
-  console.log(
-    `[GraphQL-proxy]${recording ? "[Recording]" : ""}`,
-    "fetching",
-    req.method,
-    req.url,
-    "->",
-    process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
-    req.body.operationName,
-    req.body.variables
-  );
+  const recordMocks = parseBooleanEnvVar(process.env.RECORD_MOCKS, false);
+  const replayMocks = parseBooleanEnvVar(process.env.REPLAY_MOCKS, false);
   try {
     if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
       throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
     }
+    if (replayMocks) {
+      console.log("try replay", req.body.variables);
+      let result;
+      try {
+        // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
+        result = await loadMock(req.body.operationName, req.body.variables);
+      } catch (e) {
+        console.error(e);
+      }
+      if (result) {
+        console.log(
+          "[GraphQL-proxy][Replay]",
+          req.body.operationName,
+          req.body.variables
+        );
+        return res.status(200).json(result);
+      }
+      // in case mocking was not successful, fallback in network mode
+    }
+    console.log(
+      `[GraphQL-proxy]${recordMocks ? "[Record]" : ""}${
+        replayMocks ? "[Replay - FAILED / fallback network]" : ""
+      }`,
+      "fetching",
+      req.method,
+      req.url,
+      "->",
+      process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
+      req.body.operationName,
+      req.body.variables
+    );
     const result = await fetch(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT, {
       method: "POST",
       body: JSON.stringify(req.body),
@@ -42,14 +65,14 @@ export default async (
     });
     if (result.ok) {
       const response = await result.text();
-      if (recording) {
+      if (recordMocks) {
         // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
-        const mockFilePath = await require("../../../../utils/mocks").saveMock(
+        const mockFilePath = await saveMock(
           req.body.operationName,
           req.body.variables,
           response
         );
-        console.log(`[GraphQL-proxy][Recording] Mock saved at ${mockFilePath}`);
+        console.log(`[GraphQL-proxy][Record] Mock saved at ${mockFilePath}`);
       }
       return res.status(result.status).json(response);
     }
