@@ -1,4 +1,3 @@
-import path from "path";
 import {
   getMockFilePath as _getMockFilePath,
   saveMock as _saveMock,
@@ -16,9 +15,12 @@ type OptionsType = Omit<
 
 function getOptions(options: Record<string, unknown> = {}) {
   return {
-    ...options,
-    rootMockDirectory: () => path.join(process.cwd(), ".tmp", ".mocks"),
+    rootMockDirectory: () =>
+      // need to `require` native node module so that they will work inside cypress (if you want to use the cypress plugin)
+      // eslint-disable-next-line @typescript-eslint/no-var-requires,global-require
+      require("path").join(process.cwd(), ".tmp", ".mocks"),
     endpoint: process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
+    ...options,
   };
 }
 

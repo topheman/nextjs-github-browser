@@ -16,7 +16,7 @@
  * @type {Cypress.PluginConfig}
  */
 
-import { loadMock } from "../../utils/mocks";
+import { loadMock } from "../../src/mocks/node";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpackPreprocessor = require("@cypress/webpack-preprocessor");
 
