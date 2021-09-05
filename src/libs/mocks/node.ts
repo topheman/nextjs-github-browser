@@ -20,15 +20,21 @@ export type GetMockFilePathOptionsType = ManageMockOptionsType & {
   isRequest?: boolean;
 };
 
+function getMockFolderPath({
+  endpoint,
+  rootMockDirectory,
+}: GetMockFilePathOptionsType): string {
+  const cleanEnpoint = endpoint.replace(/https?:\/\//, "");
+  return path.join(rootMockDirectory(), cleanEnpoint);
+}
+
 export function getMockFilePath(
   operationName: string,
   variables: Record<string, unknown>,
   { isRequest = false, rootMockDirectory, endpoint }: GetMockFilePathOptionsType
 ): string {
-  const cleanEnpoint = endpoint.replace(/https?:\/\//, "");
   return path.join(
-    rootMockDirectory(),
-    cleanEnpoint,
+    getMockFolderPath({ rootMockDirectory, endpoint }),
     getMockFileName(operationName, variables, { isRequest })
   );
 }
@@ -84,5 +90,31 @@ export async function loadMock(
       return null;
     }
     throw e;
+  }
+}
+
+export async function loadAllMocks(
+  options: GetMockFilePathOptionsType
+): Promise<Map<string, unknown> | null> {
+  try {
+    const directory = getMockFolderPath(options);
+    const files = (await fsPromises.readdir(directory)) as string[];
+    const filesContent = await Promise.all(
+      files.map(
+        (fileName) =>
+          fsPromises.readFile(
+            path.join(directory, fileName),
+            "utf8"
+          ) as Promise<string>
+      )
+    );
+    const result = files.reduce((acc, fileName, index) => {
+      acc.set(fileName, filesContent[index]);
+      return acc;
+    }, new Map());
+    return result;
+  } catch (err) {
+    console.error(err);
+    return null;
   }
 }

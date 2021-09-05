@@ -28,7 +28,6 @@ export default async (
     if (replayMocks) {
       let result;
       try {
-        // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
         result = await loadMock(req.body.operationName, req.body.variables);
       } catch (e) {
         console.error(e);
