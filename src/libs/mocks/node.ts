@@ -11,12 +11,12 @@ import { getMockFileName } from "./common";
 const fsPromises = require("fs/promises");
 const path = require("path");
 
-type ManageMockOptionsType = {
+export type ManageMockOptionsType = {
   rootMockDirectory: () => string;
   endpoint: string;
 };
 
-type GetMockFilePathOptionsType = ManageMockOptionsType & {
+export type GetMockFilePathOptionsType = ManageMockOptionsType & {
   isRequest?: boolean;
 };
 

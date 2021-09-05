@@ -3,7 +3,7 @@
 
 import type { NextApiRequest, NextApiResponse } from "next";
 import { parseBooleanEnvVar } from "../../../../utils";
-import { loadMock, saveMock } from "../../../../utils/mocks";
+import { loadMock, saveMock } from "../../../mocks/node";
 
 export default async (
   req: NextApiRequest,
