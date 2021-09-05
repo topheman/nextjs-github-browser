@@ -22,6 +22,6 @@ export function getMockFileName(
   { isRequest = false }: { isRequest: boolean }
 ): string {
   return `${operationName}_${generateMockIdFromGraphqlVariables(variables)}${
-    isRequest ? "_request" : ""
+    isRequest ? "_request" : "_response"
   }.json`;
 }

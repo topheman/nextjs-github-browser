@@ -22,7 +22,7 @@ describe("libs/mocks/node", () => {
         baseOptions
       );
       expect(result).toContain(
-        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
+        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484_response.json"
       );
     });
     it("should give the same hash with variables passed in other order", () => {
@@ -35,7 +35,7 @@ describe("libs/mocks/node", () => {
         baseOptions
       );
       expect(result).toContain(
-        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
+        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484_response.json"
       );
     });
     it("should give the same hash with undefined variables", () => {
@@ -49,7 +49,7 @@ describe("libs/mocks/node", () => {
         baseOptions
       );
       expect(result).toContain(
-        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484.json"
+        ".tmp/.mock-test/www.example.com/graphql/MyQueryName_1246ca6d7128858e2b3f2d3ee06cde329cc20697e146355fd62af214af3b2484_response.json"
       );
     });
   });
