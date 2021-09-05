@@ -1,7 +1,7 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import { makeUser, makeProfileReadMe } from "../../mocks/helpers";
+import { makeUser, makeProfileReadMe } from "../../msw/helpers";
 import AppUserProfileOverview, {
   AppUserProfileOverviewProps,
 } from "./AppUserProfileOverview";

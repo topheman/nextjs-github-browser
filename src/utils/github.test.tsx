@@ -4,7 +4,7 @@ import { waitFor } from "@testing-library/react";
 
 import { makeApolloProviderWrapper } from "./tests";
 import { encodeBase64 } from "./common";
-import { server } from "../mocks/server";
+import { server } from "../msw/server";
 import {
   useSearchRepos,
   extractSearchUrlParams,
