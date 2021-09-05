@@ -19,8 +19,8 @@ export default async (
     console.log("[GraphQL-proxy]", "Incoming IntrospectionQuery ignored");
     return res.status(405).json({ error: "IntrospectionQuery not allowed" });
   }
-  const recordMocks = parseBooleanEnvVar(process.env.RECORD_MOCKS, false);
-  const replayMocks = parseBooleanEnvVar(process.env.REPLAY_MOCKS, false);
+  const recordMocks = parseBooleanEnvVar(process.env.MOCKS_RECORD, false);
+  const replayMocks = parseBooleanEnvVar(process.env.MOCKS_REPLAY, false);
   try {
     if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
       throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
