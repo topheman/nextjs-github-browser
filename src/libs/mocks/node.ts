@@ -114,6 +114,7 @@ export async function loadAllMocks(
     }, new Map());
     return result;
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error(err);
     return null;
   }
