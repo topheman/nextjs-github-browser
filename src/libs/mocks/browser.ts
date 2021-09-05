@@ -1,0 +1,1 @@
+export { getMockFileName } from "./common";

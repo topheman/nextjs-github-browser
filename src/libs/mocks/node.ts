@@ -5,26 +5,11 @@
  * - to setup mocks on a mock server / check api state : `loadMock`
  */
 
+import { getMockFileName } from "./common";
+
 // using require so that it will work in a node process of cypress if needed
 const fsPromises = require("fs/promises");
 const path = require("path");
-
-function generateMockIdFromGraphqlVariables(
-  variables: Record<string, unknown>
-): string {
-  const serializedVariablesSortedByKeyWithoutUndefined = Object.entries(
-    variables
-  )
-    .filter(([, value]) => typeof value !== "undefined")
-    .sort(([a], [b]) => (a < b ? -1 : 1))
-    .map(([key, value]) => `${key}|${value}`)
-    .join("");
-  const hashed = require("hash.js")
-    .sha256()
-    .update(serializedVariablesSortedByKeyWithoutUndefined)
-    .digest("hex");
-  return hashed;
-}
 
 type ManageMockOptionsType = {
   rootMockDirectory: () => string;
@@ -44,9 +29,7 @@ export function getMockFilePath(
   return path.join(
     rootMockDirectory(),
     cleanEnpoint,
-    `${operationName}_${generateMockIdFromGraphqlVariables(variables)}${
-      isRequest ? "_request" : ""
-    }.json`
+    getMockFileName(operationName, variables, { isRequest })
   );
 }
 
