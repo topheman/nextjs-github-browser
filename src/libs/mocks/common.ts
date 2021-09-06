@@ -25,3 +25,28 @@ export function getMockFileName(
     isRequest ? "_request" : "_response"
   }.json`;
 }
+
+export function serializeMocksMap(map: Map<string, unknown>): string {
+  return JSON.stringify(Array.from(map.entries()));
+}
+
+export function parseMocksMap(str: string): Map<string, unknown> {
+  return new Map(JSON.parse(str));
+}
+
+export function fromMocksMap(
+  map: Map<string, unknown>
+): {
+  get: (
+    operationName: string,
+    variables: Record<string, unknown>
+  ) => Record<string, unknown>;
+} {
+  return {
+    get: (operationName: string, variables: Record<string, unknown>) => {
+      return map.get(
+        getMockFileName(operationName, variables, { isRequest: false })
+      ) as Record<string, unknown>;
+    },
+  };
+}

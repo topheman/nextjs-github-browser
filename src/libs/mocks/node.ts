@@ -109,7 +109,7 @@ export async function loadAllMocks(
       )
     );
     const result = files.reduce((acc, fileName, index) => {
-      acc.set(fileName, filesContent[index]);
+      acc.set(fileName, JSON.parse(filesContent[index]));
       return acc;
     }, new Map());
     return result;
