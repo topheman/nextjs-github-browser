@@ -2,6 +2,7 @@ import {
   getMockFilePath as _getMockFilePath,
   saveMock as _saveMock,
   loadMock as _loadMock,
+  loadAllMocks as _loadAllMocks,
   GetMockFilePathOptionsType,
   ManageMockOptionsType,
 } from "../libs/mocks/node";
@@ -57,4 +58,10 @@ export function loadMock(
   options?: OptionsType
 ): Promise<unknown | null> {
   return _loadMock(operationName, variables, getOptions(options));
+}
+
+export async function loadAllMocks(
+  options?: OptionsType
+): Promise<Map<string, unknown> | null> {
+  return _loadAllMocks(getOptions(options));
 }

@@ -94,7 +94,7 @@ export async function loadMock(
 }
 
 export async function loadAllMocks(
-  options: GetMockFilePathOptionsType
+  options: ManageMockOptionsType
 ): Promise<Map<string, unknown> | null> {
   try {
     const directory = getMockFolderPath(options);

@@ -15,8 +15,14 @@
 /**
  * @type {Cypress.PluginConfig}
  */
+import { loadEnvConfig } from "@next/env";
 
 import { loadMock } from "../../src/mocks/node";
+
+const { GITHUB_GRAPHQL_API_ROOT_ENDPOINT } = loadEnvConfig(
+  "./",
+  true
+).combinedEnv;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpackPreprocessor = require("@cypress/webpack-preprocessor");
 
@@ -25,15 +31,16 @@ module.exports = (on) => {
     // eslint-disable-next-line global-require
     webpackOptions: require("../webpack.config"),
   };
-  console.log(process.cwd());
   on("file:preprocessor", webpackPreprocessor(options));
   on("task", {
     loadMock: ([operationName, variables, loadMockOptions]) => {
-      console.log("loadMock", [operationName, variables, loadMockOptions]);
-      return loadMock(operationName, variables, {
+      const resolvedOptions = {
+        endpoint: GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
         ...loadMockOptions,
-        endpoint: "https://api.github.com/graphql", // must specify - we dont share .env
-      });
+      };
+      // eslint-disable-next-line no-console
+      console.log("loadMock", [operationName, variables, resolvedOptions]);
+      return loadMock(operationName, variables, resolvedOptions);
     },
   });
 };
