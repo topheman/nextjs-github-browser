@@ -1,9 +1,19 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
 import { NextWindowType } from "../types";
 import {
   Repository,
   SearchRepositoriesQueryResult,
 } from "../../src/libs/graphql";
+
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      clientRepositoryPaginationNavigate: typeof clientRepositoryPaginationNavigate;
+    }
+  }
+}
 
 function ssrAssertDefaultpage() {
   cy.visit("/topheman?tab=repositories");
@@ -23,36 +33,113 @@ function ssrAssertDefaultpage() {
   });
 }
 
-function clientAssertDefaultPageNavigation() {
-  cy.url().should(
-    "eq",
-    `${Cypress.config().baseUrl}/topheman?tab=repositories`
-  );
-  cy.intercept("/api/github/graphql").as("graphql");
-  cy.get("[data-testid=search-pagination-top] [data-end-cursor]").click();
+function clientRepositoryPaginationNavigate(
+  direction: "next" | "previous",
+  isCached = false,
+  key: string,
+  requestAssertion?: (variable: Record<string, unknown>) => void
+): void {
+  // click Previous or Next according to direction
   cy.get(
-    "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
-  ).should("be.visible");
-  cy.wait("@graphql").then((result) => {
-    const body = (result.response
-      .body as unknown) as SearchRepositoriesQueryResult;
-    expect(body.data.searchRepos.edges).to.have.length(30);
-    const firstRepoInfos = body.data.searchRepos.edges[0].node as Repository;
+    `[data-testid=search-pagination-top] [data-${
+      direction === "previous" ? "start" : "end"
+    }-cursor]`
+  ).click();
+  if (!isCached) {
+    cy.get(
+      "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
+    ).should("be.visible");
+  } else {
     cy.get(
       "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
     ).should("not.exist");
-    cy.findByText(firstRepoInfos.name).should("exist");
-  });
+  }
+  if (!isCached) {
+    cy.wait("@graphql").then((result) => {
+      requestAssertion(result.request.body.variables);
+      const body = (result.response
+        .body as unknown) as SearchRepositoriesQueryResult;
+      expect(body.data.searchRepos.edges).to.have.lengthOf.above(0);
+      const firstRepoInfos = body.data.searchRepos.edges[0].node as Repository;
+      cy.get(
+        "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
+      ).should("not.exist");
+      cy.findByText(firstRepoInfos.name).should("exist");
+      cy.wrap(firstRepoInfos).as(key);
+    });
+  } else {
+    cy.get(`@${key}`).then((cachedFirstRepo) => {
+      cy.findByText(((cachedFirstRepo as unknown) as Repository).name).should(
+        "exist"
+      );
+    });
+  }
 }
+
+Cypress.Commands.add(
+  "clientRepositoryPaginationNavigate",
+  clientRepositoryPaginationNavigate
+);
 
 describe("useSearchRepos", () => {
   describe("/[owner]?tab=repositories", () => {
     it("[SSR] should correctly render /topheman?tab=repositories", () => {
       ssrAssertDefaultpage();
     });
-    it("[Client] should correctly use client-side pagination", () => {
+    it("[Client] should correctly use client-side pagination with apollo cache", () => {
+      // todo check Pagination infos when component done (total found, etc ...)
       ssrAssertDefaultpage();
-      clientAssertDefaultPageNavigation();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        "next",
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "next",
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "previous",
+        false,
+        "all|last-updated|page2-with-before",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "previous",
+        false,
+        "all|last-updated|page1-with-before",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      // hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        "next",
+        true,
+        "all|last-updated|page2-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "next",
+        true,
+        "all|last-updated|page3-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "previous",
+        true,
+        "all|last-updated|page2-with-before"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        "previous",
+        true,
+        "all|last-updated|page1-with-before"
+      );
     });
   });
 });
