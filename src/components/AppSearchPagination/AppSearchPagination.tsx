@@ -21,12 +21,13 @@ export default function AppSearchPagination({
   loading,
   onUpdate,
   className,
+  ...props
 }: AppSearchPaginationProps): JSX.Element {
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { before, after, page, ...rest } = router.query;
   return (
-    <div className={className || ""}>
+    <div className={className || ""} {...props}>
       <div className="flex text-brand-primary">
         <Link
           href={{
@@ -58,7 +59,7 @@ export default function AppSearchPagination({
         </Link>
         <div className="p-1 w-14 text-center border-t border-b">
           {loading ? (
-            <AppLoadingSpinner width={50} />
+            <AppLoadingSpinner width={50} data-testid="pagination-spinner" />
           ) : (
             <span style={{ width: 50 }} />
           )}

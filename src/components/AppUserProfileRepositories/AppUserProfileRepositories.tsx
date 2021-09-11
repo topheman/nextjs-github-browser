@@ -35,6 +35,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       <div className="text-center">
         {data?.searchRepos.pageInfo && (
           <AppSearchPagination
+            data-testid="search-pagination-top"
             loading={loading}
             onUpdate={setPaginationState}
             pageInfo={data?.searchRepos.pageInfo}

@@ -16,10 +16,12 @@ AppLoadingSpinner.defaultProps = {
 export default function AppLoadingSpinner({
   width,
   color,
+  ...props
 }: AppLoadingSpinnerProps): JSX.Element {
   const formattedWidth = typeof width === "number" ? `${width}px` : width;
   return (
     <div
+      {...props}
       className={styles.root}
       style={
         {
