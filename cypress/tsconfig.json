@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "esModuleInterop": true,
     "types": ["cypress", "node", "@testing-library/cypress"]
   },
+  "exclude": [
+    "node_modules",
+  ]
 }

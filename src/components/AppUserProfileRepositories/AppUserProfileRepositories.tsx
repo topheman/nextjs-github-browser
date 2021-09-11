@@ -52,7 +52,7 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       {data?.searchRepos.edges ? (
         <>
           <div>Total found: {data?.searchRepos.repositoryCount}</div>
-          <ul>
+          <ul data-testid="repository-list">
             {data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>
                 <AppRepositoryListItem repository={repo?.node as Repository} />
