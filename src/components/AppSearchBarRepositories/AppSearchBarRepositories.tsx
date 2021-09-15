@@ -7,14 +7,12 @@ import {
 
 export type AppSearchBarRepositoriesProps = {
   onUpdate: SetReducerStateType<Partial<Record<"sort" | "type" | "q", string>>>;
-  clearPaginationFilter: () => void;
   params: SearchParamsType;
   className?: string;
 };
 
 export default function AppSearchBarRepositories({
   onUpdate,
-  clearPaginationFilter,
   params: { type, sort, q },
   className,
 }: AppSearchBarRepositoriesProps): JSX.Element {
@@ -27,7 +25,6 @@ export default function AppSearchBarRepositories({
         value={q}
         onInput={(e) => {
           onUpdate({ q: (e.target as HTMLInputElement).value });
-          clearPaginationFilter();
         }}
       />
       <div className="flex ml-0 sm:ml-2">
@@ -35,7 +32,6 @@ export default function AppSearchBarRepositories({
           value={type || ""}
           onChange={(value) => {
             onUpdate({ type: value });
-            clearPaginationFilter();
           }}
           options={getSearchFieldOptions("type")}
           buttonLabel="Type"
@@ -46,7 +42,6 @@ export default function AppSearchBarRepositories({
           value={sort || ""}
           onChange={(value) => {
             onUpdate({ sort: value });
-            clearPaginationFilter();
           }}
           options={getSearchFieldOptions("sort")}
           buttonLabel="Sort"

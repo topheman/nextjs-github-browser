@@ -1,4 +1,11 @@
-import { useEffect, useState, useReducer, Dispatch } from "react";
+import {
+  useEffect,
+  useState,
+  useReducer,
+  Dispatch,
+  EffectCallback,
+  DependencyList,
+} from "react";
 
 /**
  * Inspired by https://usehooks.com/useDebounce/
@@ -45,4 +52,21 @@ export function useStateReducer<T extends Record<string, unknown>>(
   return useReducer<
     (previousState: T, nextState: StateReducerActionType<T>) => T
   >(stateReducer, initialState);
+}
+
+export function useEffectSkipFirst(
+  callback: EffectCallback,
+  dependencies: DependencyList | undefined,
+  callbackFirstEffect?: EffectCallback
+): void {
+  const [isFirstEffect, setIsFirstEffect] = useState(true);
+  useEffect(() => {
+    if (!isFirstEffect) {
+      callback();
+    } else if (typeof callbackFirstEffect === "function") {
+      callbackFirstEffect();
+    }
+    setIsFirstEffect(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, dependencies);
 }

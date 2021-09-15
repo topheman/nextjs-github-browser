@@ -1,14 +1,18 @@
-import isEqual from "lodash/isEqual";
 import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { encodeBase64, decodeBase64 } from "./common";
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
 } from "../libs/graphql";
-import { useDebounce, useStateReducer, StateReducerActionType } from "./hooks";
+import {
+  useDebounce,
+  useStateReducer,
+  StateReducerActionType,
+  useEffectSkipFirst,
+} from "./hooks";
 
 export const DEFAULT_REPOS_PER_PAGE = 30;
 
@@ -45,14 +49,6 @@ const SORT_MAPPING = Object.freeze({
   stargazers: "sort:stars-desc",
   name: "sort:name-asc",
 });
-
-function cleanupUndefinedValues<T>(obj: T): T {
-  try {
-    return JSON.parse(JSON.stringify(obj));
-  } catch (_) {
-    return obj;
-  }
-}
 
 export function getSearchRepoGraphqlVariables(
   user: string,
@@ -242,7 +238,6 @@ export function useSearchRepos(
   setPaginationState: React.Dispatch<
     StateReducerActionType<PaginationParamsType>
   >;
-  clearPaginationFilter: () => void;
   loading: boolean;
   data:
     | SearchRepositoriesQueryResult["data"]
@@ -255,6 +250,22 @@ export function useSearchRepos(
       ...onlyParams<SearchParamsType>(searchUrlParams, "search"),
     }
   );
+  // manage reset location when pagination should be ignored (changing type/sort/query)
+  const [
+    nextLocationWithoutPagination,
+    setNextLocationWithoutPagination,
+  ] = useState<string | null>(null);
+  function resetNextLocation(done = false) {
+    if (done) {
+      return setNextLocationWithoutPagination(null);
+    }
+    const location = getNewLocation(searchBarState).replace(
+      /((after|before)=([a-zA-Z0-9])*)&?/,
+      ""
+    );
+    console.log("resetNextLocation", location);
+    return setNextLocationWithoutPagination(location);
+  }
   // manage pagination fields state
   const [
     paginationState,
@@ -262,42 +273,6 @@ export function useSearchRepos(
   ] = useStateReducer<PaginationParamsType>({
     ...onlyParams<PaginationParamsType>(searchUrlParams, "pagination"),
   });
-  const clearPaginationFilter = () => {
-    // todo
-    console.log("clearPaginationFilter", paginationState, searchBarState);
-    const newLocation = getNewLocation({
-      ...searchBarState,
-    });
-    console.log("newLocation", newLocation);
-  };
-  // reset local state if not in sync with searchUrlParams (from the router)
-  useEffect(() => {
-    if (
-      !isEqual(
-        cleanupUndefinedValues({ ...searchUrlParams }),
-        cleanupUndefinedValues({ ...searchBarState, ...paginationState })
-      )
-    ) {
-      const newSearchBarState = onlyParams<SearchParamsType>(
-        searchUrlParams,
-        "search"
-      );
-      const newPaginationState = onlyParams<PaginationParamsType>(
-        searchUrlParams,
-        "pagination"
-      );
-      setSearchBarState(() => newSearchBarState);
-      setPaginationState(() => newPaginationState);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    searchUrlParams.q,
-    searchUrlParams.type,
-    searchUrlParams.sort,
-    searchUrlParams.after,
-    searchUrlParams.before,
-    searchUrlParams.page,
-  ]);
   // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
   const { query, before, after, first, last } = getSearchRepoGraphqlVariables(
@@ -321,37 +296,60 @@ export function useSearchRepos(
   });
   // update url
   const router = useRouter();
-  const [bypassFirstEffect, setBypassFirstEffect] = useState(true);
-  // eslint-disable-next-line consistent-return
-  useEffect(() => {
-    // do not change location on first mount
-    if (bypassFirstEffect) {
+  // reset local state if not in sync with searchUrlParams (from the router)
+  useEffectSkipFirst(() => {
+    resetNextLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query]);
+  useEffectSkipFirst(
+    () => {
+      const newLocation = getNewLocation({
+        ...searchBarState,
+        ...paginationState,
+      });
+      // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
+      // console.log(rawResult);
+      if (rawResult.networkStatus === NetworkStatus.ready) {
+        // shallow mode because we don't want to run any server-side hooks
+        setTimeout(() => {
+          console.log(
+            "router.push",
+            "newLocation",
+            newLocation,
+            "nextLocationWithoutPagination",
+            nextLocationWithoutPagination,
+            "query",
+            query
+          );
+          router
+            .push(
+              nextLocationWithoutPagination || newLocation,
+              nextLocationWithoutPagination || newLocation,
+              { shallow: true }
+            )
+            .then(() => {
+              resetNextLocation(true);
+            });
+        }, 0);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    },
+    [rawResult.networkStatus, after, before, query],
+    () => {
+      // do not change location on first mount
       if (searchUrlParams.after || searchUrlParams.before) {
         setPaginationState({
           after: searchUrlParams.after,
           before: searchUrlParams.before,
         });
       }
-      return setBypassFirstEffect(false);
     }
-    const newLocation = getNewLocation({
-      ...searchBarState,
-      ...paginationState,
-    });
-    // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
-    // console.log(rawResult);
-    if (rawResult.networkStatus === NetworkStatus.ready) {
-      // shallow mode because we don't want to run any server-side hooks
-      router.push(newLocation, newLocation, { shallow: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [rawResult.networkStatus, after, before, query]);
+  );
   return {
     searchBarState,
     setSearchBarState,
     paginationState,
     setPaginationState,
-    clearPaginationFilter,
     loading: rawResult.loading,
     data: rawResult.data || rawResult.previousData, // keep the previous data while requesting
     rawResult,

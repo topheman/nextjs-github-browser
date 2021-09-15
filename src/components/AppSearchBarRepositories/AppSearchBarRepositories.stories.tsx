@@ -29,9 +29,6 @@ const Template: Story<AppSearchBarRepositoriesProps> = () => {
     <div style={{ width: "100%", maxWidth: "700px" }}>
       <AppSearchBarRepositories
         onUpdate={setState as AppSearchBarRepositoriesProps["onUpdate"]}
-        clearPaginationFilter={() => {
-          // todo add when done
-        }}
         params={state}
       />
     </div>

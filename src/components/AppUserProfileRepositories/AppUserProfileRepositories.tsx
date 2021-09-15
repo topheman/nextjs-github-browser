@@ -15,7 +15,6 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
     searchBarState,
     setSearchBarState,
     setPaginationState,
-    clearPaginationFilter,
     data,
     loading,
   } = useSearchRepos(
@@ -27,7 +26,6 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
       <div>
         <AppSearchBarRepositories
           onUpdate={setSearchBarState}
-          clearPaginationFilter={clearPaginationFilter}
           params={searchBarState}
           className="pb-4 mb-4 border-b border-light"
         />
