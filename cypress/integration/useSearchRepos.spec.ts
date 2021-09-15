@@ -6,6 +6,16 @@ import {
   SearchRepositoriesQueryResult,
 } from "../../src/libs/graphql";
 
+type NavigationInfosType = {
+  firstRepoInfos: Repository;
+  graphqlVariables: {
+    query: string;
+    after?: string;
+    before?: string;
+    first?: number;
+  };
+};
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -56,22 +66,47 @@ function clientRepositoryPaginationNavigate(
   }
   if (!isCached) {
     cy.wait("@graphql").then((result) => {
-      requestAssertion(result.request.body.variables);
+      const graphqlVariables = result.request.body
+        .variables as NavigationInfosType["graphqlVariables"];
+      // run the callback passed if a custom assertion is needed to be done on the graphqlVariables
+      requestAssertion(graphqlVariables);
       const body = (result.response
         .body as unknown) as SearchRepositoriesQueryResult;
       expect(body.data.searchRepos.edges).to.have.lengthOf.above(0);
       const firstRepoInfos = body.data.searchRepos.edges[0].node as Repository;
+      // ensure the loading spinner is not here anymore (the request is done)
       cy.get(
         "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
       ).should("not.exist");
+      // check the render is up to date with the data passed
       cy.findByText(firstRepoInfos.name).should("exist");
-      cy.wrap(firstRepoInfos).as(key);
+      // check the url is up to date
+      const { after, before } = graphqlVariables;
+      if (after) {
+        cy.url().should("contain", `after=${after}`);
+      }
+      if (before) {
+        cy.url().should("contain", `before=${before}`);
+      }
+      // store the data from the request intercepted to do the checks in apollo cached mode
+      cy.wrap({ firstRepoInfos, graphqlVariables }).as(key);
     });
   } else {
-    cy.get(`@${key}`).then((cachedFirstRepo) => {
-      cy.findByText(((cachedFirstRepo as unknown) as Repository).name).should(
-        "exist"
-      );
+    // apollo cached mode
+    cy.get(`@${key}`).then((infos) => {
+      cy.findByText(
+        ((infos as unknown) as NavigationInfosType).firstRepoInfos.name
+      ).should("exist");
+      const {
+        after,
+        before,
+      } = ((infos as unknown) as NavigationInfosType).graphqlVariables;
+      if (after) {
+        cy.url().should("contain", `after=${after}`);
+      }
+      if (before) {
+        cy.url().should("contain", `before=${before}`);
+      }
     });
   }
 }
