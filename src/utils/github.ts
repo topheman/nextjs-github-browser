@@ -22,6 +22,18 @@ export type PaginationParamsType = Partial<
 >;
 export type SearchUrlParamsType = SearchParamsType & PaginationParamsType;
 
+type ParsedUrlQueryInput = Record<
+  string,
+  | string
+  | undefined
+  | number
+  | boolean
+  | ReadonlyArray<string>
+  | ReadonlyArray<number>
+  | ReadonlyArray<boolean>
+  | null
+>;
+
 const SELECT_TYPE_OPTIONS = Object.freeze([
   { value: "", label: "All" },
   { value: "source", label: "Sources" },
@@ -210,20 +222,19 @@ export function makeGraphqlSearchQuery(
   return queries.join(" ");
 }
 
-function getNewLocation(searchUrlParams: SearchUrlParamsType): string {
-  if (typeof window === "undefined") {
-    throw new Error("Only use client side");
+function getNewRouterQuery(
+  searchUrlParams: Record<string, unknown>,
+  { noPaginationInfos = false } = {}
+): ParsedUrlQueryInput {
+  const result = cleanupPaginationParams(
+    searchUrlParams
+  ) as ParsedUrlQueryInput;
+  if (noPaginationInfos) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { after, before, ...rest } = result;
+    return rest;
   }
-  const newSearchUrlParams = new URLSearchParams(
-    cleanupPaginationParams({
-      ...Object.fromEntries(
-        new URLSearchParams(window.location.search).entries()
-      ),
-      ...searchUrlParams,
-    })
-  );
-  const url = `${window.location.pathname}?${newSearchUrlParams.toString()}`;
-  return url;
+  return result;
 }
 
 export type SetReducerStateType<T> = React.Dispatch<StateReducerActionType<T>>;
@@ -254,18 +265,7 @@ export function useSearchRepos(
   const [
     nextLocationWithoutPagination,
     setNextLocationWithoutPagination,
-  ] = useState<string | null>(null);
-  function resetNextLocation(done = false) {
-    if (done) {
-      return setNextLocationWithoutPagination(null);
-    }
-    const location = getNewLocation(searchBarState).replace(
-      /((after|before)=([a-zA-Z0-9])*)&?/,
-      ""
-    );
-    console.log("resetNextLocation", location);
-    return setNextLocationWithoutPagination(location);
-  }
+  ] = useState(false);
   // manage pagination fields state
   const [
     paginationState,
@@ -298,37 +298,34 @@ export function useSearchRepos(
   const router = useRouter();
   // reset local state if not in sync with searchUrlParams (from the router)
   useEffectSkipFirst(() => {
-    resetNextLocation();
+    setNextLocationWithoutPagination(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   useEffectSkipFirst(
     () => {
-      const newLocation = getNewLocation({
-        ...searchBarState,
-        ...paginationState,
-      });
+      const routerQuery = getNewRouterQuery(
+        {
+          ...router.query,
+          ...searchBarState,
+          ...paginationState,
+        },
+        { noPaginationInfos: !!nextLocationWithoutPagination }
+      );
       // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
-      // console.log(rawResult);
       if (rawResult.networkStatus === NetworkStatus.ready) {
         // shallow mode because we don't want to run any server-side hooks
         setTimeout(() => {
-          console.log(
-            "router.push",
-            "newLocation",
-            newLocation,
-            "nextLocationWithoutPagination",
-            nextLocationWithoutPagination,
-            "query",
-            query
-          );
           router
             .push(
-              nextLocationWithoutPagination || newLocation,
-              nextLocationWithoutPagination || newLocation,
+              {
+                pathname: router.pathname,
+                query: { ...routerQuery },
+              },
+              undefined,
               { shallow: true }
             )
             .then(() => {
-              resetNextLocation(true);
+              setNextLocationWithoutPagination(false);
             });
         }, 0);
       }
