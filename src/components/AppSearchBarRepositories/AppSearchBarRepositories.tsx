@@ -1,9 +1,6 @@
 import AppSelectMenu from "../AppSelectMenu/AppSelectMenu";
-import {
-  getSearchFieldOptions,
-  SearchParamsType,
-  SetReducerStateType,
-} from "../../utils/github";
+import { getSearchFieldOptions, SearchParamsType } from "../../utils/github";
+import { SetReducerStateType } from "../../utils/useSearchRepos";
 
 export type AppSearchBarRepositoriesProps = {
   onUpdate: SetReducerStateType<Partial<Record<"sort" | "type" | "q", string>>>;

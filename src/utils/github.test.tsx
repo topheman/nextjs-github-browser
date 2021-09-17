@@ -6,11 +6,11 @@ import { makeApolloProviderWrapper } from "./tests";
 import { encodeBase64 } from "./common";
 import { server } from "../msw/server";
 import {
-  useSearchRepos,
   extractSearchUrlParams,
   makeGraphqlSearchQuery,
   getPaginationInfos,
 } from "./github";
+import useSearchRepos from "./useSearchRepos";
 import { Repository } from "../libs/graphql";
 
 // eslint-disable-next-line global-require

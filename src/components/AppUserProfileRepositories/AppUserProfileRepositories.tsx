@@ -5,7 +5,8 @@ import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
 import AppRepositoryListItem from "../AppRepositoryListItem/AppRepositoryListItem";
-import { useSearchRepos, extractSearchUrlParams } from "../../utils/github";
+import { extractSearchUrlParams } from "../../utils/github";
+import useSearchRepos from "../../utils/useSearchRepos";
 
 export type AppUserProfileRepositoriesProps = never;
 
