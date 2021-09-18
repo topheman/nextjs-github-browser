@@ -27,6 +27,7 @@ function MyApp({
   pageProps: PageProps;
 }): JSX.Element {
   const apolloClient = useApollo(pageProps);
+  console.log("MyApp", Component, pageProps);
   return (
     <ApolloProvider client={apolloClient}>
       <TheHeader />

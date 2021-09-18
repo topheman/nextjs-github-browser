@@ -16,6 +16,7 @@ export type AppUserProfileInfosProps = {
 export default function AppUserProfileInfos({
   user,
 }: AppUserProfileInfosProps): JSX.Element | null {
+  console.log("AppUserProfileInfos", { user });
   if (!user) {
     return null;
   }

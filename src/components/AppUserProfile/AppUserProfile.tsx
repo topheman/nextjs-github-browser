@@ -1,7 +1,7 @@
-import { User } from "../../libs/graphql";
+// import { User } from "../../libs/graphql";
 
 export type AppUserProfileProps = {
-  user?: User;
+  // user?: User;
   children: () => {
     nav: JSX.Element;
     main: JSX.Element;

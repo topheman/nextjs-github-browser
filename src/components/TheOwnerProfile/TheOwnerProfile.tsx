@@ -60,7 +60,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerRepositoriesModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile user={user}>
+      <AppUserProfile>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -84,7 +84,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile user={user}>
+      <AppUserProfile>
         {() => ({
           nav: (
             <AppProfileNavTab
