@@ -1,11 +1,11 @@
 import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
-  GetRepositoryOwnerWithRepositoriesQuery,
+  SearchRepositoriesDocument,
 } from "../libs/graphql";
 import {
   useDebounce,
@@ -101,6 +101,13 @@ export default function useSearchRepos(
     | SearchRepositoriesQueryResult["previousData"];
   rawResult: SearchRepositoriesQueryResult;
 } {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+  // todo error
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   const router = useRouter();
   useEffect(() => {
     router.events.on("beforeHistoryChange", (...args) => {
@@ -137,7 +144,7 @@ export default function useSearchRepos(
     ...paginationState,
     q: debouncedQ,
   });
-  useEffectSkipFirst(() => {
+  useEffectSkipFirst(async () => {
     console.log(router);
     const { owner, after, before, ...routerQuery } = getNewRouterQuery({
       ...router.query,
@@ -170,6 +177,7 @@ export default function useSearchRepos(
       "resetPagination",
       resetPagination
     );
+    console.log("apolloClient", apolloClient.current);
     const newRouterQuery = {
       ...(resetPagination ? {} : cleanupPaginationParams({ after, before })),
       ...(routerQuery as Record<string, string>),
@@ -177,6 +185,14 @@ export default function useSearchRepos(
     const newUrl = `${window.location.pathname}?${new URLSearchParams(
       newRouterQuery
     ).toString()}`;
+    setLoading(true);
+    const result = await apolloClient.current.query({
+      query: SearchRepositoriesDocument,
+      variables: computedGraphqlVariables,
+    });
+    setData(result.data);
+    setLoading(false);
+    console.log("apolloClient query result", result);
     window.history.pushState(
       {
         ...window.history.state,
@@ -223,14 +239,16 @@ export default function useSearchRepos(
   );
   const rawResult = useSearchRepositoriesQuery({
     variables: computedGraphqlVariables,
+    skip: mounted,
   });
+  const apolloClient = useRef(rawResult.client);
   return {
     searchBarState,
     setSearchBarState,
     paginationState,
     setPaginationState,
-    loading: rawResult.loading,
-    data: rawResult.data || rawResult.previousData, // keep the previous data while requesting
+    loading, // rawResult.loading,
+    data: data || rawResult.data || rawResult.previousData, // keep the previous data while requesting
     rawResult,
   };
 }
