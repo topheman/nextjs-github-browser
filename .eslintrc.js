@@ -62,7 +62,7 @@ module.exports = {
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": [
       "error",
-      { functions: false, classes: false, variables: true },
+      { functions: false, classes: false, variables: false },
     ],
     // needed because of https://github.com/typescript-eslint/typescript-eslint/blob/master/packages/eslint-plugin/docs/rules/no-unused-vars.md
     "no-unused-vars": "off",

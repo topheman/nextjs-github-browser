@@ -109,20 +109,28 @@ export default function useSearchRepos(
   }, []);
   const router = useRouter();
   useEffect(() => {
-    router.events.on("beforeHistoryChange", (...args) => {
+    function onRouteChangeComplete(url: string, options: unknown) {
+      // cleanup state when going back to default page
+      if (typeof url === "string" && url.endsWith("?tab=repositories")) {
+        setSearchBarState({ q: "", type: "", sort: "" });
+        setPaginationState({ before: "", after: "", page: "" });
+      }
       // eslint-disable-next-line no-console
-      console.log("beforeHistoryChange", ...args);
-    });
-    router.events.on("routeChangeComplete", (...args) => {
+      console.log("routeChangeComplete", url, options);
+    }
+    function onBeforeHistoryChange(url: string, options: unknown) {
       // eslint-disable-next-line no-console
-      console.log("routeChangeComplete", ...args);
-    });
-    router.events.on("routeChangeStart", (...args) => {
-      // eslint-disable-next-line no-console
-      console.log("routeChangeStart", ...args);
-    });
+      console.log("beforeHistoryChange", url, options);
+    }
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
+    router.events.on("beforeHistoryChange", onBeforeHistoryChange);
+    // router.events.on("routeChangeStart", (...args) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log("routeChangeStart", ...args);
+    // });
     return () => {
-      // todo router.events.off()
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
+      router.events.off("beforeHistoryChange", onBeforeHistoryChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -170,7 +178,6 @@ export default function useSearchRepos(
       },
       { resetPagination }
     );
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const newRouterQuery = {
       ...(resetPagination
         ? {}
@@ -183,7 +190,6 @@ export default function useSearchRepos(
       newRouterQuery
     ).toString()}`;
     setLoading(true);
-    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const result = await apolloClient.current.query({
       query: SearchRepositoriesDocument,
       variables: graphqlVariables,
