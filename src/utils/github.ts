@@ -39,7 +39,7 @@ const SORT_MAPPING = Object.freeze({
 export function getSearchRepoGraphqlVariables(
   user: string,
   searchUrlParams: SearchUrlParamsType,
-  options?: { perPage?: number }
+  options?: PaginationOptionsType
 ): {
   query: string;
   before?: string;
@@ -53,9 +53,14 @@ export function getSearchRepoGraphqlVariables(
   };
 }
 
+type PaginationOptionsType = { perPage?: number; resetPagination?: boolean };
+
 export function getPaginationInfos(
   paginationParams: PaginationParamsType,
-  { perPage = DEFAULT_REPOS_PER_PAGE }: { perPage?: number } = {}
+  {
+    perPage = DEFAULT_REPOS_PER_PAGE,
+    resetPagination = false,
+  }: PaginationOptionsType = {}
 ): {
   before?: string;
   after?: string;
@@ -64,32 +69,41 @@ export function getPaginationInfos(
 } {
   let before;
   let after;
-  const decodedBefore = decodeBase64(paginationParams.before);
-  const decodeAfter = decodeBase64(paginationParams.after);
-  // convert "page" into graphql cursor - will be overriden by before/after if passed
-  if (paginationParams.page) {
-    const pageNumber = Number(paginationParams.page) || 1; // get rid of NaN
-    after = encodeBase64(`cursor:${(pageNumber - 1) * perPage}`);
-  }
-  // check for before/after cursor passed (github website uses v2, which is unsupported in the API)
-  if (decodedBefore && /cursor:\d+/.test(decodedBefore)) {
-    before = paginationParams.before;
-  } else if (paginationParams.before) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `"before" cursor not supported - decoded : "${decodedBefore}", falling back`
-    );
-  }
-  if (paginationParams.after && decodeAfter && /cursor:\d+/.test(decodeAfter)) {
-    after = paginationParams.after;
-  } else if (paginationParams.after) {
-    // eslint-disable-next-line no-console
-    console.warn(
-      `"after" cursor not supported - decoded : "${decodeAfter}", falling back`
-    );
-  }
-  // after should override before
-  if (before && after) {
+  if (!resetPagination) {
+    const decodedBefore = decodeBase64(paginationParams.before);
+    const decodeAfter = decodeBase64(paginationParams.after);
+    // convert "page" into graphql cursor - will be overriden by before/after if passed
+    if (paginationParams.page) {
+      const pageNumber = Number(paginationParams.page) || 1; // get rid of NaN
+      after = encodeBase64(`cursor:${(pageNumber - 1) * perPage}`);
+    }
+    // check for before/after cursor passed (github website uses v2, which is unsupported in the API)
+    if (decodedBefore && /cursor:\d+/.test(decodedBefore)) {
+      before = paginationParams.before;
+    } else if (paginationParams.before) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `"before" cursor not supported - decoded : "${decodedBefore}", falling back`
+      );
+    }
+    if (
+      paginationParams.after &&
+      decodeAfter &&
+      /cursor:\d+/.test(decodeAfter)
+    ) {
+      after = paginationParams.after;
+    } else if (paginationParams.after) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `"after" cursor not supported - decoded : "${decodeAfter}", falling back`
+      );
+    }
+    // after should override before
+    if (before && after) {
+      before = undefined;
+    }
+  } else {
+    after = undefined;
     before = undefined;
   }
   // when you use before, ask for `last`

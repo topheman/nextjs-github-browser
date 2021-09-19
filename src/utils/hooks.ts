@@ -56,7 +56,7 @@ export function useStateReducer<T extends Record<string, unknown>>(
 }
 
 export function useEffectSkipFirst(
-  callback: EffectCallback,
+  callback: EffectCallback | (() => Promise<unknown>),
   dependencies: DependencyList | undefined,
   callbackFirstEffect?: EffectCallback
 ): void {

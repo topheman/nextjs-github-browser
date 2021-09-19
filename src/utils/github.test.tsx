@@ -279,5 +279,18 @@ describe("utils/github", () => {
         last: undefined,
       });
     });
+    it("after and before should be undefined if resetPagination=true", () => {
+      const after = encodeBase64("cursor:30"); // Y3Vyc29yOjMw
+      const result = getPaginationInfos(
+        { after, before: after },
+        { resetPagination: true }
+      );
+      expect(result).toStrictEqual({
+        after: undefined,
+        before: undefined,
+        first: 30,
+        last: undefined,
+      });
+    });
   });
 });

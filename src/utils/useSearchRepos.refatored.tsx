@@ -1,4 +1,3 @@
-import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -103,7 +102,7 @@ export default function useSearchRepos(
 } {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
-  // todo error
+  // todo manage error
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -111,14 +110,21 @@ export default function useSearchRepos(
   const router = useRouter();
   useEffect(() => {
     router.events.on("beforeHistoryChange", (...args) => {
+      // eslint-disable-next-line no-console
       console.log("beforeHistoryChange", ...args);
     });
     router.events.on("routeChangeComplete", (...args) => {
+      // eslint-disable-next-line no-console
       console.log("routeChangeComplete", ...args);
     });
     router.events.on("routeChangeStart", (...args) => {
+      // eslint-disable-next-line no-console
       console.log("routeChangeStart", ...args);
     });
+    return () => {
+      // todo router.events.off()
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useStateReducer<SearchParamsType>(
@@ -139,13 +145,13 @@ export default function useSearchRepos(
     sort: searchBarState.sort,
     q: debouncedQ,
   });
-  let computedGraphqlVariables = getSearchRepoGraphqlVariables(user, {
+  let graphqlVariables = getSearchRepoGraphqlVariables(user, {
     ...searchBarState,
     ...paginationState,
     q: debouncedQ,
   });
   useEffectSkipFirst(async () => {
-    console.log(router);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { owner, after, before, ...routerQuery } = getNewRouterQuery({
       ...router.query,
       ...searchBarState,
@@ -155,44 +161,35 @@ export default function useSearchRepos(
       previousState.q !== debouncedQ ||
       previousState.type !== searchBarState.type ||
       previousState.sort !== searchBarState.sort;
-    const graphqlVariables = getSearchRepoGraphqlVariables(user, {
-      ...searchBarState,
-      ...paginationState,
-      q: debouncedQ,
-    });
-    computedGraphqlVariables = {
-      query: graphqlVariables.query,
-      first: graphqlVariables.first,
-      last: graphqlVariables.last,
+    graphqlVariables = getSearchRepoGraphqlVariables(
+      user,
+      {
+        ...searchBarState,
+        ...paginationState,
+        q: debouncedQ,
+      },
+      { resetPagination }
+    );
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
+    const newRouterQuery = {
       ...(resetPagination
         ? {}
-        : cleanupPaginationParams({
-            after: graphqlVariables.after,
-            before: graphqlVariables.before,
+        : cleanupPaginationParams({ after, before } as {
+            [key: string]: string | undefined;
           })),
-    };
-    console.log(
-      "effect computedGraphqlVariables",
-      computedGraphqlVariables,
-      "resetPagination",
-      resetPagination
-    );
-    console.log("apolloClient", apolloClient.current);
-    const newRouterQuery = {
-      ...(resetPagination ? {} : cleanupPaginationParams({ after, before })),
       ...(routerQuery as Record<string, string>),
     };
     const newUrl = `${window.location.pathname}?${new URLSearchParams(
       newRouterQuery
     ).toString()}`;
     setLoading(true);
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     const result = await apolloClient.current.query({
       query: SearchRepositoriesDocument,
-      variables: computedGraphqlVariables,
+      variables: graphqlVariables,
     });
     setData(result.data);
     setLoading(false);
-    console.log("apolloClient query result", result);
     window.history.pushState(
       {
         ...window.history.state,
@@ -218,27 +215,8 @@ export default function useSearchRepos(
     paginationState.before,
     paginationState.page,
   ]);
-  // const { query, before, after, first, last } = getSearchRepoGraphqlVariables(
-  //   user,
-  //   {
-  //     ...searchBarState,
-  //     ...paginationState,
-  //     q: debouncedQ,
-  //   }
-  // );
-  // console.log({ query, before, after, first, last });
-  const resetPagination =
-    previousState?.q !== debouncedQ ||
-    previousState?.type !== searchBarState.type ||
-    previousState?.sort !== searchBarState.sort;
-  console.log(
-    "render computedGraphqlVariables",
-    computedGraphqlVariables,
-    "resetPagination",
-    resetPagination
-  );
   const rawResult = useSearchRepositoriesQuery({
-    variables: computedGraphqlVariables,
+    variables: graphqlVariables,
     skip: mounted,
   });
   const apolloClient = useRef(rawResult.client);
