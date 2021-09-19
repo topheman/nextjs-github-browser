@@ -116,7 +116,6 @@ export default function PageOwner({
 }: MyPageProps): JSX.Element {
   const router = useRouter();
   const { owner, tab, ...searchUrlParams } = parseQuery(router.query);
-  console.log("PageOwner", { owner, tab, ...searchUrlParams });
   return (
     <>
       <TheOwnerProfile

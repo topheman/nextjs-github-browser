@@ -13,7 +13,6 @@ export default function AppSearchBarRepositories({
   params: { type = "", sort = "", q = "" },
   className,
 }: AppSearchBarRepositoriesProps): JSX.Element {
-  console.log("AppSearchBarRepositories", { type, sort, q });
   return (
     <div className={`${className} flex flex-col sm:flex-row w-full`}>
       <input

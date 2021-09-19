@@ -1,16 +1,17 @@
-import { NetworkStatus } from "@apollo/client";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   SearchRepositoriesQueryResult,
   useSearchRepositoriesQuery,
+  SearchRepositoriesDocument,
 } from "../libs/graphql";
 import {
   useDebounce,
   useStateReducer,
   StateReducerActionType,
   useEffectSkipFirst,
+  usePrevious,
 } from "./hooks";
 import {
   getSearchRepoGraphqlVariables,
@@ -99,17 +100,46 @@ export default function useSearchRepos(
     | SearchRepositoriesQueryResult["previousData"];
   rawResult: SearchRepositoriesQueryResult;
 } {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+  // todo manage error
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+  const router = useRouter();
+  useEffect(() => {
+    function onRouteChangeComplete(url: string, options: unknown) {
+      // cleanup state when going back to default page
+      if (typeof url === "string" && url.endsWith("?tab=repositories")) {
+        setSearchBarState({ q: "", type: "", sort: "" });
+        setPaginationState({ before: "", after: "", page: "" });
+      }
+      // eslint-disable-next-line no-console
+      console.log("routeChangeComplete", url, options);
+    }
+    function onBeforeHistoryChange(url: string, options: unknown) {
+      // eslint-disable-next-line no-console
+      console.log("beforeHistoryChange", url, options);
+    }
+    router.events.on("routeChangeComplete", onRouteChangeComplete);
+    router.events.on("beforeHistoryChange", onBeforeHistoryChange);
+    // router.events.on("routeChangeStart", (...args) => {
+    //   // eslint-disable-next-line no-console
+    //   console.log("routeChangeStart", ...args);
+    // });
+    return () => {
+      router.events.off("routeChangeComplete", onRouteChangeComplete);
+      router.events.off("beforeHistoryChange", onBeforeHistoryChange);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   // manage searchBar fields state
   const [searchBarState, setSearchBarState] = useStateReducer<SearchParamsType>(
     {
       ...onlyParams<SearchParamsType>(searchUrlParams, "search"),
     }
   );
-  // manage reset location when pagination should be ignored (changing type/sort/query)
-  const [
-    nextLocationWithoutPagination,
-    setNextLocationWithoutPagination,
-  ] = useState(false);
   // manage pagination fields state
   const [
     paginationState,
@@ -117,82 +147,92 @@ export default function useSearchRepos(
   ] = useStateReducer<PaginationParamsType>({
     ...onlyParams<PaginationParamsType>(searchUrlParams, "pagination"),
   });
-  // generate graphql query string
   const debouncedQ = useDebounce(searchBarState.q, 1000);
-  const { query, before, after, first, last } = getSearchRepoGraphqlVariables(
-    user,
-    {
+  const previousState = usePrevious({
+    type: searchBarState.type,
+    sort: searchBarState.sort,
+    q: debouncedQ,
+  });
+  let graphqlVariables = getSearchRepoGraphqlVariables(user, {
+    ...searchBarState,
+    ...paginationState,
+    q: debouncedQ,
+  });
+  useEffectSkipFirst(async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { owner, after, before, ...routerQuery } = getNewRouterQuery({
+      ...router.query,
       ...searchBarState,
       ...paginationState,
-      q: debouncedQ,
-    }
-  );
-  console.log({ query, before, after, first, last });
-  // call graphql API
-  const rawResult = useSearchRepositoriesQuery({
-    variables: {
-      query,
-      before,
-      after,
-      first,
-      last,
-    },
-  });
-  // update url
-  const router = useRouter();
-  // reset local state if not in sync with searchUrlParams (from the router)
-  useEffectSkipFirst(() => {
-    setNextLocationWithoutPagination(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
-  useEffectSkipFirst(
-    () => {
-      const routerQuery = getNewRouterQuery(
-        {
-          ...router.query,
-          ...searchBarState,
-          ...paginationState,
+    });
+    const resetPagination =
+      previousState.q !== debouncedQ ||
+      previousState.type !== searchBarState.type ||
+      previousState.sort !== searchBarState.sort;
+    graphqlVariables = getSearchRepoGraphqlVariables(
+      user,
+      {
+        ...searchBarState,
+        ...paginationState,
+        q: debouncedQ,
+      },
+      { resetPagination }
+    );
+    const newRouterQuery = {
+      ...(resetPagination
+        ? {}
+        : cleanupPaginationParams({ after, before } as {
+            [key: string]: string | undefined;
+          })),
+      ...(routerQuery as Record<string, string>),
+    };
+    const newUrl = `${window.location.pathname}?${new URLSearchParams(
+      newRouterQuery
+    ).toString()}`;
+    setLoading(true);
+    const result = await apolloClient.current.query({
+      query: SearchRepositoriesDocument,
+      variables: graphqlVariables,
+    });
+    setData(result.data);
+    setLoading(false);
+    window.history.pushState(
+      {
+        ...window.history.state,
+        as: newUrl,
+        // url: newUrl.replace("topheman", "[owner]"),
+        url: newUrl.replace("topheman", "[owner]"),
+        options: {
+          ...window.history.state.options,
+          shallow: true,
         },
-        { noPaginationInfos: !!nextLocationWithoutPagination }
-      );
-      // wait for the graphql request to be finished to update the location (rely on networkStatus instead of loading for cache support)
-      if (rawResult.networkStatus === NetworkStatus.ready) {
-        // shallow mode because we don't want to run any server-side hooks
-        setTimeout(() => {
-          router
-            .push(
-              {
-                pathname: router.pathname,
-                query: { ...routerQuery },
-              },
-              undefined,
-              { shallow: true }
-            )
-            .then(() => {
-              setNextLocationWithoutPagination(false);
-            });
-        }, 0);
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [rawResult.networkStatus, after, before, query],
-    () => {
-      // do not change location on first mount
-      if (searchUrlParams.after || searchUrlParams.before) {
-        setPaginationState({
-          after: searchUrlParams.after,
-          before: searchUrlParams.before,
-        });
-      }
-    }
-  );
+      },
+      "",
+      newUrl
+    );
+    // router.push({ pathname: router.pathname, query: routerQuery }, undefined, {
+    //   shallow: true,
+    // });
+  }, [
+    searchBarState.sort,
+    searchBarState.type,
+    debouncedQ,
+    paginationState.after,
+    paginationState.before,
+    paginationState.page,
+  ]);
+  const rawResult = useSearchRepositoriesQuery({
+    variables: graphqlVariables,
+    skip: mounted,
+  });
+  const apolloClient = useRef(rawResult.client);
   return {
     searchBarState,
     setSearchBarState,
     paginationState,
     setPaginationState,
-    loading: rawResult.loading,
-    data: rawResult.data || rawResult.previousData, // keep the previous data while requesting
+    loading, // rawResult.loading,
+    data: data || rawResult.data || rawResult.previousData, // keep the previous data while requesting
     rawResult,
   };
 }
