@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect, useRef, useState } from "react";
 
 import {
@@ -100,6 +100,7 @@ export default function useSearchRepos(
     | SearchRepositoriesQueryResult["previousData"];
   rawResult: SearchRepositoriesQueryResult;
 } {
+  const [replayHistory, setReplayHistory] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   // todo manage error
@@ -118,19 +119,52 @@ export default function useSearchRepos(
       // eslint-disable-next-line no-console
       console.log("routeChangeComplete", url, options);
     }
-    function onBeforeHistoryChange(url: string, options: unknown) {
+    function manageHistory(url: string, options: unknown): boolean {
       // eslint-disable-next-line no-console
-      console.log("beforeHistoryChange", url, options);
+      let [, searchUrlParamsFromHistory] = url.split("?");
+      searchUrlParamsFromHistory = Object.fromEntries(
+        new URLSearchParams(searchUrlParamsFromHistory).entries()
+      );
+      if (searchUrlParamsFromHistory.tab !== "repositories") {
+        return true;
+      }
+      console.log("manageHistory", url, searchUrlParamsFromHistory, {
+        after: searchUrlParamsFromHistory.after
+          ? atob(searchUrlParamsFromHistory.after)
+          : searchUrlParamsFromHistory.after,
+        before: searchUrlParamsFromHistory.before
+          ? atob(searchUrlParamsFromHistory.before)
+          : searchUrlParamsFromHistory.before,
+      });
+      // todo add some flag "useHistory" to avoid pushState in useEffect bellow
+      setReplayHistory(true);
+      setSearchBarState(() =>
+        onlyParams<SearchParamsType>(searchUrlParamsFromHistory, "search")
+      );
+      setPaginationState(() =>
+        onlyParams<PaginationParamsType>(
+          searchUrlParamsFromHistory,
+          "pagination"
+        )
+      );
+      return false;
     }
+    // window.addEventListener("popstate", function (event) {
+    //   console.log("popstate fired!", event.state);
+    // });
+    Router.beforePopState(({ url, as, options }) => {
+      return manageHistory(url, options);
+    });
     router.events.on("routeChangeComplete", onRouteChangeComplete);
-    router.events.on("beforeHistoryChange", onBeforeHistoryChange);
+    // router.events.on("beforeHistoryChange", onBeforeHistoryChange);
     // router.events.on("routeChangeStart", (...args) => {
     //   // eslint-disable-next-line no-console
     //   console.log("routeChangeStart", ...args);
     // });
     return () => {
+      Router.beforePopState(() => true);
       router.events.off("routeChangeComplete", onRouteChangeComplete);
-      router.events.off("beforeHistoryChange", onBeforeHistoryChange);
+      // router.events.off("beforeHistoryChange", onBeforeHistoryChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -196,23 +230,23 @@ export default function useSearchRepos(
     });
     setData(result.data);
     setLoading(false);
-    window.history.pushState(
-      {
-        ...window.history.state,
-        as: newUrl,
-        // url: newUrl.replace("topheman", "[owner]"),
-        url: newUrl.replace("topheman", "[owner]"),
-        options: {
-          ...window.history.state.options,
-          shallow: true,
+    if (!replayHistory) {
+      window.history.pushState(
+        {
+          ...window.history.state,
+          as: newUrl,
+          // url: newUrl.replace("topheman", "[owner]"),
+          url: newUrl.replace("topheman", "[owner]"),
+          options: {
+            ...window.history.state.options,
+            shallow: true,
+          },
         },
-      },
-      "",
-      newUrl
-    );
-    // router.push({ pathname: router.pathname, query: routerQuery }, undefined, {
-    //   shallow: true,
-    // });
+        "",
+        newUrl
+      );
+    }
+    setReplayHistory(false);
   }, [
     searchBarState.sort,
     searchBarState.type,

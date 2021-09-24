@@ -44,7 +44,6 @@ const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  console.log("getServerSideProps", context);
   const { owner, tab, ...searchUrlParams } = parseQuery(context.query);
   const baseProps: MyPageProps = {
     skipProfileReadme: tab === "repositories",
