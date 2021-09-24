@@ -40,6 +40,12 @@ function ssrAssertDefaultpage() {
     const firstRepoInfos = searchPayload.edges[0].node as Repository;
     cy.findByText(firstRepoInfos.name).should("exist");
     cy.get("[data-testid=repository-list] > li").should("have.length", 30);
+    cy.wrap({
+      firstRepoInfos,
+      graphqlVariables: {
+        query: "user:topheman sort:updated-desc fork:true",
+      },
+    }).as("all|last-updated|page1-with-after");
   });
 }
 
@@ -47,8 +53,9 @@ function clientRepositoryPaginationNavigate(
   action: {
     direction?: "next" | "previous";
     query?: string;
-    type?: string;
-    sort?: string;
+    type?: "all" | "source" | "fork" | "archived" | "mirror";
+    sort?: "last-updated" | "name" | "stargazers";
+    custom?: () => void;
   },
   isCached = false,
   key: string,
@@ -61,6 +68,32 @@ function clientRepositoryPaginationNavigate(
         action.direction === "previous" ? "start" : "end"
       }-cursor]`
     ).click();
+  }
+  if (action.type) {
+    const typeTextMapping = {
+      all: "All",
+      source: "Sources",
+      fork: "Forks",
+      archived: "Archived",
+      mirror: "Mirrors",
+    };
+    cy.findByText("Type").click();
+    cy.findByText(typeTextMapping[action.type]).click();
+  }
+  if (action.sort) {
+    const typeTextMapping = {
+      "last-updated": "Last updated",
+      name: "Name",
+      stargazers: "Stars",
+    };
+    cy.findByText("Sort").click();
+    cy.findByText(typeTextMapping[action.sort]).click();
+  }
+  if (action.query) {
+    cy.findByPlaceholderText("Find a repository...").type(action.query);
+  }
+  if (action.custom && typeof action.custom === "function") {
+    action.custom();
   }
   if (!isCached) {
     cy.get(
@@ -181,6 +214,114 @@ describe("useSearchRepos", () => {
         { direction: "previous" },
         true,
         "all|last-updated|page1-with-before"
+      );
+    });
+    it("[Client] should reset pagination when changing type", () => {
+      ssrAssertDefaultpage();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { type: "source" },
+        false,
+        "source|last-updated|page1-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:false") // <-
+      );
+    });
+    it("[Client] should reset pagination when changing sort", () => {
+      ssrAssertDefaultpage();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { sort: "name" },
+        false,
+        "all|name|page1-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:name-asc fork:true") // <-
+      );
+    });
+    it("[Client] should reset pagination when changing query", () => {
+      ssrAssertDefaultpage();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { query: "react" },
+        false,
+        "all|last-updated|page1-with-after|q=react",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true react") // <-
+      );
+    });
+    it("[Client] should load default page when clicking on Repositories tab", () => {
+      ssrAssertDefaultpage();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.get("[href='/topheman?tab=repositories']").first().click();
+          },
+        },
+        true,
+        "all|last-updated|page1-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true") // <-
       );
     });
   });
