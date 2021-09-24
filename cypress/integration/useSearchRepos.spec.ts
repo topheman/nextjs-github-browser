@@ -44,17 +44,24 @@ function ssrAssertDefaultpage() {
 }
 
 function clientRepositoryPaginationNavigate(
-  direction: "next" | "previous",
+  action: {
+    direction?: "next" | "previous";
+    query?: string;
+    type?: string;
+    sort?: string;
+  },
   isCached = false,
   key: string,
   requestAssertion?: (variable: Record<string, unknown>) => void
 ): void {
   // click Previous or Next according to direction
-  cy.get(
-    `[data-testid=search-pagination-top] [data-${
-      direction === "previous" ? "start" : "end"
-    }-cursor]`
-  ).click();
+  if (action.direction) {
+    cy.get(
+      `[data-testid=search-pagination-top] [data-${
+        action.direction === "previous" ? "start" : "end"
+      }-cursor]`
+    ).click();
+  }
   if (!isCached) {
     cy.get(
       "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
@@ -127,28 +134,28 @@ describe("useSearchRepos", () => {
       cy.intercept("/api/github/graphql").as("graphql");
       // without hitting cache
       cy.clientRepositoryPaginationNavigate(
-        "next",
+        { direction: "next" },
         false,
         "all|last-updated|page2-with-after",
         ({ query }) =>
           expect(query).to.eq("user:topheman sort:updated-desc fork:true")
       );
       cy.clientRepositoryPaginationNavigate(
-        "next",
+        { direction: "next" },
         false,
         "all|last-updated|page3-with-after",
         ({ query }) =>
           expect(query).to.eq("user:topheman sort:updated-desc fork:true")
       );
       cy.clientRepositoryPaginationNavigate(
-        "previous",
+        { direction: "previous" },
         false,
         "all|last-updated|page2-with-before",
         ({ query }) =>
           expect(query).to.eq("user:topheman sort:updated-desc fork:true")
       );
       cy.clientRepositoryPaginationNavigate(
-        "previous",
+        { direction: "previous" },
         false,
         "all|last-updated|page1-with-before",
         ({ query }) =>
@@ -156,22 +163,22 @@ describe("useSearchRepos", () => {
       );
       // hitting cache
       cy.clientRepositoryPaginationNavigate(
-        "next",
+        { direction: "next" },
         true,
         "all|last-updated|page2-with-after"
       );
       cy.clientRepositoryPaginationNavigate(
-        "next",
+        { direction: "next" },
         true,
         "all|last-updated|page3-with-after"
       );
       cy.clientRepositoryPaginationNavigate(
-        "previous",
+        { direction: "previous" },
         true,
         "all|last-updated|page2-with-before"
       );
       cy.clientRepositoryPaginationNavigate(
-        "previous",
+        { direction: "previous" },
         true,
         "all|last-updated|page1-with-before"
       );
