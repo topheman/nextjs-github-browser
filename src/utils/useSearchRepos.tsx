@@ -110,21 +110,18 @@ export default function useSearchRepos(
   }, []);
   const router = useRouter();
   useEffect(() => {
-    function onRouteChangeComplete(url: string, options: unknown) {
-      // cleanup state when going back to default page
-      if (typeof url === "string" && url.endsWith("?tab=repositories")) {
-        setSearchBarState({ q: "", type: "", sort: "" });
-        setPaginationState({ before: "", after: "", page: "" });
-      }
-      // eslint-disable-next-line no-console
-      console.log("routeChangeComplete", url, options);
-    }
-    function manageHistory(url: string, options: unknown): boolean {
-      // eslint-disable-next-line no-console
-      let [, searchUrlParamsFromHistory] = url.split("?");
-      searchUrlParamsFromHistory = Object.fromEntries(
-        new URLSearchParams(searchUrlParamsFromHistory).entries()
+    /**
+     * In order not to break back/forward history button, we must sync url and state
+     * when they change after user clicks on back button for example.
+     * We also want to prevent NextJS router to call the getServerSideProps endpoint `_next/data/*`
+     * We make our own requests directly to the graphql endpoint if needed (triggered by state change)
+     */
+    Router.beforePopState(({ url }) => {
+      const [, searchUrlQueryString] = url.split("?");
+      const searchUrlParamsFromHistory = Object.fromEntries(
+        new URLSearchParams(searchUrlQueryString).entries()
       );
+      // Do not override router if not on the repositories tab
       if (searchUrlParamsFromHistory.tab !== "repositories") {
         return true;
       }
@@ -136,8 +133,10 @@ export default function useSearchRepos(
           ? atob(searchUrlParamsFromHistory.before)
           : searchUrlParamsFromHistory.before,
       });
-      // todo add some flag "useHistory" to avoid pushState in useEffect bellow
+      // flag the following state changes as triggered by history change
+      // (in order not to add any new entry with `history.pushState`)
       setReplayHistory(true);
+      // sync hook state with router
       setSearchBarState(() =>
         onlyParams<SearchParamsType>(searchUrlParamsFromHistory, "search")
       );
@@ -147,24 +146,21 @@ export default function useSearchRepos(
           "pagination"
         )
       );
+      // prevent next router from calling getServerSideProps hook
       return false;
-    }
-    // window.addEventListener("popstate", function (event) {
-    //   console.log("popstate fired!", event.state);
-    // });
-    Router.beforePopState(({ url, as, options }) => {
-      return manageHistory(url, options);
     });
+    function onRouteChangeComplete(url: string) {
+      // cleanup state when going back to default page
+      if (typeof url === "string" && url.endsWith("?tab=repositories")) {
+        setSearchBarState({ q: "", type: "", sort: "" });
+        setPaginationState({ before: "", after: "", page: "" });
+      }
+    }
     router.events.on("routeChangeComplete", onRouteChangeComplete);
-    // router.events.on("beforeHistoryChange", onBeforeHistoryChange);
-    // router.events.on("routeChangeStart", (...args) => {
-    //   // eslint-disable-next-line no-console
-    //   console.log("routeChangeStart", ...args);
-    // });
     return () => {
+      // reset Router events
       Router.beforePopState(() => true);
       router.events.off("routeChangeComplete", onRouteChangeComplete);
-      // router.events.off("beforeHistoryChange", onBeforeHistoryChange);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -230,6 +226,7 @@ export default function useSearchRepos(
     });
     setData(result.data);
     setLoading(false);
+    // if state change is comming from a history change (e.g. back button), don't add a new entry
     if (!replayHistory) {
       window.history.pushState(
         {
