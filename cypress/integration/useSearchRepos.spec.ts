@@ -98,9 +98,9 @@ function clientRepositoryPaginationNavigate(
   if (!isCached) {
     // todo something wrong - some tests are failing, even if the spinner is visible
     // temporary commenting
-    // cy.get(
-    //   "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
-    // ).should("be.visible");
+    cy.get(
+      "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
+    ).should("be.visible");
   } else {
     cy.get(
       "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
@@ -326,22 +326,34 @@ describe("useSearchRepos", () => {
           expect(query).to.eq("user:topheman sort:updated-desc fork:true") // <-
       );
     });
-    it("[Client] should not break history", () => {
+    it.only("[Client] should not break history", () => {
       // fill the history
       ssrAssertDefaultpage();
-      // don't navigate to quickly between url (DOM nodes will appear detached to cypress)
-      const WAIT_BETWEEN_NAVIGATION = 50;
       cy.intercept("/api/github/graphql").as("graphql");
+      // don't navigate to quickly between url (DOM nodes will appear detached to cypress)
+      const WAIT_BETWEEN_NAVIGATION = 100;
       cy.get("[href='/topheman']").first().click();
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should("eq", `${Cypress.config().baseUrl}/topheman`);
       cy.get("[href='/topheman?tab=repositories']").first().click();
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should(
+        "contain",
+        `${Cypress.config().baseUrl}/topheman?tab=repositories`
+      );
       cy.get("[href='/topheman']").first().click();
       // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should("eq", `${Cypress.config().baseUrl}/topheman`);
       cy.get("[href='/topheman?tab=repositories']").first().click();
+      // eslint-disable-next-line cypress/no-unnecessary-waiting
+      cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should(
+        "contain",
+        `${Cypress.config().baseUrl}/topheman?tab=repositories`
+      );
       // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },

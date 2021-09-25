@@ -38,6 +38,8 @@ export default async (
           req.body.operationName,
           req.body.variables
         );
+        // add just a little delay (a response should not be immediate) / better for Cypress
+        await new Promise((resolve) => setTimeout(resolve, 40));
         return res.status(200).json(result);
       }
       // in case mocking was not successful, fallback in network mode
