@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable cypress/no-unnecessary-waiting */
 import { NextWindowType } from "../types";
 import {
   Repository,
@@ -16,6 +17,8 @@ type NavigationInfosType = {
   };
 };
 
+// don't navigate to quickly between url that dont do a full reload thx to nextjs (DOM nodes will appear detached to cypress)
+const WAIT_BETWEEN_NAVIGATION = 100;
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
@@ -221,7 +224,6 @@ describe("useSearchRepos", () => {
     it("[Client] should reset pagination when changing type", () => {
       ssrAssertDefaultpage();
       cy.intercept("/api/github/graphql").as("graphql");
-      // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },
         false,
@@ -247,7 +249,6 @@ describe("useSearchRepos", () => {
     it("[Client] should reset pagination when changing sort", () => {
       ssrAssertDefaultpage();
       cy.intercept("/api/github/graphql").as("graphql");
-      // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },
         false,
@@ -273,7 +274,6 @@ describe("useSearchRepos", () => {
     it("[Client] should reset pagination when changing query", () => {
       ssrAssertDefaultpage();
       cy.intercept("/api/github/graphql").as("graphql");
-      // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },
         false,
@@ -299,7 +299,6 @@ describe("useSearchRepos", () => {
     it("[Client] should load default page when clicking on Repositories tab", () => {
       ssrAssertDefaultpage();
       cy.intercept("/api/github/graphql").as("graphql");
-      // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },
         false,
@@ -326,35 +325,28 @@ describe("useSearchRepos", () => {
           expect(query).to.eq("user:topheman sort:updated-desc fork:true") // <-
       );
     });
-    it.only("[Client] should not break history", () => {
+    it("[Client] should not break back button", () => {
       // fill the history
       ssrAssertDefaultpage();
       cy.intercept("/api/github/graphql").as("graphql");
-      // don't navigate to quickly between url (DOM nodes will appear detached to cypress)
-      const WAIT_BETWEEN_NAVIGATION = 100;
       cy.get("[href='/topheman']").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
       cy.url().should("eq", `${Cypress.config().baseUrl}/topheman`);
       cy.get("[href='/topheman?tab=repositories']").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
       cy.url().should(
         "contain",
         `${Cypress.config().baseUrl}/topheman?tab=repositories`
       );
       cy.get("[href='/topheman']").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
       cy.url().should("eq", `${Cypress.config().baseUrl}/topheman`);
       cy.get("[href='/topheman?tab=repositories']").first().click();
-      // eslint-disable-next-line cypress/no-unnecessary-waiting
       cy.wait(WAIT_BETWEEN_NAVIGATION);
       cy.url().should(
         "contain",
         `${Cypress.config().baseUrl}/topheman?tab=repositories`
       );
-      // without hitting cache
       cy.clientRepositoryPaginationNavigate(
         { direction: "next" },
         false,
@@ -390,12 +382,135 @@ describe("useSearchRepos", () => {
         ({ query }) =>
           expect(query).to.eq("user:topheman sort:updated-desc fork:only")
       );
-      // todo potential bug
       cy.clientRepositoryPaginationNavigate(
-        { custom: () => cy.go("back") },
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
         true,
         "source|last-updated|page2-with-after"
       );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "source|last-updated|page1-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page3-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page2-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page1-with-after"
+      );
+      cy.go("back");
+      cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should("eq", `${Cypress.config().baseUrl}/topheman`);
+      cy.go("back");
+      cy.wait(WAIT_BETWEEN_NAVIGATION);
+      cy.url().should(
+        "contain",
+        `${Cypress.config().baseUrl}/topheman?tab=repositories`
+      );
+      cy.location();
+    });
+    it("[Client] should not break forward button", () => {
+      // fill the history
+      ssrAssertDefaultpage();
+      cy.intercept("/api/github/graphql").as("graphql");
+      // without hitting cache
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page2-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { direction: "next" },
+        false,
+        "all|last-updated|page3-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:true")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        { type: "source" },
+        false,
+        "source|last-updated|page1-with-after",
+        ({ query }) =>
+          expect(query).to.eq("user:topheman sort:updated-desc fork:false")
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page3-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("back");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page2-with-after"
+      );
+      // unfortunately, cypress seems not to be able to do more than 2 cy.go('forward')
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("forward");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "all|last-updated|page3-with-after"
+      );
+      cy.clientRepositoryPaginationNavigate(
+        {
+          custom: () => {
+            cy.go("forward");
+            cy.wait(WAIT_BETWEEN_NAVIGATION);
+          },
+        },
+        true,
+        "source|last-updated|page1-with-after"
+      );
+      cy.location();
     });
   });
 });

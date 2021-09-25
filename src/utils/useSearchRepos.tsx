@@ -196,9 +196,10 @@ export default function useSearchRepos(
       ...paginationState,
     });
     const resetPagination =
-      previousState.q !== debouncedQ ||
-      previousState.type !== searchBarState.type ||
-      previousState.sort !== searchBarState.sort;
+      !replayHistory &&
+      (previousState.q !== debouncedQ ||
+        previousState.type !== searchBarState.type ||
+        previousState.sort !== searchBarState.sort);
     graphqlVariables = getSearchRepoGraphqlVariables(
       user,
       {
@@ -225,6 +226,7 @@ export default function useSearchRepos(
       variables: graphqlVariables,
     });
     setData(result.data);
+    console.log("effect", { graphqlVariables, data: result.data });
     setLoading(false);
     // if state change is comming from a history change (e.g. back button), don't add a new entry
     if (!replayHistory) {
