@@ -2,7 +2,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
 import type { NextApiRequest, NextApiResponse } from "next";
-import { parseBooleanEnvVar } from "../../../../utils";
 import { loadMock, saveMock } from "../../../mocks/node";
 
 export default async (
@@ -19,8 +18,8 @@ export default async (
     console.log("[GraphQL-proxy]", "Incoming IntrospectionQuery ignored");
     return res.status(405).json({ error: "IntrospectionQuery not allowed" });
   }
-  const recordMocks = parseBooleanEnvVar(process.env.MOCKS_RECORD, false);
-  const replayMocks = parseBooleanEnvVar(process.env.MOCKS_REPLAY, false);
+  const recordMocks = (process.env.MOCKS_MODE || "").toUpperCase() === "RECORD";
+  const replayMocks = (process.env.MOCKS_MODE || "").toUpperCase() === "REPLAY";
   try {
     if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
       throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
