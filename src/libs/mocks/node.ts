@@ -86,7 +86,7 @@ export async function loadMock(
     const result = await promise;
     return JSON.parse(result.toString());
   } catch (e) {
-    if (e.code === "ENOENT") {
+    if ((e as NodeJS.ErrnoException).code === "ENOENT") {
       return null;
     }
     throw e;

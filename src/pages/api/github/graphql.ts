@@ -80,7 +80,9 @@ export default async (
     throw new Error("Couldn't call github API");
   } catch (e) {
     // return same shaped error object
-    console.error("[GraphQL-proxy]", e.message);
-    return res.status(500).json({ errors: [{ message: e.message }] });
+    console.error("[GraphQL-proxy]", (e as NodeJS.ErrnoException).message);
+    return res
+      .status(500)
+      .json({ errors: [{ message: (e as NodeJS.ErrnoException).message }] });
   }
 };
