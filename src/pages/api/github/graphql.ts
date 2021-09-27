@@ -38,10 +38,12 @@ export default async (
           req.body.operationName,
           req.body.variables
         );
+        res.setHeader("x-mocks-mode", "replay");
         // add just a little delay (a response should not be immediate) / better for Cypress
         await new Promise((resolve) => setTimeout(resolve, 40));
         return res.status(200).json(result);
       }
+      res.setHeader("x-mocks-mode", "replay-fallback");
       // in case mocking was not successful, fallback in network mode
     }
     console.log(
@@ -74,6 +76,7 @@ export default async (
           response
         );
         console.log(`[GraphQL-proxy][Record] Mock saved at ${mockFilePath}`);
+        res.setHeader("x-mocks-mode", "record");
       }
       return res.status(result.status).json(response);
     }
