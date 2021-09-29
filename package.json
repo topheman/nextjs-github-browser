@@ -96,6 +96,7 @@
     "next-router-mock": "^0.2.2",
     "postcss": "^8.2.13",
     "prettier": "2.2.1",
+    "storybook-addon-next-router": "^3.0.8",
     "storybook-addon-themes": "^6.1.0",
     "storybook-css-modules-preset": "^1.1.1",
     "tailwindcss": "^2.2.16",

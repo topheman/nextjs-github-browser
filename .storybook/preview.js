@@ -1,5 +1,6 @@
 import "../src/styles/globals.css";
 import "github-markdown-css";
+import { RouterContext } from "next/dist/shared/lib/router-context";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -21,5 +22,8 @@ export const parameters = {
   },
   backgrounds: {
     disable: true,
+  },
+  nextRouter: {
+    Provider: RouterContext.Provider,
   },
 };
