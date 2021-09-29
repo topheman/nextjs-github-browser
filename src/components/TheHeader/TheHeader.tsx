@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
 import "@reach/dialog/styles.css";
@@ -33,9 +34,17 @@ const links: [string, string, LinkOptionsType][] = [
 ].filter(Boolean);
 
 export default function TheHeader(): JSX.Element {
+  const router = useRouter();
   const [showDrawer, setShowDrawer] = useState(false);
   const open = () => setShowDrawer(true);
   const close = () => setShowDrawer(false);
+  useEffect(() => {
+    router.events.on("routeChangeComplete", close);
+    return () => {
+      router.events.off("routeChangeComplete", close);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <>
       <header className="h-12 bg-brand-primary shadow-lg">
