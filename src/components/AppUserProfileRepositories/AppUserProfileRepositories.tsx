@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 
-import { decodeBase64 } from "../../utils/common";
 import { Repository } from "../../libs/graphql";
 import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRepositories";
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
 import AppRepositoryListItem from "../AppRepositoryListItem/AppRepositoryListItem";
+import AppSearchSummary from "../AppSearchSummary/AppSearchSummary";
 import { extractSearchUrlParams } from "../../utils/github";
 import useSearchRepos from "../../utils/useSearchRepos";
 
@@ -31,6 +31,17 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           className="pb-4 mb-4 border-b border-light"
         />
       </div>
+      {data && (
+        <div>
+          <AppSearchSummary
+            count={data?.searchRepos.repositoryCount}
+            pageInfo={data?.searchRepos.pageInfo}
+            sort={searchBarState.sort}
+            type={searchBarState.type}
+            className="pb-4 mb-4 border-b border-light"
+          />
+        </div>
+      )}
       <div className="text-center">
         {data?.searchRepos.pageInfo && (
           <AppSearchPagination
@@ -42,16 +53,8 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
           />
         )}
       </div>
-      <div className="font-bold">TODO : filter result infos</div>
-      {data?.searchRepos.edges ? (
-        <p>
-          First : {decodeBase64([...data?.searchRepos.edges].shift()?.cursor)} /
-          Last : {decodeBase64([...data?.searchRepos.edges].pop()?.cursor)}
-        </p>
-      ) : null}
       {data?.searchRepos.edges ? (
         <>
-          <div>Total found: {data?.searchRepos.repositoryCount}</div>
           <ul data-testid="repository-list">
             {data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>

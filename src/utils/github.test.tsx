@@ -3,6 +3,7 @@ import {
   extractSearchUrlParams,
   makeGraphqlSearchQuery,
   getPaginationInfos,
+  getSearchFieldSummaryInfos,
 } from "./github";
 
 // eslint-disable-next-line global-require
@@ -106,6 +107,20 @@ describe("utils/github", () => {
         first: 30,
         last: undefined,
       });
+    });
+  });
+  describe("getSearchFieldSummaryInfos", () => {
+    it("`getSearchFieldSummaryInfos('sort')` should return an object with correct keys", () => {
+      const result = getSearchFieldSummaryInfos("sort");
+      expect(Object.keys(result)).toEqual(
+        expect.arrayContaining(["", "name", "stargazers"])
+      );
+    });
+    it("`getSearchFieldSummaryInfos('type')` should return an object with correct keys", () => {
+      const result = getSearchFieldSummaryInfos("type");
+      expect(Object.keys(result)).toEqual(
+        expect.arrayContaining(["", "source", "fork", "archived", "mirror"])
+      );
     });
   });
 });

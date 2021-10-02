@@ -9,17 +9,17 @@ export type PaginationParamsType = Partial<
 export type SearchUrlParamsType = SearchParamsType & PaginationParamsType;
 
 const SELECT_TYPE_OPTIONS = Object.freeze([
-  { value: "", label: "All" },
-  { value: "source", label: "Sources" },
-  { value: "fork", label: "Forks" },
-  { value: "archived", label: "Archived" },
-  { value: "mirror", label: "Mirrors" },
+  { value: "", label: "All", summary: null },
+  { value: "source", label: "Sources", summary: "source" },
+  { value: "fork", label: "Forks", summary: "forked" },
+  { value: "archived", label: "Archived", summary: "archived" },
+  { value: "mirror", label: "Mirrors", summary: "mirror" },
 ]);
 
 const SELECT_SORT_OPTIONS = Object.freeze([
-  { value: "", label: "Last updated" },
-  { value: "name", label: "Name" },
-  { value: "stargazers", label: "Stars" },
+  { value: "", label: "Last updated", summary: "last updated" },
+  { value: "name", label: "Name", summary: "name" },
+  { value: "stargazers", label: "Stars", summary: "stars" },
 ]);
 
 const TYPE_MAPPING = Object.freeze({
@@ -35,6 +35,16 @@ const SORT_MAPPING = Object.freeze({
   stargazers: "sort:stars-desc",
   name: "sort:name-asc",
 });
+
+export function decodeCursor(
+  base64EncodedCursor: string | undefined | null
+): number | null {
+  if (!base64EncodedCursor) {
+    return null;
+  }
+  const [, cursorNum] = decodeBase64(base64EncodedCursor).split(":");
+  return Number(cursorNum);
+}
 
 export function getSearchRepoGraphqlVariables(
   user: string,
@@ -123,6 +133,7 @@ export function getSearchFieldOptions(
 ): {
   value: string;
   label: string;
+  summary: string | null;
 }[] {
   switch (fieldName) {
     case "type":
@@ -132,6 +143,24 @@ export function getSearchFieldOptions(
     default:
       throw new Error(`Unsupported fieldname: ${fieldName}`);
   }
+}
+
+export function getSearchFieldSummaryInfos(
+  fieldName: "sort" | "type"
+): {
+  [key: string]: string | null;
+} {
+  const infos = {
+    type: SELECT_TYPE_OPTIONS,
+    sort: SELECT_SORT_OPTIONS,
+  };
+  return [...infos[fieldName]].reduce<{ [key: string]: string | null }>(
+    (acc, { value, summary }) => {
+      acc[value] = summary;
+      return acc;
+    },
+    {}
+  );
 }
 
 export function extractSearchUrlParams(url: string): SearchUrlParamsType {
