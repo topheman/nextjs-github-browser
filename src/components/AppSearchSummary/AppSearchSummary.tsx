@@ -8,6 +8,7 @@ export type AppSearchSummaryProps = {
   pageInfo: Pick<PageInfo, "startCursor" | "endCursor">;
   sort: string | undefined;
   type: string | undefined;
+  clearFilter?: () => void;
   className?: string;
 };
 
@@ -19,6 +20,7 @@ export default function AppSearchSummary({
   pageInfo,
   sort = "",
   type = "",
+  clearFilter,
   className,
 }: AppSearchSummaryProps): JSX.Element | null {
   const sortByLabel = SORT_LABEL_MAPPING[sort];
@@ -45,15 +47,15 @@ export default function AppSearchSummary({
         sorted by{" "}
         <strong data-testid="repositories-search-sort">{sortByLabel}</strong>
       </div>
-      <div className="">
-        <span
+      <div className={`${typeof clearFilter === "undefined" ? "hidden" : ""}`}>
+        <button
+          type="button"
           className="text-secondary hover:text-brand-primary cursor-pointer"
-          role="button"
-          tabIndex={0}
+          onClick={clearFilter}
         >
           <XIcon />
           Clear filter
-        </span>
+        </button>
       </div>
     </div>
   );

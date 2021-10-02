@@ -38,6 +38,14 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
             pageInfo={data?.searchRepos.pageInfo}
             sort={searchBarState.sort}
             type={searchBarState.type}
+            clearFilter={
+              searchBarState.sort || searchBarState.type || searchBarState.q
+                ? () => {
+                    setSearchBarState(() => ({}));
+                    setPaginationState(() => ({}));
+                  }
+                : undefined
+            }
             className="pb-4 mb-4 border-b border-light"
           />
         </div>
