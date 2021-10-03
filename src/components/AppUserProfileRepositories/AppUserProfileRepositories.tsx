@@ -51,15 +51,17 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
         </div>
       )}
       <div className="text-center">
-        {data?.searchRepos.pageInfo && (
-          <AppSearchPagination
-            data-testid="search-pagination-top"
-            loading={loading}
-            onUpdate={setPaginationState}
-            pageInfo={data?.searchRepos.pageInfo}
-            className="inline-block"
-          />
-        )}
+        {data &&
+          data.searchRepos.pageInfo &&
+          (data.searchRepos.edges?.length || 0) > 0 && (
+            <AppSearchPagination
+              data-testid="search-pagination-top"
+              loading={loading}
+              onUpdate={setPaginationState}
+              pageInfo={data?.searchRepos.pageInfo}
+              className="inline-block"
+            />
+          )}
       </div>
       {data?.searchRepos.edges ? (
         <>
@@ -75,14 +77,16 @@ export default function AppUserProfileRepositories(): JSX.Element | null {
         <div>There will be a repository list.</div>
       )}
       <div className="text-center">
-        {data?.searchRepos.pageInfo && (
-          <AppSearchPagination
-            loading={loading}
-            onUpdate={setPaginationState}
-            pageInfo={data?.searchRepos.pageInfo}
-            className="inline-block"
-          />
-        )}
+        {data &&
+          data.searchRepos.pageInfo &&
+          (data.searchRepos.edges?.length || 0) > 0 && (
+            <AppSearchPagination
+              loading={loading}
+              onUpdate={setPaginationState}
+              pageInfo={data?.searchRepos.pageInfo}
+              className="inline-block"
+            />
+          )}
       </div>
     </div>
   );

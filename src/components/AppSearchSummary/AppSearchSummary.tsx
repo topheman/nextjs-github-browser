@@ -33,9 +33,13 @@ export default function AppSearchSummary({
     <div {...props} className={clsx("flex", className)}>
       <div className="flex-1">
         <strong data-testid="repositories-total-found">{count}</strong> result
-        {count > 1 ? "s" : ""} (
-        <span data-testid="repositories-page-from">{from}</span>-
-        <span data-testid="repositories-page-to">{to}</span>)
+        {count > 1 ? "s" : ""}{" "}
+        {count ? (
+          <>
+            (<span data-testid="repositories-page-from">{from}</span>-
+            <span data-testid="repositories-page-to">{to}</span>)
+          </>
+        ) : null}
         {typeLabel ? (
           <>
             {" "}
