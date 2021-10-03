@@ -33,7 +33,7 @@ export default function AppUserProfileInfos({
         </div>
         <div className="md:block w-full">
           <h1>
-            <span itemProp="name" className="block text-2xl font-medium">
+            <span itemProp="name" className="block text-2xl">
               {user.name}
             </span>
             <span

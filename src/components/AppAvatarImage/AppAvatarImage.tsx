@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 export type AppAvatarImageProps = {
   avatarUrl: string;
   alt?: string;
