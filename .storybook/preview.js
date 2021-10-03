@@ -27,3 +27,7 @@ export const parameters = {
     Provider: RouterContext.Provider,
   },
 };
+
+document.body.onload = function () {
+  document.body.classList.add("text-primary");
+};

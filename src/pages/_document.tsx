@@ -25,7 +25,9 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
-          <Main />
+          <div className="text-primary">
+            <Main />
+          </div>
           <NextScript />
         </body>
       </Html>

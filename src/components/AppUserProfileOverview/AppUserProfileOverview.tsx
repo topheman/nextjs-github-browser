@@ -22,12 +22,12 @@ export default function AppUserProfileOverview({
   return (
     <div>
       {profileReadme ? (
-        <BaseBox className="p-4 mb-4 text-primary">
+        <BaseBox className="p-4 mb-4">
           <BaseMarkdownDisplay markdown={profileReadme} />
         </BaseBox>
       ) : null}
       <div className="mb-4">
-        <h2 className="text-primary">
+        <h2>
           {pinnedRepositories && pinnedRepositories.length > 0
             ? "Pinned"
             : "Popular repositories"}

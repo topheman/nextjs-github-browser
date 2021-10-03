@@ -10,7 +10,7 @@ export default function PageIndex(): JSX.Element {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={`${styles.main} text-primary`}>
+      <main className={styles.main}>
         <h1 className={styles.title}>nextjs-github-browser</h1>
         <h2 className="mt-6 text-5xl">Work in progress</h2>
         <p className="mt-6">

@@ -4,7 +4,7 @@ import styles from "../styles/Home.module.css";
 
 export default function PageAbout(): JSX.Element {
   return (
-    <div className={`${styles.container} text-primary`}>
+    <div className={styles.container}>
       <Head>
         <title>nextjs-github-browser</title>
         <meta name="description" content="nextjs-github-browser" />
