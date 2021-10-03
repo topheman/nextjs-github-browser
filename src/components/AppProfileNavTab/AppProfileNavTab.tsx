@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookIcon, RepoIcon } from "@primer/octicons-react";
 import React from "react";
+import clsx from "clsx";
 
 import BaseBadge from "../BaseBadge/BaseBadge";
 
@@ -60,9 +61,10 @@ export default function AppProfileNavTab({
         return (
           <Component
             key={label}
-            className={`px-4 py-2 leading-6 ${
-              currentTab === tab ? "border-brand-primary border-b-2" : ""
-            }`}
+            className={clsx(
+              "py-2 px-4 leading-6",
+              currentTab === tab && "border-b-2 border-brand-primary"
+            )}
           >
             <span>
               {Icon ? <Icon className="mr-1" /> : null}

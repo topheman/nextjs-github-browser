@@ -49,7 +49,7 @@ export default function AppSearchSummary({
         sorted by{" "}
         <strong data-testid="repositories-search-sort">{sortByLabel}</strong>
       </div>
-      <div className={`${typeof clearFilter === "undefined" ? "hidden" : ""}`}>
+      <div className={clsx(typeof clearFilter === "undefined" && "hidden")}>
         <button
           type="button"
           className="text-secondary hover:text-brand-primary cursor-pointer"

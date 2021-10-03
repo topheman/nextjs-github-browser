@@ -40,9 +40,10 @@ export default function AppSearchPagination({
           }}
         >
           <a
-            className={`border p-1 rounded-l ${
-              !hasPreviousPage ? "cursor-not-allowed" : ""
-            }`}
+            className={clsx(
+              "p-1 rounded-l border",
+              !hasPreviousPage && "cursor-not-allowed"
+            )}
             onClick={(e) => {
               e.preventDefault();
               if (hasPreviousPage && startCursor && !loading)
@@ -75,9 +76,10 @@ export default function AppSearchPagination({
           }}
         >
           <a
-            className={`border p-1 rounded-r ${
-              !hasNextPage ? "cursor-not-allowed" : ""
-            }`}
+            className={clsx(
+              "p-1 rounded-r border",
+              !hasNextPage && "cursor-not-allowed"
+            )}
             onClick={(e) => {
               e.preventDefault();
               if (hasNextPage && endCursor && !loading)

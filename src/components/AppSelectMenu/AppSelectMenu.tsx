@@ -59,15 +59,19 @@ export default function AppSelectMenu<T extends string | number>({
           ref={buttonRef}
           type="button"
           onClick={toggle}
-          className={`${className} py-1 px-3 font-bold text-primary bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none`}
+          className={clsx(
+            "py-1 px-3 font-bold text-primary bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none",
+            className
+          )}
         >
           {buttonLabel}
           <TriangleDownIcon />
         </button>
         <div
-          className={`${
-            !open ? "hidden" : ""
-          } overflow-hidden sm:mt-1 sm:right-0 top-1/2 sm:top-auto left-1/2 sm:left-auto -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0 sm:absolute fixed text-lg sm:text-sm text-primary bg-primary rounded-md border border-light sm:w-72 w-11/12`}
+          className={clsx(
+            !open ? "hidden" : "",
+            "overflow-hidden fixed sm:absolute top-1/2 sm:top-auto sm:right-0 left-1/2 sm:left-auto sm:mt-1 w-11/12 sm:w-72 text-lg sm:text-sm text-primary bg-primary rounded-md border border-light -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0"
+          )}
         >
           {menuLabel ? (
             <header className="flex pl-1 w-full border-b border-light">
@@ -88,9 +92,9 @@ export default function AppSelectMenu<T extends string | number>({
                 onKeyDown={makeHandleKeypress(value)}
               >
                 <CheckIcon
-                  className={`${
+                  className={clsx(
                     value === currentValue ? "visible" : "invisible"
-                  }`}
+                  )}
                 />
                 <span>{label}</span>
               </li>
