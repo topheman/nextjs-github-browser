@@ -1,4 +1,5 @@
 import { DotFillIcon } from "@primer/octicons-react";
+import clsx from "clsx";
 
 import { Language } from "../../libs/graphql";
 
@@ -7,19 +8,16 @@ export type AppTagLanguageProps = {
   className?: string;
 };
 
-AppTagLanguage.defaultProps = {
-  className: "",
-};
-
 export default function AppTagLanguage({
   primaryLanguage,
   className,
+  ...props
 }: AppTagLanguageProps): JSX.Element | null {
   if (!primaryLanguage) {
     return null;
   }
   return (
-    <span className={`${className} text-sm text-secondary`}>
+    <span {...props} className={clsx("text-sm text-secondary", className)}>
       <DotFillIcon
         fill={primaryLanguage.color || "#900000"}
         size={24}

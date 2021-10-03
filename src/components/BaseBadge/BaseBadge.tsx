@@ -1,10 +1,8 @@
+import clsx from "clsx";
+
 export type BaseBadgeProps = {
   badgeContent: string | number;
 } & React.HTMLProps<HTMLSpanElement>;
-
-BaseBadge.defaultProps = {
-  className: "",
-};
 
 export default function BaseBadge({
   badgeContent,
@@ -13,14 +11,21 @@ export default function BaseBadge({
 }: BaseBadgeProps): JSX.Element {
   return badgeContent ? (
     <span
-      className={`inline-flex justify-center items-center py-1 px-2 text-xs font-bold leading-none text-white bg-brand-primary rounded-full ${className}`}
       {...props}
+      className={clsx(
+        "inline-flex justify-center items-center py-1 px-2 text-xs font-bold leading-none text-white bg-brand-primary rounded-full",
+        className
+      )}
     >
       {badgeContent}
     </span>
   ) : (
     <span
-      className={`inline-block w-2 h-2 text-brand-primary-light bg-brand-primary rounded-full ${className}`}
+      {...props}
+      className={clsx(
+        "inline-block w-2 h-2 bg-brand-primary rounded-full",
+        className
+      )}
     />
   );
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { CheckIcon, TriangleDownIcon, XIcon } from "@primer/octicons-react";
+import clsx from "clsx";
 
 type OptionType<T extends string | number> = { value: T; label: string };
 
@@ -19,6 +20,7 @@ export default function AppSelectMenu<T extends string | number>({
   menuLabel,
   onChange,
   className,
+  ...props
 }: AppSelectMenuProps<T>): JSX.Element {
   const buttonRef = useRef(null);
   const [open, setOpen] = useState(false);
@@ -52,7 +54,7 @@ export default function AppSelectMenu<T extends string | number>({
   }, [open]);
   return (
     <>
-      <div className="sm:relative">
+      <div {...props} className={clsx("sm:relative", className)}>
         <button
           ref={buttonRef}
           type="button"

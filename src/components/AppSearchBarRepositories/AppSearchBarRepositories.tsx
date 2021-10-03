@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import AppSelectMenu from "../AppSelectMenu/AppSelectMenu";
 import { getSearchFieldOptions, SearchParamsType } from "../../utils/github";
 import { SetReducerStateType } from "../../utils/useSearchRepos";
@@ -12,9 +14,13 @@ export default function AppSearchBarRepositories({
   onUpdate,
   params: { type = "", sort = "", q = "" },
   className,
+  ...props
 }: AppSearchBarRepositoriesProps): JSX.Element {
   return (
-    <div className={`${className} flex flex-col sm:flex-row w-full`}>
+    <div
+      {...props}
+      className={clsx("flex flex-col sm:flex-row w-full", className)}
+    >
       <input
         type="text"
         placeholder="Find a repository..."

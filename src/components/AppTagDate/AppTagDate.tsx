@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import clsx from "clsx";
 import { formatDate } from "../../utils/date";
 
 AppTagDate.defaultProps = {
   mode: "updated",
   reactive: true,
-  className: "",
 };
 
 const MAPPING_MODE = Object.freeze({
@@ -14,6 +14,7 @@ const MAPPING_MODE = Object.freeze({
 export type AppTagDateProps = {
   mode: "updated";
   date: Date;
+  className?: string;
 } & typeof AppTagDate.defaultProps;
 
 export default function AppTagDate({
@@ -21,6 +22,7 @@ export default function AppTagDate({
   mode,
   className,
   reactive,
+  ...props
 }: AppTagDateProps): JSX.Element | null {
   const [innerDate, setInnerDate] = useState(date);
   useEffect(() => {
@@ -39,7 +41,7 @@ export default function AppTagDate({
   }
   const { formattedDate, isRelative } = formatDate(innerDate);
   return (
-    <span className={`${className} text-sm text-secondary`}>
+    <span {...props} className={clsx("text-sm text-secondary", className)}>
       {MAPPING_MODE[mode]}
       {!isRelative ? " on" : ""} {formattedDate}
     </span>

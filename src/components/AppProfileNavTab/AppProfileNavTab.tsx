@@ -26,6 +26,7 @@ export default function AppProfileNavTab({
   owner,
   currentTab,
   reposTotalCount,
+  ...ownProps
 }: AppProfileNavTabProps): JSX.Element | null {
   const links: LinksDataType[] = [
     { label: "Overview", icon: BookIcon, tab: "default" },
@@ -37,7 +38,7 @@ export default function AppProfileNavTab({
     },
   ];
   return (
-    <nav className="flex text-primary">
+    <nav {...ownProps} className="flex text-primary">
       {links.map(({ label, icon: Icon, badge, tab }) => {
         const Component: TabComponent = tab
           ? ({ children, className, ...props }) => (

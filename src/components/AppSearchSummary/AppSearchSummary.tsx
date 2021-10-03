@@ -1,4 +1,5 @@
 import { XIcon } from "@primer/octicons-react";
+import clsx from "clsx";
 
 import { PageInfo } from "../../libs/graphql";
 import { getSearchFieldSummaryInfos, decodeCursor } from "../../utils/github";
@@ -22,13 +23,14 @@ export default function AppSearchSummary({
   type = "",
   clearFilter,
   className,
+  ...props
 }: AppSearchSummaryProps): JSX.Element | null {
   const sortByLabel = SORT_LABEL_MAPPING[sort];
   const typeLabel = TYPE_LABEL_MAPPING[type];
   const from = decodeCursor(pageInfo.startCursor);
   const to = decodeCursor(pageInfo.endCursor);
   return (
-    <div className={`${className || ""} flex`}>
+    <div {...props} className={clsx("flex", className)}>
       <div className="flex-1">
         <strong data-testid="repositories-total-found">{count}</strong> result
         {count > 1 ? "s" : ""} (

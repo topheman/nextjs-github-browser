@@ -12,11 +12,12 @@ export type BaseMarkdownDisplayProps = {
 
 export default function BaseMarkdownDisplay({
   markdown,
+  ...props
 }: BaseMarkdownDisplayProps): JSX.Element | null {
   if (markdown) {
     return (
       // eslint-disable-next-line tailwindcss/no-custom-classname
-      <div className="markdown-body">
+      <div {...props} className="markdown-body">
         <ReactMarkdown rehypePlugins={[raw, sanitize]} remarkPlugins={[gfm]}>
           {markdown}
         </ReactMarkdown>

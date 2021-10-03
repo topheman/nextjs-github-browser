@@ -5,6 +5,7 @@ import {
   GitPullRequestIcon,
 } from "@primer/octicons-react";
 import Link from "next/link";
+import clsx from "clsx";
 
 type AllowedType = "stargazers" | "forks" | "issues" | "pulls";
 
@@ -22,15 +23,12 @@ const iconMapping: Record<AllowedType, [typeof StarIcon, string]> = {
   pulls: [GitPullRequestIcon, "/pulls"],
 };
 
-AppTagCount.defaultProps = {
-  className: "",
-};
-
 export default function AppTagCount({
   nameWithOwner,
   type,
   count,
   className,
+  ...props
 }: AppTagCountProps): JSX.Element | null {
   if (count === undefined || count === null) {
     return null;
@@ -39,7 +37,11 @@ export default function AppTagCount({
   return (
     <Link href={`/${nameWithOwner}${relativePath}`}>
       <a
-        className={`text-xs text-secondary hover:text-brand-primary ${className}`}
+        {...props}
+        className={clsx(
+          "text-xs text-secondary hover:text-brand-primary",
+          className
+        )}
       >
         <Icon /> {count}
       </a>

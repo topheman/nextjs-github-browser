@@ -10,9 +10,10 @@ export type AppPinnedItemProps = {
 
 export default function AppPinnedItem({
   repository,
+  ...props
 }: AppPinnedItemProps): JSX.Element {
   return (
-    <div className="flex flex-col">
+    <div {...props} className="flex flex-col">
       <div className="flex items-center">
         <RepoIcon className="mr-1 text-secondary" />
         <a

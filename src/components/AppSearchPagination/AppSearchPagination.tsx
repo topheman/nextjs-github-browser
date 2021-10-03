@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import { decodeBase64 } from "../../utils/common";
 import { PaginationParamsType } from "../../utils/github";
@@ -27,7 +28,7 @@ export default function AppSearchPagination({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { before, after, page, ...rest } = router.query;
   return (
-    <div className={className || ""} {...props}>
+    <div {...props} className={clsx(className)}>
       <div className="flex text-brand-primary">
         <Link
           href={{

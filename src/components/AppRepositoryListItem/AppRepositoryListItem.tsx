@@ -12,9 +12,13 @@ export type AppRepositoryListItemProps = {
 
 export default function AppRepositoryListItem({
   repository,
+  ...props
 }: AppRepositoryListItemProps): JSX.Element {
   return (
-    <div className="grid grid-cols-12 pb-5 mb-5 border-b border-light">
+    <div
+      {...props}
+      className="grid grid-cols-12 pb-5 mb-5 border-b border-light"
+    >
       <div className="col-span-10">
         <h3>
           <Link href={`/${repository.nameWithOwner}`}>
