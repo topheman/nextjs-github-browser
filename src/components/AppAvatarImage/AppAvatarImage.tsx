@@ -1,11 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 export type AppAvatarImageProps = {
   avatarUrl: string;
-  alt?: string;
   rounded: "full" | "medium";
-};
+} & typeof defaultProps;
 
-AppAvatarImage.defaultProps = {
+const defaultProps = {
   alt: "Avatar",
 };
 
@@ -24,3 +23,5 @@ export default function AppAvatarImage({
     />
   );
 }
+
+AppAvatarImage.defaultProps = defaultProps;
