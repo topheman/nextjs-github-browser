@@ -19791,7 +19791,13 @@ export type GetProfileReadmeQueryVariables = Exact<{
 
 export type GetProfileReadmeQuery = (
   { __typename?: 'Query' }
-  & { profileReadme?: Maybe<(
+  & { profileReadmeUser?: Maybe<(
+    { __typename?: 'Repository' }
+    & { file?: Maybe<(
+      { __typename?: 'Blob' }
+      & Pick<Blob, 'text'>
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }> }
+  )>, profileReadmeOrg?: Maybe<(
     { __typename?: 'Repository' }
     & { file?: Maybe<(
       { __typename?: 'Blob' }
@@ -20017,8 +20023,15 @@ export const UserInfosFragmentDoc = gql`
     `;
 export const GetProfileReadmeDocument = gql`
     query GetProfileReadme($owner: String!) {
-  profileReadme: repository(owner: $owner, name: $owner) {
+  profileReadmeUser: repository(owner: $owner, name: $owner) {
     file: object(expression: "HEAD:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+  }
+  profileReadmeOrg: repository(owner: $owner, name: ".github") {
+    file: object(expression: "HEAD:profile/README.md") {
       ... on Blob {
         text
       }

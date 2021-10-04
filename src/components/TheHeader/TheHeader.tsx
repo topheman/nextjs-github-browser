@@ -22,6 +22,8 @@ const links: [string, string, LinkOptionsType][] = [
   ["/warpdesign/react-explorer", "/warpdesign/react-explorer", {}],
   ["/facebook", "/facebook", {}],
   ["/facebook/react", "/facebook/react", {}],
+  ["/twitter", "/twitter", {}],
+  ["/microsoft", "/microsoft", {}],
   ["/a", "/a (no profile readme)", {}],
   process.env.NODE_ENV === "production"
     ? [

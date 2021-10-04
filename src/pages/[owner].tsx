@@ -6,16 +6,13 @@ import { initializeApollo, addApolloState } from "../libs/apollo-client";
 import { getSearchRepoGraphqlVariables } from "../utils/github";
 import TheOwnerProfile from "../components/TheOwnerProfile/TheOwnerProfile";
 import {
-  GetRepositoryOwnerWithPinnedItemsQueryResult,
   GetRepositoryOwnerWithPinnedItemsQuery,
   GetRepositoryOwnerWithPinnedItemsDocument,
-  GetRepositoryOwnerWithRepositoriesQueryResult,
   GetRepositoryOwnerWithRepositoriesQuery,
   GetRepositoryOwnerWithRepositoriesDocument,
   GetProfileReadmeQuery,
   GetProfileReadmeDocument,
 } from "../libs/graphql";
-import { isUser } from "../utils/type-guards";
 import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
 
 type MyPageProps = {
@@ -62,37 +59,28 @@ export const getServerSideProps: GetServerSideProps = async (
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();
   let { skipProfileReadme } = baseProps;
-  let repositoryOwnerResult:
-    | GetRepositoryOwnerWithPinnedItemsQueryResult
-    | GetRepositoryOwnerWithRepositoriesQueryResult;
   if (tab === "default") {
-    repositoryOwnerResult = (await apolloClient.query<GetRepositoryOwnerWithPinnedItemsQuery>(
-      {
-        query: GetRepositoryOwnerWithPinnedItemsDocument,
-        variables: { owner },
-      }
-    )) as GetRepositoryOwnerWithPinnedItemsQueryResult;
+    await apolloClient.query<GetRepositoryOwnerWithPinnedItemsQuery>({
+      query: GetRepositoryOwnerWithPinnedItemsDocument,
+      variables: { owner },
+    });
   } else {
-    repositoryOwnerResult = (await apolloClient.query<GetRepositoryOwnerWithRepositoriesQuery>(
-      {
-        query: GetRepositoryOwnerWithRepositoriesDocument,
-        variables: {
-          owner,
-          ...getSearchRepoGraphqlVariables(owner, searchUrlParams),
-        },
-      }
-    )) as GetRepositoryOwnerWithRepositoriesQueryResult;
+    await apolloClient.query<GetRepositoryOwnerWithRepositoriesQuery>({
+      query: GetRepositoryOwnerWithRepositoriesDocument,
+      variables: {
+        owner,
+        ...getSearchRepoGraphqlVariables(owner, searchUrlParams),
+      },
+    });
   }
-  // this query needs to be done conditionally (not to raise a "NOT FOUND" error) - organizations dont have README profiles
-  if (
-    !skipProfileReadme &&
-    isUser(repositoryOwnerResult?.data?.repositoryOwner)
-  ) {
+  // todo now we can do it in parallel
+  if (!skipProfileReadme) {
     // if it errors, tell `useQuery` to skip it clientSide (otherwise the query will be played as there won't be anything in cache)
     try {
       await apolloClient.query<GetProfileReadmeQuery>({
         query: GetProfileReadmeDocument,
         variables: { owner },
+        errorPolicy: "ignore",
       });
     } catch (e) {
       skipProfileReadme = true;

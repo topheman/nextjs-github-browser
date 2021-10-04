@@ -1,8 +1,16 @@
 query GetProfileReadme($owner: String!) {
-  profileReadme: repository(owner: $owner, name: $owner) {
+  profileReadmeUser: repository(owner: $owner, name: $owner) {
     # README.md for profile might be on a main or master branch
     # prefer use HEAD : https://stackoverflow.com/questions/48935381/github-graphql-api-default-branch-in-repository#comment-85055968
     file: object(expression: "HEAD:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+  }
+  profileReadmeOrg: repository(owner: $owner, name: ".github") {
+    # Organisation keep their readme in different place
+    file: object(expression: "HEAD:profile/README.md") {
       ... on Blob {
         text
       }

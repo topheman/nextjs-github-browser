@@ -99,7 +99,8 @@ export default function TheOwnerProfile({
               user={user}
               profileReadme={
                 // README.md for profile might be on a main or master branch
-                (profileReadmeResult?.data?.profileReadme?.file as Blob)?.text
+                (profileReadmeResult?.data?.profileReadmeUser?.file as Blob)
+                  ?.text
               }
               pinnedRepositories={user.pinnedRepositories?.nodes?.map(
                 (repo) => repo as PinnedItemInfosFragment
@@ -113,13 +114,14 @@ export default function TheOwnerProfile({
       </AppUserProfile>
     );
   }
-  if (
-    tab === "default" &&
-    isOrganization(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)
-  ) {
+  if (isOrganization(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)) {
     return (
       <AppOrganizationProfile
         organization={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
+        profileReadme={
+          // README.md for profile might be on a main or master branch
+          (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)?.text
+        }
       />
     );
   }
