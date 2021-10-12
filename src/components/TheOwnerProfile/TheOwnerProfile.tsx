@@ -13,7 +13,6 @@ import {
 } from "../../utils/github";
 import AppProfile from "../AppProfile/AppProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
-import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
 import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppUserProfileRepositories from "../AppUserProfileRepositories/AppUserProfileRepositories";
@@ -121,19 +120,33 @@ export default function TheOwnerProfile({
   ) {
     const organisation = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppOrganizationProfile
-        organization={organisation}
-        profileReadme={
-          // README.md for profile might be on a main or master branch
-          (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)?.text
-        }
-        pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
-          (repo) => repo as PinnedItemInfosFragment
-        )}
-        popularRepositories={organisation.popularRepositories.edges?.map(
-          (edge) => edge?.node as PinnedItemInfosFragment
-        )}
-      />
+      <AppProfile>
+        {() => ({
+          nav: (
+            <AppProfileNavTab
+              owner={owner}
+              currentTab={tab}
+              reposTotalCount={organisation.allRepos.totalCount}
+            />
+          ),
+          sidebar: <div>TODO SIDEBAR</div>,
+          main: (
+            <AppProfileOverview
+              profileReadme={
+                // README.md for profile might be on a main or master branch
+                (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)
+                  ?.text
+              }
+              pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
+                (repo) => repo as PinnedItemInfosFragment
+              )}
+              popularRepositories={organisation.popularRepositories.edges?.map(
+                (edge) => edge?.node as PinnedItemInfosFragment
+              )}
+            />
+          ),
+        })}
+      </AppProfile>
     );
   }
   return null;
