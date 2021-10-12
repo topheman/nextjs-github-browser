@@ -19701,7 +19701,7 @@ export type OrganizationInfosFragment = (
       { __typename?: 'OrganizationMemberEdge' }
       & { node?: Maybe<(
         { __typename?: 'User' }
-        & Pick<User, 'avatarUrl'>
+        & Pick<User, 'avatarUrl' | 'login'>
       )> }
     )>>> }
   ), allRepos: (
@@ -19914,6 +19914,7 @@ export const OrganizationInfosFragmentDoc = gql`
     edges {
       node {
         avatarUrl
+        login
       }
     }
   }

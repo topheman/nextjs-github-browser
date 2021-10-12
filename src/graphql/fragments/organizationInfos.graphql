@@ -13,6 +13,7 @@ fragment OrganizationInfos on Organization {
     edges {
       node {
         avatarUrl
+        login
       }
     }
   }

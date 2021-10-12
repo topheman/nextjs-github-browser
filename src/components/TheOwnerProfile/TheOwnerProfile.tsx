@@ -15,6 +15,7 @@ import AppProfile from "../AppProfile/AppProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
+import AppOrganizationProfileInfos from "../AppOrganizationProfileInfos/AppOrganizationProfileInfos";
 import AppUserProfileRepositories from "../AppUserProfileRepositories/AppUserProfileRepositories";
 
 export type TheOwnerProfileProps = {
@@ -130,7 +131,7 @@ export default function TheOwnerProfile({
               isOrganization
             />
           ),
-          sidebar: <div>TODO SIDEBAR</div>,
+          sidebar: <AppOrganizationProfileInfos organization={organisation} />,
           main: (
             <AppProfileOverview
               profileReadme={

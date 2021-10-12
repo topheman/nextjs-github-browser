@@ -14,6 +14,9 @@ export default function AppProfile({
   children,
 }: AppProfileProps): JSX.Element | null {
   const { nav, main, sidebar } = children();
+  const navbar = (
+    <div className="md:hidden px-3 border-b border-light">{nav}</div>
+  );
   return (
     <>
       <div className="sticky top-0 border-b border-light">
@@ -36,11 +39,17 @@ export default function AppProfile({
               : "flex-col md:flex-row"
           )}
         >
-          <div className="z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4">
+          <div
+            className={clsx(
+              "z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4",
+              reverse ? "md:mt-4" : ""
+            )}
+          >
             {sidebar}
           </div>
-          <div className="md:hidden px-3 border-b border-light">{nav}</div>
+          {!reverse ? navbar : null}
           <div className="p-4 w-full md:w-3/4">{main}</div>
+          {reverse ? navbar : null}
         </div>
       </div>
     </>
