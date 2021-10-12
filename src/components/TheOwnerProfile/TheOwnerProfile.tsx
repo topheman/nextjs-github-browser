@@ -11,10 +11,10 @@ import {
   getSearchRepoGraphqlVariables,
   SearchUrlParamsType,
 } from "../../utils/github";
-import AppUserProfile from "../AppUserProfile/AppUserProfile";
+import AppProfile from "../AppProfile/AppProfile";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppOrganizationProfile from "../AppOrganizationProfile/AppOrganizationProfile";
-import AppUserProfileOverview from "../AppUserProfileOverview/AppUserProfileOverview";
+import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppUserProfileRepositories from "../AppUserProfileRepositories/AppUserProfileRepositories";
 
@@ -60,7 +60,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerRepositoriesModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile>
+      <AppProfile>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -72,7 +72,7 @@ export default function TheOwnerProfile({
           sidebar: <AppUserProfileInfos user={user} />,
           main: <AppUserProfileRepositories />,
         })}
-      </AppUserProfile>
+      </AppProfile>
     );
   }
   if (
@@ -84,7 +84,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppUserProfile>
+      <AppProfile>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -95,8 +95,7 @@ export default function TheOwnerProfile({
           ),
           sidebar: <AppUserProfileInfos user={user} />,
           main: (
-            <AppUserProfileOverview
-              user={user}
+            <AppProfileOverview
               profileReadme={
                 // README.md for profile might be on a main or master branch
                 (profileReadmeResult?.data?.profileReadmeUser?.file as Blob)
@@ -111,7 +110,7 @@ export default function TheOwnerProfile({
             />
           ),
         })}
-      </AppUserProfile>
+      </AppProfile>
     );
   }
   if (

@@ -1,7 +1,6 @@
 // import { User } from "../../libs/graphql";
 
-export type AppUserProfileProps = {
-  // user?: User;
+export type AppProfileProps = {
   children: () => {
     nav: JSX.Element;
     main: JSX.Element;
@@ -9,9 +8,9 @@ export type AppUserProfileProps = {
   };
 };
 
-export default function AppUserProfile({
+export default function AppProfile({
   children,
-}: AppUserProfileProps): JSX.Element | null {
+}: AppProfileProps): JSX.Element | null {
   const { nav, main, sidebar } = children();
   return (
     <>

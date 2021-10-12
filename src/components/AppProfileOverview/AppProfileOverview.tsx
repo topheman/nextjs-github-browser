@@ -1,24 +1,19 @@
-import { User, Maybe, PinnedItemInfosFragment } from "../../libs/graphql";
+import { Maybe, PinnedItemInfosFragment } from "../../libs/graphql";
 import BaseBox from "../BaseBox/BaseBox";
 import BaseMarkdownDisplay from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
 import AppPinnedItem from "../AppPinnedItem/AppPinnedItem";
 
-export type AppUserProfileOverviewProps = {
-  user?: User;
+export type AppProfileOverviewProps = {
   profileReadme: Maybe<string> | undefined;
   pinnedRepositories?: PinnedItemInfosFragment[];
   popularRepositories?: PinnedItemInfosFragment[];
 };
 
-export default function AppUserProfileOverview({
-  user,
+export default function AppProfileOverview({
   profileReadme,
   pinnedRepositories,
   popularRepositories,
-}: AppUserProfileOverviewProps): JSX.Element | null {
-  if (!user) {
-    return null;
-  }
+}: AppProfileOverviewProps): JSX.Element | null {
   return (
     <div>
       {profileReadme ? (
