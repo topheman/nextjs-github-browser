@@ -120,7 +120,7 @@ export default function TheOwnerProfile({
   ) {
     const organisation = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppProfile>
+      <AppProfile reverse>
         {() => ({
           nav: (
             <AppProfileNavTab
