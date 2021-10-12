@@ -30,8 +30,10 @@ export default function AppProfile({
       <div className="mx-auto max-w-screen-xl">
         <div
           className={clsx(
-            "flex flex-col",
-            reverse ? "md:flex-row-reverse" : "md:flex-row"
+            "flex",
+            reverse
+              ? "flex-col-reverse md:flex-row-reverse"
+              : "flex-col md:flex-row"
           )}
         >
           <div className="z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4">
