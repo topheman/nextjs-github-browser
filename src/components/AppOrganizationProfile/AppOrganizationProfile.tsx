@@ -1,4 +1,8 @@
-import { Organization, Maybe } from "../../libs/graphql";
+import {
+  Organization,
+  Maybe,
+  PinnedItemInfosFragment,
+} from "../../libs/graphql";
 
 import BaseBox from "../BaseBox/BaseBox";
 import BaseMarkdownDisplay from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
@@ -6,6 +10,8 @@ import BaseMarkdownDisplay from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
 export type AppOrganizationProfileProps = {
   organization?: Organization;
   profileReadme: Maybe<string> | undefined;
+  pinnedRepositories?: PinnedItemInfosFragment[];
+  popularRepositories?: PinnedItemInfosFragment[];
 };
 
 AppOrganizationProfile.defaultProps = {
@@ -19,6 +25,7 @@ export default function AppOrganizationProfile({
   if (!organization) {
     return null;
   }
+  // todo reuse parts of User
   return (
     <>
       <p>AppOrganizationProfile</p>

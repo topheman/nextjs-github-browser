@@ -30,25 +30,24 @@ query GetRepositoryOwnerWithPinnedItems($owner: String!) {
     }
     ... on Organization {
       ...OrganizationInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
+      pinnedRepositories: pinnedItems(first: 6, types: REPOSITORY) {
+        nodes {
+          ... on Repository {
+            ...PinnedItemInfos
+          }
         }
-        totalCount
+      }
+      popularRepositories: repositories(
+        first: 6
+        orderBy: { field: STARGAZERS, direction: DESC }
+      ) {
         edges {
           node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
+            # Some users may not have pinned items (or less than 6 pinned items)
+            ...PinnedItemInfos
           }
-          cursor
         }
+        totalCount
       }
     }
   }

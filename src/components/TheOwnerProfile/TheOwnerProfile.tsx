@@ -114,14 +114,26 @@ export default function TheOwnerProfile({
       </AppUserProfile>
     );
   }
-  if (isOrganization(repositoryOwnerDefaultModeResult?.data?.repositoryOwner)) {
+  if (
+    repositoryOwnerDefaultModeResult &&
+    repositoryOwnerDefaultModeResult.data &&
+    repositoryOwnerDefaultModeResult.data.repositoryOwner &&
+    isOrganization(repositoryOwnerDefaultModeResult.data.repositoryOwner)
+  ) {
+    const organisation = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
       <AppOrganizationProfile
-        organization={repositoryOwnerDefaultModeResult?.data?.repositoryOwner}
+        organization={organisation}
         profileReadme={
           // README.md for profile might be on a main or master branch
           (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)?.text
         }
+        pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
+          (repo) => repo as PinnedItemInfosFragment
+        )}
+        popularRepositories={organisation.popularRepositories.edges?.map(
+          (edge) => edge?.node as PinnedItemInfosFragment
+        )}
       />
     );
   }

@@ -19818,22 +19818,20 @@ export type GetRepositoryOwnerWithPinnedItemsQuery = (
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repositoryOwner?: Maybe<(
     { __typename?: 'Organization' }
-    & { repositories: (
+    & { pinnedRepositories: (
+      { __typename?: 'PinnableItemConnection' }
+      & { nodes?: Maybe<Array<Maybe<{ __typename?: 'Gist' } | (
+        { __typename?: 'Repository' }
+        & PinnedItemInfosFragment
+      )>>> }
+    ), popularRepositories: (
       { __typename?: 'RepositoryConnection' }
       & Pick<RepositoryConnection, 'totalCount'>
-      & { pageInfo: (
-        { __typename?: 'PageInfo' }
-        & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'startCursor' | 'endCursor'>
-      ), edges?: Maybe<Array<Maybe<(
+      & { edges?: Maybe<Array<Maybe<(
         { __typename?: 'RepositoryEdge' }
-        & Pick<RepositoryEdge, 'cursor'>
         & { node?: Maybe<(
           { __typename?: 'Repository' }
-          & Pick<Repository, 'name' | 'description'>
-          & { primaryLanguage?: Maybe<(
-            { __typename?: 'Language' }
-            & Pick<Language, 'name' | 'color'>
-          )> }
+          & PinnedItemInfosFragment
         )> }
       )>>> }
     ) }
@@ -20099,25 +20097,23 @@ export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
     }
     ... on Organization {
       ...OrganizationInfos
-      repositories(first: 30) {
-        pageInfo {
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
+      pinnedRepositories: pinnedItems(first: 6, types: REPOSITORY) {
+        nodes {
+          ... on Repository {
+            ...PinnedItemInfos
+          }
         }
-        totalCount
+      }
+      popularRepositories: repositories(
+        first: 6
+        orderBy: {field: STARGAZERS, direction: DESC}
+      ) {
         edges {
           node {
-            primaryLanguage {
-              name
-              color
-            }
-            name
-            description
+            ...PinnedItemInfos
           }
-          cursor
         }
+        totalCount
       }
     }
   }
