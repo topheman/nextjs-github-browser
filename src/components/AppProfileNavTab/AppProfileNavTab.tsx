@@ -9,6 +9,7 @@ export type AppProfileNavTabProps = {
   owner: string;
   currentTab: "default" | "repositories";
   reposTotalCount?: number;
+  isOrganization?: boolean;
 };
 
 type LinksDataType = {
@@ -27,6 +28,7 @@ export default function AppProfileNavTab({
   owner,
   currentTab,
   reposTotalCount,
+  isOrganization = false,
   ...ownProps
 }: AppProfileNavTabProps): JSX.Element | null {
   const links: LinksDataType[] = [
@@ -46,9 +48,12 @@ export default function AppProfileNavTab({
               <Link
                 key={label}
                 href={{
-                  pathname: `/${owner}`,
+                  pathname:
+                    isOrganization && tab === "repositories"
+                      ? `/orgs/${owner}/repositories`
+                      : `/${owner}`,
                   query: {
-                    ...(tab !== "default" ? { tab } : {}),
+                    ...(!isOrganization && tab !== "default" ? { tab } : {}),
                   },
                 }}
                 // href={tab !== "default" ? `/${owner}?tab=${tab}` : `/${owner}`}

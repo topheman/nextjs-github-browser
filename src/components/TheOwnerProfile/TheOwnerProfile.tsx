@@ -127,6 +127,7 @@ export default function TheOwnerProfile({
               owner={owner}
               currentTab={tab}
               reposTotalCount={organisation.allRepos.totalCount}
+              isOrganization
             />
           ),
           sidebar: <div>TODO SIDEBAR</div>,
