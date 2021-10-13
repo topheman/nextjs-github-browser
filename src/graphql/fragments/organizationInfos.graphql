@@ -8,6 +8,8 @@ fragment OrganizationInfos on Organization {
   twitterUsername
   avatarUrl
   location
+  description
+  isVerified
   people: membersWithRole(first: 20) {
     totalCount
     edges {

@@ -1,4 +1,4 @@
-import { User } from "../../libs/graphql";
+import { User, Organization } from "../../libs/graphql";
 
 export const makeUser = (props: Partial<User> = {}): User => {
   return {
@@ -23,6 +23,24 @@ export const makeUser = (props: Partial<User> = {}): User => {
     },
     ...props,
   } as User;
+};
+
+export const makeOrganization = (
+  props: Partial<Organization> = {}
+): Organization => {
+  return {
+    name: "Microsoft",
+    login: "microsoft",
+    createdAt: "2013-12-10T19:06:48Z",
+    websiteUrl: "https://opensource.microsoft.com",
+    twitterUsername: "OpenAtMicrosoft",
+    avatarUrl: "https://avatars.githubusercontent.com/u/6154722?v=4",
+    location: "Redmond, WA",
+    email: "opensource@microsoft.com",
+    description: "Open source projects and samples from Microsoft",
+    isVerified: true,
+    ...props,
+  } as Organization;
 };
 
 export const makeProfileReadMe = (): string =>

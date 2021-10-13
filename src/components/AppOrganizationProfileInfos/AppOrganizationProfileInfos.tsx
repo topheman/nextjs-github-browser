@@ -14,36 +14,38 @@ export default function AppOrganizationProfileInfos({
     return null;
   }
   return (
-    <div className="flex flex-col">
-      <div>
-        <Link href={`/orgs/${organization.login}/people`}>
-          <a className="mb-1">
-            <h4>People</h4>
-          </a>
-        </Link>
+    <div itemScope itemType="http://schema.org/Organization">
+      <div className="flex flex-col">
         <div>
-          {organization.people.edges?.map((member) => {
-            return (
-              <Link
-                key={member?.node?.avatarUrl}
-                href={`/${member?.node?.login}`}
-              >
-                <a className="float-left m-[1px]">
-                  <AppAvatarImage
-                    avatarUrl={`${member?.node?.avatarUrl}&s=70`}
-                    alt={member?.node?.login || "Avatar"}
-                    rounded="full"
-                    className="w-[35px]"
-                  />
-                </a>
-              </Link>
-            );
-          })}
-        </div>
-        <div className="block clear-left text-sm text-brand-primary hover:underline">
           <Link href={`/orgs/${organization.login}/people`}>
-            <a>View all</a>
+            <a className="mb-1">
+              <h4>People</h4>
+            </a>
           </Link>
+          <div>
+            {organization.people.edges?.map((member) => {
+              return (
+                <Link
+                  key={member?.node?.avatarUrl}
+                  href={`/${member?.node?.login}`}
+                >
+                  <a className="float-left m-[1px]">
+                    <AppAvatarImage
+                      avatarUrl={`${member?.node?.avatarUrl}&s=70`}
+                      alt={member?.node?.login || "Avatar"}
+                      rounded="full"
+                      className="w-[35px]"
+                    />
+                  </a>
+                </Link>
+              );
+            })}
+          </div>
+          <div className="block clear-left text-sm text-brand-primary hover:underline">
+            <Link href={`/orgs/${organization.login}/people`}>
+              <a>View all</a>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
