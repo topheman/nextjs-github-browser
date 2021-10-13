@@ -17,6 +17,7 @@ import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppOrganizationProfileInfos from "../AppOrganizationProfileInfos/AppOrganizationProfileInfos";
 import AppUserProfileRepositories from "../AppUserProfileRepositories/AppUserProfileRepositories";
+import AppOrganizationCard from "../AppOrganizationCard/AppOrganizationCard";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -147,6 +148,7 @@ export default function TheOwnerProfile({
               )}
             />
           ),
+          topNav: <AppOrganizationCard organisation={organisation} />,
         })}
       </AppProfile>
     );

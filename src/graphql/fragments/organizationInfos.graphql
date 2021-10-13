@@ -9,6 +9,7 @@ fragment OrganizationInfos on Organization {
   avatarUrl
   location
   description
+  email
   isVerified
   people: membersWithRole(first: 20) {
     totalCount

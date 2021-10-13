@@ -6,6 +6,7 @@ export type AppProfileProps = {
     nav: JSX.Element;
     main: JSX.Element;
     sidebar: JSX.Element;
+    topNav?: JSX.Element;
   };
 };
 
@@ -13,13 +14,18 @@ export default function AppProfile({
   reverse = false,
   children,
 }: AppProfileProps): JSX.Element | null {
-  const { nav, main, sidebar } = children();
+  const { nav, main, sidebar, topNav } = children();
   const navbar = (
     <div className="md:hidden px-3 border-b border-light">{nav}</div>
   );
   return (
     <>
-      <div className="sticky top-0 border-b border-light">
+      <div className={clsx("top-0 border-b border-light", !topNav && "sticky")}>
+        {topNav ? (
+          <div className="md:flex p-4 my-2 mr-auto ml-auto w-auto max-w-screen-xl">
+            <div className="w-full">{topNav}</div>
+          </div>
+        ) : null}
         <div
           className={clsx(
             "hidden md:flex mr-auto ml-auto w-auto max-w-screen-xl",

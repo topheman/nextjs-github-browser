@@ -19693,7 +19693,7 @@ export type ViewerHovercardContext = HovercardContext & {
 
 export type OrganizationInfosFragment = (
   { __typename: 'Organization' }
-  & Pick<Organization, 'id' | 'name' | 'login' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location'>
+  & Pick<Organization, 'id' | 'name' | 'login' | 'createdAt' | 'websiteUrl' | 'twitterUsername' | 'avatarUrl' | 'location' | 'description' | 'email' | 'isVerified'>
   & { people: (
     { __typename?: 'OrganizationMemberConnection' }
     & Pick<OrganizationMemberConnection, 'totalCount'>
@@ -19909,6 +19909,9 @@ export const OrganizationInfosFragmentDoc = gql`
   twitterUsername
   avatarUrl
   location
+  description
+  email
+  isVerified
   people: membersWithRole(first: 20) {
     totalCount
     edges {
