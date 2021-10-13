@@ -1,0 +1,6 @@
+.root a {
+  color: var(--color-brand-primary);
+}
+.root a:hover {
+  text-decoration: underline;
+}
