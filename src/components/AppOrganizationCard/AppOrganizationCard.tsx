@@ -26,12 +26,7 @@ export default function AppOrganizationCard({
       <div>
         <img
           src={`${organisation.avatarUrl}&s=200`}
-          alt={
-            (organisation.twitterUsername &&
-              `@${organisation.twitterUsername}`) ||
-            organisation.name ||
-            "Organization logo"
-          }
+          alt={`@${organisation.login}`}
           width="100"
           height="100"
           className="mr-6 rounded border border-light"
