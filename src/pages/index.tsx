@@ -11,14 +11,14 @@ export default function PageIndex(): JSX.Element {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>nextjs-github-browser</h1>
-        <h2 className="mt-6 text-5xl">Work in progress</h2>
-        <p className="mt-6">
+        <h1 className="text-3xl md:text-5xl">nextjs-github-browser</h1>
+        <h2 className="mt-2 md:mt-6 text-2xl md:text-5xl">Work in progress</h2>
+        <p className="md:mt-6">
           <span role="img" aria-label="Construction panel" className="text-9xl">
             🚧
           </span>
         </p>
-        <p className="mt-6">
+        <p className="md:mt-6">
           <a href="https://github.com/topheman" className="text-brand-primary">
             @topheman
           </a>
