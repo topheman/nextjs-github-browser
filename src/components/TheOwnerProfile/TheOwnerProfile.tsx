@@ -68,6 +68,7 @@ export default function TheOwnerProfile({
               owner={owner}
               currentTab={tab}
               reposTotalCount={user.allRepos.totalCount}
+              mode="user"
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,
@@ -92,6 +93,7 @@ export default function TheOwnerProfile({
               owner={owner}
               currentTab={tab}
               reposTotalCount={user.allRepos.totalCount}
+              mode="user"
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,
@@ -129,7 +131,7 @@ export default function TheOwnerProfile({
               owner={owner}
               currentTab={tab}
               reposTotalCount={organisation.allRepos.totalCount}
-              isOrganization
+              mode="organization"
             />
           ),
           sidebar: <AppOrganizationProfileInfos organization={organisation} />,

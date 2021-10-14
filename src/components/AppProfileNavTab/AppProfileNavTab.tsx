@@ -8,8 +8,8 @@ import BaseBadge from "../BaseBadge/BaseBadge";
 export type AppProfileNavTabProps = {
   owner: string;
   currentTab: "default" | "repositories";
+  mode: "user" | "organization";
   reposTotalCount?: number;
-  isOrganization?: boolean;
 };
 
 type LinksDataType = {
@@ -28,7 +28,7 @@ export default function AppProfileNavTab({
   owner,
   currentTab,
   reposTotalCount,
-  isOrganization = false,
+  mode,
   ...ownProps
 }: AppProfileNavTabProps): JSX.Element | null {
   const links: LinksDataType[] = [
@@ -49,14 +49,13 @@ export default function AppProfileNavTab({
                 key={label}
                 href={{
                   pathname:
-                    isOrganization && tab === "repositories"
+                    mode === "organization" && tab === "repositories"
                       ? `/orgs/${owner}/repositories`
                       : `/${owner}`,
                   query: {
-                    ...(!isOrganization && tab !== "default" ? { tab } : {}),
+                    ...(mode === "user" && tab !== "default" ? { tab } : {}),
                   },
                 }}
-                // href={tab !== "default" ? `/${owner}?tab=${tab}` : `/${owner}`}
                 {...props}
               >
                 <a className={className}>{children}</a>
