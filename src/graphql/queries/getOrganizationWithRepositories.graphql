@@ -1,0 +1,23 @@
+query GetOrganizationWithRepositories(
+  $owner: String!
+  $query: String!
+  $after: String
+  $before: String
+  $first: Int
+  $last: Int
+) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  ...SearchRepos
+  repositoryOwner(login: $owner) {
+    ... on Organization {
+      login
+      name
+      avatarUrl
+    }
+  }
+}

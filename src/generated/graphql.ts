@@ -19784,6 +19784,28 @@ export type UserInfosFragment = (
   ) }
 );
 
+export type GetOrganizationWithRepositoriesQueryVariables = Exact<{
+  owner: Scalars['String'];
+  query: Scalars['String'];
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+  first?: Maybe<Scalars['Int']>;
+  last?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type GetOrganizationWithRepositoriesQuery = (
+  { __typename?: 'Query' }
+  & { rateLimit?: Maybe<(
+    { __typename?: 'RateLimit' }
+    & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )>, repositoryOwner?: Maybe<(
+    { __typename?: 'Organization' }
+    & Pick<Organization, 'login' | 'name' | 'avatarUrl'>
+  ) | { __typename?: 'User' }> }
+  & SearchReposFragment
+);
+
 export type GetProfileReadmeQueryVariables = Exact<{
   owner: Scalars['String'];
 }>;
@@ -20139,6 +20161,57 @@ export const UserInfosFragmentDoc = gql`
   }
 }
     `;
+export const GetOrganizationWithRepositoriesDocument = gql`
+    query GetOrganizationWithRepositories($owner: String!, $query: String!, $after: String, $before: String, $first: Int, $last: Int) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  ...SearchRepos
+  repositoryOwner(login: $owner) {
+    ... on Organization {
+      login
+      name
+      avatarUrl
+    }
+  }
+}
+    ${SearchReposFragmentDoc}`;
+
+/**
+ * __useGetOrganizationWithRepositoriesQuery__
+ *
+ * To run a query within a React component, call `useGetOrganizationWithRepositoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrganizationWithRepositoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrganizationWithRepositoriesQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      query: // value for 'query'
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useGetOrganizationWithRepositoriesQuery(baseOptions: Apollo.QueryHookOptions<GetOrganizationWithRepositoriesQuery, GetOrganizationWithRepositoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrganizationWithRepositoriesQuery, GetOrganizationWithRepositoriesQueryVariables>(GetOrganizationWithRepositoriesDocument, options);
+      }
+export function useGetOrganizationWithRepositoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrganizationWithRepositoriesQuery, GetOrganizationWithRepositoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrganizationWithRepositoriesQuery, GetOrganizationWithRepositoriesQueryVariables>(GetOrganizationWithRepositoriesDocument, options);
+        }
+export type GetOrganizationWithRepositoriesQueryHookResult = ReturnType<typeof useGetOrganizationWithRepositoriesQuery>;
+export type GetOrganizationWithRepositoriesLazyQueryHookResult = ReturnType<typeof useGetOrganizationWithRepositoriesLazyQuery>;
+export type GetOrganizationWithRepositoriesQueryResult = Apollo.QueryResult<GetOrganizationWithRepositoriesQuery, GetOrganizationWithRepositoriesQueryVariables>;
 export const GetProfileReadmeDocument = gql`
     query GetProfileReadme($owner: String!) {
   profileReadmeUser: repository(owner: $owner, name: $owner) {
