@@ -8,9 +8,9 @@ import AppSearchSummary from "../AppSearchSummary/AppSearchSummary";
 import { extractSearchUrlParams } from "../../utils/github";
 import useSearchRepos from "../../utils/useSearchRepos";
 
-export type AppUserProfileRepositoriesProps = never;
+export type AppProfileRepositoriesProps = never;
 
-export default function AppUserProfileRepositories(): JSX.Element | null {
+export default function AppProfileRepositories(): JSX.Element | null {
   const router = useRouter();
   const {
     searchBarState,
