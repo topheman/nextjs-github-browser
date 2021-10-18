@@ -12,7 +12,7 @@ import {
 } from "../../../libs/graphql";
 import AppProfileLayout from "../../../components/AppProfileLayout/AppProfileLayout";
 import AppProfileNavTab from "../../../components/AppProfileNavTab/AppProfileNavTab";
-import AppUserProfileRepositories from "../../../components/AppUserProfileRepositories/AppUserProfileRepositories";
+import AppProfileRepositories from "../../../components/AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCardMini from "../../../components/AppOrganizationCardMini/AppOrganizationCardMini";
 
 // necessary typeguard as query.owner is of type string | string[]
@@ -65,7 +65,7 @@ export default function PageOrganizationRepositories(): JSX.Element {
             mode="organization"
           />
         ),
-        main: <AppUserProfileRepositories />,
+        main: <AppProfileRepositories />,
         sidebar: <div>NO SIDEBAR</div>,
       })}
     </AppProfileLayout>
