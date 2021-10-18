@@ -2,18 +2,16 @@ import clsx from "clsx";
 
 export type AppProfileLayoutProps = {
   reverse?: boolean;
-  showSidebar?: boolean;
   children: () => {
     nav: JSX.Element | null;
     main: JSX.Element | null;
-    sidebar: JSX.Element | null;
+    sidebar?: JSX.Element | null;
     topNav?: JSX.Element | null;
   };
 };
 
 export default function AppProfileLayout({
   reverse = false,
-  showSidebar = true,
   children,
 }: AppProfileLayoutProps): JSX.Element | null {
   const { nav, main, sidebar, topNav } = children();
@@ -34,10 +32,8 @@ export default function AppProfileLayout({
             reverse ? "flex-row-reverse" : "flex-row"
           )}
         >
-          {showSidebar ? <div className="w-0 md:w-1/4" /> : null}
-          <div
-            className={clsx("w-full bg-primary", showSidebar ? "md:w-3/4" : "")}
-          >
+          {sidebar ? <div className="w-0 md:w-1/4" /> : null}
+          <div className={clsx("w-full bg-primary", sidebar ? "md:w-3/4" : "")}>
             {nav}
           </div>
         </div>
@@ -51,7 +47,7 @@ export default function AppProfileLayout({
               : "flex-col md:flex-row"
           )}
         >
-          {showSidebar ? (
+          {sidebar ? (
             <div
               className={clsx(
                 "z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4",
@@ -62,7 +58,7 @@ export default function AppProfileLayout({
             </div>
           ) : null}
           {!reverse ? navbar : null}
-          <div className={clsx("p-4 w-full", showSidebar ? "md:w-3/4" : "")}>
+          <div className={clsx("p-4 w-full", sidebar ? "md:w-3/4" : "")}>
             {main}
           </div>
           {reverse ? navbar : null}

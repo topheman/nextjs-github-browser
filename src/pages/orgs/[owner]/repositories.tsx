@@ -50,7 +50,7 @@ export default function PageOrganizationRepositories(): JSX.Element {
     },
   });
   return (
-    <AppProfileLayout showSidebar={false}>
+    <AppProfileLayout>
       {() => ({
         topNav: result.data?.repositoryOwner ? (
           <AppOrganizationCardMini
@@ -66,7 +66,6 @@ export default function PageOrganizationRepositories(): JSX.Element {
           />
         ),
         main: <AppProfileRepositories />,
-        sidebar: <div>NO SIDEBAR</div>,
       })}
     </AppProfileLayout>
   );
