@@ -6,11 +6,10 @@ import sanitize from "rehype-sanitize"; // https://github.com/remarkjs/react-mar
 import clsx from "clsx";
 
 import { makeUriTransformer } from "./uri-transformer";
-import { Maybe } from "../../libs/graphql";
 import styles from "./BaseMarkdown.module.css";
 
 export type BaseMarkdownDisplayProps = {
-  markdown: Maybe<string> | undefined;
+  markdown: string | null | undefined;
   profileReadmeInfos: {
     login: string;
     defaultBranchName: string | undefined;

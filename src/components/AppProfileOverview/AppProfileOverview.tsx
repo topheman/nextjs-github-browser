@@ -1,4 +1,4 @@
-import { Maybe, PinnedItemInfosFragment } from "../../libs/graphql";
+import { PinnedItemInfosFragment } from "../../libs/graphql";
 import BaseBox from "../BaseBox/BaseBox";
 import BaseMarkdownDisplay, {
   BaseMarkdownDisplayProps,
@@ -6,7 +6,7 @@ import BaseMarkdownDisplay, {
 import AppPinnedItem from "../AppPinnedItem/AppPinnedItem";
 
 export type AppProfileOverviewProps = {
-  profileReadme: Maybe<string> | undefined;
+  profileReadme: string | null | undefined;
   profileReadmeInfos: BaseMarkdownDisplayProps["profileReadmeInfos"];
   pinnedRepositories?: PinnedItemInfosFragment[];
   popularRepositories?: PinnedItemInfosFragment[];
