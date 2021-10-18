@@ -2,16 +2,18 @@ import clsx from "clsx";
 
 export type AppProfileLayoutProps = {
   reverse?: boolean;
+  showSidebar?: boolean;
   children: () => {
-    nav: JSX.Element;
-    main: JSX.Element;
-    sidebar: JSX.Element;
-    topNav?: JSX.Element;
+    nav: JSX.Element | null;
+    main: JSX.Element | null;
+    sidebar: JSX.Element | null;
+    topNav?: JSX.Element | null;
   };
 };
 
 export default function AppProfileLayout({
   reverse = false,
+  showSidebar = true,
   children,
 }: AppProfileLayoutProps): JSX.Element | null {
   const { nav, main, sidebar, topNav } = children();
@@ -32,8 +34,12 @@ export default function AppProfileLayout({
             reverse ? "flex-row-reverse" : "flex-row"
           )}
         >
-          <div className="w-0 md:w-1/4" />
-          <div className="w-full md:w-3/4 bg-primary">{nav}</div>
+          {showSidebar ? <div className="w-0 md:w-1/4" /> : null}
+          <div
+            className={clsx("w-full bg-primary", showSidebar ? "md:w-3/4" : "")}
+          >
+            {nav}
+          </div>
         </div>
       </div>
       <div className="mx-auto max-w-screen-xl">
@@ -45,16 +51,20 @@ export default function AppProfileLayout({
               : "flex-col md:flex-row"
           )}
         >
-          <div
-            className={clsx(
-              "z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4",
-              reverse ? "md:mt-4" : ""
-            )}
-          >
-            {sidebar}
-          </div>
+          {showSidebar ? (
+            <div
+              className={clsx(
+                "z-10 px-4 mt-2 md:-mt-8 w-full md:w-1/4",
+                reverse ? "md:mt-4" : ""
+              )}
+            >
+              {sidebar}
+            </div>
+          ) : null}
           {!reverse ? navbar : null}
-          <div className="p-4 w-full md:w-3/4">{main}</div>
+          <div className={clsx("p-4 w-full", showSidebar ? "md:w-3/4" : "")}>
+            {main}
+          </div>
           {reverse ? navbar : null}
         </div>
       </div>

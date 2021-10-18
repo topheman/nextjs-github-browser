@@ -8,10 +8,12 @@ import {
   GetOrganizationWithRepositoriesQuery,
   GetOrganizationWithRepositoriesDocument,
   useGetOrganizationWithRepositoriesQuery,
+  Organization,
 } from "../../../libs/graphql";
 import AppProfileLayout from "../../../components/AppProfileLayout/AppProfileLayout";
 import AppProfileNavTab from "../../../components/AppProfileNavTab/AppProfileNavTab";
 import AppUserProfileRepositories from "../../../components/AppUserProfileRepositories/AppUserProfileRepositories";
+import AppOrganizationCardMini from "../../../components/AppOrganizationCardMini/AppOrganizationCardMini";
 
 // necessary typeguard as query.owner is of type string | string[]
 const parseQuery: ParseQuery<unknown> = (query) => {
@@ -48,8 +50,13 @@ export default function PageOrganizationRepositories(): JSX.Element {
     },
   });
   return (
-    <AppProfileLayout reverse>
+    <AppProfileLayout showSidebar={false}>
       {() => ({
+        topNav: result.data?.repositoryOwner ? (
+          <AppOrganizationCardMini
+            organisation={result.data?.repositoryOwner as Organization}
+          />
+        ) : null,
         nav: (
           <AppProfileNavTab
             owner={owner}
