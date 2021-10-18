@@ -1,16 +1,20 @@
 import { Maybe, PinnedItemInfosFragment } from "../../libs/graphql";
 import BaseBox from "../BaseBox/BaseBox";
-import BaseMarkdownDisplay from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
+import BaseMarkdownDisplay, {
+  BaseMarkdownDisplayProps,
+} from "../BaseMarkdownDisplay/BaseMarkdownDisplay";
 import AppPinnedItem from "../AppPinnedItem/AppPinnedItem";
 
 export type AppProfileOverviewProps = {
   profileReadme: Maybe<string> | undefined;
+  profileReadmeInfos: BaseMarkdownDisplayProps["profileReadmeInfos"];
   pinnedRepositories?: PinnedItemInfosFragment[];
   popularRepositories?: PinnedItemInfosFragment[];
 };
 
 export default function AppProfileOverview({
   profileReadme,
+  profileReadmeInfos,
   pinnedRepositories,
   popularRepositories,
 }: AppProfileOverviewProps): JSX.Element | null {
@@ -18,7 +22,10 @@ export default function AppProfileOverview({
     <div>
       {profileReadme ? (
         <BaseBox className="p-4 mb-4">
-          <BaseMarkdownDisplay markdown={profileReadme} />
+          <BaseMarkdownDisplay
+            markdown={profileReadme}
+            profileReadmeInfos={profileReadmeInfos}
+          />
         </BaseBox>
       ) : null}
       <div className="mb-4">

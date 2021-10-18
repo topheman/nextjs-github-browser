@@ -19796,13 +19796,129 @@ export type GetProfileReadmeQuery = (
     & { file?: Maybe<(
       { __typename?: 'Blob' }
       & Pick<Blob, 'text'>
-    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }> }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Commit' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Tag' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Tree' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    )> }
   )>, profileReadmeOrg?: Maybe<(
     { __typename?: 'Repository' }
     & { file?: Maybe<(
       { __typename?: 'Blob' }
       & Pick<Blob, 'text'>
-    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }> }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Commit' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Tag' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    ) | (
+      { __typename?: 'Tree' }
+      & { repository: (
+        { __typename?: 'Repository' }
+        & { owner: (
+          { __typename?: 'Organization' }
+          & Pick<Organization, 'login'>
+        ) | (
+          { __typename?: 'User' }
+          & Pick<User, 'login'>
+        ), defaultBranchRef?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      ) }
+    )> }
   )> }
 );
 
@@ -20030,12 +20146,28 @@ export const GetProfileReadmeDocument = gql`
       ... on Blob {
         text
       }
+      repository {
+        owner {
+          login
+        }
+        defaultBranchRef {
+          name
+        }
+      }
     }
   }
   profileReadmeOrg: repository(owner: $owner, name: ".github") {
     file: object(expression: "HEAD:profile/README.md") {
       ... on Blob {
         text
+      }
+      repository {
+        owner {
+          login
+        }
+        defaultBranchRef {
+          name
+        }
       }
     }
   }

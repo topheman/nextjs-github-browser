@@ -6,6 +6,14 @@ query GetProfileReadme($owner: String!) {
       ... on Blob {
         text
       }
+      repository {
+        owner {
+          login
+        }
+        defaultBranchRef {
+          name
+        }
+      }
     }
   }
   profileReadmeOrg: repository(owner: $owner, name: ".github") {
@@ -13,6 +21,14 @@ query GetProfileReadme($owner: String!) {
     file: object(expression: "HEAD:profile/README.md") {
       ... on Blob {
         text
+      }
+      repository {
+        owner {
+          login
+        }
+        defaultBranchRef {
+          name
+        }
       }
     }
   }

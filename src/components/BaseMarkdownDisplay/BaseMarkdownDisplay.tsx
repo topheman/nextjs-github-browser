@@ -5,18 +5,33 @@ import raw from "rehype-raw"; // allow html in markdown - https://github.com/rem
 import sanitize from "rehype-sanitize"; // https://github.com/remarkjs/react-markdown#security
 import clsx from "clsx";
 
+import { makeUriTransformer } from "./uri-transformer";
 import { Maybe } from "../../libs/graphql";
 import styles from "./BaseMarkdown.module.css";
 
 export type BaseMarkdownDisplayProps = {
   markdown: Maybe<string> | undefined;
+  profileReadmeInfos: {
+    login: string;
+    defaultBranchName: string | undefined;
+    mode: "user" | "organization";
+  };
 };
 
 export default function BaseMarkdownDisplay({
   markdown,
+  profileReadmeInfos,
   ...props
 }: BaseMarkdownDisplayProps): JSX.Element | null {
   if (markdown) {
+    let uriTransformer;
+    if (profileReadmeInfos.defaultBranchName) {
+      uriTransformer = makeUriTransformer(
+        profileReadmeInfos.login,
+        profileReadmeInfos.defaultBranchName,
+        profileReadmeInfos.mode
+      );
+    }
     return (
       // eslint-disable-next-line tailwindcss/no-custom-classname
       <div {...props} className="markdown-body">
@@ -24,6 +39,8 @@ export default function BaseMarkdownDisplay({
           rehypePlugins={[raw, sanitize]}
           remarkPlugins={[gfm]}
           className={clsx("text-sm", styles.root)}
+          transformLinkUri={uriTransformer}
+          transformImageUri={uriTransformer}
         >
           {markdown}
         </ReactMarkdown>

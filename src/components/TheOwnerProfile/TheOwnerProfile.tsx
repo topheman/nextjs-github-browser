@@ -104,6 +104,13 @@ export default function TheOwnerProfile({
                 (profileReadmeResult?.data?.profileReadmeUser?.file as Blob)
                   ?.text
               }
+              profileReadmeInfos={{
+                login: owner,
+                defaultBranchName:
+                  profileReadmeResult.data?.profileReadmeUser?.file?.repository
+                    .defaultBranchRef?.name,
+                mode: "user",
+              }}
               pinnedRepositories={user.pinnedRepositories?.nodes?.map(
                 (repo) => repo as PinnedItemInfosFragment
               )}
@@ -142,6 +149,13 @@ export default function TheOwnerProfile({
                 (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)
                   ?.text
               }
+              profileReadmeInfos={{
+                login: owner,
+                defaultBranchName:
+                  profileReadmeResult.data?.profileReadmeOrg?.file?.repository
+                    .defaultBranchRef?.name,
+                mode: "organization",
+              }}
               pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
                 (repo) => repo as PinnedItemInfosFragment
               )}
