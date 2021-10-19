@@ -125,8 +125,10 @@ export default function useSearchRepos(
       console.log("url", url);
       // Do not override router if not on the repositories tab
       if (
-        mode === "user" &&
-        searchUrlParamsFromHistory.tab !== "repositories"
+        (mode === "user" &&
+          searchUrlParamsFromHistory.tab !== "repositories") ||
+        (mode === "organization" &&
+          !url.match(/orgs\/\[(\w|-|\d)+\]\/repositories/))
       ) {
         return true;
       }
@@ -155,6 +157,7 @@ export default function useSearchRepos(
       return false;
     });
     function onRouteChangeComplete(url: string) {
+      console.log("onRouteChangeComplete", url);
       // cleanup state when going back to default page
       if (
         typeof url === "string" &&
