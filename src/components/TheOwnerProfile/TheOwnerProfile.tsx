@@ -72,7 +72,7 @@ export default function TheOwnerProfile({
             />
           ),
           sidebar: <AppUserProfileInfos user={user} />,
-          main: <AppProfileRepositories />,
+          main: <AppProfileRepositories mode="user" />,
         })}
       </AppProfileLayout>
     );

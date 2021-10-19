@@ -65,7 +65,7 @@ export default function PageOrganizationRepositories(): JSX.Element {
             mode="organization"
           />
         ),
-        main: <AppProfileRepositories />,
+        main: <AppProfileRepositories mode="organization" />,
       })}
     </AppProfileLayout>
   );

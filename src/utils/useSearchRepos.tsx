@@ -86,7 +86,8 @@ export type SetReducerStateType<T> = React.Dispatch<StateReducerActionType<T>>;
 
 export default function useSearchRepos(
   user: string,
-  searchUrlParams: SearchUrlParamsType
+  searchUrlParams: SearchUrlParamsType,
+  mode: "user" | "organization"
 ): {
   searchBarState: SearchParamsType;
   setSearchBarState: React.Dispatch<StateReducerActionType<SearchParamsType>>;
@@ -121,8 +122,12 @@ export default function useSearchRepos(
       const searchUrlParamsFromHistory = Object.fromEntries(
         new URLSearchParams(searchUrlQueryString).entries()
       );
+      console.log("url", url);
       // Do not override router if not on the repositories tab
-      if (searchUrlParamsFromHistory.tab !== "repositories") {
+      if (
+        mode === "user" &&
+        searchUrlParamsFromHistory.tab !== "repositories"
+      ) {
         return true;
       }
       console.log("manageHistory", url, searchUrlParamsFromHistory, {
@@ -151,7 +156,12 @@ export default function useSearchRepos(
     });
     function onRouteChangeComplete(url: string) {
       // cleanup state when going back to default page
-      if (typeof url === "string" && url.endsWith("?tab=repositories")) {
+      if (
+        typeof url === "string" &&
+        ((mode === "organization" &&
+          url.match(/orgs\/(\w|-|\d)+\/repositories/)) ||
+          (mode === "user" && url.endsWith("?tab=repositories")))
+      ) {
         setSearchBarState({ q: "", type: "", sort: "" });
         setPaginationState({ before: "", after: "", page: "" });
       }
@@ -159,6 +169,7 @@ export default function useSearchRepos(
     router.events.on("routeChangeComplete", onRouteChangeComplete);
     return () => {
       // reset Router events
+      console.log("clean effect");
       Router.beforePopState(() => true);
       router.events.off("routeChangeComplete", onRouteChangeComplete);
     };
@@ -230,12 +241,12 @@ export default function useSearchRepos(
     setLoading(false);
     // if state change is comming from a history change (e.g. back button), don't add a new entry
     if (!replayHistory) {
+      console.log("replayHistory", newUrl, owner);
       window.history.pushState(
         {
           ...window.history.state,
           as: newUrl,
-          // url: newUrl.replace("topheman", "[owner]"),
-          url: newUrl.replace("topheman", "[owner]"),
+          url: newUrl.replace(`/${owner}`, "/[owner]"),
           options: {
             ...window.history.state.options,
             shallow: true,
