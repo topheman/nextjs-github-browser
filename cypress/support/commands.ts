@@ -112,7 +112,7 @@ function clientRepositoryPaginationNavigate(
         "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
       ).should("not.exist");
       // check the render is up to date with the data passed
-      cy.findByText(firstRepoInfos.name).should("exist");
+      cy.findByRole("link", { name: firstRepoInfos.name }).should("exist");
       // check the url is up to date
       const { after, before } = graphqlVariables;
       if (after) {
@@ -127,9 +127,9 @@ function clientRepositoryPaginationNavigate(
   } else {
     // apollo cached mode
     cy.get(`@${key}`).then((infos) => {
-      cy.findByText(
-        ((infos as unknown) as NavigationInfosType).firstRepoInfos.name
-      ).should("exist");
+      cy.findByRole("link", {
+        name: ((infos as unknown) as NavigationInfosType).firstRepoInfos.name,
+      }).should("exist");
       const {
         after,
         before,
