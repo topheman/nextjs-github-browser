@@ -161,7 +161,7 @@ Cypress.Commands.add(
   clientRepositoryPaginationNavigate
 );
 
-describe("useSearchRepos", () => {
+describe("user/repositories", () => {
   describe("/[owner]?tab=repositories", () => {
     it("[SSR] should correctly render /topheman?tab=repositories", () => {
       ssrAssertDefaultpage();
