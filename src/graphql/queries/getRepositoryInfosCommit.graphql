@@ -1,0 +1,12 @@
+query GetRepositoryInfosCommit(
+  $owner: String!
+  $name: String!
+  $commit: String!
+) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}

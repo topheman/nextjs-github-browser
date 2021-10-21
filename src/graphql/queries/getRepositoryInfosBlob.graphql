@@ -1,0 +1,13 @@
+query GetRepositoryInfosBlob(
+  $owner: String!
+  $name: String!
+  $branch: String! # default: HEAD - other possibilities: master|feature/foo ...
+  $branchPath: String! # default: HEAD: - other possibilities: master:|feature/foo: ...
+) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}

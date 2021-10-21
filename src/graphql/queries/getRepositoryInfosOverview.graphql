@@ -1,0 +1,94 @@
+query GetRepositoryInfosOverview(
+  $owner: String!
+  $name: String!
+  $branch: String! # default: HEAD - other possibilities: master|feature/foo ...
+  $branchPath: String! # default: HEAD: - other possibilities: master:|feature/foo: ...
+) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  repository(name: $name, owner: $owner) {
+    description
+    homepageUrl
+    defaultBranchRef {
+      name
+    }
+    branches: refs(refPrefix: "refs/heads/", first: 0) {
+      totalCount
+    }
+    tags: refs(refPrefix: "refs/tags/", first: 0) {
+      totalCount
+    }
+    commits: object(expression: $branch) {
+      ... on Commit {
+        history {
+          totalCount
+        }
+      }
+    }
+    repositoryTopics(first: 15) {
+      nodes {
+        topic {
+          name
+        }
+      }
+    }
+    # check should be case insensitive
+    readmeUppercase: object(expression: "HEAD:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+    readmeLowercase: object(expression: "HEAD:readme.md") {
+      ... on Blob {
+        text
+      }
+    }
+    licenseInfo {
+      name
+    }
+    # latest release + totalCount
+    releases(first: 1, orderBy: { field: CREATED_AT, direction: DESC }) {
+      totalCount
+      edges {
+        node {
+          name
+          createdAt
+        }
+      }
+    }
+    packages(first: 10) {
+      totalCount
+      edges {
+        node {
+          name
+          packageType
+        }
+      }
+    }
+    # no contributors for the moment - https://maravindblog.wordpress.com/2021/08/12/how-to-get-contributors-using-github-graphql/
+    languages(first: 10, orderBy: { field: SIZE, direction: DESC }) {
+      edges {
+        size
+        node {
+          name
+          color
+        }
+      }
+    }
+    repositoryFiles: object(expression: $branchPath) {
+      ... on Tree {
+        entries {
+          name
+          type
+          extension
+          path
+          oid
+        }
+      }
+    }
+  }
+}

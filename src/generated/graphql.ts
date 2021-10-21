@@ -19944,6 +19944,142 @@ export type GetProfileReadmeQuery = (
   )> }
 );
 
+export type GetRepositoryInfosBlobQueryVariables = Exact<{
+  owner: Scalars['String'];
+  name: Scalars['String'];
+  branch: Scalars['String'];
+  branchPath: Scalars['String'];
+}>;
+
+
+export type GetRepositoryInfosBlobQuery = (
+  { __typename?: 'Query' }
+  & { rateLimit?: Maybe<(
+    { __typename?: 'RateLimit' }
+    & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )> }
+);
+
+export type GetRepositoryInfosCommitQueryVariables = Exact<{
+  owner: Scalars['String'];
+  name: Scalars['String'];
+  commit: Scalars['String'];
+}>;
+
+
+export type GetRepositoryInfosCommitQuery = (
+  { __typename?: 'Query' }
+  & { rateLimit?: Maybe<(
+    { __typename?: 'RateLimit' }
+    & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )> }
+);
+
+export type GetRepositoryInfosOverviewQueryVariables = Exact<{
+  owner: Scalars['String'];
+  name: Scalars['String'];
+  branch: Scalars['String'];
+  branchPath: Scalars['String'];
+}>;
+
+
+export type GetRepositoryInfosOverviewQuery = (
+  { __typename?: 'Query' }
+  & { rateLimit?: Maybe<(
+    { __typename?: 'RateLimit' }
+    & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )>, repository?: Maybe<(
+    { __typename?: 'Repository' }
+    & Pick<Repository, 'description' | 'homepageUrl'>
+    & { defaultBranchRef?: Maybe<(
+      { __typename?: 'Ref' }
+      & Pick<Ref, 'name'>
+    )>, branches?: Maybe<(
+      { __typename?: 'RefConnection' }
+      & Pick<RefConnection, 'totalCount'>
+    )>, tags?: Maybe<(
+      { __typename?: 'RefConnection' }
+      & Pick<RefConnection, 'totalCount'>
+    )>, commits?: Maybe<{ __typename?: 'Blob' } | (
+      { __typename?: 'Commit' }
+      & { history: (
+        { __typename?: 'CommitHistoryConnection' }
+        & Pick<CommitHistoryConnection, 'totalCount'>
+      ) }
+    ) | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, repositoryTopics: (
+      { __typename?: 'RepositoryTopicConnection' }
+      & { nodes?: Maybe<Array<Maybe<(
+        { __typename?: 'RepositoryTopic' }
+        & { topic: (
+          { __typename?: 'Topic' }
+          & Pick<Topic, 'name'>
+        ) }
+      )>>> }
+    ), readmeUppercase?: Maybe<(
+      { __typename?: 'Blob' }
+      & Pick<Blob, 'text'>
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, readmeLowercase?: Maybe<(
+      { __typename?: 'Blob' }
+      & Pick<Blob, 'text'>
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, licenseInfo?: Maybe<(
+      { __typename?: 'License' }
+      & Pick<License, 'name'>
+    )>, releases: (
+      { __typename?: 'ReleaseConnection' }
+      & Pick<ReleaseConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'ReleaseEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Release' }
+          & Pick<Release, 'name' | 'createdAt'>
+        )> }
+      )>>> }
+    ), packages: (
+      { __typename?: 'PackageConnection' }
+      & Pick<PackageConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'PackageEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Package' }
+          & Pick<Package, 'name' | 'packageType'>
+        )> }
+      )>>> }
+    ), languages?: Maybe<(
+      { __typename?: 'LanguageConnection' }
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'LanguageEdge' }
+        & Pick<LanguageEdge, 'size'>
+        & { node: (
+          { __typename?: 'Language' }
+          & Pick<Language, 'name' | 'color'>
+        ) }
+      )>>> }
+    )>, repositoryFiles?: Maybe<{ __typename?: 'Blob' } | { __typename?: 'Commit' } | { __typename?: 'Tag' } | (
+      { __typename?: 'Tree' }
+      & { entries?: Maybe<Array<(
+        { __typename?: 'TreeEntry' }
+        & Pick<TreeEntry, 'name' | 'type' | 'extension' | 'path' | 'oid'>
+      )>> }
+    )> }
+  )> }
+);
+
+export type GetRepositoryInfosTreeQueryVariables = Exact<{
+  owner: Scalars['String'];
+  name: Scalars['String'];
+  branch: Scalars['String'];
+  branchPath: Scalars['String'];
+}>;
+
+
+export type GetRepositoryInfosTreeQuery = (
+  { __typename?: 'Query' }
+  & { rateLimit?: Maybe<(
+    { __typename?: 'RateLimit' }
+    & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )> }
+);
+
 export type GetRepositoryOwnerWithPinnedItemsQueryVariables = Exact<{
   owner: Scalars['String'];
 }>;
@@ -20274,6 +20410,247 @@ export function useGetProfileReadmeLazyQuery(baseOptions?: Apollo.LazyQueryHookO
 export type GetProfileReadmeQueryHookResult = ReturnType<typeof useGetProfileReadmeQuery>;
 export type GetProfileReadmeLazyQueryHookResult = ReturnType<typeof useGetProfileReadmeLazyQuery>;
 export type GetProfileReadmeQueryResult = Apollo.QueryResult<GetProfileReadmeQuery, GetProfileReadmeQueryVariables>;
+export const GetRepositoryInfosBlobDocument = gql`
+    query GetRepositoryInfosBlob($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}
+    `;
+
+/**
+ * __useGetRepositoryInfosBlobQuery__
+ *
+ * To run a query within a React component, call `useGetRepositoryInfosBlobQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepositoryInfosBlobQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepositoryInfosBlobQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      name: // value for 'name'
+ *      branch: // value for 'branch'
+ *      branchPath: // value for 'branchPath'
+ *   },
+ * });
+ */
+export function useGetRepositoryInfosBlobQuery(baseOptions: Apollo.QueryHookOptions<GetRepositoryInfosBlobQuery, GetRepositoryInfosBlobQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepositoryInfosBlobQuery, GetRepositoryInfosBlobQueryVariables>(GetRepositoryInfosBlobDocument, options);
+      }
+export function useGetRepositoryInfosBlobLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepositoryInfosBlobQuery, GetRepositoryInfosBlobQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepositoryInfosBlobQuery, GetRepositoryInfosBlobQueryVariables>(GetRepositoryInfosBlobDocument, options);
+        }
+export type GetRepositoryInfosBlobQueryHookResult = ReturnType<typeof useGetRepositoryInfosBlobQuery>;
+export type GetRepositoryInfosBlobLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosBlobLazyQuery>;
+export type GetRepositoryInfosBlobQueryResult = Apollo.QueryResult<GetRepositoryInfosBlobQuery, GetRepositoryInfosBlobQueryVariables>;
+export const GetRepositoryInfosCommitDocument = gql`
+    query GetRepositoryInfosCommit($owner: String!, $name: String!, $commit: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}
+    `;
+
+/**
+ * __useGetRepositoryInfosCommitQuery__
+ *
+ * To run a query within a React component, call `useGetRepositoryInfosCommitQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepositoryInfosCommitQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepositoryInfosCommitQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      name: // value for 'name'
+ *      commit: // value for 'commit'
+ *   },
+ * });
+ */
+export function useGetRepositoryInfosCommitQuery(baseOptions: Apollo.QueryHookOptions<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>(GetRepositoryInfosCommitDocument, options);
+      }
+export function useGetRepositoryInfosCommitLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>(GetRepositoryInfosCommitDocument, options);
+        }
+export type GetRepositoryInfosCommitQueryHookResult = ReturnType<typeof useGetRepositoryInfosCommitQuery>;
+export type GetRepositoryInfosCommitLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosCommitLazyQuery>;
+export type GetRepositoryInfosCommitQueryResult = Apollo.QueryResult<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>;
+export const GetRepositoryInfosOverviewDocument = gql`
+    query GetRepositoryInfosOverview($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+  repository(name: $name, owner: $owner) {
+    description
+    homepageUrl
+    defaultBranchRef {
+      name
+    }
+    branches: refs(refPrefix: "refs/heads/", first: 0) {
+      totalCount
+    }
+    tags: refs(refPrefix: "refs/tags/", first: 0) {
+      totalCount
+    }
+    commits: object(expression: $branch) {
+      ... on Commit {
+        history {
+          totalCount
+        }
+      }
+    }
+    repositoryTopics(first: 15) {
+      nodes {
+        topic {
+          name
+        }
+      }
+    }
+    readmeUppercase: object(expression: "HEAD:README.md") {
+      ... on Blob {
+        text
+      }
+    }
+    readmeLowercase: object(expression: "HEAD:readme.md") {
+      ... on Blob {
+        text
+      }
+    }
+    licenseInfo {
+      name
+    }
+    releases(first: 1, orderBy: {field: CREATED_AT, direction: DESC}) {
+      totalCount
+      edges {
+        node {
+          name
+          createdAt
+        }
+      }
+    }
+    packages(first: 10) {
+      totalCount
+      edges {
+        node {
+          name
+          packageType
+        }
+      }
+    }
+    languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
+      edges {
+        size
+        node {
+          name
+          color
+        }
+      }
+    }
+    repositoryFiles: object(expression: $branchPath) {
+      ... on Tree {
+        entries {
+          name
+          type
+          extension
+          path
+          oid
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetRepositoryInfosOverviewQuery__
+ *
+ * To run a query within a React component, call `useGetRepositoryInfosOverviewQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepositoryInfosOverviewQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepositoryInfosOverviewQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      name: // value for 'name'
+ *      branch: // value for 'branch'
+ *      branchPath: // value for 'branchPath'
+ *   },
+ * });
+ */
+export function useGetRepositoryInfosOverviewQuery(baseOptions: Apollo.QueryHookOptions<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>(GetRepositoryInfosOverviewDocument, options);
+      }
+export function useGetRepositoryInfosOverviewLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>(GetRepositoryInfosOverviewDocument, options);
+        }
+export type GetRepositoryInfosOverviewQueryHookResult = ReturnType<typeof useGetRepositoryInfosOverviewQuery>;
+export type GetRepositoryInfosOverviewLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosOverviewLazyQuery>;
+export type GetRepositoryInfosOverviewQueryResult = Apollo.QueryResult<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>;
+export const GetRepositoryInfosTreeDocument = gql`
+    query GetRepositoryInfosTree($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
+}
+    `;
+
+/**
+ * __useGetRepositoryInfosTreeQuery__
+ *
+ * To run a query within a React component, call `useGetRepositoryInfosTreeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetRepositoryInfosTreeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetRepositoryInfosTreeQuery({
+ *   variables: {
+ *      owner: // value for 'owner'
+ *      name: // value for 'name'
+ *      branch: // value for 'branch'
+ *      branchPath: // value for 'branchPath'
+ *   },
+ * });
+ */
+export function useGetRepositoryInfosTreeQuery(baseOptions: Apollo.QueryHookOptions<GetRepositoryInfosTreeQuery, GetRepositoryInfosTreeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetRepositoryInfosTreeQuery, GetRepositoryInfosTreeQueryVariables>(GetRepositoryInfosTreeDocument, options);
+      }
+export function useGetRepositoryInfosTreeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetRepositoryInfosTreeQuery, GetRepositoryInfosTreeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetRepositoryInfosTreeQuery, GetRepositoryInfosTreeQueryVariables>(GetRepositoryInfosTreeDocument, options);
+        }
+export type GetRepositoryInfosTreeQueryHookResult = ReturnType<typeof useGetRepositoryInfosTreeQuery>;
+export type GetRepositoryInfosTreeLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosTreeLazyQuery>;
+export type GetRepositoryInfosTreeQueryResult = Apollo.QueryResult<GetRepositoryInfosTreeQuery, GetRepositoryInfosTreeQueryVariables>;
 export const GetRepositoryOwnerWithPinnedItemsDocument = gql`
     query GetRepositoryOwnerWithPinnedItems($owner: String!) {
   rateLimit {
