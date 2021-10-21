@@ -1,8 +1,8 @@
 query GetRepositoryInfosOverview(
   $owner: String!
   $name: String!
-  $branch: String! # default: HEAD - other possibilities: master|feature/foo ...
-  $branchPath: String! # default: HEAD: - other possibilities: master:|feature/foo: ...
+  $branch: String! # examples: HEAD|master|feature/foo
+  $branchPath: String! # examples: HEAD:|master:|feature/foo:|master:src
 ) {
   rateLimit {
     limit
@@ -79,16 +79,6 @@ query GetRepositoryInfosOverview(
         }
       }
     }
-    repositoryFiles: object(expression: $branchPath) {
-      ... on Tree {
-        entries {
-          name
-          type
-          extension
-          path
-          oid
-        }
-      }
-    }
+    ...RepositoryFiles
   }
 }

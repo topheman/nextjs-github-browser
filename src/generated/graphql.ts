@@ -19722,6 +19722,17 @@ export type PinnedItemInfosFragment = (
   )> }
 );
 
+export type RepositoryFilesFragment = (
+  { __typename?: 'Repository' }
+  & { repositoryFiles?: Maybe<{ __typename?: 'Blob' } | { __typename?: 'Commit' } | { __typename?: 'Tag' } | (
+    { __typename?: 'Tree' }
+    & { entries?: Maybe<Array<(
+      { __typename?: 'TreeEntry' }
+      & Pick<TreeEntry, 'name' | 'type' | 'extension' | 'path' | 'oid'>
+    )>> }
+  )> }
+);
+
 export type SearchReposFragment = (
   { __typename?: 'Query' }
   & { searchRepos: (
@@ -19949,6 +19960,7 @@ export type GetRepositoryInfosBlobQueryVariables = Exact<{
   name: Scalars['String'];
   branch: Scalars['String'];
   branchPath: Scalars['String'];
+  path: Scalars['String'];
 }>;
 
 
@@ -19957,6 +19969,34 @@ export type GetRepositoryInfosBlobQuery = (
   & { rateLimit?: Maybe<(
     { __typename?: 'RateLimit' }
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )>, repository?: Maybe<(
+    { __typename?: 'Repository' }
+    & { file?: Maybe<(
+      { __typename?: 'Blob' }
+      & Pick<Blob, 'byteSize' | 'text'>
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, lastCommit?: Maybe<(
+      { __typename?: 'Ref' }
+      & { target?: Maybe<{ __typename?: 'Blob' } | (
+        { __typename?: 'Commit' }
+        & { history: (
+          { __typename?: 'CommitHistoryConnection' }
+          & { edges?: Maybe<Array<Maybe<(
+            { __typename?: 'CommitEdge' }
+            & { node?: Maybe<(
+              { __typename?: 'Commit' }
+              & Pick<Commit, 'oid' | 'messageHeadline' | 'committedDate'>
+              & { author?: Maybe<(
+                { __typename?: 'GitActor' }
+                & { user?: Maybe<(
+                  { __typename?: 'User' }
+                  & Pick<User, 'login' | 'avatarUrl'>
+                )> }
+              )> }
+            )> }
+          )>>> }
+        ) }
+      ) | { __typename?: 'Tag' } | { __typename?: 'Tree' }> }
+    )> }
   )> }
 );
 
@@ -20054,20 +20094,14 @@ export type GetRepositoryInfosOverviewQuery = (
           & Pick<Language, 'name' | 'color'>
         ) }
       )>>> }
-    )>, repositoryFiles?: Maybe<{ __typename?: 'Blob' } | { __typename?: 'Commit' } | { __typename?: 'Tag' } | (
-      { __typename?: 'Tree' }
-      & { entries?: Maybe<Array<(
-        { __typename?: 'TreeEntry' }
-        & Pick<TreeEntry, 'name' | 'type' | 'extension' | 'path' | 'oid'>
-      )>> }
     )> }
+    & RepositoryFilesFragment
   )> }
 );
 
 export type GetRepositoryInfosTreeQueryVariables = Exact<{
   owner: Scalars['String'];
   name: Scalars['String'];
-  branch: Scalars['String'];
   branchPath: Scalars['String'];
 }>;
 
@@ -20077,6 +20111,9 @@ export type GetRepositoryInfosTreeQuery = (
   & { rateLimit?: Maybe<(
     { __typename?: 'RateLimit' }
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
+  )>, repository?: Maybe<(
+    { __typename?: 'Repository' }
+    & RepositoryFilesFragment
   )> }
 );
 
@@ -20213,6 +20250,21 @@ export const PinnedItemInfosFragmentDoc = gql`
   nameWithOwner
   parent {
     nameWithOwner
+  }
+}
+    `;
+export const RepositoryFilesFragmentDoc = gql`
+    fragment RepositoryFiles on Repository {
+  repositoryFiles: object(expression: $branchPath) {
+    ... on Tree {
+      entries {
+        name
+        type
+        extension
+        path
+        oid
+      }
+    }
   }
 }
     `;
@@ -20411,12 +20463,41 @@ export type GetProfileReadmeQueryHookResult = ReturnType<typeof useGetProfileRea
 export type GetProfileReadmeLazyQueryHookResult = ReturnType<typeof useGetProfileReadmeLazyQuery>;
 export type GetProfileReadmeQueryResult = Apollo.QueryResult<GetProfileReadmeQuery, GetProfileReadmeQueryVariables>;
 export const GetRepositoryInfosBlobDocument = gql`
-    query GetRepositoryInfosBlob($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+    query GetRepositoryInfosBlob($owner: String!, $name: String!, $branch: String!, $branchPath: String!, $path: String!) {
   rateLimit {
     limit
     cost
     remaining
     resetAt
+  }
+  repository(name: $name, owner: $owner) {
+    file: object(expression: $branchPath) {
+      ... on Blob {
+        byteSize
+        text
+      }
+    }
+    lastCommit: ref(qualifiedName: $branch) {
+      target {
+        ... on Commit {
+          history(first: 1, path: $path) {
+            edges {
+              node {
+                oid
+                messageHeadline
+                committedDate
+                author {
+                  user {
+                    login
+                    avatarUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
     `;
@@ -20437,6 +20518,7 @@ export const GetRepositoryInfosBlobDocument = gql`
  *      name: // value for 'name'
  *      branch: // value for 'branch'
  *      branchPath: // value for 'branchPath'
+ *      path: // value for 'path'
  *   },
  * });
  */
@@ -20565,20 +20647,10 @@ export const GetRepositoryInfosOverviewDocument = gql`
         }
       }
     }
-    repositoryFiles: object(expression: $branchPath) {
-      ... on Tree {
-        entries {
-          name
-          type
-          extension
-          path
-          oid
-        }
-      }
-    }
+    ...RepositoryFiles
   }
 }
-    `;
+    ${RepositoryFilesFragmentDoc}`;
 
 /**
  * __useGetRepositoryInfosOverviewQuery__
@@ -20611,15 +20683,18 @@ export type GetRepositoryInfosOverviewQueryHookResult = ReturnType<typeof useGet
 export type GetRepositoryInfosOverviewLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosOverviewLazyQuery>;
 export type GetRepositoryInfosOverviewQueryResult = Apollo.QueryResult<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>;
 export const GetRepositoryInfosTreeDocument = gql`
-    query GetRepositoryInfosTree($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+    query GetRepositoryInfosTree($owner: String!, $name: String!, $branchPath: String!) {
   rateLimit {
     limit
     cost
     remaining
     resetAt
   }
+  repository(name: $name, owner: $owner) {
+    ...RepositoryFiles
+  }
 }
-    `;
+    ${RepositoryFilesFragmentDoc}`;
 
 /**
  * __useGetRepositoryInfosTreeQuery__
@@ -20635,7 +20710,6 @@ export const GetRepositoryInfosTreeDocument = gql`
  *   variables: {
  *      owner: // value for 'owner'
  *      name: // value for 'name'
- *      branch: // value for 'branch'
  *      branchPath: // value for 'branchPath'
  *   },
  * });

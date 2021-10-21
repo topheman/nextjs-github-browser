@@ -1,0 +1,13 @@
+fragment RepositoryFiles on Repository {
+  repositoryFiles: object(expression: $branchPath) {
+    ... on Tree {
+      entries {
+        name
+        type
+        extension
+        path
+        oid
+      }
+    }
+  }
+}

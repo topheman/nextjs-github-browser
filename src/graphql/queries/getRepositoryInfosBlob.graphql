@@ -1,13 +1,43 @@
 query GetRepositoryInfosBlob(
   $owner: String!
   $name: String!
-  $branch: String! # default: HEAD - other possibilities: master|feature/foo ...
-  $branchPath: String! # default: HEAD: - other possibilities: master:|feature/foo: ...
+  $branch: String! # examples: HEAD|master|feature/foo
+  $branchPath: String! # examples: HEAD:common.js|master:index.js|feature/foo:src/foo.php|master:src
+  $path: String! # examples: common.js|src/foo.js|style/toto.css
 ) {
   rateLimit {
     limit
     cost
     remaining
     resetAt
+  }
+  repository(name: $name, owner: $owner) {
+    file: object(expression: $branchPath) {
+      ... on Blob {
+        byteSize
+        text
+      }
+    }
+    lastCommit: ref(qualifiedName: $branch) {
+      target {
+        ... on Commit {
+          history(first: 1, path: $path) {
+            edges {
+              node {
+                oid
+                messageHeadline
+                committedDate
+                author {
+                  user {
+                    login
+                    avatarUrl
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }
