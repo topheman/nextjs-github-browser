@@ -11,7 +11,7 @@ import {
   Organization,
 } from "../../../libs/graphql";
 import AppProfileLayout from "../../../components/AppProfileLayout/AppProfileLayout";
-import AppProfileNavTab from "../../../components/AppProfileNavTab/AppProfileNavTab";
+import AppProfileNavTab from "../../../components/AppNavBarProfile/AppNavBarProfile";
 import AppProfileRepositories from "../../../components/AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCardMini from "../../../components/AppOrganizationCardMini/AppOrganizationCardMini";
 

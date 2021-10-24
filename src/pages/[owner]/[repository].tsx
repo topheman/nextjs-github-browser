@@ -11,6 +11,7 @@ import {
   GetRepositoryInfosOverviewDocument,
 } from "../../libs/graphql";
 import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout";
+import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarRepository";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
@@ -41,10 +42,16 @@ export default function PageRepository({
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
-      <AppProfileLayout>
+      <AppProfileLayout reverse>
         {() => ({
           topNav: <div>TOP NAV</div>,
-          nav: <div>nav bar</div>,
+          nav: (
+            <AppNavBarRepository
+              currentTab="code"
+              owner={owner}
+              repository={repository}
+            />
+          ),
           main: <div>Main</div>,
           sidebar: <div>side bar</div>,
         })}

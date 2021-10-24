@@ -12,7 +12,7 @@ import {
   SearchUrlParamsType,
 } from "../../utils/github/searchRepos";
 import AppProfileLayout from "../AppProfileLayout/AppProfileLayout";
-import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
+import AppProfileNavTab from "../AppNavBarProfile/AppNavBarProfile";
 import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppOrganizationProfileInfos from "../AppOrganizationProfileInfos/AppOrganizationProfileInfos";

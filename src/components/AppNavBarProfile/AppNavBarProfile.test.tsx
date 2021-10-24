@@ -1,6 +1,6 @@
 import { render, within } from "@testing-library/react";
 
-import AppProfileNavTab from "./AppProfileNavTab";
+import AppNavBarProfile from "./AppNavBarProfile";
 
 const data = {
   organization: [
@@ -13,10 +13,10 @@ const data = {
   ],
 };
 
-describe("components/AppProfileNavTab", () => {
+describe("components/AppNavBarProfile", () => {
   it("[organization] should show correct links", () => {
     const { container } = render(
-      <AppProfileNavTab
+      <AppNavBarProfile
         owner="microsoft"
         currentTab="default"
         mode="organization"
@@ -31,7 +31,7 @@ describe("components/AppProfileNavTab", () => {
   });
   it("[user] should show correct links", () => {
     const { container } = render(
-      <AppProfileNavTab owner="topheman" currentTab="default" mode="user" />
+      <AppNavBarProfile owner="topheman" currentTab="default" mode="user" />
     );
     data.user.forEach(({ label, link }) => {
       const { getByText } = within(
@@ -42,7 +42,7 @@ describe("components/AppProfileNavTab", () => {
   });
   it("should handle current tab default", () => {
     const { container } = render(
-      <AppProfileNavTab owner="topheman" currentTab="default" mode="user" />
+      <AppNavBarProfile owner="topheman" currentTab="default" mode="user" />
     );
     const { getByText } = within(
       container.querySelector(`.border-brand-primary`) as HTMLElement
@@ -51,7 +51,7 @@ describe("components/AppProfileNavTab", () => {
   });
   it("should handle current tab repositories", () => {
     const { container } = render(
-      <AppProfileNavTab
+      <AppNavBarProfile
         owner="topheman"
         currentTab="repositories"
         mode="user"
