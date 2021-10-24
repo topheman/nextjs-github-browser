@@ -21,4 +21,9 @@ Base.parameters = {
 };
 Base.args = {
   profileReadme: makeProfileReadMe(),
+  profileReadmeInfos: {
+    defaultBranchName: "master",
+    login: "topheman",
+    mode: "user",
+  },
 };
