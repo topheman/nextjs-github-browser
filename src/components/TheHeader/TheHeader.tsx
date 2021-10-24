@@ -14,7 +14,7 @@ type LinkOptionsType = {
 
 function getLinks(
   owner?: string | string[],
-  repository?: string | string[]
+  repositoryName?: string | string[]
 ): [string, string, LinkOptionsType][] {
   return [
     ["/", "Home", {}],
@@ -37,7 +37,7 @@ function getLinks(
         ]
       : null,
     ["/about", "About", {}],
-    ...(owner && repository
+    ...(owner && repositoryName
       ? [
           "/tree/master",
           "/tree/gh-pages",
@@ -48,14 +48,14 @@ function getLinks(
           "/blob/feature/some-feature?path=src/index.js",
           "/blob/feature/some-feature/with-multiples-slashes?path=src/index.js",
           "/commit/c4dce4801eafc37e7849f800ae899c12c13485c1",
-        ].map((url) => [`/${owner}/${repository}${url}`, url, {}])
+        ].map((url) => [`/${owner}/${repositoryName}${url}`, url, {}])
       : []),
   ].filter(Boolean);
 }
 
 export default function TheHeader(): JSX.Element {
   const router = useRouter();
-  const { owner, repository } = router.query;
+  const { owner, repositoryName } = router.query;
   const [showDrawer, setShowDrawer] = useState(false);
   const open = () => setShowDrawer(true);
   const close = () => setShowDrawer(false);
@@ -66,7 +66,7 @@ export default function TheHeader(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const links = getLinks(owner, repository);
+  const links = getLinks(owner, repositoryName);
   return (
     <>
       <header className="h-12 bg-brand-primary shadow-lg">

@@ -16,29 +16,29 @@ import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarR
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  const { owner, repository } = parseQuery(context.query);
+  const { owner, repositoryName } = parseQuery(context.query);
   const apolloClient = initializeApollo();
   await apolloClient.query<GetRepositoryInfosOverviewQuery>({
     query: GetRepositoryInfosOverviewDocument,
-    variables: getRepositoryVariables({ owner, repository }),
+    variables: getRepositoryVariables({ owner, repositoryName }),
   });
   return addApolloState(apolloClient, {
     props: {
       owner,
-      repository,
+      repositoryName,
     },
   });
 };
 
 export default function PageRepository({
   owner,
-  repository,
+  repositoryName,
 }: {
   owner: string;
-  repository: string;
+  repositoryName: string;
 }): JSX.Element | null {
   const repositoryResult = useGetRepositoryInfosOverviewQuery({
-    variables: getRepositoryVariables({ owner, repository }),
+    variables: getRepositoryVariables({ owner, repositoryName }),
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
@@ -49,7 +49,7 @@ export default function PageRepository({
             <AppNavBarRepository
               currentTab="code"
               owner={owner}
-              repository={repository}
+              repositoryName={repositoryName}
             />
           ),
           main: <div>Main</div>,

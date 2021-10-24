@@ -9,13 +9,13 @@ import AppNavBar, { LinksDataType } from "../AppNavBar/AppNavBar";
 
 export type AppProfileNavTabProps = {
   owner: string;
-  repository: string;
+  repositoryName: string;
   currentTab: "code" | "issues" | "pull-requests";
 };
 
 export default function AppProfileNavTab({
   owner,
-  repository,
+  repositoryName,
   currentTab,
   ...ownProps
 }: AppProfileNavTabProps): JSX.Element | null {
@@ -25,7 +25,7 @@ export default function AppProfileNavTab({
       icon: CodeIcon,
       tab: "code",
       href: {
-        pathname: `/${owner}/${repository}`,
+        pathname: `/${owner}/${repositoryName}`,
       },
     },
     {
@@ -33,7 +33,7 @@ export default function AppProfileNavTab({
       tab: "issues",
       icon: IssueOpenedIcon,
       href: {
-        pathname: `/${owner}/${repository}/issues`,
+        pathname: `/${owner}/${repositoryName}/issues`,
       },
       disabled: true,
     },
@@ -42,7 +42,7 @@ export default function AppProfileNavTab({
       tab: "pull-requests",
       icon: GitPullRequestIcon,
       href: {
-        pathname: `/${owner}/${repository}/pulls`,
+        pathname: `/${owner}/${repositoryName}/pulls`,
       },
       disabled: true,
     },

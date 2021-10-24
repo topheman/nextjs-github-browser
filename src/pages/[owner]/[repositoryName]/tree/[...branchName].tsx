@@ -1,19 +1,18 @@
 import { useRouter } from "next/router";
 
-export default function PageRepositoryBlob(): JSX.Element {
+export default function PageRepositoryTree(): JSX.Element {
   const router = useRouter();
-  const { owner, repository, branchName, path } = router.query;
+  const { owner, repositoryName, branchName } = router.query;
   const resolvedBranchName = Array.isArray(branchName)
     ? branchName.join("/")
     : branchName;
   return (
     <>
-      <h1>Blob</h1>
+      <h1>Tree</h1>
       <h2>
-        Owner: "{owner}" / Repository: "{repository}"" / branchName: "
+        Owner: "{owner}" / Repository: "{repositoryName}"" / branchName: "
         {resolvedBranchName}"
       </h2>
-      <p>path: {path}</p>
     </>
   );
 }

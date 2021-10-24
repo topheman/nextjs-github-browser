@@ -9,15 +9,15 @@ export const parseQuery = (
   query: ParsedUrlQuery
 ): {
   owner: string;
-  repository: string;
+  repositoryName: string;
   branchName?: string;
   commitId?: string;
   path?: string;
 } => {
-  const { owner, repository, branchName, commitId, path } = query;
+  const { owner, repositoryName, branchName, commitId, path } = query;
   return {
     owner: typeof owner === "string" ? owner : "",
-    repository: typeof repository === "string" ? repository : "",
+    repositoryName: typeof repositoryName === "string" ? repositoryName : "",
     branchName: typeof branchName === "string" ? branchName : undefined,
     commitId: typeof commitId === "string" ? commitId : undefined,
     path: typeof path === "string" ? path : undefined,
@@ -26,13 +26,13 @@ export const parseQuery = (
 
 export function getRepositoryVariables({
   owner,
-  repository,
+  repositoryName,
   branchName,
   commitId,
   path,
 }: {
   owner: string;
-  repository: string;
+  repositoryName: string;
   branchName?: string;
   commitId?: string;
   path?: string;
@@ -45,7 +45,7 @@ export function getRepositoryVariables({
 } {
   return {
     owner,
-    name: repository,
+    name: repositoryName,
     branch: branchName ?? "HEAD",
     branchPath: `${branchName ?? "HEAD"}:${path || ""}`,
     commit: commitId,
