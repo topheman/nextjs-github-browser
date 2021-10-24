@@ -1,5 +1,5 @@
 /** From https://github.com/remarkjs/react-markdown/blob/main/lib/uri-transformer.js */
-import { profileReadmeBaseUrl } from "../../utils/github/searchRepos";
+import { profileReadmeBaseUrl } from "../../utils/github";
 
 const protocols = ["http", "https", "mailto", "tel"];
 

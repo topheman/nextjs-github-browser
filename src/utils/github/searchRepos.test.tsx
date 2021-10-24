@@ -4,7 +4,6 @@ import {
   makeGraphqlSearchQuery,
   getPaginationInfos,
   getSearchFieldSummaryInfos,
-  profileReadmeBaseUrl,
 } from "./searchRepos";
 
 // eslint-disable-next-line global-require
@@ -121,18 +120,6 @@ describe("utils/github", () => {
       const result = getSearchFieldSummaryInfos("type");
       expect(Object.keys(result)).toEqual(
         expect.arrayContaining(["", "source", "fork", "archived", "mirror"])
-      );
-    });
-  });
-  describe("profileReadmeBaseUrl", () => {
-    it("check for organization", () => {
-      expect(profileReadmeBaseUrl("microsoft", "main", "organization")).toBe(
-        "https://github.com/microsoft/.github/raw/main"
-      );
-    });
-    it("check for user", () => {
-      expect(profileReadmeBaseUrl("topheman", "master", "user")).toBe(
-        "https://github.com/topheman/topheman/raw/master"
       );
     });
   });
