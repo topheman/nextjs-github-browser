@@ -42,7 +42,7 @@ export default function PageRepository({
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
-      <AppProfileLayout reverse>
+      <AppProfileLayout>
         {() => ({
           topNav: <div>TOP NAV</div>,
           nav: (
