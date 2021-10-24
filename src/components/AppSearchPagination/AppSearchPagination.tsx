@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import { decodeBase64 } from "../../utils/common";
-import { PaginationParamsType } from "../../utils/github";
+import { PaginationParamsType } from "../../utils/github/searchRepos";
 import { PageInfo } from "../../libs/graphql";
 import AppLoadingSpinner from "../AppLoadingSpinner/AppLoadingSpinner";
 

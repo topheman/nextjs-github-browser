@@ -2,7 +2,7 @@ import React from "react";
 import { Story, Meta } from "@storybook/react";
 
 import AppSearchSummary, { AppSearchSummaryProps } from "./AppSearchSummary";
-import { getSearchFieldOptions } from "../../utils/github";
+import { getSearchFieldOptions } from "../../utils/github/searchRepos";
 
 export default {
   title: "AppSearchSummary",

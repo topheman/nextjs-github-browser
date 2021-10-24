@@ -1,7 +1,10 @@
 import clsx from "clsx";
 
 import AppSelectMenu from "../AppSelectMenu/AppSelectMenu";
-import { getSearchFieldOptions, SearchParamsType } from "../../utils/github";
+import {
+  getSearchFieldOptions,
+  SearchParamsType,
+} from "../../utils/github/searchRepos";
 import { SetReducerStateType } from "../../utils/useSearchRepos";
 
 export type AppSearchBarRepositoriesProps = {

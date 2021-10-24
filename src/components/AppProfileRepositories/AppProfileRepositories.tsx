@@ -5,7 +5,7 @@ import AppSearchBarRepositories from "../AppSearchBarRepositories/AppSearchBarRe
 import AppSearchPagination from "../AppSearchPagination/AppSearchPagination";
 import AppRepositoryListItem from "../AppRepositoryListItem/AppRepositoryListItem";
 import AppSearchSummary from "../AppSearchSummary/AppSearchSummary";
-import { extractSearchUrlParams } from "../../utils/github";
+import { extractSearchUrlParams } from "../../utils/github/searchRepos";
 import useSearchRepos from "../../utils/useSearchRepos";
 
 export type AppProfileRepositoriesProps = {

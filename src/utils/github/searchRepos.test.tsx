@@ -1,11 +1,11 @@
-import { encodeBase64 } from "./common";
+import { encodeBase64 } from "../common";
 import {
   extractSearchUrlParams,
   makeGraphqlSearchQuery,
   getPaginationInfos,
   getSearchFieldSummaryInfos,
   profileReadmeBaseUrl,
-} from "./github";
+} from "./searchRepos";
 
 // eslint-disable-next-line global-require
 jest.mock("next/router", () => require("next-router-mock"));

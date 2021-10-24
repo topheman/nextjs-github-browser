@@ -3,7 +3,7 @@ import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
 import type { ParseQuery } from "../../../types";
 import { initializeApollo, addApolloState } from "../../../libs/apollo-client";
-import { getSearchRepoGraphqlVariables } from "../../../utils/github";
+import { getSearchRepoGraphqlVariables } from "../../../utils/github/searchRepos";
 import {
   GetOrganizationWithRepositoriesQuery,
   GetOrganizationWithRepositoriesDocument,

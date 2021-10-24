@@ -2,7 +2,10 @@ import { XIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 
 import { PageInfo } from "../../libs/graphql";
-import { getSearchFieldSummaryInfos, decodeCursor } from "../../utils/github";
+import {
+  getSearchFieldSummaryInfos,
+  decodeCursor,
+} from "../../utils/github/searchRepos";
 
 export type AppSearchSummaryProps = {
   count: number;

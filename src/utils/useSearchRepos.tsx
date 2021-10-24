@@ -18,7 +18,7 @@ import {
   SearchUrlParamsType,
   SearchParamsType,
   PaginationParamsType,
-} from "./github";
+} from "./github/searchRepos";
 
 type ParsedUrlQueryInput = Record<
   string,

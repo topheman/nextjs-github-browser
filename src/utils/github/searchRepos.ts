@@ -1,4 +1,4 @@
-import { encodeBase64, decodeBase64 } from "./common";
+import { encodeBase64, decodeBase64 } from "../common";
 
 export const DEFAULT_REPOS_PER_PAGE = 30;
 

@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import { Story, Meta } from "@storybook/react";
 
-import { SearchParamsType } from "../../utils/github";
+import { SearchParamsType } from "../../utils/github/searchRepos";
 import AppSearchBarRepositories, {
   AppSearchBarRepositoriesProps,
 } from "./AppSearchBarRepositories";

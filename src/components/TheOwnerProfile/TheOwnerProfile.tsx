@@ -10,7 +10,7 @@ import { isUser, isOrganization } from "../../utils/type-guards";
 import {
   getSearchRepoGraphqlVariables,
   SearchUrlParamsType,
-} from "../../utils/github";
+} from "../../utils/github/searchRepos";
 import AppProfileLayout from "../AppProfileLayout/AppProfileLayout";
 import AppProfileNavTab from "../AppProfileNavTab/AppProfileNavTab";
 import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
