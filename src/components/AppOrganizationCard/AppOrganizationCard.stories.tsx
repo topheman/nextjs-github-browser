@@ -1,7 +1,7 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import { makeOrganization } from "../../msw/helpers";
+import { makeOrganization } from "../../tests/helpers";
 import AppOrganizationCard, {
   AppOrganizationCardProps,
 } from "./AppOrganizationCard";

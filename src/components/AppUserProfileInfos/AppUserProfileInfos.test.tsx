@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react";
 
-import { makeUser } from "../../msw/helpers";
+import { makeUser } from "../../tests/helpers";
 import AppUserProfileInfos from "./AppUserProfileInfos";
 
 describe("components/AppUserProfileInfos", () => {

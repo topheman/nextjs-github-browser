@@ -1,7 +1,7 @@
 import React from "react";
 import { Story, Meta } from "@storybook/react";
 
-import { makeProfileReadMe } from "../../msw/helpers";
+import { makeProfileReadMe } from "../../tests/helpers";
 import BaseMarkdownDisplay, {
   BaseMarkdownDisplayProps,
 } from "./BaseMarkdownDisplay";
