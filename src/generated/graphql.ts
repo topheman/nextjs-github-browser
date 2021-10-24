@@ -19974,9 +19974,32 @@ export type GetRepositoryInfosBlobQuery = (
     & { file?: Maybe<(
       { __typename?: 'Blob' }
       & Pick<Blob, 'byteSize' | 'text'>
-    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, lastCommit?: Maybe<(
+    ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, gitInfos?: Maybe<(
       { __typename?: 'Ref' }
-      & { target?: Maybe<{ __typename?: 'Blob' } | (
+      & { tag?: Maybe<{ __typename?: 'Blob' } | { __typename?: 'Commit' } | (
+        { __typename?: 'Tag' }
+        & Pick<Tag, 'name'>
+        & { target: { __typename?: 'Blob' } | (
+          { __typename?: 'Commit' }
+          & { history: (
+            { __typename?: 'CommitHistoryConnection' }
+            & { edges?: Maybe<Array<Maybe<(
+              { __typename?: 'CommitEdge' }
+              & { node?: Maybe<(
+                { __typename?: 'Commit' }
+                & Pick<Commit, 'oid' | 'messageHeadline' | 'committedDate'>
+                & { author?: Maybe<(
+                  { __typename?: 'GitActor' }
+                  & { user?: Maybe<(
+                    { __typename?: 'User' }
+                    & Pick<User, 'login' | 'avatarUrl'>
+                  )> }
+                )> }
+              )> }
+            )>>> }
+          ) }
+        ) | { __typename?: 'Tag' } | { __typename?: 'Tree' } }
+      ) | { __typename?: 'Tree' }>, branch?: Maybe<{ __typename?: 'Blob' } | (
         { __typename?: 'Commit' }
         & { history: (
           { __typename?: 'CommitHistoryConnection' }
@@ -20477,8 +20500,32 @@ export const GetRepositoryInfosBlobDocument = gql`
         text
       }
     }
-    lastCommit: ref(qualifiedName: $branch) {
-      target {
+    gitInfos: ref(qualifiedName: $branch) {
+      tag: target {
+        ... on Tag {
+          name
+          target {
+            ... on Commit {
+              history(first: 1, path: $path) {
+                edges {
+                  node {
+                    oid
+                    messageHeadline
+                    committedDate
+                    author {
+                      user {
+                        login
+                        avatarUrl
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      branch: target {
         ... on Commit {
           history(first: 1, path: $path) {
             edges {
