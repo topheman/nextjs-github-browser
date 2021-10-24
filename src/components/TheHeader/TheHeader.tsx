@@ -12,31 +12,50 @@ type LinkOptionsType = {
   target?: "_blank";
 };
 
-const links: [string, string, LinkOptionsType][] = [
-  ["/", "Home", {}],
-  ["/topheman", "/topheman", {}],
-  ["/topheman?tab=repositories", "/topheman?tab=repositories", {}],
-  ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser", {}],
-  ["/warpdesign", "/warpdesign", {}],
-  ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories", {}],
-  ["/warpdesign/react-explorer", "/warpdesign/react-explorer", {}],
-  ["/facebook", "/facebook", {}],
-  ["/facebook/react", "/facebook/react", {}],
-  ["/twitter", "/twitter", {}],
-  ["/microsoft", "/microsoft", {}],
-  ["/a", "/a (no profile readme)", {}],
-  process.env.NODE_ENV === "production"
-    ? [
-        "/explore/storybook/index.html",
-        "explore storybook",
-        { target: "_blank" },
-      ]
-    : null,
-  ["/about", "About", {}],
-].filter(Boolean);
+function getLinks(
+  owner?: string | string[],
+  repository?: string | string[]
+): [string, string, LinkOptionsType][] {
+  return [
+    ["/", "Home", {}],
+    ["/topheman", "/topheman", {}],
+    ["/topheman?tab=repositories", "/topheman?tab=repositories", {}],
+    ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser", {}],
+    ["/warpdesign", "/warpdesign", {}],
+    ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories", {}],
+    ["/warpdesign/react-explorer", "/warpdesign/react-explorer", {}],
+    ["/facebook", "/facebook", {}],
+    ["/facebook/react", "/facebook/react", {}],
+    ["/twitter", "/twitter", {}],
+    ["/microsoft", "/microsoft", {}],
+    ["/a", "/a (no profile readme)", {}],
+    process.env.NODE_ENV === "production"
+      ? [
+          "/explore/storybook/index.html",
+          "explore storybook",
+          { target: "_blank" },
+        ]
+      : null,
+    ["/about", "About", {}],
+    ...(owner && repository
+      ? [
+          "/tree/master",
+          "/tree/gh-pages",
+          "/tree/feature/some-feature",
+          "/tree/feature/some-feature/with-multiples-slashes",
+          "/blob/master?path=src/index.js",
+          "/blob/gh-pages?path=src/index.js",
+          "/blob/feature/some-feature?path=src/index.js",
+          "/blob/feature/some-feature/with-multiples-slashes?path=src/index.js",
+          "/commit/c4dce4801eafc37e7849f800ae899c12c13485c1",
+        ].map((url) => [`/${owner}/${repository}${url}`, url, {}])
+      : []),
+  ].filter(Boolean);
+}
 
 export default function TheHeader(): JSX.Element {
   const router = useRouter();
+  const { owner, repository } = router.query;
   const [showDrawer, setShowDrawer] = useState(false);
   const open = () => setShowDrawer(true);
   const close = () => setShowDrawer(false);
@@ -47,6 +66,7 @@ export default function TheHeader(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const links = getLinks(owner, repository);
   return (
     <>
       <header className="h-12 bg-brand-primary shadow-lg">
@@ -85,7 +105,10 @@ export default function TheHeader(): JSX.Element {
               <CloseIcon className="inline-block w-6 h-6 text-center fill-current" />
             </button>
             {links.map(([href, title, options]) => (
-              <li key={href} className="list-none hover:text-secondary">
+              <li
+                key={href}
+                className="list-none hover:text-secondary break-words"
+              >
                 <Link href={href}>
                   <a {...options}>{title}</a>
                 </Link>
