@@ -1,62 +1,55 @@
-import { useRouter } from "next/router";
-import { gql, useQuery } from "@apollo/client";
-import type { GetServerSideProps } from "next";
+import type { GetServerSideProps, GetServerSidePropsResult } from "next";
 
+import {
+  parseQuery,
+  getRepositoryVariables,
+} from "../../utils/github/repository";
 import { initializeApollo, addApolloState } from "../../libs/apollo-client";
+import {
+  useGetRepositoryInfosOverviewQuery,
+  GetRepositoryInfosOverviewQuery,
+  GetRepositoryInfosOverviewDocument,
+} from "../../libs/graphql";
+import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout";
 
-const REPOSITORY_QUERY = gql`
-  query GetSpecificRepo($owner: String!, $repository: String!) {
-    repository(name: $repository, owner: $owner) {
-      primaryLanguage {
-        name
-      }
-      description
-      owner {
-        avatarUrl
-      }
-      forkCount
-      stargazerCount
-    }
-  }
-`;
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { owner, repository } = context.query;
-  const baseProps = {
-    graphQLVariables: {
+export const getServerSideProps: GetServerSideProps = async (
+  context
+): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
+  const { owner, repository } = parseQuery(context.query);
+  const apolloClient = initializeApollo();
+  await apolloClient.query<GetRepositoryInfosOverviewQuery>({
+    query: GetRepositoryInfosOverviewDocument,
+    variables: getRepositoryVariables({ owner, repository }),
+  });
+  return addApolloState(apolloClient, {
+    props: {
       owner,
       repository,
     },
-  };
-  const apolloClient = initializeApollo();
-  await apolloClient.query({
-    query: REPOSITORY_QUERY,
-    variables: baseProps.graphQLVariables,
-  });
-  return addApolloState(apolloClient, {
-    props: { ...baseProps },
   });
 };
 
 export default function PageRepository({
-  graphQLVariables,
+  owner,
+  repository,
 }: {
-  graphQLVariables: Record<string, string | number>;
-}): JSX.Element {
-  const repositoryResult = useQuery(REPOSITORY_QUERY, {
-    variables: graphQLVariables,
+  owner: string;
+  repository: string;
+}): JSX.Element | null {
+  const repositoryResult = useGetRepositoryInfosOverviewQuery({
+    variables: getRepositoryVariables({ owner, repository }),
   });
-  const router = useRouter();
-  const { owner, repository } = router.query;
-  return (
-    <>
-      <h1>
-        Owner: "{owner}" / Repository: "{repository}"
-      </h1>
-      <ul>
-        <li>{repositoryResult?.data?.repository.description}</li>
-        <li>{repositoryResult?.data?.repository.primaryLanguage.name}</li>
-      </ul>
-    </>
-  );
+  if (repositoryResult.data && repositoryResult.data.repository) {
+    return (
+      <AppProfileLayout>
+        {() => ({
+          topNav: <div>TOP NAV</div>,
+          nav: <div>nav bar</div>,
+          main: <div>Main</div>,
+          sidebar: <div>side bar</div>,
+        })}
+      </AppProfileLayout>
+    );
+  }
+  return null;
 }
