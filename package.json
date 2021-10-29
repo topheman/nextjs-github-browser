@@ -33,6 +33,7 @@
     "github-markdown-css": "^4.0.0",
     "graphql": "^15.5.0",
     "hash.js": "^1.1.7",
+    "human-readable-numbers": "^0.9.5",
     "human-time": "0.0.2",
     "next": "^11.1.0",
     "react": "^17.0.2",

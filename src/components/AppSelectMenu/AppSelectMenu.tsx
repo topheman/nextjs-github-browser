@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import { CheckIcon, TriangleDownIcon, XIcon } from "@primer/octicons-react";
+import { CheckIcon, XIcon } from "@primer/octicons-react";
 import clsx from "clsx";
+
+import BaseButton from "../BaseButton/BaseButton";
 
 type OptionType<T extends string | number> = { value: T; label: string };
 
@@ -55,18 +57,15 @@ export default function AppSelectMenu<T extends string | number>({
   return (
     <>
       <div {...props} className={clsx("sm:relative", className)}>
-        <button
+        <BaseButton
+          hasMenu
+          label={buttonLabel}
+          size="medium"
           ref={buttonRef}
-          type="button"
           onClick={toggle}
-          className={clsx(
-            "py-1 px-3 font-bold text-primary bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none",
-            className
-          )}
         >
           {buttonLabel}
-          <TriangleDownIcon />
-        </button>
+        </BaseButton>
         <div
           className={clsx(
             !open ? "hidden" : "",

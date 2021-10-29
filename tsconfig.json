@@ -22,6 +22,7 @@
   "include": [
     "next-env.d.ts",
     "lib.es5.d.ts",
+    "types.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "jest-setup.ts",
