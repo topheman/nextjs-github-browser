@@ -13,6 +13,8 @@ query GetRepositoryInfosOverview(
   repository(name: $name, owner: $owner) {
     description
     homepageUrl
+    stargazerCount
+    forkCount
     defaultBranchRef {
       name
     }

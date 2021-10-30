@@ -18,6 +18,6 @@ export const Base = Template.bind({});
 Base.args = {
   owner: "microsoft",
   repositoryName: "vscode",
-  starsCount: 123456,
-  forksCount: 20654,
+  stargazerCount: 123456,
+  forkCount: 20654,
 };

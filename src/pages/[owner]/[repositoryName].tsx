@@ -49,8 +49,8 @@ export default function PageRepository({
             <AppRepositoryHeader
               owner={owner}
               repositoryName={repositoryName}
-              starsCount={666}
-              forksCount={666}
+              stargazerCount={repositoryResult.data?.repository?.stargazerCount}
+              forkCount={repositoryResult.data?.repository?.forkCount}
             />
           ),
           nav: (

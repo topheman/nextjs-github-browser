@@ -6,15 +6,15 @@ import BaseButton from "../BaseButton/BaseButton";
 export type AppRepositoryHeaderProps = {
   owner: string;
   repositoryName: string;
-  starsCount: number;
-  forksCount: number;
+  stargazerCount?: number;
+  forkCount?: number;
 };
 
 export default function AppRepositoryHeader({
   owner,
   repositoryName,
-  starsCount,
-  forksCount,
+  stargazerCount,
+  forkCount,
 }: AppRepositoryHeaderProps): JSX.Element | null {
   return (
     <div className="flex">
@@ -42,7 +42,7 @@ export default function AppRepositoryHeader({
             size="small"
             badge={{
               href: `/${owner}/${repositoryName}/stargazers`,
-              label: starsCount,
+              label: stargazerCount || 0,
             }}
           >
             Star
@@ -54,10 +54,10 @@ export default function AppRepositoryHeader({
             size="small"
             badge={{
               href: `/${owner}/${repositoryName}/network/members`,
-              label: forksCount,
+              label: forkCount || 0,
             }}
           >
-            Star
+            Fork
           </BaseButton>
         </li>
       </ul>
