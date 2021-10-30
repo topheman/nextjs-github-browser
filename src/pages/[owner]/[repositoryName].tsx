@@ -61,7 +61,7 @@ export default function PageRepository({
             />
           ),
           main: <div>Main</div>,
-          sidebar: <div>side bar</div>,
+          sidebar: <div className="-mt-4 md:mt-12">side bar</div>,
         })}
       </AppProfileLayout>
     );

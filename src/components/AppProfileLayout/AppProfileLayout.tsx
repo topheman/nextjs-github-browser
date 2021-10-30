@@ -20,7 +20,9 @@ export default function AppProfileLayout({
   );
   return (
     <>
-      <div className={clsx("top-0 border-b border-light", !topNav && "sticky")}>
+      <div
+        className={clsx("top-0 md:border-b border-light", !topNav && "sticky")}
+      >
         {topNav ? (
           <div className="md:flex p-4 my-2 mr-auto ml-auto w-auto max-w-screen-xl">
             <div className="w-full">{topNav}</div>
