@@ -12,6 +12,7 @@ import {
 } from "../../libs/graphql";
 import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout";
 import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarRepository";
+import AppRepositoryHeader from "../../components/AppRepositoryHeader/AppRepositoryHeader";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
@@ -44,7 +45,14 @@ export default function PageRepository({
     return (
       <AppProfileLayout>
         {() => ({
-          topNav: <div>TOP NAV</div>,
+          topNav: (
+            <AppRepositoryHeader
+              owner={owner}
+              repositoryName={repositoryName}
+              starsCount={666}
+              forksCount={666}
+            />
+          ),
           nav: (
             <AppNavBarRepository
               currentTab="code"

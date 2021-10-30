@@ -8,7 +8,7 @@ export type BaseButtonProps = Omit<
   "size"
 > & {
   size: "small" | "medium";
-  hasMenu: boolean;
+  hasMenu?: boolean;
   badge?: {
     label: string | number;
     href: string;
