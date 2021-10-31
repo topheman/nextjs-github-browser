@@ -1,6 +1,8 @@
 body,
 body.default-mode {
   --color-bg-canvas: white;
+  --color-bg-canvas-inverted: #0d1117;
+  --color-text-white: white;
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
@@ -20,6 +22,8 @@ body.default-mode {
 }
 body.dark-mode {
   --color-bg-canvas: #0d1117;
+  --color-bg-canvas-inverted: white;
+  --color-text-white: #0d1117;
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;

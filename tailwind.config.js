@@ -26,13 +26,14 @@ module.exports = {
     textColor: {
       ...brandColors,
       "brand-primary": "var(--color-text-brand-primary)",
-      white: "white",
+      white: "var(--color-text-white)",
       primary: "var(--color-text-primary)",
       secondary: "var(--color-text-secondary)",
     },
     backgroundColor: {
       ...brandColors,
       canvas: "var(--color-bg-canvas)",
+      "canvas-inverted": "var(--color-bg-canvas-inverted)",
       primary: "var(--color-bg-primary)",
       "primary-active": "var(--color-bg-primary-active)",
       "primary-hover": "var(--color-bg-primary-hover)",
