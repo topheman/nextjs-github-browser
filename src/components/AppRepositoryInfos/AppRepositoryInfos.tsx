@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { LinkIcon, BookIcon, LawIcon, TagIcon } from "@primer/octicons-react";
+import { TagIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 
+import AppRepositoryInfosAbout from "../AppRepositoryInfosAbout/AppRepositoryInfosAbout";
 import { GetRepositoryInfosOverviewQuery } from "../../libs/graphql";
-import { formatUrl } from "../../utils/string";
 import BaseBadge from "../BaseBadge/BaseBadge";
 import { formatDate } from "../../utils/date";
 
@@ -12,7 +12,7 @@ export type AppRepositoryInfosProps = {
   className?: string;
 };
 
-export default function AppOrganizationProfileInfos({
+export default function AppRepositoryInfos({
   repository,
   className,
 }: AppRepositoryInfosProps): JSX.Element | null {
@@ -26,50 +26,11 @@ export default function AppOrganizationProfileInfos({
       className={clsx(className)}
     >
       <div className="flex flex-col">
-        <div className="md:pb-4">
-          <h2 className="hidden md:block mb-2 font-bold">About</h2>
-          <p className="mb-2">{repository.description}</p>
-          {repository.homepageUrl ? (
-            <div className="mb-1 md:mb-2">
-              <LinkIcon className="mr-2" />
-              <a
-                href={repository.homepageUrl}
-                title={repository.homepageUrl}
-                target="_blank"
-                className="font-bold text-brand-primary hover:underline"
-                rel="noreferrer noopener"
-              >
-                {formatUrl(repository.homepageUrl)}
-              </a>
-            </div>
-          ) : null}
-          <h3 className="sr-only">Topics</h3>
-          <h3 className="sr-only">Resources</h3>
-          {repository.readmeLowercase || repository.readmeUppercase ? (
-            <div className="mb-1 md:mb-2 text-secondary hover:text-brand-primary">
-              <Link href="#readme">
-                <a>
-                  <BookIcon className="mr-2" />
-                  Readme
-                </a>
-              </Link>
-            </div>
-          ) : null}
-          <h3 className="sr-only">License</h3>
-          {repository.licenseInfo ? (
-            <div className="mb-1 md:mb-2 text-secondary hover:text-brand-primary">
-              <Link
-                href={`/${repository.nameWithOwner}/blob/${repository.defaultBranchRef?.name}/LICENSE.txt`}
-              >
-                <a>
-                  <LawIcon className="mr-2" />
-                  {repository.licenseInfo.name}
-                </a>
-              </Link>
-            </div>
-          ) : null}
-        </div>
-        <div className="hidden md:block pt-4 border-t border-light">
+        <AppRepositoryInfosAbout
+          repository={repository}
+          className="hidden md:block"
+        />
+        <div className="pt-4 border-t border-light">
           <div>
             <h2 className="mb-2 font-bold">
               <Link href={`/${repository.nameWithOwner}/releases`}>

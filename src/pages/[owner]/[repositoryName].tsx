@@ -14,6 +14,7 @@ import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout
 import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarRepository";
 import AppRepositoryHeader from "../../components/AppRepositoryHeader/AppRepositoryHeader";
 import AppRepositoryInfos from "../../components/AppRepositoryInfos/AppRepositoryInfos";
+import AppRepositoryInfosAbout from "../../components/AppRepositoryInfosAbout/AppRepositoryInfosAbout";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
@@ -44,15 +45,23 @@ export default function PageRepository({
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
-      <AppProfileLayout>
+      <AppProfileLayout reverse>
         {() => ({
           topNav: (
-            <AppRepositoryHeader
-              owner={owner}
-              repositoryName={repositoryName}
-              stargazerCount={repositoryResult.data?.repository?.stargazerCount}
-              forkCount={repositoryResult.data?.repository?.forkCount}
-            />
+            <>
+              <AppRepositoryHeader
+                owner={owner}
+                repositoryName={repositoryName}
+                stargazerCount={
+                  repositoryResult.data?.repository?.stargazerCount
+                }
+                forkCount={repositoryResult.data?.repository?.forkCount}
+              />
+              <AppRepositoryInfosAbout
+                repository={repositoryResult.data?.repository}
+                className="md:hidden mt-4 md:mt-0"
+              />
+            </>
           ),
           nav: (
             <AppNavBarRepository
@@ -64,7 +73,7 @@ export default function PageRepository({
           main: <div>Main</div>,
           sidebar: (
             <AppRepositoryInfos
-              className="-mt-4 md:mt-12"
+              className=""
               repository={repositoryResult.data?.repository}
             />
           ),
