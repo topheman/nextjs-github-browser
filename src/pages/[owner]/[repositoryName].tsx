@@ -10,7 +10,7 @@ import {
   GetRepositoryInfosOverviewQuery,
   GetRepositoryInfosOverviewDocument,
 } from "../../libs/graphql";
-import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout";
+import AppMainLayout from "../../components/AppMainLayout/AppMainLayout";
 import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarRepository";
 import AppRepositoryHeader from "../../components/AppRepositoryHeader/AppRepositoryHeader";
 import AppRepositoryInfos from "../../components/AppRepositoryInfos/AppRepositoryInfos";
@@ -45,7 +45,7 @@ export default function PageRepository({
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
-      <AppProfileLayout reverse>
+      <AppMainLayout reverse>
         {() => ({
           topNav: (
             <>
@@ -78,7 +78,7 @@ export default function PageRepository({
             />
           ),
         })}
-      </AppProfileLayout>
+      </AppMainLayout>
     );
   }
   return null;

@@ -10,7 +10,7 @@ import {
   useGetOrganizationWithRepositoriesQuery,
   Organization,
 } from "../../../libs/graphql";
-import AppProfileLayout from "../../../components/AppProfileLayout/AppProfileLayout";
+import AppMainLayout from "../../../components/AppMainLayout/AppMainLayout";
 import AppProfileNavTab from "../../../components/AppNavBarProfile/AppNavBarProfile";
 import AppProfileRepositories from "../../../components/AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCardMini from "../../../components/AppOrganizationCardMini/AppOrganizationCardMini";
@@ -50,7 +50,7 @@ export default function PageOrganizationRepositories(): JSX.Element {
     },
   });
   return (
-    <AppProfileLayout>
+    <AppMainLayout>
       {() => ({
         topNav: result.data?.repositoryOwner ? (
           <AppOrganizationCardMini
@@ -67,6 +67,6 @@ export default function PageOrganizationRepositories(): JSX.Element {
         ),
         main: <AppProfileRepositories mode="organization" />,
       })}
-    </AppProfileLayout>
+    </AppMainLayout>
   );
 }

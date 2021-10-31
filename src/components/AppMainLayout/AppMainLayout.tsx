@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-export type AppProfileLayoutProps = {
+export type AppMainLayoutProps = {
   reverse?: boolean;
   children: () => {
     nav: JSX.Element | null;
@@ -10,10 +10,10 @@ export type AppProfileLayoutProps = {
   };
 };
 
-export default function AppProfileLayout({
+export default function AppMainLayout({
   reverse = false,
   children,
-}: AppProfileLayoutProps): JSX.Element | null {
+}: AppMainLayoutProps): JSX.Element | null {
   const { nav, main, sidebar, topNav } = children();
   const navbar = (
     <div className="md:hidden px-3 border-b border-light">{nav}</div>

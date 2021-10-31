@@ -11,7 +11,7 @@ import {
   getSearchRepoGraphqlVariables,
   SearchUrlParamsType,
 } from "../../utils/github/searchRepos";
-import AppProfileLayout from "../AppProfileLayout/AppProfileLayout";
+import AppMainLayout from "../AppMainLayout/AppMainLayout";
 import AppProfileNavTab from "../AppNavBarProfile/AppNavBarProfile";
 import AppProfileOverview from "../AppProfileOverview/AppProfileOverview";
 import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
@@ -61,7 +61,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerRepositoriesModeResult.data.repositoryOwner;
     return (
-      <AppProfileLayout>
+      <AppMainLayout>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -74,7 +74,7 @@ export default function TheOwnerProfile({
           sidebar: <AppUserProfileInfos user={user} />,
           main: <AppProfileRepositories mode="user" />,
         })}
-      </AppProfileLayout>
+      </AppMainLayout>
     );
   }
   if (
@@ -86,7 +86,7 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppProfileLayout>
+      <AppMainLayout>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -120,7 +120,7 @@ export default function TheOwnerProfile({
             />
           ),
         })}
-      </AppProfileLayout>
+      </AppMainLayout>
     );
   }
   if (
@@ -131,7 +131,7 @@ export default function TheOwnerProfile({
   ) {
     const organisation = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppProfileLayout reverse>
+      <AppMainLayout reverse>
         {() => ({
           nav: (
             <AppProfileNavTab
@@ -166,7 +166,7 @@ export default function TheOwnerProfile({
           ),
           topNav: <AppOrganizationCard organisation={organisation} />,
         })}
-      </AppProfileLayout>
+      </AppMainLayout>
     );
   }
   return null;
