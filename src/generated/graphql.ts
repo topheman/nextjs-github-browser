@@ -20095,6 +20095,10 @@ export type GetRepositoryInfosOverviewQuery = (
         & { node?: Maybe<(
           { __typename?: 'Release' }
           & Pick<Release, 'name' | 'createdAt'>
+          & { tag?: Maybe<(
+            { __typename?: 'Ref' }
+            & Pick<Ref, 'name'>
+          )> }
         )> }
       )>>> }
     ), packages: (
@@ -20676,6 +20680,9 @@ export const GetRepositoryInfosOverviewDocument = gql`
         node {
           name
           createdAt
+          tag {
+            name
+          }
         }
       }
     }

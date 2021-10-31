@@ -60,6 +60,9 @@ query GetRepositoryInfosOverview(
         node {
           name
           createdAt
+          tag {
+            name
+          }
         }
       }
     }
