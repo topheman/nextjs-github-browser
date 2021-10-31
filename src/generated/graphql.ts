@@ -20053,7 +20053,7 @@ export type GetRepositoryInfosOverviewQuery = (
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repository?: Maybe<(
     { __typename?: 'Repository' }
-    & Pick<Repository, 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount'>
+    & Pick<Repository, 'nameWithOwner' | 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount'>
     & { defaultBranchRef?: Maybe<(
       { __typename?: 'Ref' }
       & Pick<Ref, 'name'>
@@ -20629,6 +20629,7 @@ export const GetRepositoryInfosOverviewDocument = gql`
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    nameWithOwner
     description
     homepageUrl
     stargazerCount

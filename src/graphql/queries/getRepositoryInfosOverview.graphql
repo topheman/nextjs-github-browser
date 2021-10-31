@@ -11,6 +11,7 @@ query GetRepositoryInfosOverview(
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    nameWithOwner
     description
     homepageUrl
     stargazerCount

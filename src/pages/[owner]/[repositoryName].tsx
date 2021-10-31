@@ -13,6 +13,7 @@ import {
 import AppProfileLayout from "../../components/AppProfileLayout/AppProfileLayout";
 import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarRepository";
 import AppRepositoryHeader from "../../components/AppRepositoryHeader/AppRepositoryHeader";
+import AppRepositoryInfos from "../../components/AppRepositoryInfos/AppRepositoryInfos";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
@@ -61,7 +62,12 @@ export default function PageRepository({
             />
           ),
           main: <div>Main</div>,
-          sidebar: <div className="-mt-4 md:mt-12">side bar</div>,
+          sidebar: (
+            <AppRepositoryInfos
+              className="-mt-4 md:mt-12"
+              repository={repositoryResult.data?.repository}
+            />
+          ),
         })}
       </AppProfileLayout>
     );
