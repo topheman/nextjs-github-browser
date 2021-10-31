@@ -30,7 +30,7 @@ export default function AppRepositoryInfos({
           repository={repository}
           className="hidden md:block"
         />
-        <div className="pt-4 border-t border-light">
+        <div className="py-4 border-t border-light">
           <div>
             <h2 className="mb-2 font-bold">
               <Link href={`/${repository.nameWithOwner}/releases`}>
@@ -85,6 +85,24 @@ export default function AppRepositoryInfos({
                 ) : null}
               </>
             ) : null}
+            {(!repository.releases || !repository.releases.totalCount) &&
+            repository.tags &&
+            repository.tags.totalCount > 0 ? (
+              <Link href={`/${repository.nameWithOwner}/releases`}>
+                <a className="text-sm hover:text-brand-primary">
+                  <TagIcon className="mr-1" />
+                  <span className="font-bold">
+                    {repository.tags.totalCount}
+                  </span>{" "}
+                  tags
+                </a>
+              </Link>
+            ) : null}
+          </div>
+        </div>
+        <div className="py-4 border-t border-light">
+          <div>
+            <h2 className="mb-2 font-bold">Languages</h2>
           </div>
         </div>
       </div>
