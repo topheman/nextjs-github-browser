@@ -33,7 +33,7 @@ export default function BaseTag({
   return (
     <LinkOrSpan
       className={clsx(
-        "inline-block px-2 mr-1 rounded-lg border",
+        "px-2 rounded-lg border",
         color === "brand-primary" && [
           "text-brand-primary border-brand-primary",
           href && "hover:text-white hover:bg-brand-primary",
