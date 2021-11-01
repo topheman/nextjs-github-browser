@@ -40,13 +40,7 @@ export default function BaseSelectMenu({
   return (
     <>
       <div {...props} className={clsx("sm:relative", className)}>
-        <BaseButton
-          hasMenu
-          label={buttonLabel}
-          size="medium"
-          ref={buttonRef}
-          onClick={toggle}
-        >
+        <BaseButton hasMenu label={buttonLabel} size="medium" onClick={toggle}>
           {buttonLabel}
         </BaseButton>
         {open ? (
