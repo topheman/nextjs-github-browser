@@ -101,6 +101,17 @@ describe("components/AppGitRefSwitch", () => {
     await fireEvent.click(getByRole("tab", { name: "Tags" }));
     expect(getByText("190 more tags ...")).toBeVisible();
   });
+  it("should accept path", async () => {
+    const { getGitRefButton, container } = makeBaseCase({
+      path: "src/common.js",
+    });
+    await fireEvent.click(getGitRefButton());
+    expect(
+      container.querySelector(
+        '[href="/topheman/npm-registry-browser/tree/master?path=src%2Fcommon.js"]'
+      )
+    ).toBeVisible();
+  });
 });
 
 export default {};

@@ -17,6 +17,7 @@ export type AppGitRefSwitchProps = {
   tags: string[];
   branchesTotalCount: number;
   tagsTotalCount: number;
+  path?: string;
 };
 
 const prefixMapping = {
@@ -32,6 +33,7 @@ export default function AppGitRefSwitch({
   tags,
   branchesTotalCount,
   tagsTotalCount,
+  path,
 }: AppGitRefSwitchProps): JSX.Element | null {
   const [currentTab, setCurrentTab] = useState<"branches" | "tags">("branches");
   const resolvedBranches = [
@@ -90,7 +92,16 @@ export default function AppGitRefSwitch({
                   "flex hover:bg-brand-secondary border-b border-light"
                 )}
               >
-                <Link href={`/${nameWithOwner}/tree/${ref}`}>
+                <Link
+                  href={{
+                    pathname: `/${nameWithOwner}/tree/${ref}`,
+                    query: path
+                      ? {
+                          path,
+                        }
+                      : null,
+                  }}
+                >
                   <a className="flex py-2 px-2 w-full" aria-checked={isChecked}>
                     {(isChecked && <CheckIcon className="w-[20px]" />) || (
                       <span className="inline-block w-[20px]" />
