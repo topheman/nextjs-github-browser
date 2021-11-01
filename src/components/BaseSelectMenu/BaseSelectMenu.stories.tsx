@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<BaseSelectMenuProps> = (args) => {
   return (
-    <div className="flex flex-row-reverse">
+    <div className="flex justify-center">
       <BaseSelectMenu {...args} />
     </div>
   );
@@ -20,6 +20,7 @@ export const Base = Template.bind({});
 Base.args = {
   buttonLabel: "Type",
   menuLabel: "Select Type",
+  alignMenu: "right",
   children: (
     <div>
       <ul className="p-2">
@@ -34,6 +35,7 @@ Base.args = {
 export const WithoutMenuLabel = Template.bind({});
 WithoutMenuLabel.args = {
   buttonLabel: "Type",
+  alignMenu: "right",
   children: (
     <div>
       <ul className="p-2">

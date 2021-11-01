@@ -8,6 +8,7 @@ export type BaseSelectMenuProps = {
   buttonLabel: string;
   menuLabel?: string;
   children: React.ReactChild | React.ReactChild[];
+  alignMenu: "left" | "right";
   className?: string;
 };
 
@@ -16,6 +17,7 @@ export default function BaseSelectMenu({
   menuLabel,
   className,
   children,
+  alignMenu,
   ...props
 }: BaseSelectMenuProps): JSX.Element | null {
   const buttonRef = useRef(null);
@@ -47,7 +49,8 @@ export default function BaseSelectMenu({
           <div
             className={clsx(
               !open ? "hidden" : "",
-              "overflow-hidden fixed sm:absolute top-1/2 sm:top-auto sm:right-0 left-1/2 sm:left-auto z-50 sm:mt-1 w-11/12 sm:w-72 text-lg sm:text-sm text-primary bg-primary rounded-md border border-light -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0"
+              "overflow-hidden fixed sm:absolute top-1/2 sm:top-auto sm:right-0 left-1/2 z-50 sm:mt-1 w-11/12 sm:w-72 text-lg sm:text-sm text-primary bg-primary rounded-md border border-light -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0",
+              alignMenu === "right" ? "sm:left-auto" : "sm:left-0"
             )}
           >
             {menuLabel ? (

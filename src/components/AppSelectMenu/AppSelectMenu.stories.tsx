@@ -8,14 +8,15 @@ export default {
   component: AppSelectMenu,
 } as Meta;
 
-const Template: Story<AppSelectMenuProps<string>> = () => {
+const Template: Story<AppSelectMenuProps<string>> = (...args) => {
   const [type, setType] = React.useState("");
   const updateType = (newType: string) => {
     setType(newType);
   };
   return (
-    <div className="flex flex-row-reverse">
+    <div className="flex justify-center">
       <AppSelectMenu
+        {...args[0]}
         value={type}
         onChange={updateType}
         options={[
@@ -25,13 +26,21 @@ const Template: Story<AppSelectMenuProps<string>> = () => {
           { value: "archived", label: "Archived" },
           { value: "mirror", label: "Mirrors" },
         ]}
-        buttonLabel="Type"
-        menuLabel="Select type"
       />
     </div>
   );
 };
 
 export const Base = Template.bind({});
-Base.parameters = {};
-Base.args = {};
+// Base.parameters = {};
+Base.args = {
+  alignMenu: "right",
+  menuLabel: "Select type",
+  buttonLabel: "Type",
+};
+Base.argTypes = {
+  alignMenu: {
+    options: ["right", "left"],
+    control: { type: "radio" },
+  },
+};

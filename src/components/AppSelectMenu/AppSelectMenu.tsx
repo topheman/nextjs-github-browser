@@ -12,6 +12,7 @@ export type AppSelectMenuProps<T extends string | number> = {
   menuLabel?: string;
   onChange: (newValue: T) => void;
   className?: string;
+  alignMenu: "left" | "right";
 };
 
 export default function AppSelectMenu<T extends string | number>({
@@ -21,6 +22,7 @@ export default function AppSelectMenu<T extends string | number>({
   menuLabel,
   onChange,
   className,
+  alignMenu,
   ...props
 }: AppSelectMenuProps<T>): JSX.Element {
   const internalOnChange = (newValue: T) => {
@@ -39,6 +41,7 @@ export default function AppSelectMenu<T extends string | number>({
       buttonLabel={buttonLabel}
       menuLabel={menuLabel}
       className={className}
+      alignMenu={alignMenu}
     >
       <ul className="mb-[-1px]">
         {options.map(({ label, value }) => (

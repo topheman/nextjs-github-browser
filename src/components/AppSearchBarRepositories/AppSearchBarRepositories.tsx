@@ -43,6 +43,7 @@ export default function AppSearchBarRepositories({
           buttonLabel="Type"
           menuLabel="Select type"
           className=""
+          alignMenu="right"
         />
         <AppSelectMenu
           value={sort || ""}
@@ -53,6 +54,7 @@ export default function AppSearchBarRepositories({
           buttonLabel="Sort"
           menuLabel="Select order"
           className="ml-1"
+          alignMenu="right"
         />
       </div>
     </div>
