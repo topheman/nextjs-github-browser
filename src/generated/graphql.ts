@@ -20056,7 +20056,10 @@ export type GetRepositoryInfosOverviewQuery = (
     & Pick<Repository, 'nameWithOwner' | 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount'>
     & { defaultBranchRef?: Maybe<(
       { __typename?: 'Ref' }
-      & Pick<Ref, 'name'>
+      & Pick<Ref, 'name' | 'prefix'>
+    )>, ref?: Maybe<(
+      { __typename?: 'Ref' }
+      & Pick<Ref, 'name' | 'prefix'>
     )>, branches?: Maybe<(
       { __typename?: 'RefConnection' }
       & Pick<RefConnection, 'totalCount'>
@@ -20640,6 +20643,11 @@ export const GetRepositoryInfosOverviewDocument = gql`
     forkCount
     defaultBranchRef {
       name
+      prefix
+    }
+    ref(qualifiedName: $branch) {
+      name
+      prefix
     }
     branches: refs(refPrefix: "refs/heads/", first: 0) {
       totalCount

@@ -18,6 +18,12 @@ query GetRepositoryInfosOverview(
     forkCount
     defaultBranchRef {
       name
+      prefix
+    }
+    # identified what kind of ref was passed
+    ref(qualifiedName: $branch) {
+      name
+      prefix
     }
     branches: refs(refPrefix: "refs/heads/", first: 0) {
       totalCount
