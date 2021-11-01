@@ -1,4 +1,5 @@
 module.exports = {
+  // next/babel presets needed to match transpilation (see explanation in .babelrc.ignored)
   mode: "development",
   resolve: {
     extensions: [".ts", ".js"],
@@ -12,7 +13,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-env"],
+              presets: ["next/babel", "@babel/preset-env"],
             },
           },
         ],
@@ -24,7 +25,7 @@ module.exports = {
           {
             loader: "babel-loader",
             options: {
-              presets: ["@babel/preset-env"],
+              presets: ["next/babel", "@babel/preset-env"],
             },
           },
         ],

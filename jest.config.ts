@@ -176,7 +176,10 @@ export default {
   // timers: "real",
 
   // A map from regular expressions to paths to transformers
-  // transform: undefined,
+  // https://github.com/Brooooooklyn/swc-node/tree/master/packages/jest
+  transform: {
+    '^.+\\.(t|j)sx?$': ['@swc-node/jest'],
+  },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
   // transformIgnorePatterns: [
