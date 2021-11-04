@@ -20053,7 +20053,7 @@ export type GetRepositoryInfosOverviewQuery = (
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repository?: Maybe<(
     { __typename?: 'Repository' }
-    & Pick<Repository, 'nameWithOwner' | 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount'>
+    & Pick<Repository, 'id' | 'nameWithOwner' | 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount'>
     & { defaultBranchRef?: Maybe<(
       { __typename?: 'Ref' }
       & Pick<Ref, 'name' | 'prefix'>
@@ -20063,9 +20063,23 @@ export type GetRepositoryInfosOverviewQuery = (
     )>, branches?: Maybe<(
       { __typename?: 'RefConnection' }
       & Pick<RefConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'RefEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      )>>> }
     )>, tags?: Maybe<(
       { __typename?: 'RefConnection' }
       & Pick<RefConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'RefEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      )>>> }
     )>, commits?: Maybe<{ __typename?: 'Blob' } | (
       { __typename?: 'Commit' }
       & { history: (
@@ -20636,6 +20650,7 @@ export const GetRepositoryInfosOverviewDocument = gql`
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    id
     nameWithOwner
     description
     homepageUrl
@@ -20649,11 +20664,21 @@ export const GetRepositoryInfosOverviewDocument = gql`
       name
       prefix
     }
-    branches: refs(refPrefix: "refs/heads/", first: 0) {
+    branches: refs(refPrefix: "refs/heads/", first: 10, direction: DESC) {
       totalCount
+      edges {
+        node {
+          name
+        }
+      }
     }
-    tags: refs(refPrefix: "refs/tags/", first: 0) {
+    tags: refs(refPrefix: "refs/tags/", first: 10, direction: DESC) {
       totalCount
+      edges {
+        node {
+          name
+        }
+      }
     }
     commits: object(expression: $branch) {
       ... on Commit {

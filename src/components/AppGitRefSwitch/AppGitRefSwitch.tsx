@@ -11,6 +11,8 @@ type GitRef = {
   prefix: "refs/heads/" | "refs/tags/";
 };
 
+// todo manage currentRef - put in correct list (branch/tags)
+
 export type AppGitRefSwitchProps = {
   nameWithOwner: string;
   currentRef: GitRef | null;

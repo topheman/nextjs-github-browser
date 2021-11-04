@@ -11,6 +11,7 @@ query GetRepositoryInfosOverview(
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    id
     nameWithOwner
     description
     homepageUrl
@@ -25,11 +26,21 @@ query GetRepositoryInfosOverview(
       name
       prefix
     }
-    branches: refs(refPrefix: "refs/heads/", first: 0) {
+    branches: refs(refPrefix: "refs/heads/", first: 10, direction: DESC) {
       totalCount
+      edges {
+        node {
+          name
+        }
+      }
     }
-    tags: refs(refPrefix: "refs/tags/", first: 0) {
+    tags: refs(refPrefix: "refs/tags/", first: 10, direction: DESC) {
       totalCount
+      edges {
+        node {
+          name
+        }
+      }
     }
     commits: object(expression: $branch) {
       ... on Commit {

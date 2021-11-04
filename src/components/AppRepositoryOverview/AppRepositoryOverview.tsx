@@ -27,8 +27,12 @@ export default function AppRepositoryOverview({
         defaultBranchName={repository.defaultBranchRef?.name as string}
         currentRef={repository.currentRef as AppGitRefSwitchProps["currentRef"]}
         nameWithOwner={repository.nameWithOwner}
-        branches={[]}
-        tags={[]}
+        branches={(repository.branches?.edges || [])
+          .map((edge) => edge?.node?.name)
+          .filter(Boolean)}
+        tags={(repository.tags?.edges || [])
+          .map((edge) => edge?.node?.name)
+          .filter(Boolean)}
         branchesTotalCount={repository.branches?.totalCount || 0}
         tagsTotalCount={repository.tags?.totalCount || 0}
       />
