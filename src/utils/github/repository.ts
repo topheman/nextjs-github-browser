@@ -18,7 +18,13 @@ export const parseQuery = (
   return {
     owner: typeof owner === "string" ? owner : "",
     repositoryName: typeof repositoryName === "string" ? repositoryName : "",
-    branchName: typeof branchName === "string" ? branchName : undefined,
+    branchName:
+      // eslint-disable-next-line no-nested-ternary
+      typeof branchName === "string"
+        ? branchName
+        : Array.isArray(branchName)
+        ? branchName.join("/")
+        : undefined,
     commitId: typeof commitId === "string" ? commitId : undefined,
     path: typeof path === "string" ? path : undefined,
   };

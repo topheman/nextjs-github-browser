@@ -14,34 +14,46 @@ import AppRepositoryInfos from "../components/AppRepositoryInfos/AppRepositoryIn
 import AppRepositoryInfosAbout from "../components/AppRepositoryInfosAbout/AppRepositoryInfosAbout";
 import AppRepositoryOverview from "../components/AppRepositoryOverview/AppRepositoryOverview";
 
-// todo add branchName conditionnally
-
 export const makeGetServerSideProps = (): GetServerSideProps => async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  const { owner, repositoryName } = parseQuery(context.query);
+  const { owner, repositoryName, branchName } = parseQuery(context.query);
   const apolloClient = initializeApollo();
   await apolloClient.query<GetRepositoryInfosOverviewQuery>({
     query: GetRepositoryInfosOverviewDocument,
     variables: getRepositoryVariables({ owner, repositoryName }),
   });
+  const resultProps: PageProps = {
+    owner,
+    repositoryName,
+  };
+  if (branchName) {
+    resultProps.branchName = branchName;
+  }
   return addApolloState(apolloClient, {
-    props: {
-      owner,
-      repositoryName,
-    },
+    props: resultProps,
   });
+};
+
+type PageProps = {
+  owner: string;
+  repositoryName: string;
+  // eslint-disable-next-line react/require-default-props
+  branchName?: string;
 };
 
 export const makePage = () => ({
   owner,
   repositoryName,
-}: {
-  owner: string;
-  repositoryName: string;
-}): JSX.Element | null => {
+  branchName,
+}: PageProps): JSX.Element | null => {
+  const variables = getRepositoryVariables({
+    owner,
+    repositoryName,
+    branchName,
+  });
   const repositoryResult = useGetRepositoryInfosOverviewQuery({
-    variables: getRepositoryVariables({ owner, repositoryName }),
+    variables,
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
