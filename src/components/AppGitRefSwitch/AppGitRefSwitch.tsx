@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React, { useState } from "react";
-import { CheckIcon } from "@primer/octicons-react";
+import { CheckIcon, TagIcon, GitBranchIcon } from "@primer/octicons-react";
 import Link from "next/link";
 
 import { truncate } from "../../utils/string";
@@ -63,6 +63,13 @@ export default function AppGitRefSwitch({
   return (
     <BaseSelectMenu
       alignMenu="left"
+      icon={
+        currentRef?.prefix === "refs/tags/" ? (
+          <TagIcon className="mr-1" />
+        ) : (
+          <GitBranchIcon className="mr-1" />
+        )
+      }
       buttonLabel={truncate(resolvedCurrentRef.name, 15)}
       menuLabel="Switch branches/tags"
     >

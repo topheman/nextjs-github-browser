@@ -9,6 +9,7 @@ export type BaseSelectMenuProps = {
   menuLabel?: string;
   children: React.ReactChild | React.ReactChild[];
   alignMenu: "left" | "right";
+  icon?: JSX.Element;
   className?: string;
 };
 
@@ -18,6 +19,7 @@ export default function BaseSelectMenu({
   className,
   children,
   alignMenu,
+  icon,
   ...props
 }: BaseSelectMenuProps): JSX.Element | null {
   const buttonRef = useRef(null);
@@ -42,7 +44,13 @@ export default function BaseSelectMenu({
   return (
     <>
       <div {...props} className={clsx("sm:relative", className)}>
-        <BaseButton hasMenu label={buttonLabel} size="medium" onClick={toggle}>
+        <BaseButton
+          hasMenu
+          label={buttonLabel}
+          size="medium"
+          onClick={toggle}
+          icon={icon}
+        >
           {buttonLabel}
         </BaseButton>
         {open ? (
