@@ -38,7 +38,7 @@ export default function AppRepositoryOverview({
         branchesTotalCount={repository.branches?.totalCount || 0}
         tagsTotalCount={repository.tags?.totalCount || 0}
       />
-      <div>
+      <div className="hidden md:block">
         <div className="flex py-1 ml-3">
           {(repository.branches?.totalCount || 0) > 0 ? (
             <Link href={`/${repository.nameWithOwner}/branches`}>
