@@ -20057,7 +20057,7 @@ export type GetRepositoryInfosOverviewQuery = (
     & { defaultBranchRef?: Maybe<(
       { __typename?: 'Ref' }
       & Pick<Ref, 'name' | 'prefix'>
-    )>, ref?: Maybe<(
+    )>, currentRef?: Maybe<(
       { __typename?: 'Ref' }
       & Pick<Ref, 'name' | 'prefix'>
     )>, branches?: Maybe<(
@@ -20645,7 +20645,7 @@ export const GetRepositoryInfosOverviewDocument = gql`
       name
       prefix
     }
-    ref(qualifiedName: $branch) {
+    currentRef: ref(qualifiedName: $branch) {
       name
       prefix
     }

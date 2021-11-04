@@ -6,12 +6,14 @@ import Link from "next/link";
 import BaseSelectMenu from "../BaseSelectMenu/BaseSelectMenu";
 import BaseTag from "../BaseTag/BaseTag";
 
+type GitRef = {
+  name: string;
+  prefix: "refs/heads/" | "refs/tags/";
+};
+
 export type AppGitRefSwitchProps = {
   nameWithOwner: string;
-  currentRef: {
-    name: string;
-    prefix: "refs/heads/" | "refs/tags/";
-  };
+  currentRef: GitRef | null;
   defaultBranchName: string;
   branches: string[];
   tags: string[];
@@ -37,12 +39,18 @@ export default function AppGitRefSwitch({
 }: AppGitRefSwitchProps): JSX.Element | null {
   const [currentTab, setCurrentTab] = useState<"branches" | "tags">("branches");
   const resolvedBranches = [
-    ...new Set([defaultBranchName, currentRef.name, ...branches]),
+    ...new Set(
+      [defaultBranchName, currentRef?.name, ...branches].filter(Boolean)
+    ),
   ];
+  const resolvedCurrentRef: GitRef = currentRef || {
+    name: defaultBranchName,
+    prefix: "refs/heads/",
+  };
   return (
     <BaseSelectMenu
       alignMenu="left"
-      buttonLabel={currentRef.name}
+      buttonLabel={resolvedCurrentRef.name}
       menuLabel="Switch branches/tags"
     >
       <div>
@@ -83,8 +91,8 @@ export default function AppGitRefSwitch({
         <ul>
           {(currentTab === "branches" ? resolvedBranches : tags).map((ref) => {
             const isChecked =
-              currentRef.prefix === prefixMapping[currentTab] &&
-              currentRef.name === ref;
+              resolvedCurrentRef.prefix === prefixMapping[currentTab] &&
+              resolvedCurrentRef.name === ref;
             return (
               <li
                 key={ref}

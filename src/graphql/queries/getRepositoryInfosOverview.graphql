@@ -21,7 +21,7 @@ query GetRepositoryInfosOverview(
       prefix
     }
     # identified what kind of ref was passed
-    ref(qualifiedName: $branch) {
+    currentRef: ref(qualifiedName: $branch) {
       name
       prefix
     }

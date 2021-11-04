@@ -25,7 +25,9 @@ const makeBaseCase = (
   return {
     ...result,
     getGitRefButton: () =>
-      result.getByRole("button", { name: baseProps.currentRef.name }),
+      result.getByRole("button", {
+        name: baseProps.currentRef?.name || baseProps.defaultBranchName,
+      }),
   };
 };
 
@@ -109,6 +111,17 @@ describe("components/AppGitRefSwitch", () => {
     expect(
       container.querySelector(
         '[href="/topheman/npm-registry-browser/tree/master?path=src%2Fcommon.js"]'
+      )
+    ).toBeVisible();
+  });
+  it("should accept null currentRef", async () => {
+    const { getGitRefButton, container } = makeBaseCase({
+      currentRef: null,
+    });
+    await fireEvent.click(getGitRefButton());
+    expect(
+      container.querySelector(
+        '[aria-checked="true"][href="/topheman/npm-registry-browser/tree/master"]'
       )
     ).toBeVisible();
   });

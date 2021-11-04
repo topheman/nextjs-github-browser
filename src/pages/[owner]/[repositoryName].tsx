@@ -15,6 +15,7 @@ import AppNavBarRepository from "../../components/AppNavBarRepository/AppNavBarR
 import AppRepositoryHeader from "../../components/AppRepositoryHeader/AppRepositoryHeader";
 import AppRepositoryInfos from "../../components/AppRepositoryInfos/AppRepositoryInfos";
 import AppRepositoryInfosAbout from "../../components/AppRepositoryInfosAbout/AppRepositoryInfosAbout";
+import AppRepositoryOverview from "../../components/AppRepositoryOverview/AppRepositoryOverview";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
@@ -70,7 +71,11 @@ export default function PageRepository({
               repositoryName={repositoryName}
             />
           ),
-          main: <div>Main</div>,
+          main: (
+            <AppRepositoryOverview
+              repository={repositoryResult.data?.repository}
+            />
+          ),
           sidebar: (
             <AppRepositoryInfos
               className=""
