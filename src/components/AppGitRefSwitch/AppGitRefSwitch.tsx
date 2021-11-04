@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CheckIcon } from "@primer/octicons-react";
 import Link from "next/link";
 
+import { truncate } from "../../utils/string";
 import BaseSelectMenu from "../BaseSelectMenu/BaseSelectMenu";
 import BaseTag from "../BaseTag/BaseTag";
 
@@ -62,7 +63,7 @@ export default function AppGitRefSwitch({
   return (
     <BaseSelectMenu
       alignMenu="left"
-      buttonLabel={resolvedCurrentRef.name}
+      buttonLabel={truncate(resolvedCurrentRef.name, 15)}
       menuLabel="Switch branches/tags"
     >
       <div>
@@ -124,13 +125,15 @@ export default function AppGitRefSwitch({
                     }}
                   >
                     <a
-                      className="flex py-2 px-2 w-full"
+                      className=" flex py-2 px-2 w-full"
                       aria-checked={isChecked}
                     >
                       {(isChecked && <CheckIcon className="w-[20px]" />) || (
                         <span className="inline-block w-[20px]" />
                       )}
-                      <span className="flex-1">{ref}</span>
+                      <span className="overflow-hidden flex-1 overflow-ellipsis whitespace-nowrap">
+                        {ref}
+                      </span>
                       {currentTab === "branches" &&
                       ref === defaultBranchName ? (
                         <BaseTag className="text-xs" color="secondary">
