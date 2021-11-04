@@ -42,10 +42,23 @@ query GetRepositoryInfosOverview(
         }
       }
     }
-    commits: object(expression: $ref) {
+    gitInfos: object(expression: $ref) {
       ... on Commit {
-        history {
+        history(first: 1) {
           totalCount
+          edges {
+            node {
+              oid
+              messageHeadline
+              committedDate
+              author {
+                user {
+                  login
+                  avatarUrl
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -20080,11 +20080,25 @@ export type GetRepositoryInfosOverviewQuery = (
           & Pick<Ref, 'name'>
         )> }
       )>>> }
-    )>, commits?: Maybe<{ __typename?: 'Blob' } | (
+    )>, gitInfos?: Maybe<{ __typename?: 'Blob' } | (
       { __typename?: 'Commit' }
       & { history: (
         { __typename?: 'CommitHistoryConnection' }
         & Pick<CommitHistoryConnection, 'totalCount'>
+        & { edges?: Maybe<Array<Maybe<(
+          { __typename?: 'CommitEdge' }
+          & { node?: Maybe<(
+            { __typename?: 'Commit' }
+            & Pick<Commit, 'oid' | 'messageHeadline' | 'committedDate'>
+            & { author?: Maybe<(
+              { __typename?: 'GitActor' }
+              & { user?: Maybe<(
+                { __typename?: 'User' }
+                & Pick<User, 'login' | 'avatarUrl'>
+              )> }
+            )> }
+          )> }
+        )>>> }
       ) }
     ) | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, repositoryTopics: (
       { __typename?: 'RepositoryTopicConnection' }
@@ -20680,10 +20694,23 @@ export const GetRepositoryInfosOverviewDocument = gql`
         }
       }
     }
-    commits: object(expression: $ref) {
+    gitInfos: object(expression: $ref) {
       ... on Commit {
-        history {
+        history(first: 1) {
           totalCount
+          edges {
+            node {
+              oid
+              messageHeadline
+              committedDate
+              author {
+                user {
+                  login
+                  avatarUrl
+                }
+              }
+            }
+          }
         }
       }
     }
