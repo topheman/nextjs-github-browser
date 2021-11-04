@@ -1,5 +1,5 @@
 fragment RepositoryFiles on Repository {
-  repositoryFiles: object(expression: $branchPath) {
+  repositoryFiles: object(expression: $refPath) {
     ... on Tree {
       entries {
         name

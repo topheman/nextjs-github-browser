@@ -45,15 +45,15 @@ export function getRepositoryVariables({
 }): {
   owner: string;
   name: string;
-  branch: string;
-  branchPath: string;
+  ref: string;
+  refPath: string;
   commit?: string;
 } {
   return {
     owner,
     name: repositoryName,
-    branch: branchName ?? "HEAD",
-    branchPath: `${branchName ?? "HEAD"}:${path || ""}`,
+    ref: branchName ?? "HEAD",
+    refPath: `${branchName ?? "HEAD"}:${path || ""}`,
     commit: commitId,
   };
 }

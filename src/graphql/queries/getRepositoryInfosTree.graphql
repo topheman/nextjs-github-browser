@@ -1,7 +1,7 @@
 query GetRepositoryInfosTree(
   $owner: String!
   $name: String!
-  $branchPath: String! # examples: HEAD:|master:|feature/foo:|master:src
+  $refPath: String! # examples: HEAD:|master:|feature/foo:|master:src
 ) {
   rateLimit {
     limit

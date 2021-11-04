@@ -1,8 +1,8 @@
 query GetRepositoryInfosBlob(
   $owner: String!
   $name: String!
-  $branch: String! # examples: HEAD|master|feature/foo
-  $branchPath: String! # examples: HEAD:common.js|master:index.js|feature/foo:src/foo.php|master:src
+  $ref: String! # examples: HEAD|master|feature/foo
+  $refPath: String! # examples: HEAD:common.js|master:index.js|feature/foo:src/foo.php|master:src
   $path: String! # examples: common.js|src/foo.js|style/toto.css
 ) {
   rateLimit {
@@ -12,14 +12,14 @@ query GetRepositoryInfosBlob(
     resetAt
   }
   repository(name: $name, owner: $owner) {
-    file: object(expression: $branchPath) {
+    file: object(expression: $refPath) {
       ... on Blob {
         byteSize
         text
       }
     }
-    gitInfos: ref(qualifiedName: $branch) {
-      # if $branch is a tag
+    gitInfos: ref(qualifiedName: $ref) {
+      # if $ref is a tag
       tag: target {
         ... on Tag {
           name
@@ -44,7 +44,7 @@ query GetRepositoryInfosBlob(
           }
         }
       }
-      # if $branch is a branch
+      # if $ref is a branch
       branch: target {
         ... on Commit {
           history(first: 1, path: $path) {

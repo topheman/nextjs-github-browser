@@ -19958,8 +19958,8 @@ export type GetProfileReadmeQuery = (
 export type GetRepositoryInfosBlobQueryVariables = Exact<{
   owner: Scalars['String'];
   name: Scalars['String'];
-  branch: Scalars['String'];
-  branchPath: Scalars['String'];
+  ref: Scalars['String'];
+  refPath: Scalars['String'];
   path: Scalars['String'];
 }>;
 
@@ -20041,8 +20041,8 @@ export type GetRepositoryInfosCommitQuery = (
 export type GetRepositoryInfosOverviewQueryVariables = Exact<{
   owner: Scalars['String'];
   name: Scalars['String'];
-  branch: Scalars['String'];
-  branchPath: Scalars['String'];
+  ref: Scalars['String'];
+  refPath: Scalars['String'];
 }>;
 
 
@@ -20146,7 +20146,7 @@ export type GetRepositoryInfosOverviewQuery = (
 export type GetRepositoryInfosTreeQueryVariables = Exact<{
   owner: Scalars['String'];
   name: Scalars['String'];
-  branchPath: Scalars['String'];
+  refPath: Scalars['String'];
 }>;
 
 
@@ -20299,7 +20299,7 @@ export const PinnedItemInfosFragmentDoc = gql`
     `;
 export const RepositoryFilesFragmentDoc = gql`
     fragment RepositoryFiles on Repository {
-  repositoryFiles: object(expression: $branchPath) {
+  repositoryFiles: object(expression: $refPath) {
     ... on Tree {
       entries {
         name
@@ -20507,7 +20507,7 @@ export type GetProfileReadmeQueryHookResult = ReturnType<typeof useGetProfileRea
 export type GetProfileReadmeLazyQueryHookResult = ReturnType<typeof useGetProfileReadmeLazyQuery>;
 export type GetProfileReadmeQueryResult = Apollo.QueryResult<GetProfileReadmeQuery, GetProfileReadmeQueryVariables>;
 export const GetRepositoryInfosBlobDocument = gql`
-    query GetRepositoryInfosBlob($owner: String!, $name: String!, $branch: String!, $branchPath: String!, $path: String!) {
+    query GetRepositoryInfosBlob($owner: String!, $name: String!, $ref: String!, $refPath: String!, $path: String!) {
   rateLimit {
     limit
     cost
@@ -20515,13 +20515,13 @@ export const GetRepositoryInfosBlobDocument = gql`
     resetAt
   }
   repository(name: $name, owner: $owner) {
-    file: object(expression: $branchPath) {
+    file: object(expression: $refPath) {
       ... on Blob {
         byteSize
         text
       }
     }
-    gitInfos: ref(qualifiedName: $branch) {
+    gitInfos: ref(qualifiedName: $ref) {
       tag: target {
         ... on Tag {
           name
@@ -20584,8 +20584,8 @@ export const GetRepositoryInfosBlobDocument = gql`
  *   variables: {
  *      owner: // value for 'owner'
  *      name: // value for 'name'
- *      branch: // value for 'branch'
- *      branchPath: // value for 'branchPath'
+ *      ref: // value for 'ref'
+ *      refPath: // value for 'refPath'
  *      path: // value for 'path'
  *   },
  * });
@@ -20642,7 +20642,7 @@ export type GetRepositoryInfosCommitQueryHookResult = ReturnType<typeof useGetRe
 export type GetRepositoryInfosCommitLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosCommitLazyQuery>;
 export type GetRepositoryInfosCommitQueryResult = Apollo.QueryResult<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>;
 export const GetRepositoryInfosOverviewDocument = gql`
-    query GetRepositoryInfosOverview($owner: String!, $name: String!, $branch: String!, $branchPath: String!) {
+    query GetRepositoryInfosOverview($owner: String!, $name: String!, $ref: String!, $refPath: String!) {
   rateLimit {
     limit
     cost
@@ -20660,7 +20660,7 @@ export const GetRepositoryInfosOverviewDocument = gql`
       name
       prefix
     }
-    currentRef: ref(qualifiedName: $branch) {
+    currentRef: ref(qualifiedName: $ref) {
       name
       prefix
     }
@@ -20680,7 +20680,7 @@ export const GetRepositoryInfosOverviewDocument = gql`
         }
       }
     }
-    commits: object(expression: $branch) {
+    commits: object(expression: $ref) {
       ... on Commit {
         history {
           totalCount
@@ -20756,8 +20756,8 @@ export const GetRepositoryInfosOverviewDocument = gql`
  *   variables: {
  *      owner: // value for 'owner'
  *      name: // value for 'name'
- *      branch: // value for 'branch'
- *      branchPath: // value for 'branchPath'
+ *      ref: // value for 'ref'
+ *      refPath: // value for 'refPath'
  *   },
  * });
  */
@@ -20773,7 +20773,7 @@ export type GetRepositoryInfosOverviewQueryHookResult = ReturnType<typeof useGet
 export type GetRepositoryInfosOverviewLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosOverviewLazyQuery>;
 export type GetRepositoryInfosOverviewQueryResult = Apollo.QueryResult<GetRepositoryInfosOverviewQuery, GetRepositoryInfosOverviewQueryVariables>;
 export const GetRepositoryInfosTreeDocument = gql`
-    query GetRepositoryInfosTree($owner: String!, $name: String!, $branchPath: String!) {
+    query GetRepositoryInfosTree($owner: String!, $name: String!, $refPath: String!) {
   rateLimit {
     limit
     cost
@@ -20800,7 +20800,7 @@ export const GetRepositoryInfosTreeDocument = gql`
  *   variables: {
  *      owner: // value for 'owner'
  *      name: // value for 'name'
- *      branchPath: // value for 'branchPath'
+ *      refPath: // value for 'refPath'
  *   },
  * });
  */

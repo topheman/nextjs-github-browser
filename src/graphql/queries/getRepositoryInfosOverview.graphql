@@ -1,8 +1,8 @@
 query GetRepositoryInfosOverview(
   $owner: String!
   $name: String!
-  $branch: String! # examples: HEAD|master|feature/foo
-  $branchPath: String! # examples: HEAD:|master:|feature/foo:|master:src
+  $ref: String! # examples: HEAD|master|feature/foo
+  $refPath: String! # examples: HEAD:|master:|feature/foo:|master:src
 ) {
   rateLimit {
     limit
@@ -22,7 +22,7 @@ query GetRepositoryInfosOverview(
       prefix
     }
     # identified what kind of ref was passed
-    currentRef: ref(qualifiedName: $branch) {
+    currentRef: ref(qualifiedName: $ref) {
       name
       prefix
     }
@@ -42,7 +42,7 @@ query GetRepositoryInfosOverview(
         }
       }
     }
-    commits: object(expression: $branch) {
+    commits: object(expression: $ref) {
       ... on Commit {
         history {
           totalCount
