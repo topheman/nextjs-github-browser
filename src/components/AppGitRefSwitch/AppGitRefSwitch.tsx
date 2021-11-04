@@ -11,8 +11,6 @@ type GitRef = {
   prefix: "refs/heads/" | "refs/tags/";
 };
 
-// todo manage currentRef - put in correct list (branch/tags)
-
 export type AppGitRefSwitchProps = {
   nameWithOwner: string;
   currentRef: GitRef | null;
@@ -42,7 +40,19 @@ export default function AppGitRefSwitch({
   const [currentTab, setCurrentTab] = useState<"branches" | "tags">("branches");
   const resolvedBranches = [
     ...new Set(
-      [defaultBranchName, currentRef?.name, ...branches].filter(Boolean)
+      [
+        defaultBranchName,
+        currentRef?.prefix === "refs/heads/" ? currentRef?.name : null,
+        ...branches,
+      ].filter(Boolean)
+    ),
+  ];
+  const resolvedTags = [
+    ...new Set(
+      [
+        currentRef?.prefix === "refs/tags/" ? currentRef?.name : null,
+        ...tags,
+      ].filter(Boolean)
     ),
   ];
   const resolvedCurrentRef: GitRef = currentRef || {
@@ -91,42 +101,48 @@ export default function AppGitRefSwitch({
           </button>
         </div>
         <ul>
-          {(currentTab === "branches" ? resolvedBranches : tags).map((ref) => {
-            const isChecked =
-              resolvedCurrentRef.prefix === prefixMapping[currentTab] &&
-              resolvedCurrentRef.name === ref;
-            return (
-              <li
-                key={ref}
-                className={clsx(
-                  "flex hover:bg-brand-secondary border-b border-light"
-                )}
-              >
-                <Link
-                  href={{
-                    pathname: `/${nameWithOwner}/tree/${ref}`,
-                    query: path
-                      ? {
-                          path,
-                        }
-                      : null,
-                  }}
+          {(currentTab === "branches" ? resolvedBranches : resolvedTags).map(
+            (ref) => {
+              const isChecked =
+                resolvedCurrentRef.prefix === prefixMapping[currentTab] &&
+                resolvedCurrentRef.name === ref;
+              return (
+                <li
+                  key={ref}
+                  className={clsx(
+                    "flex hover:bg-brand-secondary border-b border-light"
+                  )}
                 >
-                  <a className="flex py-2 px-2 w-full" aria-checked={isChecked}>
-                    {(isChecked && <CheckIcon className="w-[20px]" />) || (
-                      <span className="inline-block w-[20px]" />
-                    )}
-                    <span className="flex-1">{ref}</span>
-                    {currentTab === "branches" && ref === defaultBranchName ? (
-                      <BaseTag className="text-xs" color="secondary">
-                        default
-                      </BaseTag>
-                    ) : null}
-                  </a>
-                </Link>
-              </li>
-            );
-          })}
+                  <Link
+                    href={{
+                      pathname: `/${nameWithOwner}/tree/${ref}`,
+                      query: path
+                        ? {
+                            path,
+                          }
+                        : null,
+                    }}
+                  >
+                    <a
+                      className="flex py-2 px-2 w-full"
+                      aria-checked={isChecked}
+                    >
+                      {(isChecked && <CheckIcon className="w-[20px]" />) || (
+                        <span className="inline-block w-[20px]" />
+                      )}
+                      <span className="flex-1">{ref}</span>
+                      {currentTab === "branches" &&
+                      ref === defaultBranchName ? (
+                        <BaseTag className="text-xs" color="secondary">
+                          default
+                        </BaseTag>
+                      ) : null}
+                    </a>
+                  </Link>
+                </li>
+              );
+            }
+          )}
         </ul>
         {currentTab === "branches" &&
         branchesTotalCount > resolvedBranches.length ? (
@@ -134,9 +150,9 @@ export default function AppGitRefSwitch({
             {branchesTotalCount - resolvedBranches.length} more branches ...
           </div>
         ) : null}
-        {currentTab === "tags" && tagsTotalCount > tags.length ? (
+        {currentTab === "tags" && tagsTotalCount > resolvedTags.length ? (
           <div className="py-2 text-center">
-            {tagsTotalCount - tags.length} more tags ...
+            {tagsTotalCount - resolvedTags.length} more tags ...
           </div>
         ) : null}
       </div>
