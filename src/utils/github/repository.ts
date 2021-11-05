@@ -57,3 +57,26 @@ export function getRepositoryVariables({
     commit: commitId,
   };
 }
+
+type ResolveCurrentRefType = {
+  currentRef: {
+    name: string;
+    prefix: "refs/heads/" | "refs/tags/";
+  } | null;
+  defaultBranchName: string;
+};
+
+export function resolveCurrentRef({
+  currentRef,
+  defaultBranchName,
+}: ResolveCurrentRefType): {
+  name: string;
+  prefix: "refs/heads/" | "refs/tags/";
+} {
+  return (
+    currentRef || {
+      name: defaultBranchName,
+      prefix: "refs/heads/",
+    }
+  );
+}

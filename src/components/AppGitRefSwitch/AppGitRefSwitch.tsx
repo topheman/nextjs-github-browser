@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CheckIcon, TagIcon, GitBranchIcon } from "@primer/octicons-react";
 import Link from "next/link";
 
+import { resolveCurrentRef } from "../../utils/github/repository";
 import { truncate } from "../../utils/string";
 import BaseSelectMenu from "../BaseSelectMenu/BaseSelectMenu";
 import BaseTag from "../BaseTag/BaseTag";
@@ -56,10 +57,10 @@ export default function AppGitRefSwitch({
       ].filter(Boolean)
     ),
   ];
-  const resolvedCurrentRef: GitRef = currentRef || {
-    name: defaultBranchName,
-    prefix: "refs/heads/",
-  };
+  const resolvedCurrentRef = resolveCurrentRef({
+    currentRef,
+    defaultBranchName,
+  });
   return (
     <BaseSelectMenu
       alignMenu="left"
