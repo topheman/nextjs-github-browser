@@ -1,7 +1,12 @@
 import clsx from "clsx";
 
 import AppRepositoryMainHeader from "../AppRepositoryMainHeader/AppRepositoryMainHeader";
-import { GetRepositoryInfosOverviewQuery } from "../../libs/graphql";
+import AppFilesList from "../AppFilesList/AppFilesList";
+import {
+  GetRepositoryInfosOverviewQuery,
+  GitInfosType,
+  TreeEntry,
+} from "../../libs/graphql";
 
 export type AppRepositoryOverviewProps = {
   repository?: GetRepositoryInfosOverviewQuery["repository"];
@@ -21,12 +26,24 @@ export default function AppRepositoryOverview({
     <div
       itemScope
       itemType="http://schema.org/SoftwareSourceCode"
-      className={clsx("flex", className)}
+      className={clsx(className)}
     >
       <AppRepositoryMainHeader
         repository={repository}
         currentPath={currentPath}
       />
+      {repository.gitInfos ? (
+        <AppFilesList
+          repositoryNameWithOwner={repository.nameWithOwner}
+          gitInfos={repository.gitInfos as GitInfosType}
+          files={
+            (repository.repositoryFiles as { entries: TreeEntry[] })?.entries ||
+            []
+          }
+          currentPath={currentPath}
+          className="mt-1"
+        />
+      ) : null}
     </div>
   );
 }
