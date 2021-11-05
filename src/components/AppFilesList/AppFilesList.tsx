@@ -11,17 +11,23 @@ export type AppFilesListProps = {
   gitInfos: GitInfosType;
   currentPath?: string;
   files: Pick<TreeEntry, "name" | "type" | "extension" | "path" | "oid">[];
+  resolvedCurrentRef: {
+    name: string;
+    prefix: "refs/heads/" | "refs/tags/";
+  };
   className?: string;
 };
 
 export default function AppFilesList({
   repositoryNameWithOwner,
   gitInfos,
-  // files,
-  // currentPath,
+  files,
+  currentPath,
+  resolvedCurrentRef,
   className,
   ...props
 }: AppFilesListProps): JSX.Element | null {
+  console.log(resolvedCurrentRef, currentPath, files);
   const author = gitInfos.history.edges?.[0]?.node?.author?.user;
   const lastCommit = gitInfos.history.edges?.[0]?.node;
   return (
@@ -60,8 +66,9 @@ export default function AppFilesList({
           </Link>
         </div>
         <div className="ml-2">
-          {/* todo resolve ref */}
-          <Link href={`/${repositoryNameWithOwner}/commits`}>
+          <Link
+            href={`/${repositoryNameWithOwner}/commits/${resolvedCurrentRef.name}`}
+          >
             <a className="font-bold hover:text-brand-primary">
               <HistoryIcon className="mr-1" />
               {gitInfos.history.totalCount}{" "}

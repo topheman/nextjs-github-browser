@@ -2,6 +2,7 @@ import clsx from "clsx";
 
 import AppRepositoryMainHeader from "../AppRepositoryMainHeader/AppRepositoryMainHeader";
 import AppFilesList from "../AppFilesList/AppFilesList";
+import { resolveCurrentRef } from "../../utils/github/repository";
 import {
   GetRepositoryInfosOverviewQuery,
   GitInfosType,
@@ -42,6 +43,13 @@ export default function AppRepositoryOverview({
           }
           currentPath={currentPath}
           className="mt-1"
+          resolvedCurrentRef={resolveCurrentRef({
+            currentRef: repository.currentRef as {
+              name: string;
+              prefix: "refs/heads/" | "refs/tags/";
+            },
+            defaultBranchName: repository.defaultBranchRef?.name as string,
+          })}
         />
       ) : null}
     </div>
