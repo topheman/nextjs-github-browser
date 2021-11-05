@@ -17,11 +17,11 @@ import AppRepositoryOverview from "../components/AppRepositoryOverview/AppReposi
 export const makeGetServerSideProps = (): GetServerSideProps => async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
-  const { owner, repositoryName, branchName } = parseQuery(context.query);
+  const { owner, repositoryName, branchName, path } = parseQuery(context.query);
   const apolloClient = initializeApollo();
   await apolloClient.query<GetRepositoryInfosOverviewQuery>({
     query: GetRepositoryInfosOverviewDocument,
-    variables: getRepositoryVariables({ owner, repositoryName }),
+    variables: getRepositoryVariables({ owner, repositoryName, path }),
   });
   const resultProps: PageProps = {
     owner,
@@ -29,6 +29,9 @@ export const makeGetServerSideProps = (): GetServerSideProps => async (
   };
   if (branchName) {
     resultProps.branchName = branchName;
+  }
+  if (path) {
+    resultProps.path = path;
   }
   return addApolloState(apolloClient, {
     props: resultProps,
@@ -40,17 +43,21 @@ type PageProps = {
   repositoryName: string;
   // eslint-disable-next-line react/require-default-props
   branchName?: string;
+  // eslint-disable-next-line react/require-default-props
+  path?: string;
 };
 
 export const makePage = () => ({
   owner,
   repositoryName,
   branchName,
+  path,
 }: PageProps): JSX.Element | null => {
   const variables = getRepositoryVariables({
     owner,
     repositoryName,
     branchName,
+    path,
   });
   const repositoryResult = useGetRepositoryInfosOverviewQuery({
     variables,
@@ -85,6 +92,7 @@ export const makePage = () => ({
           main: (
             <AppRepositoryOverview
               repository={repositoryResult.data?.repository}
+              currentPath={path}
             />
           ),
           sidebar: (
