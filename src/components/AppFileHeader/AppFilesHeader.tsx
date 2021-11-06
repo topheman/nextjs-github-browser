@@ -61,7 +61,7 @@ export default function AppFilesHeader({
                 <Link
                   href={`/${repositoryNameWithOwner}/commit/${lastCommit?.oid}`}
                 >
-                  <a className="ml-2 text-sm text-secondary hover:text-brand-primary hover:underline">
+                  <a className="hidden lg:inline ml-2 text-sm text-secondary hover:text-brand-primary hover:underline">
                     {truncate(lastCommit?.oid, 7, "")}
                   </a>
                 </Link>
@@ -83,8 +83,10 @@ export default function AppFilesHeader({
           >
             <a className="ml-3 font-bold hover:text-brand-primary">
               <HistoryIcon className="mr-1" />
-              {commitsTotalCount}{" "}
-              <span className="font-normal text-secondary">commits</span>
+              <span className="hidden sm:inline">{commitsTotalCount}</span>{" "}
+              <span className="hidden lg:inline font-normal text-secondary">
+                commits
+              </span>
             </a>
           </Link>
         </div>
