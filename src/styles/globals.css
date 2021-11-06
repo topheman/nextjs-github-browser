@@ -6,6 +6,7 @@ body.default-mode {
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
+  --color-bg-brand-secondary: #eee;
   --color-text-primary: black;
   --color-text-secondary: #586069;
   --color-text-brand-primary: #900000;
@@ -27,6 +28,7 @@ body.dark-mode {
   --color-brand-primary: #900000;
   --color-brand-primary-light: #c26f6f;
   --color-brand-secondary: #eee;
+  --color-bg-brand-secondary: #444444;
   --color-text-primary: white;
   --color-text-secondary: #8b949e;
   --color-text-brand-primary: #ff3030;

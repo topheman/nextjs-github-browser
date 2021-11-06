@@ -3,7 +3,7 @@ const brandColors = {
     DEFAULT: "var(--color-brand-primary)",
     light: "var(--color-brand-primary-light)",
   },
-  "brand-secondary": "var(--color-brand-secondary)",
+  "brand-secondary": "var(--color-bg-brand-secondary)",
 };
 
 module.exports = {

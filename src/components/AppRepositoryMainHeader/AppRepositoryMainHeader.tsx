@@ -55,7 +55,7 @@ export default function AppRepositoryMainHeader({
               <Link href={`/${repository.nameWithOwner}/tags`}>
                 <a className="ml-3 hover:text-brand-primary">
                   <TagIcon />
-                  <span className="font-bold">
+                  <span className="ml-1 font-bold">
                     {repository.tags?.totalCount}
                   </span>{" "}
                   tags
