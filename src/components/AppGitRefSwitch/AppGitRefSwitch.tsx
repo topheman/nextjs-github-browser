@@ -21,7 +21,7 @@ export type AppGitRefSwitchProps = {
   tags: string[];
   branchesTotalCount: number;
   tagsTotalCount: number;
-  path?: string;
+  currentPath?: string;
 };
 
 const prefixMapping = {
@@ -37,7 +37,7 @@ export default function AppGitRefSwitch({
   tags,
   branchesTotalCount,
   tagsTotalCount,
-  path,
+  currentPath,
 }: AppGitRefSwitchProps): JSX.Element | null {
   const [currentTab, setCurrentTab] = useState<"branches" | "tags">("branches");
   const resolvedBranches = [
@@ -125,9 +125,9 @@ export default function AppGitRefSwitch({
                   <Link
                     href={{
                       pathname: `/${nameWithOwner}/tree/${ref}`,
-                      query: path
+                      query: currentPath
                         ? {
-                            path,
+                            path: currentPath,
                           }
                         : null,
                     }}

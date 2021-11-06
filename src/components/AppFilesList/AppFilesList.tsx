@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { FileDirectoryFillIcon, FileIcon } from "@primer/octicons-react";
+import Link from "next/link";
 import { TreeEntry, GitInfosType } from "../../libs/graphql";
 
 import AppFilesHeader from "../AppFileHeader/AppFilesHeader";
@@ -24,15 +26,20 @@ export default function AppFilesList({
   className,
   ...props
 }: AppFilesListProps): JSX.Element | null {
-  console.log(resolvedCurrentRef, currentPath, files);
   const author = gitInfos.history.edges?.[0]?.node?.author?.user;
   const lastCommit = gitInfos.history.edges?.[0]?.node;
+  const sortedFiles = [...files].sort((a, b) => {
+    if (a.type !== b.type) {
+      return a.type === "blob" ? 1 : -1;
+    }
+    return a.name > b.name ? 1 : -1;
+  });
+  const parentPath = currentPath?.split("/").slice(0, -1).join("/");
   return (
     <div
       className={clsx("rounded-md border border-light", className)}
       {...props}
     >
-      <h2 className="sr-only">Latest commit</h2>
       <AppFilesHeader
         repositoryNameWithOwner={repositoryNameWithOwner}
         author={author}
@@ -41,8 +48,59 @@ export default function AppFilesList({
         className="p-3"
         resolvedCurrentRef={resolvedCurrentRef}
       />
-      <h2 className="sr-only">Files</h2>
-      <div className="flex">Body</div>
+      <h2 className="sr-only" id="files" aria-labelledby="files">
+        Files
+      </h2>
+      <div className="" role="grid">
+        <div className="sr-only" role="row">
+          <div role="columnheader">Type</div>
+          <div role="columnheader">Name</div>
+        </div>
+        {currentPath ? (
+          <div className="py-2 px-3" role="row">
+            <div role="rowheader">
+              <Link
+                href={{
+                  pathname: `/${repositoryNameWithOwner}/tree/${resolvedCurrentRef.name}`,
+                  query: parentPath
+                    ? {
+                        path: parentPath,
+                      }
+                    : null,
+                }}
+              >
+                <a className="hover:text-brand-primary">..</a>
+              </Link>
+            </div>
+            <div role="gridcell" />
+          </div>
+        ) : null}
+        {sortedFiles.map((file) => (
+          <div
+            className="flex hover:bg-primary-hover"
+            key={file.name}
+            role="row"
+          >
+            <div role="gridcell" className="p-2">
+              {file.type === "tree" ? <FileDirectoryFillIcon /> : <FileIcon />}
+            </div>
+            <div role="rowheader" className="p-2">
+              <Link
+                href={{
+                  pathname: `/${repositoryNameWithOwner}/${file.type}/${resolvedCurrentRef.name}`,
+                  query: {
+                    path: file.path,
+                  },
+                }}
+              >
+                <a className="hover:text-brand-primary hover:underline">
+                  {file.name}
+                </a>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

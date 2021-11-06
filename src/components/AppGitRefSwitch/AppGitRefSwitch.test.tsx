@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent, RenderResult } from "@testing-library/react";
 
+import { truncate } from "../../utils/string";
 import AppGitRefSwitch, { AppGitRefSwitchProps } from "./AppGitRefSwitch";
 
 const makeBaseCase = (
@@ -26,7 +27,10 @@ const makeBaseCase = (
     ...result,
     getGitRefButton: () =>
       result.getByRole("button", {
-        name: baseProps.currentRef?.name || baseProps.defaultBranchName,
+        name: truncate(
+          baseProps.currentRef?.name || baseProps.defaultBranchName,
+          15
+        ),
       }),
   };
 };
@@ -105,7 +109,7 @@ describe("components/AppGitRefSwitch", () => {
   });
   it("should accept path", async () => {
     const { getGitRefButton, container } = makeBaseCase({
-      path: "src/common.js",
+      currentPath: "src/common.js",
     });
     await fireEvent.click(getGitRefButton());
     expect(

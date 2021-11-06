@@ -35,6 +35,7 @@ export default function AppRepositoryMainHeader({
           .filter(Boolean)}
         branchesTotalCount={repository.branches?.totalCount || 0}
         tagsTotalCount={repository.tags?.totalCount || 0}
+        currentPath={currentPath}
       />
       {!currentPath ? (
         <div className="hidden md:block">
