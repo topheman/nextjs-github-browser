@@ -21,7 +21,12 @@ export const makeGetServerSideProps = (): GetServerSideProps => async (
   const apolloClient = initializeApollo();
   await apolloClient.query<GetRepositoryInfosOverviewQuery>({
     query: GetRepositoryInfosOverviewDocument,
-    variables: getRepositoryVariables({ owner, repositoryName, path }),
+    variables: getRepositoryVariables({
+      owner,
+      repositoryName,
+      branchName,
+      path,
+    }),
   });
   const resultProps: PageProps = {
     owner,
