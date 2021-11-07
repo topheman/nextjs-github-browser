@@ -75,6 +75,7 @@ export default function AppRepositoryMainHeader({
           currentPath={currentPath}
           currentRef={currentRef}
           defaultBranchName={repository.defaultBranchRef?.name as string}
+          className="py-1 ml-3 text-lg"
         />
       ) : null}
     </div>
