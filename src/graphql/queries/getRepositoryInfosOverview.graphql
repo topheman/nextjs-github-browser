@@ -3,6 +3,8 @@ query GetRepositoryInfosOverview(
   $name: String!
   $ref: String! # examples: HEAD|master|feature/foo
   $refPath: String! # examples: HEAD:|master:|feature/foo:|master:src
+  $upperCaseReadmeRefPath: String! # examples: HEAD:README.md|feature/foo:README.md
+  $lowerCaseReadmeRefPath: String! # examples: HEAD:README.md|feature/foo:README.md
 ) {
   rateLimit {
     limit
@@ -70,12 +72,12 @@ query GetRepositoryInfosOverview(
       }
     }
     # check should be case insensitive
-    readmeUppercase: object(expression: "HEAD:README.md") {
+    readmeUppercase: object(expression: $upperCaseReadmeRefPath) {
       ... on Blob {
         text
       }
     }
-    readmeLowercase: object(expression: "HEAD:readme.md") {
+    readmeLowercase: object(expression: $lowerCaseReadmeRefPath) {
       ... on Blob {
         text
       }

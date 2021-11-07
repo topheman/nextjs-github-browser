@@ -20043,6 +20043,8 @@ export type GetRepositoryInfosOverviewQueryVariables = Exact<{
   name: Scalars['String'];
   ref: Scalars['String'];
   refPath: Scalars['String'];
+  upperCaseReadmeRefPath: Scalars['String'];
+  lowerCaseReadmeRefPath: Scalars['String'];
 }>;
 
 
@@ -20656,7 +20658,7 @@ export type GetRepositoryInfosCommitQueryHookResult = ReturnType<typeof useGetRe
 export type GetRepositoryInfosCommitLazyQueryHookResult = ReturnType<typeof useGetRepositoryInfosCommitLazyQuery>;
 export type GetRepositoryInfosCommitQueryResult = Apollo.QueryResult<GetRepositoryInfosCommitQuery, GetRepositoryInfosCommitQueryVariables>;
 export const GetRepositoryInfosOverviewDocument = gql`
-    query GetRepositoryInfosOverview($owner: String!, $name: String!, $ref: String!, $refPath: String!) {
+    query GetRepositoryInfosOverview($owner: String!, $name: String!, $ref: String!, $refPath: String!, $upperCaseReadmeRefPath: String!, $lowerCaseReadmeRefPath: String!) {
   rateLimit {
     limit
     cost
@@ -20721,12 +20723,12 @@ export const GetRepositoryInfosOverviewDocument = gql`
         }
       }
     }
-    readmeUppercase: object(expression: "HEAD:README.md") {
+    readmeUppercase: object(expression: $upperCaseReadmeRefPath) {
       ... on Blob {
         text
       }
     }
-    readmeLowercase: object(expression: "HEAD:readme.md") {
+    readmeLowercase: object(expression: $lowerCaseReadmeRefPath) {
       ... on Blob {
         text
       }
@@ -20785,6 +20787,8 @@ export const GetRepositoryInfosOverviewDocument = gql`
  *      name: // value for 'name'
  *      ref: // value for 'ref'
  *      refPath: // value for 'refPath'
+ *      upperCaseReadmeRefPath: // value for 'upperCaseReadmeRefPath'
+ *      lowerCaseReadmeRefPath: // value for 'lowerCaseReadmeRefPath'
  *   },
  * });
  */

@@ -47,6 +47,8 @@ export function getRepositoryVariables({
   name: string;
   ref: string;
   refPath: string;
+  upperCaseReadmeRefPath: string;
+  lowerCaseReadmeRefPath: string;
   commit?: string;
 } {
   return {
@@ -54,6 +56,8 @@ export function getRepositoryVariables({
     name: repositoryName,
     ref: branchName ?? "HEAD",
     refPath: `${branchName ?? "HEAD"}:${path || ""}`,
+    upperCaseReadmeRefPath: `${branchName ?? "HEAD"}:README.md`,
+    lowerCaseReadmeRefPath: `${branchName ?? "HEAD"}:readme.md`,
     commit: commitId,
   };
 }
