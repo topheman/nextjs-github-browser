@@ -34,6 +34,13 @@ export default function AppRepositoryOverview({
       <AppRepositoryMainHeader
         repository={repository}
         currentPath={currentPath}
+        resolvedCurrentRef={resolveCurrentRef({
+          currentRef: repository.currentRef as {
+            name: string;
+            prefix: "refs/heads/" | "refs/tags/";
+          },
+          defaultBranchName: repository.defaultBranchRef?.name as string,
+        })}
       />
       {repository.gitInfos ? (
         <AppFilesList
