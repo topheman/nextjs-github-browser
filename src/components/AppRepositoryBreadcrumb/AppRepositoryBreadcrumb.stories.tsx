@@ -18,5 +18,9 @@ export const Base = Template.bind({});
 Base.args = {
   nameWithOwner: "topheman/nextjs-movie-browser",
   currentPath: "src/components/SomeComponent/SomeComponent.tsx",
-  currentRefName: "master",
+  currentRef: {
+    name: "master",
+    prefix: "refs/heads/",
+  },
+  defaultBranchName: "master",
 };

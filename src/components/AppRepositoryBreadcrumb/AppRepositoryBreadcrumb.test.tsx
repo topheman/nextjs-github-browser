@@ -10,18 +10,32 @@ const baseRender = (props: Partial<AppRepositoryBreadcrumbProps> = {}) =>
     <AppRepositoryBreadCrumb
       nameWithOwner="topheman/nextjs-movie-browser"
       currentPath="src/components/SomeComponent/SomeComponent.tsx"
-      currentRefName="master"
+      currentRef={{
+        name: "master",
+        prefix: "refs/heads/",
+      }}
+      defaultBranchName="master"
       {...props}
     />
   );
 
 describe("components/AppRepositoryBreadCrumb", () => {
-  it("should show the name of repository with a link to it", () => {
+  it("should show the name of repository with a link to it (default branch case)", () => {
     const { getByRole } = baseRender();
     expect(getByRole("link", { name: "nextjs-movie-browser" })).toBeVisible();
     expect(getByRole("link", { name: "nextjs-movie-browser" })).toHaveAttribute(
       "href",
       "/topheman/nextjs-movie-browser"
+    );
+  });
+  it("should show the name of repository with a link to the branch (if not default branch)", () => {
+    const { getByRole } = baseRender({
+      defaultBranchName: "main",
+    });
+    expect(getByRole("link", { name: "nextjs-movie-browser" })).toBeVisible();
+    expect(getByRole("link", { name: "nextjs-movie-browser" })).toHaveAttribute(
+      "href",
+      "/topheman/nextjs-movie-browser/tree/master"
     );
   });
   it("should expose link for each path fragment except last", () => {

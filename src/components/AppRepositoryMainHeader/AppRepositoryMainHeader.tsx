@@ -73,7 +73,8 @@ export default function AppRepositoryMainHeader({
         <AppRepositoryBreadcrumb
           nameWithOwner={repository.nameWithOwner}
           currentPath={currentPath}
-          currentRefName={currentRef.name}
+          currentRef={currentRef}
+          defaultBranchName={repository.defaultBranchRef?.name as string}
         />
       ) : null}
     </div>

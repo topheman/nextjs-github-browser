@@ -1,17 +1,21 @@
 import React, { Fragment } from "react";
 import Link from "next/link";
 
+import { GitRefType } from "../../libs/graphql";
+
 export type AppRepositoryBreadcrumbProps = {
   nameWithOwner: string;
+  defaultBranchName: string;
   currentPath: string;
-  currentRefName: string;
+  currentRef: GitRefType;
   className?: string;
 };
 
 export default function AppRepositoryBreadCrumb({
   nameWithOwner,
+  defaultBranchName,
   currentPath,
-  currentRefName, // todo take defaultBranchName in account
+  currentRef,
   className,
   ...props
 }: AppRepositoryBreadcrumbProps): JSX.Element | null {
@@ -19,7 +23,14 @@ export default function AppRepositoryBreadCrumb({
   const separator = <span className="mx-1">/</span>;
   return (
     <h2 className={className} {...props}>
-      <Link href={`/${nameWithOwner}`}>
+      <Link
+        href={
+          currentRef.prefix === "refs/heads/" &&
+          currentRef.name === defaultBranchName
+            ? `/${nameWithOwner}`
+            : `/${nameWithOwner}/tree/${currentRef.name}`
+        }
+      >
         <a className="font-bold text-brand-primary hover:underline">
           {repositoryName}
         </a>
@@ -48,7 +59,7 @@ export default function AppRepositoryBreadCrumb({
               ) : (
                 <Link
                   href={{
-                    pathname: `/${nameWithOwner}/tree/${currentRefName}`,
+                    pathname: `/${nameWithOwner}/tree/${currentRef.name}`,
                     query: {
                       path,
                     },
