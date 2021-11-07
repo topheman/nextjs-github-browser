@@ -20,7 +20,7 @@ export default function AppRepositoryListItem({
       {...props}
       className="grid grid-cols-12 pb-5 mb-5 border-b border-light"
     >
-      <div className="col-span-10">
+      <div className="col-span-12 md:col-span-10">
         <h3>
           <Link href={`/${repository.nameWithOwner}`}>
             <a className="text-xl font-bold text-brand-primary hover:underline">
@@ -85,8 +85,8 @@ export default function AppRepositoryListItem({
           ) : null}
         </ul>
       </div>
-      <div className="col-span-2">
-        <div>some graph</div>
+      <div className="hidden md:col-span-2">
+        <div>{/* some graph */}</div>
       </div>
     </div>
   );
