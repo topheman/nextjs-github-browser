@@ -53,7 +53,7 @@ export default function AppFilesHeader({
               <Link
                 href={`/${repositoryNameWithOwner}/commit/${lastCommit?.oid}`}
               >
-                <a className="ml-2 hover:text-brand-primary">
+                <a className="hidden sm:inline overflow-hidden ml-2 hover:text-brand-primary overflow-ellipsis whitespace-nowrap break-words">
                   {lastCommit?.messageHeadline}
                 </a>
               </Link>
@@ -68,7 +68,7 @@ export default function AppFilesHeader({
                 <Link
                   href={`/${repositoryNameWithOwner}/commit/${lastCommit?.oid}`}
                 >
-                  <a className="ml-2 text-secondary hover:text-brand-primary hover:underline">
+                  <a className="ml-2 text-secondary hover:text-brand-primary hover:underline whitespace-nowrap">
                     on{" "}
                     {new Date(lastCommit?.committedDate).toLocaleDateString()}
                   </a>
@@ -79,7 +79,7 @@ export default function AppFilesHeader({
             <div className="flex flex-1" />
           )}
           <Link href={`/${repositoryNameWithOwner}/commits/${currentRef.name}`}>
-            <a className="ml-3 font-bold hover:text-brand-primary">
+            <a className="ml-3 font-bold hover:text-brand-primary whitespace-nowrap">
               <HistoryIcon className="mr-1" />
               {commitsTotalCount ? (
                 <>
