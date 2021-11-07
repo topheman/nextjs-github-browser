@@ -4,3 +4,6 @@
 .root a:hover {
   text-decoration: underline;
 }
+.root ul li {
+  list-style: initial;
+}

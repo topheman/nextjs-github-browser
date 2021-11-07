@@ -10,15 +10,25 @@ const protocols = ["http", "https", "mailto", "tel"];
 export function makeUriTransformer(
   login: string,
   defaultBranchName: string,
-  mode: "user" | "organization"
+  mode: "user" | "organization" | "repository",
+  repositoryName?: string
 ): (uri: string) => string {
-  const baseUrl = profileReadmeBaseUrl(login, defaultBranchName, mode);
+  const baseUrl = profileReadmeBaseUrl(
+    login,
+    defaultBranchName,
+    mode,
+    repositoryName
+  );
   return function uriTransformer(uri: string) {
     const url = (uri || "").trim();
     const first = url.charAt(0);
 
     if (first === "/") {
       return `${baseUrl}${url}`;
+    }
+
+    if (first === ".") {
+      return `${baseUrl}${url.replace(".", "")}`;
     }
 
     if (first === "#") {

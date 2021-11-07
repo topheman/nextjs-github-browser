@@ -25,6 +25,7 @@ export default function AppProfileOverview({
           <BaseMarkdownDisplay
             markdown={profileReadme}
             profileReadmeInfos={profileReadmeInfos}
+            className="text-sm"
           />
         </BaseBox>
       ) : null}

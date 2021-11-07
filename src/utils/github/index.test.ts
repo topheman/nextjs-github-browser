@@ -15,5 +15,15 @@ describe("utils/github", () => {
         "https://github.com/topheman/topheman/raw/master"
       );
     });
+    it("check for repository", () => {
+      expect(
+        profileReadmeBaseUrl(
+          "topheman",
+          "master",
+          "repository",
+          "nextjs-movie-browser"
+        )
+      ).toBe("https://github.com/topheman/nextjs-movie-browser/raw/master");
+    });
   });
 });

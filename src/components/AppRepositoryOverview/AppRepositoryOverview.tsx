@@ -2,11 +2,13 @@ import clsx from "clsx";
 
 import AppRepositoryMainHeader from "../AppRepositoryMainHeader/AppRepositoryMainHeader";
 import AppFilesList from "../AppFilesList/AppFilesList";
+import AppRepositoryReadme from "../AppRepositoryReadme/AppRepositoryReadme";
 import { resolveCurrentRef } from "../../utils/github/repository";
 import {
   GetRepositoryInfosOverviewQuery,
   GitInfosType,
   TreeEntry,
+  Blob,
 } from "../../libs/graphql";
 
 export type AppRepositoryOverviewProps = {
@@ -52,6 +54,24 @@ export default function AppRepositoryOverview({
           })}
         />
       ) : null}
+      <AppRepositoryReadme
+        currentRefName={
+          resolveCurrentRef({
+            currentRef: repository.currentRef as {
+              name: string;
+              prefix: "refs/heads/" | "refs/tags/";
+            },
+            defaultBranchName: repository.defaultBranchRef?.name as string,
+          }).name
+        }
+        markdown={
+          ((repository.readmeLowercase || repository.readmeUppercase) as Blob)
+            ?.text
+        }
+        letterCase={repository.readmeLowercase ? "lower" : "upper"}
+        nameWithOwner={repository.nameWithOwner}
+        className="mt-3"
+      />
     </div>
   );
 }
