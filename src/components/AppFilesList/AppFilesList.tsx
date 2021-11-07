@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { FileDirectoryFillIcon, FileIcon } from "@primer/octicons-react";
 import Link from "next/link";
-import { TreeEntry, GitInfosType } from "../../libs/graphql";
+import { TreeEntry, GitInfosType, GitRefType } from "../../libs/graphql";
 
 import AppFilesHeader from "../AppFileHeader/AppFilesHeader";
 
@@ -10,10 +10,7 @@ export type AppFilesListProps = {
   gitInfos: GitInfosType;
   currentPath?: string;
   files: Pick<TreeEntry, "name" | "type" | "extension" | "path" | "oid">[];
-  resolvedCurrentRef: {
-    name: string;
-    prefix: "refs/heads/" | "refs/tags/";
-  };
+  currentRef: GitRefType;
   className?: string;
 };
 
@@ -22,7 +19,7 @@ export default function AppFilesList({
   gitInfos,
   files,
   currentPath,
-  resolvedCurrentRef,
+  currentRef,
   className,
   ...props
 }: AppFilesListProps): JSX.Element | null {
@@ -48,7 +45,7 @@ export default function AppFilesList({
           !currentPath ? gitInfos.history.totalCount : undefined
         }
         className="p-3"
-        resolvedCurrentRef={resolvedCurrentRef}
+        currentRef={currentRef}
       />
       <h2 className="sr-only" id="files" aria-labelledby="files">
         Files
@@ -63,7 +60,7 @@ export default function AppFilesList({
             <div role="rowheader">
               <Link
                 href={{
-                  pathname: `/${repositoryNameWithOwner}/tree/${resolvedCurrentRef.name}`,
+                  pathname: `/${repositoryNameWithOwner}/tree/${currentRef.name}`,
                   query: parentPath
                     ? {
                         path: parentPath,
@@ -89,7 +86,7 @@ export default function AppFilesList({
             <div role="rowheader" className="p-2">
               <Link
                 href={{
-                  pathname: `/${repositoryNameWithOwner}/${file.type}/${resolvedCurrentRef.name}`,
+                  pathname: `/${repositoryNameWithOwner}/${file.type}/${currentRef.name}`,
                   query: {
                     path: file.path,
                   },

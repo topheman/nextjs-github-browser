@@ -13,6 +13,11 @@ import {
 
 export * from "../generated/graphql";
 
+export type GitRefType = {
+  name: string;
+  prefix: "refs/heads/" | "refs/tags/";
+};
+
 // GetRepositoryInfosOverviewQuery["repository"]["gitInfos"]
 export type GitInfosType = {
   history: { __typename?: "CommitHistoryConnection" } & Pick<

@@ -25,6 +25,13 @@ export default function AppRepositoryOverview({
   if (!repository) {
     return null;
   }
+  const resolvedCurrentRef = resolveCurrentRef({
+    currentRef: repository.currentRef as {
+      name: string;
+      prefix: "refs/heads/" | "refs/tags/";
+    },
+    defaultBranchName: repository.defaultBranchRef?.name as string,
+  });
   return (
     <div
       itemScope
@@ -34,13 +41,7 @@ export default function AppRepositoryOverview({
       <AppRepositoryMainHeader
         repository={repository}
         currentPath={currentPath}
-        resolvedCurrentRef={resolveCurrentRef({
-          currentRef: repository.currentRef as {
-            name: string;
-            prefix: "refs/heads/" | "refs/tags/";
-          },
-          defaultBranchName: repository.defaultBranchRef?.name as string,
-        })}
+        currentRef={resolvedCurrentRef}
       />
       {repository.gitInfos ? (
         <AppFilesList
@@ -52,26 +53,12 @@ export default function AppRepositoryOverview({
           }
           currentPath={currentPath}
           className="mt-1"
-          resolvedCurrentRef={resolveCurrentRef({
-            currentRef: repository.currentRef as {
-              name: string;
-              prefix: "refs/heads/" | "refs/tags/";
-            },
-            defaultBranchName: repository.defaultBranchRef?.name as string,
-          })}
+          currentRef={resolvedCurrentRef}
         />
       ) : null}
       {!currentPath ? (
         <AppRepositoryReadme
-          currentRefName={
-            resolveCurrentRef({
-              currentRef: repository.currentRef as {
-                name: string;
-                prefix: "refs/heads/" | "refs/tags/";
-              },
-              defaultBranchName: repository.defaultBranchRef?.name as string,
-            }).name
-          }
+          currentRefName={resolvedCurrentRef.name}
           markdown={
             ((repository.readmeLowercase || repository.readmeUppercase) as Blob)
               ?.text

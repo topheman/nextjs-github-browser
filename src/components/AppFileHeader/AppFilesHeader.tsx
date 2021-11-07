@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import Link from "next/link";
 import { HistoryIcon } from "@primer/octicons-react";
-import { Actor, Commit } from "../../libs/graphql";
 
+import { Actor, Commit, GitRefType } from "../../libs/graphql";
 import { truncate } from "../../utils/string";
 import AppAvatarImage from "../AppAvatarImage/AppAvatarImage";
 
@@ -11,10 +11,7 @@ export type AppFilesHeaderProps = {
   author?: Pick<Actor, "avatarUrl" | "login"> | null;
   lastCommit?: Pick<Commit, "oid" | "messageHeadline" | "committedDate"> | null;
   commitsTotalCount?: number;
-  resolvedCurrentRef: {
-    name: string;
-    prefix: "refs/heads/" | "refs/tags/";
-  };
+  currentRef: GitRefType;
   className?: string;
 };
 
@@ -23,7 +20,7 @@ export default function AppFilesHeader({
   author,
   lastCommit,
   commitsTotalCount,
-  resolvedCurrentRef,
+  currentRef,
   className,
   ...props
 }: AppFilesHeaderProps): JSX.Element | null {
@@ -81,9 +78,7 @@ export default function AppFilesHeader({
           ) : (
             <div className="flex flex-1" />
           )}
-          <Link
-            href={`/${repositoryNameWithOwner}/commits/${resolvedCurrentRef.name}`}
-          >
+          <Link href={`/${repositoryNameWithOwner}/commits/${currentRef.name}`}>
             <a className="ml-3 font-bold hover:text-brand-primary">
               <HistoryIcon className="mr-1" />
               {commitsTotalCount ? (

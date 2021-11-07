@@ -10,7 +10,7 @@ const baseRender = (props: Partial<AppRepositoryBreadcrumbProps> = {}) =>
     <AppRepositoryBreadCrumb
       nameWithOwner="topheman/nextjs-movie-browser"
       currentPath="src/components/SomeComponent/SomeComponent.tsx"
-      resolvedCurrentRefName="master"
+      currentRefName="master"
       {...props}
     />
   );

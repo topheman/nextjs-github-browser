@@ -118,17 +118,6 @@ describe("components/AppGitRefSwitch", () => {
       )
     ).toBeVisible();
   });
-  it("should accept null currentRef", async () => {
-    const { getGitRefButton, container } = makeBaseCase({
-      currentRef: null,
-    });
-    await fireEvent.click(getGitRefButton());
-    expect(
-      container.querySelector(
-        '[aria-checked="true"][href="/topheman/npm-registry-browser/tree/master"]'
-      )
-    ).toBeVisible();
-  });
 });
 
 export default {};

@@ -2,26 +2,24 @@ import clsx from "clsx";
 import Link from "next/link";
 import { GitBranchIcon, TagIcon } from "@primer/octicons-react";
 
-import AppGitRefSwitch, {
-  AppGitRefSwitchProps,
-} from "../AppGitRefSwitch/AppGitRefSwitch";
+import AppGitRefSwitch from "../AppGitRefSwitch/AppGitRefSwitch";
 import AppRepositoryBreadcrumb from "../AppRepositoryBreadcrumb/AppRepositoryBreadcrumb";
-import { GetRepositoryInfosOverviewQuery } from "../../libs/graphql";
+import {
+  GetRepositoryInfosOverviewQuery,
+  GitRefType,
+} from "../../libs/graphql";
 
 export type AppRepositoryMainHeaderProps = {
   repository?: GetRepositoryInfosOverviewQuery["repository"];
   className?: string;
-  resolvedCurrentRef: {
-    name: string;
-    prefix: "refs/heads/" | "refs/tags/";
-  };
+  currentRef: GitRefType;
   currentPath?: string;
 };
 
 export default function AppRepositoryMainHeader({
   repository,
   currentPath,
-  resolvedCurrentRef,
+  currentRef,
   className,
 }: AppRepositoryMainHeaderProps): JSX.Element | null {
   if (!repository) {
@@ -31,7 +29,7 @@ export default function AppRepositoryMainHeader({
     <div className={clsx("flex", className)}>
       <AppGitRefSwitch
         defaultBranchName={repository.defaultBranchRef?.name as string}
-        currentRef={repository.currentRef as AppGitRefSwitchProps["currentRef"]}
+        currentRef={currentRef}
         nameWithOwner={repository.nameWithOwner}
         branches={(repository.branches?.edges || [])
           .map((edge) => edge?.node?.name)
@@ -75,7 +73,7 @@ export default function AppRepositoryMainHeader({
         <AppRepositoryBreadcrumb
           nameWithOwner={repository.nameWithOwner}
           currentPath={currentPath}
-          resolvedCurrentRefName={resolvedCurrentRef.name}
+          currentRefName={currentRef.name}
         />
       ) : null}
     </div>

@@ -30,7 +30,7 @@ Base.args = {
     oid: "azertyuiovbnlkjhgv",
   },
   commitsTotalCount: 123,
-  resolvedCurrentRef: {
+  currentRef: {
     name: "v1.2.3",
     prefix: "refs/tags/",
   },
@@ -41,7 +41,7 @@ export const WithoutCommitInfos = Template.bind({});
 WithoutCommitInfos.args = {
   repositoryNameWithOwner: "topheman/nextjs-movie-browser",
   commitsTotalCount: 123,
-  resolvedCurrentRef: {
+  currentRef: {
     name: "v1.2.3",
     prefix: "refs/tags/",
   },

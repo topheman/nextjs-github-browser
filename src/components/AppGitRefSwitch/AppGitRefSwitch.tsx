@@ -3,19 +3,14 @@ import React, { useState } from "react";
 import { CheckIcon, TagIcon, GitBranchIcon } from "@primer/octicons-react";
 import Link from "next/link";
 
-import { resolveCurrentRef } from "../../utils/github/repository";
+import { GitRefType } from "../../libs/graphql";
 import { truncate } from "../../utils/string";
 import BaseSelectMenu from "../BaseSelectMenu/BaseSelectMenu";
 import BaseTag from "../BaseTag/BaseTag";
 
-type GitRef = {
-  name: string;
-  prefix: "refs/heads/" | "refs/tags/";
-};
-
 export type AppGitRefSwitchProps = {
   nameWithOwner: string;
-  currentRef: GitRef | null;
+  currentRef: GitRefType;
   defaultBranchName: string;
   branches: string[];
   tags: string[];
@@ -57,10 +52,6 @@ export default function AppGitRefSwitch({
       ].filter(Boolean)
     ),
   ];
-  const resolvedCurrentRef = resolveCurrentRef({
-    currentRef,
-    defaultBranchName,
-  });
   return (
     <BaseSelectMenu
       alignMenu="left"
@@ -71,7 +62,7 @@ export default function AppGitRefSwitch({
           <GitBranchIcon className="mr-1" />
         )
       }
-      buttonLabel={truncate(resolvedCurrentRef.name, 15)}
+      buttonLabel={truncate(currentRef.name, 15)}
       menuLabel="Switch branches/tags"
     >
       <div>
@@ -113,8 +104,8 @@ export default function AppGitRefSwitch({
           {(currentTab === "branches" ? resolvedBranches : resolvedTags).map(
             (ref) => {
               const isChecked =
-                resolvedCurrentRef.prefix === prefixMapping[currentTab] &&
-                resolvedCurrentRef.name === ref;
+                currentRef.prefix === prefixMapping[currentTab] &&
+                currentRef.name === ref;
               return (
                 <li
                   key={ref}

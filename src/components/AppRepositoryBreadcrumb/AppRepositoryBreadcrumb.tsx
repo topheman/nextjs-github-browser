@@ -4,14 +4,14 @@ import Link from "next/link";
 export type AppRepositoryBreadcrumbProps = {
   nameWithOwner: string;
   currentPath: string;
-  resolvedCurrentRefName: string;
+  currentRefName: string;
   className?: string;
 };
 
 export default function AppRepositoryBreadCrumb({
   nameWithOwner,
   currentPath,
-  resolvedCurrentRefName, // todo take defaultBranchName in account
+  currentRefName, // todo take defaultBranchName in account
   className,
   ...props
 }: AppRepositoryBreadcrumbProps): JSX.Element | null {
@@ -48,7 +48,7 @@ export default function AppRepositoryBreadCrumb({
               ) : (
                 <Link
                   href={{
-                    pathname: `/${nameWithOwner}/tree/${resolvedCurrentRefName}`,
+                    pathname: `/${nameWithOwner}/tree/${currentRefName}`,
                     query: {
                       path,
                     },
