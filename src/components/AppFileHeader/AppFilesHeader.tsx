@@ -5,6 +5,7 @@ import { HistoryIcon } from "@primer/octicons-react";
 import { Actor, Commit, GitRefType } from "../../libs/graphql";
 import { truncate } from "../../utils/string";
 import AppAvatarImage from "../AppAvatarImage/AppAvatarImage";
+import AppTagDate from "../AppTagDate/AppTagDate";
 
 export type AppFilesHeaderProps = {
   repositoryNameWithOwner: string;
@@ -69,8 +70,10 @@ export default function AppFilesHeader({
                   href={`/${repositoryNameWithOwner}/commit/${lastCommit?.oid}`}
                 >
                   <a className="ml-2 text-secondary hover:text-brand-primary hover:underline whitespace-nowrap">
-                    on{" "}
-                    {new Date(lastCommit?.committedDate).toLocaleDateString()}
+                    <AppTagDate
+                      date={new Date(lastCommit?.committedDate)}
+                      mode="default"
+                    />
                   </a>
                 </Link>
               </div>

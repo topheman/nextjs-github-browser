@@ -83,10 +83,11 @@ Base.parameters = {
 Base.args = {
   reactive: true,
   mode: "updated",
+  className: "",
 };
 Base.argTypes = {
   mode: {
-    options: ["updated"],
+    options: ["updated", "default"],
   },
   dateLabel: {
     name: "date ", // with a trailing space because `date` is excluded

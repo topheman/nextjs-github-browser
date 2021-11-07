@@ -80,6 +80,7 @@ export default function AppRepositoryListItem({
               <AppTagDate
                 date={new Date(repository.updatedAt)}
                 mode="updated"
+                className="text-sm text-secondary"
               />
             </li>
           ) : null}

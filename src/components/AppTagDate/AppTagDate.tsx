@@ -8,11 +8,12 @@ AppTagDate.defaultProps = {
 };
 
 const MAPPING_MODE = Object.freeze({
-  updated: "Updated",
+  updated: "Updated ",
+  default: "",
 });
 
 export type AppTagDateProps = {
-  mode: "updated";
+  mode: "updated" | "default";
   date: Date;
   className?: string;
 } & typeof AppTagDate.defaultProps;
@@ -41,9 +42,10 @@ export default function AppTagDate({
   }
   const { formattedDate, isRelative } = formatDate(innerDate);
   return (
-    <span {...props} className={clsx("text-sm text-secondary", className)}>
+    <span {...props} className={clsx(className)}>
       {MAPPING_MODE[mode]}
-      {!isRelative ? " on" : ""} {formattedDate}
+      {!isRelative ? "on " : ""}
+      <time dateTime={date.toISOString()}>{formattedDate}</time>
     </span>
   );
 }
