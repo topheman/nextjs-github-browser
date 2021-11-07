@@ -100,12 +100,12 @@ export const makePage = () => ({
               currentPath={path}
             />
           ),
-          sidebar: (
+          sidebar: !path ? (
             <AppRepositoryInfos
               className=""
               repository={repositoryResult.data?.repository}
             />
-          ),
+          ) : null,
         })}
       </AppMainLayout>
     );

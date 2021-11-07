@@ -10,7 +10,7 @@ export type AppFilesHeaderProps = {
   repositoryNameWithOwner: string;
   author?: Pick<Actor, "avatarUrl" | "login"> | null;
   lastCommit?: Pick<Commit, "oid" | "messageHeadline" | "committedDate"> | null;
-  commitsTotalCount: number;
+  commitsTotalCount?: number;
   resolvedCurrentRef: {
     name: string;
     prefix: "refs/heads/" | "refs/tags/";
@@ -86,10 +86,16 @@ export default function AppFilesHeader({
           >
             <a className="ml-3 font-bold hover:text-brand-primary">
               <HistoryIcon className="mr-1" />
-              <span className="hidden sm:inline">{commitsTotalCount}</span>{" "}
-              <span className="hidden lg:inline font-normal text-secondary">
-                commits
-              </span>
+              {commitsTotalCount ? (
+                <>
+                  <span className="hidden sm:inline">{commitsTotalCount}</span>{" "}
+                  <span className="hidden lg:inline font-normal text-secondary">
+                    commits
+                  </span>
+                </>
+              ) : (
+                <span>History</span>
+              )}
             </a>
           </Link>
         </div>

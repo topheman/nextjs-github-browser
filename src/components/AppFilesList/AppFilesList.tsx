@@ -42,9 +42,11 @@ export default function AppFilesList({
     >
       <AppFilesHeader
         repositoryNameWithOwner={repositoryNameWithOwner}
-        author={author}
-        lastCommit={lastCommit}
-        commitsTotalCount={gitInfos.history.totalCount}
+        author={!currentPath ? author : undefined}
+        lastCommit={!currentPath ? lastCommit : undefined}
+        commitsTotalCount={
+          !currentPath ? gitInfos.history.totalCount : undefined
+        }
         className="p-3"
         resolvedCurrentRef={resolvedCurrentRef}
       />
