@@ -23,7 +23,10 @@ export default function AppRepositoryListItem({
       <div className="col-span-12 md:col-span-10">
         <h3>
           <Link href={`/${repository.nameWithOwner}`}>
-            <a className="text-xl font-bold text-brand-primary hover:underline">
+            <a
+              className="text-xl font-bold text-brand-primary hover:underline"
+              data-testid={`repository-item-link:${repository.name}`}
+            >
               {repository.name}
             </a>
           </Link>

@@ -6,6 +6,10 @@ import {
 
 import { NextWindowType } from "../types";
 
+function dataTestidRepositoryName(name) {
+  return `repository-item-link:${name}`;
+}
+
 Cypress.Commands.add(
   "clientRepositoryAssertDefaultPage",
   (url: string, login: string) => {
@@ -18,7 +22,9 @@ Cypress.Commands.add(
         ];
       expect(searchPayload.edges).to.have.length(30);
       const firstRepoInfos = searchPayload.edges[0].node as Repository;
-      cy.findByText(firstRepoInfos.name).should("exist");
+      cy.findByTestId(dataTestidRepositoryName(firstRepoInfos.name)).should(
+        "exist"
+      ); // todo don't use findByText - use dataTestid
       cy.get("[data-testid=repository-list] > li").should("have.length", 30);
       cy.wrap({
         firstRepoInfos,
@@ -112,7 +118,9 @@ function clientRepositoryPaginationNavigate(
         "[data-testid=search-pagination-top] [data-testid=pagination-spinner]"
       ).should("not.exist");
       // check the render is up to date with the data passed
-      cy.findByRole("link", { name: firstRepoInfos.name }).should("exist");
+      cy.findByTestId(dataTestidRepositoryName(firstRepoInfos.name)).should(
+        "exist"
+      );
       // check the url is up to date
       const { after, before } = graphqlVariables;
       if (after) {
@@ -127,9 +135,11 @@ function clientRepositoryPaginationNavigate(
   } else {
     // apollo cached mode
     cy.get(`@${key}`).then((infos) => {
-      cy.findByRole("link", {
-        name: ((infos as unknown) as NavigationInfosType).firstRepoInfos.name,
-      }).should("exist");
+      cy.findByTestId(
+        dataTestidRepositoryName(
+          ((infos as unknown) as NavigationInfosType).firstRepoInfos.name
+        )
+      ).should("exist");
       const {
         after,
         before,
