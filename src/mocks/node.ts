@@ -23,7 +23,7 @@ function getOptions(options: Record<string, unknown> = {}) {
         process.cwd(),
         process.env.MOCKS_TARGET || ".tmp/.mocks"
       ),
-    endpoint: process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT as string,
+    endpoint: process.env.GRAPHQL_API_ROOT_ENDPOINT as string,
     ...options,
   };
 }

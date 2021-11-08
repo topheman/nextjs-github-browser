@@ -46,15 +46,15 @@ if (typeof window === "undefined") {
     process.env.STORYBOOK &&
     !process.env.STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN // to not expose token when publishing storybook
   ) {
-    if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
-      throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
+    if (!process.env.GRAPHQL_API_ROOT_ENDPOINT) {
+      throw new Error("Env var GRAPHQL_API_ROOT_ENDPOINT not defined");
     }
-    const httpLink = makeHttpLink(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT);
+    const httpLink = makeHttpLink(process.env.GRAPHQL_API_ROOT_ENDPOINT);
     const authlink = setContext((_, { headers }) => {
       return {
         headers: {
           ...headers,
-          authorization: `Bearer ${process.env.GITHUB_GRAPHQL_API_TOKEN}`,
+          authorization: `Bearer ${process.env.GRAPHQL_API_TOKEN}`,
         },
       };
     });

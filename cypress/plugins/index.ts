@@ -19,10 +19,7 @@ import { loadEnvConfig } from "@next/env";
 
 import { loadMock } from "../../src/mocks/node";
 
-const { GITHUB_GRAPHQL_API_ROOT_ENDPOINT } = loadEnvConfig(
-  "./",
-  true
-).combinedEnv;
+const { GRAPHQL_API_ROOT_ENDPOINT } = loadEnvConfig("./", true).combinedEnv;
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const webpackPreprocessor = require("@cypress/webpack-preprocessor");
 
@@ -35,7 +32,7 @@ module.exports = (on) => {
   on("task", {
     loadMock: ([operationName, variables, loadMockOptions]) => {
       const resolvedOptions = {
-        endpoint: GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
+        endpoint: GRAPHQL_API_ROOT_ENDPOINT,
         ...loadMockOptions,
       };
       // eslint-disable-next-line no-console
