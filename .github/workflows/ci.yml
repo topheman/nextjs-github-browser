@@ -3,6 +3,8 @@ name: ci
 on: [push]
 jobs:
   e2e:
+    env:
+      GRAPHQL_API_TOKEN: ${{secrets.GRAPHQL_API_TOKEN}}
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout 🛎
