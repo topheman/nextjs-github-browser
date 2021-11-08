@@ -1,0 +1,16 @@
+# inpired by https://github.com/cypress-io/cypress-and-jest-typescript-example
+name: ci
+on: [push]
+jobs:
+  e2e:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+
+      - name: Install and run Cypress tests 🌲
+        uses: cypress-io/github-action@v2
+        with:
+          build: npm run build
+          start: npm start
+          wait-on: "http://localhost:3000"
