@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:storybook": "GITHUB_GRAPHQL_API_TOKEN=null STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN=true build-storybook -o ./public/explore/storybook",
+    "build:storybook": "GRAPHQL_API_TOKEN=null STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN=true build-storybook -o ./public/explore/storybook",
     "build:all": "npm run build:storybook && npm run build",
     "start": "next start",
     "storybook": "start-storybook -p 6006",

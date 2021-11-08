@@ -21,8 +21,8 @@ export default async (
   const recordMocks = (process.env.MOCKS_MODE || "").toUpperCase() === "RECORD";
   const replayMocks = (process.env.MOCKS_MODE || "").toUpperCase() === "REPLAY";
   try {
-    if (!process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT) {
-      throw new Error("Env var GITHUB_GRAPHQL_API_ROOT_ENDPOINT not defined");
+    if (!process.env.GRAPHQL_API_ROOT_ENDPOINT) {
+      throw new Error("Env var GRAPHQL_API_ROOT_ENDPOINT not defined");
     }
     if (replayMocks) {
       let result;
@@ -53,15 +53,15 @@ export default async (
       req.method,
       req.url,
       "->",
-      process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT,
+      process.env.GRAPHQL_API_ROOT_ENDPOINT,
       req.body.operationName,
       req.body.variables
     );
-    const result = await fetch(process.env.GITHUB_GRAPHQL_API_ROOT_ENDPOINT, {
+    const result = await fetch(process.env.GRAPHQL_API_ROOT_ENDPOINT, {
       method: "POST",
       body: JSON.stringify(req.body),
       headers: new Headers({
-        Authorization: `Bearer ${process.env.GITHUB_GRAPHQL_API_TOKEN}`,
+        Authorization: `Bearer ${process.env.GRAPHQL_API_TOKEN}`,
       }),
     });
     if (result.ok) {
