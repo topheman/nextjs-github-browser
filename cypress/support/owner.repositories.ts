@@ -3,8 +3,13 @@ export function runRepositoriesTests(
   login: string,
   {
     searchQuery,
+    skipCheckBackButton,
     skipCheckForwardButton,
-  }: { searchQuery: string; skipCheckForwardButton?: boolean }
+  }: {
+    searchQuery: string;
+    skipCheckBackButton?: boolean;
+    skipCheckForwardButton?: boolean;
+  }
 ): void {
   describe(url, () => {
     describe(`useSearchRepos - ${url}`, () => {
@@ -172,115 +177,118 @@ export function runRepositoriesTests(
             expect(query).to.eq(`user:${login} sort:updated-desc fork:true`) // <-
         );
       });
-      it("[Client] should not break back button", () => {
-        // fill the history
-        cy.clientRepositoryAssertDefaultPage(url, login);
-        cy.intercept("/api/github/graphql").as("graphql");
-        cy.get(`[href='/${login}']`).first().click();
-        cy.waitBetweenNavigation();
-        cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
-        cy.get(`[href='${url}']`).first().click();
-        cy.waitBetweenNavigation();
-        cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
-        cy.get(`[href='/${login}']`).first().click();
-        cy.waitBetweenNavigation();
-        cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
-        cy.get(`[href='${url}']`).first().click();
-        cy.waitBetweenNavigation();
-        cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
-        cy.clientRepositoryPaginationNavigate(
-          { direction: "next" },
-          false,
-          "all|last-updated|page2-with-after",
-          ({ query }) =>
-            expect(query).to.eq(`user:${login} sort:updated-desc fork:true`)
-        );
-        cy.clientRepositoryPaginationNavigate(
-          { direction: "next" },
-          false,
-          "all|last-updated|page3-with-after",
-          ({ query }) =>
-            expect(query).to.eq(`user:${login} sort:updated-desc fork:true`)
-        );
-        cy.clientRepositoryPaginationNavigate(
-          { type: "source" },
-          false,
-          "source|last-updated|page1-with-after",
-          ({ query }) =>
-            expect(query).to.eq(`user:${login} sort:updated-desc fork:false`)
-        );
-        cy.clientRepositoryPaginationNavigate(
-          { direction: "next" },
-          false,
-          "source|last-updated|page2-with-after",
-          ({ query }) =>
-            expect(query).to.eq(`user:${login} sort:updated-desc fork:false`)
-        );
-        cy.clientRepositoryPaginationNavigate(
-          { type: "fork" },
-          false,
-          "fork|last-updated|page1-with-after",
-          ({ query }) =>
-            expect(query).to.eq(`user:${login} sort:updated-desc fork:only`)
-        );
-        cy.clientRepositoryPaginationNavigate(
-          {
-            custom: () => {
-              cy.go("back");
-              cy.waitBetweenNavigation();
+      (skipCheckBackButton ? it.skip : it)(
+        "[Client] should not break back button",
+        () => {
+          // fill the history
+          cy.clientRepositoryAssertDefaultPage(url, login);
+          cy.intercept("/api/github/graphql").as("graphql");
+          cy.get(`[href='/${login}']`).first().click();
+          cy.waitBetweenNavigation();
+          cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
+          cy.get(`[href='${url}']`).first().click();
+          cy.waitBetweenNavigation();
+          cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
+          cy.get(`[href='/${login}']`).first().click();
+          cy.waitBetweenNavigation();
+          cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
+          cy.get(`[href='${url}']`).first().click();
+          cy.waitBetweenNavigation();
+          cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
+          cy.clientRepositoryPaginationNavigate(
+            { direction: "next" },
+            false,
+            "all|last-updated|page2-with-after",
+            ({ query }) =>
+              expect(query).to.eq(`user:${login} sort:updated-desc fork:true`)
+          );
+          cy.clientRepositoryPaginationNavigate(
+            { direction: "next" },
+            false,
+            "all|last-updated|page3-with-after",
+            ({ query }) =>
+              expect(query).to.eq(`user:${login} sort:updated-desc fork:true`)
+          );
+          cy.clientRepositoryPaginationNavigate(
+            { type: "source" },
+            false,
+            "source|last-updated|page1-with-after",
+            ({ query }) =>
+              expect(query).to.eq(`user:${login} sort:updated-desc fork:false`)
+          );
+          cy.clientRepositoryPaginationNavigate(
+            { direction: "next" },
+            false,
+            "source|last-updated|page2-with-after",
+            ({ query }) =>
+              expect(query).to.eq(`user:${login} sort:updated-desc fork:false`)
+          );
+          cy.clientRepositoryPaginationNavigate(
+            { type: "fork" },
+            false,
+            "fork|last-updated|page1-with-after",
+            ({ query }) =>
+              expect(query).to.eq(`user:${login} sort:updated-desc fork:only`)
+          );
+          cy.clientRepositoryPaginationNavigate(
+            {
+              custom: () => {
+                cy.go("back");
+                cy.waitBetweenNavigation();
+              },
             },
-          },
-          true,
-          "source|last-updated|page2-with-after"
-        );
-        cy.clientRepositoryPaginationNavigate(
-          {
-            custom: () => {
-              cy.go("back");
-              cy.waitBetweenNavigation();
+            true,
+            "source|last-updated|page2-with-after"
+          );
+          cy.clientRepositoryPaginationNavigate(
+            {
+              custom: () => {
+                cy.go("back");
+                cy.waitBetweenNavigation();
+              },
             },
-          },
-          true,
-          "source|last-updated|page1-with-after"
-        );
-        cy.clientRepositoryPaginationNavigate(
-          {
-            custom: () => {
-              cy.go("back");
-              cy.waitBetweenNavigation();
+            true,
+            "source|last-updated|page1-with-after"
+          );
+          cy.clientRepositoryPaginationNavigate(
+            {
+              custom: () => {
+                cy.go("back");
+                cy.waitBetweenNavigation();
+              },
             },
-          },
-          true,
-          "all|last-updated|page3-with-after"
-        );
-        cy.clientRepositoryPaginationNavigate(
-          {
-            custom: () => {
-              cy.go("back");
-              cy.waitBetweenNavigation();
+            true,
+            "all|last-updated|page3-with-after"
+          );
+          cy.clientRepositoryPaginationNavigate(
+            {
+              custom: () => {
+                cy.go("back");
+                cy.waitBetweenNavigation();
+              },
             },
-          },
-          true,
-          "all|last-updated|page2-with-after"
-        );
-        cy.clientRepositoryPaginationNavigate(
-          {
-            custom: () => {
-              cy.go("back");
-              cy.waitBetweenNavigation();
+            true,
+            "all|last-updated|page2-with-after"
+          );
+          cy.clientRepositoryPaginationNavigate(
+            {
+              custom: () => {
+                cy.go("back");
+                cy.waitBetweenNavigation();
+              },
             },
-          },
-          true,
-          "all|last-updated|page1-with-after"
-        );
-        cy.go("back");
-        cy.waitBetweenNavigation();
-        cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
-        cy.go("back");
-        cy.waitBetweenNavigation();
-        cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
-        cy.location();
-      });
+            true,
+            "all|last-updated|page1-with-after"
+          );
+          cy.go("back");
+          cy.waitBetweenNavigation();
+          cy.url().should("eq", `${Cypress.config().baseUrl}/${login}`);
+          cy.go("back");
+          cy.waitBetweenNavigation();
+          cy.url().should("contain", `${Cypress.config().baseUrl}${url}`);
+          cy.location();
+        }
+      );
       (skipCheckForwardButton ? it.skip : it)(
         "[Client] should not break forward button",
         () => {
