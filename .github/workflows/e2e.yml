@@ -1,6 +1,6 @@
 # inpired by https://github.com/cypress-io/cypress-and-jest-typescript-example
 name: e2e
-on: [push]
+on: [push, pull_request]
 jobs:
   e2e:
     env:
