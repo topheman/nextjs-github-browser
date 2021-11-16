@@ -4,19 +4,26 @@ jobs:
   main:
     runs-on: ubuntu-20.04
     steps:
-      - name: Checkout 🛎
-        uses: actions/checkout@v2
-      - name: Setup 🥣
+      - name: Setup Node 🥣
         uses: actions/setup-node@v2
         with:
-          node-version: "14"
+          node-version: 14
+      - run: node -v
+      - run: npm -v
+
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+
       - name: Install NPM dependencies 📦
         run: npm ci
         env:
           CYPRESS_INSTALL_BINARY: 0
+
       - name: Lint
         run: npm run lint
+
       - name: Type check
         run: npm run type-check
+
       - name: Unit tests
         run: npm run test:unit

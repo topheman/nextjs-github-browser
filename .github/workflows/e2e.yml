@@ -7,6 +7,13 @@ jobs:
       GRAPHQL_API_TOKEN: ${{secrets.GRAPHQL_API_TOKEN}}
     runs-on: ubuntu-20.04
     steps:
+      - name: Setup Node 🥣
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - run: node -v
+      - run: npm -v
+
       - name: Checkout 🛎
         uses: actions/checkout@v2
 
