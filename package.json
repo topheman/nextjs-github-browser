@@ -7,7 +7,7 @@
     "build": "next build",
     "build:storybook": "GRAPHQL_API_TOKEN=null STORYBOOK_DO_NOT_CALL_GITHUB_DIRECTLY_WITH_TOKEN=true build-storybook -o ./public/explore/storybook",
     "build:all": "npm run build:storybook && npm run build",
-    "start": "node -v && npm -v && next start",
+    "start": "next start",
     "storybook": "start-storybook -p 6006",
     "lint": "eslint --ext js,jsx,ts,tsx --no-fix .",
     "lint:fix": "eslint --ext js,jsx,ts,tsx --fix .",
@@ -16,13 +16,13 @@
     "type-check:cy": "tsc --project ./cypress --pretty --noEmit",
     "prepare": "husky install",
     "graphql-codegen": "graphql-codegen --config codegen.yml",
-    "test": "node -v && npm -v && npm run test:unit",
+    "test": "npm run test:unit",
     "test:unit": "jest",
     "test:unit:watch": "jest --watch",
     "test:precommit": "npm run test:unit:precommit",
     "test:unit:precommit": "npm run test:unit -- --passWithNoTests",
     "cy:open": "cypress open",
-    "cy:run": "node -v && npm -v && cypress run"
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",
