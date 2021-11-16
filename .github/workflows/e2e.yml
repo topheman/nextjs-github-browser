@@ -1,5 +1,5 @@
 # inpired by https://github.com/cypress-io/cypress-and-jest-typescript-example
-name: ci
+name: e2e
 on: [push]
 jobs:
   e2e:
