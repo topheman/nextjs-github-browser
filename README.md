@@ -1,5 +1,9 @@
 # nextjs-github-browser
 
+[![ci](https://github.com/topheman/nextjs-github-browser/actions/workflows/ci.yml/badge.svg)](https://github.com/topheman/nextjs-github-browser/actions/workflows/ci.yml)
+[![e2e](https://github.com/topheman/nextjs-github-browser/actions/workflows/e2e.yml/badge.svg)](https://github.com/topheman/nextjs-github-browser/actions/workflows/e2e.yml)
+[![Demo](https://img.shields.io/badge/demo-online-blue.svg)](http://nextjs-github-browser.vercel.app/)
+
 This project is a reimplementation of the main features of the [github.com](https://github.com) website in **NextJS**.
 
 ## Prerequisites
