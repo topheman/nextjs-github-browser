@@ -5,6 +5,7 @@ import raw from "rehype-raw"; // allow html in markdown - https://github.com/rem
 import sanitize from "rehype-sanitize"; // https://github.com/remarkjs/react-markdown#security
 import clsx from "clsx";
 
+import { profileReadmeBaseUrl } from "../../utils/github";
 import { makeUriTransformer } from "./uri-transformer";
 import styles from "./BaseMarkdown.module.css";
 
@@ -25,23 +26,47 @@ export default function BaseMarkdownDisplay({
   ...props
 }: BaseMarkdownDisplayProps): JSX.Element | null {
   if (markdown) {
-    let uriTransformer;
+    let imageUriTransformer;
+    let linkUriTransformer;
     if (
       profileReadmeInfos.mode === "repository" &&
       profileReadmeInfos.defaultBranchName
     ) {
       const [login, repositoryName] = profileReadmeInfos.login.split("/");
-      uriTransformer = makeUriTransformer(
-        login,
-        profileReadmeInfos.defaultBranchName,
-        profileReadmeInfos.mode,
-        repositoryName
+      imageUriTransformer = makeUriTransformer(
+        profileReadmeBaseUrl(
+          login,
+          profileReadmeInfos.defaultBranchName,
+          profileReadmeInfos.mode,
+          "image",
+          repositoryName
+        )
+      );
+      linkUriTransformer = makeUriTransformer(
+        profileReadmeBaseUrl(
+          login,
+          profileReadmeInfos.defaultBranchName,
+          profileReadmeInfos.mode,
+          "link",
+          repositoryName
+        )
       );
     } else if (profileReadmeInfos.defaultBranchName) {
-      uriTransformer = makeUriTransformer(
-        profileReadmeInfos.login,
-        profileReadmeInfos.defaultBranchName,
-        profileReadmeInfos.mode
+      imageUriTransformer = makeUriTransformer(
+        profileReadmeBaseUrl(
+          profileReadmeInfos.login,
+          profileReadmeInfos.defaultBranchName,
+          profileReadmeInfos.mode,
+          "image"
+        )
+      );
+      linkUriTransformer = makeUriTransformer(
+        profileReadmeBaseUrl(
+          profileReadmeInfos.login,
+          profileReadmeInfos.defaultBranchName,
+          profileReadmeInfos.mode,
+          "link"
+        )
       );
     }
     return (
@@ -51,8 +76,8 @@ export default function BaseMarkdownDisplay({
           rehypePlugins={[raw, sanitize]}
           remarkPlugins={[gfm]}
           className={clsx(styles.root, className)}
-          transformLinkUri={uriTransformer}
-          transformImageUri={uriTransformer}
+          transformLinkUri={linkUriTransformer}
+          transformImageUri={imageUriTransformer}
         >
           {markdown}
         </ReactMarkdown>

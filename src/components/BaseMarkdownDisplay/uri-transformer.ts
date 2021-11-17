@@ -1,24 +1,11 @@
 /** From https://github.com/remarkjs/react-markdown/blob/main/lib/uri-transformer.js */
-import { profileReadmeBaseUrl } from "../../utils/github";
-
 const protocols = ["http", "https", "mailto", "tel"];
 
 /**
  * @param {string} uri
  * @returns {string}
  */
-export function makeUriTransformer(
-  login: string,
-  defaultBranchName: string,
-  mode: "user" | "organization" | "repository",
-  repositoryName?: string
-): (uri: string) => string {
-  const baseUrl = profileReadmeBaseUrl(
-    login,
-    defaultBranchName,
-    mode,
-    repositoryName
-  );
+export function makeUriTransformer(baseUrl: string): (uri: string) => string {
   return function uriTransformer(uri: string) {
     const url = (uri || "").trim();
     const first = url.charAt(0);
@@ -37,7 +24,7 @@ export function makeUriTransformer(
 
     const colon = url.indexOf(":");
     if (colon === -1) {
-      return url;
+      return `${baseUrl}${url}`;
     }
 
     let index = -1;
