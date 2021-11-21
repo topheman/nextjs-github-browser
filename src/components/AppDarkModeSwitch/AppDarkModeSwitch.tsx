@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { SunIcon, MoonIcon } from "@primer/octicons-react";
+import clsx from "clsx";
 
-export type AppDarkModeSwitchProps = never;
+export type AppDarkModeSwitchProps = {
+  className?: string;
+};
 
-// todo better UI
-
-export default function AppDarkModeSwitch(): JSX.Element {
+export default function AppDarkModeSwitch({
+  className,
+  ...props
+}: AppDarkModeSwitchProps): JSX.Element {
   const [darkMode, setDarkMode] = useState(false);
   useEffect(() => {
     if (darkMode) {
@@ -16,14 +21,15 @@ export default function AppDarkModeSwitch(): JSX.Element {
     }
   }, [darkMode]);
   return (
-    <label htmlFor="dark-mode-switch">
-      <input
-        id="dark-mode-switch"
-        type="checkbox"
-        onChange={() => setDarkMode(!darkMode)}
-        checked={darkMode}
-      />{" "}
-      Dark mode
+    <label
+      htmlFor="dark-mode-switch"
+      className={clsx(className, "cursor-pointer")}
+      title={`Switch to ${darkMode ? "light" : "dark"} mode`}
+      {...props}
+    >
+      <button type="button" onClick={() => setDarkMode(!darkMode)}>
+        {darkMode ? <MoonIcon /> : <SunIcon className="text-[yellow]" />}
+      </button>
     </label>
   );
 }

@@ -42,16 +42,16 @@ export default function TheHeader(): JSX.Element {
         <div className="flex items-center p-2 h-full">
           <button
             type="button"
-            className="w-10 h-10 text-brand-secondary hover:bg-brand-primary-light focus:bg-brand-primary-light rounded-full focus:outline-none"
+            className="w-10 h-10 text-white-always hover:bg-brand-primary-light focus:bg-brand-primary-light rounded-full focus:outline-none"
             onClick={open}
             aria-label="Open"
           >
             <HamburgerIcon className="inline-block w-6 h-6 text-center fill-current" />
           </button>
-          <h1 className="m-2 text-brand-secondary">
+          <h1 className="m-2 text-white-always">
             <Link href="/">nextjs-github-browser</Link>
           </h1>
-          <AppDarkModeSwitch />
+          <AppDarkModeSwitch className="text-white" />
         </div>
       </header>
       <DialogOverlay
@@ -71,7 +71,7 @@ export default function TheHeader(): JSX.Element {
           <div className="pt-10">
             <button
               type="button"
-              className="absolute top-1 left-2 w-10 h-10 text-brand-secondary hover:text-brand-secondary focus:text-primary hover:bg-brand-primary-light rounded-full focus:outline-none"
+              className="absolute top-1 left-2 w-10 h-10 text-white-always focus:text-primary hover:bg-brand-primary-light rounded-full focus:outline-none"
               onClick={close}
               aria-label="Close"
             >
@@ -85,9 +85,7 @@ export default function TheHeader(): JSX.Element {
                     className="list-none hover:text-secondary break-words"
                   >
                     <Link href={href}>
-                      <a className=" block py-2 px-2 hover:bg-brand-secondary">
-                        {title}
-                      </a>
+                      <a className="block py-2 px-2">{title}</a>
                     </Link>
                   </li>
                 );
