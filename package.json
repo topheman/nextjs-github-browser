@@ -22,7 +22,8 @@
     "test:precommit": "npm run test:unit:precommit",
     "test:unit:precommit": "npm run test:unit -- --passWithNoTests",
     "cy:open": "cypress open",
-    "cy:run": "cypress run"
+    "cy:run": "cypress run",
+    "forward": "ssh -R 80:localhost:3000 localhost.run -l nextjs-repository-browser"
   },
   "dependencies": {
     "@apollo/client": "^3.3.16",

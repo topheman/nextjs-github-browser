@@ -7,6 +7,9 @@ import {
   GetRepositoryInfosOverviewQuery,
   GetRepositoryInfosOverviewDocument,
 } from "../libs/graphql";
+import BaseMetaTags, {
+  commonMetaTagsExtractProps,
+} from "../components/BaseMetaTags/BaseMetaTags";
 import AppMainLayout from "../components/AppMainLayout/AppMainLayout";
 import AppNavBarRepository from "../components/AppNavBarRepository/AppNavBarRepository";
 import AppRepositoryHeader from "../components/AppRepositoryHeader/AppRepositoryHeader";
@@ -69,45 +72,57 @@ export const makePage = () => ({
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
     return (
-      <AppMainLayout reverse>
-        {() => ({
-          topNav: (
-            <>
-              <AppRepositoryHeader
+      <>
+        <BaseMetaTags
+          {...commonMetaTagsExtractProps({
+            pathname: path,
+          })}
+          description={repositoryResult.data.repository.description}
+          image={repositoryResult.data.repository.openGraphImageUrl}
+          title={`${process.env.NEXT_PUBLIC_APP_TITLE} - ${repositoryResult.data.repository.nameWithOwner}`}
+          twitterCard="summary_large_image"
+          type="object"
+        />
+        <AppMainLayout reverse>
+          {() => ({
+            topNav: (
+              <>
+                <AppRepositoryHeader
+                  owner={owner}
+                  repositoryName={repositoryName}
+                  stargazerCount={
+                    repositoryResult.data?.repository?.stargazerCount
+                  }
+                  forkCount={repositoryResult.data?.repository?.forkCount}
+                />
+                <AppRepositoryInfosAbout
+                  repository={repositoryResult.data?.repository}
+                  className="md:hidden mt-4 md:mt-0"
+                />
+              </>
+            ),
+            nav: (
+              <AppNavBarRepository
+                currentTab="code"
                 owner={owner}
                 repositoryName={repositoryName}
-                stargazerCount={
-                  repositoryResult.data?.repository?.stargazerCount
-                }
-                forkCount={repositoryResult.data?.repository?.forkCount}
               />
-              <AppRepositoryInfosAbout
+            ),
+            main: (
+              <AppRepositoryOverview
                 repository={repositoryResult.data?.repository}
-                className="md:hidden mt-4 md:mt-0"
+                currentPath={path}
               />
-            </>
-          ),
-          nav: (
-            <AppNavBarRepository
-              currentTab="code"
-              owner={owner}
-              repositoryName={repositoryName}
-            />
-          ),
-          main: (
-            <AppRepositoryOverview
-              repository={repositoryResult.data?.repository}
-              currentPath={path}
-            />
-          ),
-          sidebar: !path ? (
-            <AppRepositoryInfos
-              className=""
-              repository={repositoryResult.data?.repository}
-            />
-          ) : null,
-        })}
-      </AppMainLayout>
+            ),
+            sidebar: !path ? (
+              <AppRepositoryInfos
+                className=""
+                repository={repositoryResult.data?.repository}
+              />
+            ) : null,
+          })}
+        </AppMainLayout>
+      </>
     );
   }
   return null;

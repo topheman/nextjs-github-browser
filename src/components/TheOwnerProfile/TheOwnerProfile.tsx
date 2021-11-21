@@ -1,4 +1,6 @@
 /* eslint-disable no-underscore-dangle */
+import { useRouter } from "next/router";
+
 import {
   useGetRepositoryOwnerWithPinnedItemsQuery,
   useGetRepositoryOwnerWithRepositoriesQuery,
@@ -18,6 +20,9 @@ import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppOrganizationProfileInfos from "../AppOrganizationProfileInfos/AppOrganizationProfileInfos";
 import AppProfileRepositories from "../AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCard from "../AppOrganizationCard/AppOrganizationCard";
+import BaseMetaTags, {
+  commonMetaTagsExtractProps,
+} from "../BaseMetaTags/BaseMetaTags";
 
 export type TheOwnerProfileProps = {
   owner: string;
@@ -32,6 +37,7 @@ export default function TheOwnerProfile({
   skipProfileReadme,
   searchUrlParams,
 }: TheOwnerProfileProps): JSX.Element | null {
+  const router = useRouter();
   const repositoryOwnerDefaultModeResult = useGetRepositoryOwnerWithPinnedItemsQuery(
     {
       variables: { owner },
@@ -86,41 +92,53 @@ export default function TheOwnerProfile({
   ) {
     const user = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppMainLayout>
-        {() => ({
-          nav: (
-            <AppProfileNavTab
-              owner={owner}
-              currentTab={tab}
-              reposTotalCount={user.allRepos.totalCount}
-              mode="user"
-            />
-          ),
-          sidebar: <AppUserProfileInfos user={user} />,
-          main: (
-            <AppProfileOverview
-              profileReadme={
-                // README.md for profile might be on a main or master branch
-                (profileReadmeResult?.data?.profileReadmeUser?.file as Blob)
-                  ?.text
-              }
-              profileReadmeInfos={{
-                login: owner,
-                defaultBranchName:
-                  profileReadmeResult.data?.profileReadmeUser?.file?.repository
-                    .defaultBranchRef?.name,
-                mode: "user",
-              }}
-              pinnedRepositories={user.pinnedRepositories?.nodes?.map(
-                (repo) => repo as PinnedItemInfosFragment
-              )}
-              popularRepositories={user.popularRepositories.edges?.map(
-                (edge) => edge?.node as PinnedItemInfosFragment
-              )}
-            />
-          ),
-        })}
-      </AppMainLayout>
+      <>
+        <BaseMetaTags
+          {...commonMetaTagsExtractProps({
+            pathname: router.asPath,
+          })}
+          title={`${user.login} - Overview`}
+          description={`${user.bio} - ${user.login} has ${user.allRepos.totalCount} repositories available. Check it out on nextjs-github-browser!`}
+          image={user.avatarUrl}
+          twitterCard="summary"
+          type="profile"
+        />
+        <AppMainLayout>
+          {() => ({
+            nav: (
+              <AppProfileNavTab
+                owner={owner}
+                currentTab={tab}
+                reposTotalCount={user.allRepos.totalCount}
+                mode="user"
+              />
+            ),
+            sidebar: <AppUserProfileInfos user={user} />,
+            main: (
+              <AppProfileOverview
+                profileReadme={
+                  // README.md for profile might be on a main or master branch
+                  (profileReadmeResult?.data?.profileReadmeUser?.file as Blob)
+                    ?.text
+                }
+                profileReadmeInfos={{
+                  login: owner,
+                  defaultBranchName:
+                    profileReadmeResult.data?.profileReadmeUser?.file
+                      ?.repository.defaultBranchRef?.name,
+                  mode: "user",
+                }}
+                pinnedRepositories={user.pinnedRepositories?.nodes?.map(
+                  (repo) => repo as PinnedItemInfosFragment
+                )}
+                popularRepositories={user.popularRepositories.edges?.map(
+                  (edge) => edge?.node as PinnedItemInfosFragment
+                )}
+              />
+            ),
+          })}
+        </AppMainLayout>
+      </>
     );
   }
   if (
@@ -131,42 +149,56 @@ export default function TheOwnerProfile({
   ) {
     const organisation = repositoryOwnerDefaultModeResult.data.repositoryOwner;
     return (
-      <AppMainLayout reverse>
-        {() => ({
-          nav: (
-            <AppProfileNavTab
-              owner={owner}
-              currentTab={tab}
-              reposTotalCount={organisation.allRepos.totalCount}
-              mode="organization"
-            />
-          ),
-          sidebar: <AppOrganizationProfileInfos organization={organisation} />,
-          main: (
-            <AppProfileOverview
-              profileReadme={
-                // README.md for profile might be on a main or master branch
-                (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)
-                  ?.text
-              }
-              profileReadmeInfos={{
-                login: owner,
-                defaultBranchName:
-                  profileReadmeResult.data?.profileReadmeOrg?.file?.repository
-                    .defaultBranchRef?.name,
-                mode: "organization",
-              }}
-              pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
-                (repo) => repo as PinnedItemInfosFragment
-              )}
-              popularRepositories={organisation.popularRepositories.edges?.map(
-                (edge) => edge?.node as PinnedItemInfosFragment
-              )}
-            />
-          ),
-          topNav: <AppOrganizationCard organisation={organisation} />,
-        })}
-      </AppMainLayout>
+      <>
+        <BaseMetaTags
+          {...commonMetaTagsExtractProps({
+            pathname: router.asPath,
+          })}
+          title={`${organisation.login} - Overview`}
+          description={`${organisation.description} - ${organisation.login} has ${organisation.allRepos.totalCount} repositories available. Check it out on nextjs-github-browser!`}
+          image={organisation.avatarUrl}
+          twitterCard="summary"
+          type="profile"
+        />
+        <AppMainLayout reverse>
+          {() => ({
+            nav: (
+              <AppProfileNavTab
+                owner={owner}
+                currentTab={tab}
+                reposTotalCount={organisation.allRepos.totalCount}
+                mode="organization"
+              />
+            ),
+            sidebar: (
+              <AppOrganizationProfileInfos organization={organisation} />
+            ),
+            main: (
+              <AppProfileOverview
+                profileReadme={
+                  // README.md for profile might be on a main or master branch
+                  (profileReadmeResult?.data?.profileReadmeOrg?.file as Blob)
+                    ?.text
+                }
+                profileReadmeInfos={{
+                  login: owner,
+                  defaultBranchName:
+                    profileReadmeResult.data?.profileReadmeOrg?.file?.repository
+                      .defaultBranchRef?.name,
+                  mode: "organization",
+                }}
+                pinnedRepositories={organisation.pinnedRepositories?.nodes?.map(
+                  (repo) => repo as PinnedItemInfosFragment
+                )}
+                popularRepositories={organisation.popularRepositories.edges?.map(
+                  (edge) => edge?.node as PinnedItemInfosFragment
+                )}
+              />
+            ),
+            topNav: <AppOrganizationCard organisation={organisation} />,
+          })}
+        </AppMainLayout>
+      </>
     );
   }
   return null;

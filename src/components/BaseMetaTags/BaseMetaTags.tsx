@@ -15,7 +15,7 @@ export interface PropsMetaTags {
   twitterHandle?: string;
   twitterCard?: "summary" | "summary_large_image";
   title?: string;
-  description?: string;
+  description?: string | null;
   siteName?: string;
   type?: "profile" | "object";
   url?: string;

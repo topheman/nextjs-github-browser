@@ -23,6 +23,7 @@ query GetRepositoryInfosOverview(
       name
       prefix
     }
+    openGraphImageUrl
     # identified what kind of ref was passed
     currentRef: ref(qualifiedName: $ref) {
       name
