@@ -2,7 +2,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { DialogOverlay, DialogContent } from "@reach/dialog";
+
 import "@reach/dialog/styles.css";
+import style from "./style.module.css";
 
 import HamburgerIcon from "../icons/HamburgerIcon";
 import CloseIcon from "../icons/CloseIcon";
@@ -12,50 +14,9 @@ type LinkOptionsType = {
   target?: "_blank";
 };
 
-function getLinks(
-  owner?: string | string[],
-  repositoryName?: string | string[]
-): [string, string, LinkOptionsType][] {
-  return [
-    ["/", "Home", {}],
-    ["/topheman", "/topheman", {}],
-    ["/topheman?tab=repositories", "/topheman?tab=repositories", {}],
-    ["/topheman/nextjs-movie-browser", "/topheman/nextjs-movie-browser", {}],
-    ["/warpdesign", "/warpdesign", {}],
-    ["/warpdesign?tab=repositories", "/warpdesign?tab=repositories", {}],
-    ["/warpdesign/react-explorer", "/warpdesign/react-explorer", {}],
-    ["/facebook", "/facebook", {}],
-    ["/facebook/react", "/facebook/react", {}],
-    ["/twitter", "/twitter", {}],
-    ["/microsoft", "/microsoft", {}],
-    ["/a", "/a (no profile readme)", {}],
-    process.env.NODE_ENV === "production"
-      ? [
-          "/explore/storybook/index.html",
-          "explore storybook",
-          { target: "_blank" },
-        ]
-      : null,
-    ["/about", "About", {}],
-    ...(owner && repositoryName
-      ? [
-          "/tree/master",
-          "/tree/gh-pages",
-          "/tree/feature/some-feature",
-          "/tree/feature/some-feature/with-multiples-slashes",
-          "/blob/master?path=src/index.js",
-          "/blob/gh-pages?path=src/index.js",
-          "/blob/feature/some-feature?path=src/index.js",
-          "/blob/feature/some-feature/with-multiples-slashes?path=src/index.js",
-          "/commit/c4dce4801eafc37e7849f800ae899c12c13485c1",
-        ].map((url) => [`/${owner}/${repositoryName}${url}`, url, {}])
-      : []),
-  ].filter(Boolean);
-}
-
 export default function TheHeader(): JSX.Element {
   const router = useRouter();
-  const { owner, repositoryName } = router.query;
+  // const { owner, repositoryName } = router.query;
   const [showDrawer, setShowDrawer] = useState(false);
   const open = () => setShowDrawer(true);
   const close = () => setShowDrawer(false);
@@ -66,7 +27,15 @@ export default function TheHeader(): JSX.Element {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const links = getLinks(owner, repositoryName);
+  const links: [string | null, string, LinkOptionsType][] = [
+    ["/", "Home", {}],
+    process.env.NODE_ENV === "production"
+      ? ["/explore/storybook/index.html", "Storybook", { target: "_blank" }]
+      : null,
+    [null, "separator-1", {}],
+    ["https://github.com/topheman/nextjs-github-browser", "Github", {}],
+    ["https://twitter.com/topheman", "Twitter", {}],
+  ].filter(Boolean);
   return (
     <>
       <header className="h-12 bg-brand-primary shadow-lg">
@@ -85,7 +54,11 @@ export default function TheHeader(): JSX.Element {
           <AppDarkModeSwitch />
         </div>
       </header>
-      <DialogOverlay isOpen={showDrawer} onDismiss={close}>
+      <DialogOverlay
+        isOpen={showDrawer}
+        onDismiss={close}
+        className={style.dialog}
+      >
         <DialogContent
           style={{
             width: "80vw",
@@ -95,7 +68,7 @@ export default function TheHeader(): JSX.Element {
           }}
           aria-label="Links"
         >
-          <div className="pt-4">
+          <div className="pt-10">
             <button
               type="button"
               className="absolute top-1 left-2 w-10 h-10 text-brand-secondary hover:text-brand-secondary focus:text-primary hover:bg-brand-primary-light rounded-full focus:outline-none"
@@ -104,16 +77,23 @@ export default function TheHeader(): JSX.Element {
             >
               <CloseIcon className="inline-block w-6 h-6 text-center fill-current" />
             </button>
-            {links.map(([href, title, options]) => (
-              <li
-                key={href}
-                className="list-none hover:text-secondary break-words"
-              >
-                <Link href={href}>
-                  <a {...options}>{title}</a>
-                </Link>
-              </li>
-            ))}
+            {links.map(([href, title]) => {
+              if (href && title) {
+                return (
+                  <li
+                    key={title}
+                    className="list-none hover:text-secondary break-words"
+                  >
+                    <Link href={href}>
+                      <a className=" block py-2 px-2 hover:bg-brand-secondary">
+                        {title}
+                      </a>
+                    </Link>
+                  </li>
+                );
+              }
+              return <li key={title} className="list-none border" />;
+            })}
           </div>
         </DialogContent>
       </DialogOverlay>

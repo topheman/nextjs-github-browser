@@ -62,6 +62,15 @@ export default function PageIndex(): JSX.Element {
             </Link>
           </li>
         </ul>
+        {process.env.NODE_ENV === "production" ? (
+          <p className="mt-4">
+            The storybook of the project is also{" "}
+            <Link href="/explore/storybook/index.html">
+              <a target="_blank">available online</a>
+            </Link>
+            .
+          </p>
+        ) : null}
         <p className="mt-4">Take a tour (and more):</p>
         <ul>
           <li>
