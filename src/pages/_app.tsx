@@ -8,6 +8,7 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 import "github-markdown-css";
 import TheHeader from "../components/TheHeader/TheHeader";
+import TheFooter from "../components/TheFooter/TheFooter";
 
 if (parseBooleanEnvVar(process.env.NEXT_PUBLIC_API_MOCKS_ENABLED, false)) {
   // eslint-disable-next-line no-console
@@ -31,6 +32,7 @@ function MyApp({
     <ApolloProvider client={apolloClient}>
       <TheHeader />
       <Component {...pageProps} />
+      <TheFooter fromFullYear={2021} toFullYear={new Date().getFullYear()} />
     </ApolloProvider>
   );
 }
