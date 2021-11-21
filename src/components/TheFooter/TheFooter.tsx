@@ -33,6 +33,20 @@ export default function TheFooter({
         </a>{" "}
         - Christophe Rosset
       </p>
+      <p className="pt-2 text-sm">
+        <a
+          href="https://github.com/topheman"
+          className="text-brand-primary hover:underline"
+        >
+          Github
+        </a>{" "}
+        <a
+          href="https://twitter.com/topheman"
+          className="text-brand-primary hover:underline"
+        >
+          Twitter
+        </a>
+      </p>
       {currentUrl ? (
         <p className="pt-2 pb-4">
           <ExternalTwitterButton
