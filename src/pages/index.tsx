@@ -1,6 +1,9 @@
-import Head from "next/head";
 import Link from "next/link";
 import clsx from "clsx";
+
+import BaseMetaTags, {
+  commonMetaTagsExtractProps,
+} from "../components/BaseMetaTags/BaseMetaTags";
 
 export default function PageIndex(): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -19,11 +22,11 @@ export default function PageIndex(): JSX.Element {
   ];
   return (
     <div>
-      <Head>
-        <title>nextjs-github-browser</title>
-        <meta name="description" content="nextjs-github-browser" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <BaseMetaTags
+        {...commonMetaTagsExtractProps({
+          pathname: "/",
+        })}
+      />
 
       <main className="px-2 lg:px-0 mx-auto mt-4 max-w-5xl">
         <h1 className="text-2xl">Home</h1>
