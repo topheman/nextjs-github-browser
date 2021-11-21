@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import styles from "../styles/basic.module.css";
+// import styles from "../styles/basic.module.css";
 
 export default function PageIndex(): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -18,7 +18,7 @@ export default function PageIndex(): JSX.Element {
     ["/topheman/nextjs-github-browser", "topheman/nextjs-github-browser"],
   ];
   return (
-    <div className={styles.root}>
+    <div>
       <Head>
         <title>nextjs-github-browser</title>
         <meta name="description" content="nextjs-github-browser" />
@@ -44,43 +44,67 @@ export default function PageIndex(): JSX.Element {
         <ul className="ml-10 list-disc">
           <li>
             <Link href="/apollographql/apollo-client">
-              <a title="appolo GraphQL">Apollo</a>
+              <a
+                title="appolo GraphQL"
+                className="text-brand-primary hover:underline"
+              >
+                Apollo
+              </a>
             </Link>{" "}
             /{" "}
             <Link href="/graphql">
-              <a title="GraphQL">GraphQL</a>
+              <a title="GraphQL" className="text-brand-primary hover:underline">
+                GraphQL
+              </a>
             </Link>
           </li>
           <li>
             <Link href="/microsoft/TypeScript">
-              <a title="microsoft/TypeScript">TypeScript</a>
+              <a
+                title="microsoft/TypeScript"
+                className="text-brand-primary hover:underline"
+              >
+                TypeScript
+              </a>
             </Link>
           </li>
           <li>
             <Link href="/tailwindlabs/tailwindcss">
-              <a title="tailwindlabs/tailwindcss">Tailwind</a>
+              <a
+                title="tailwindlabs/tailwindcss"
+                className="text-brand-primary hover:underline"
+              >
+                Tailwind
+              </a>
             </Link>
           </li>
         </ul>
-        {process.env.NODE_ENV === "production" ? (
-          <p className="mt-4">
-            The storybook of the project is also{" "}
-            <Link href="/explore/storybook/index.html">
-              <a target="_blank">available online</a>
-            </Link>
-            .
-          </p>
-        ) : null}
+
+        <p className="mt-4">
+          The{" "}
+          <strong className="text-brand-primary hover:underline">
+            storybook
+          </strong>{" "}
+          of the project is also{" "}
+          <Link href="/explore/storybook/index.html">
+            <a target="_blank" className="text-brand-primary hover:underline">
+              available online
+            </a>
+          </Link>
+          .
+        </p>
         <p className="mt-4">Take a tour (and more):</p>
-        <ul>
+        <ul className="ml-10 list-disc">
           <li>
             Profile pages (user and organizations) - ex:
-            <ul>
+            <ul className="ml-10 list-disc">
               {profileLinks.map(([href, label]) => {
                 return (
                   <li key={href}>
                     <Link href={href}>
-                      <a>{label}</a>
+                      <a className="text-brand-primary hover:underline">
+                        {label}
+                      </a>
                     </Link>
                   </li>
                 );
@@ -89,12 +113,14 @@ export default function PageIndex(): JSX.Element {
           </li>
           <li>
             Repository pages - ex:
-            <ul>
+            <ul className="ml-10 list-disc">
               {repositoryLinks.map(([href, label]) => {
                 return (
                   <li key={href}>
                     <Link href={href}>
-                      <a>{label}</a>
+                      <a className="text-brand-primary hover:underline">
+                        {label}
+                      </a>
                     </Link>
                   </li>
                 );
