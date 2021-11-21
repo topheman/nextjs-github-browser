@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-// import styles from "../styles/basic.module.css";
+import clsx from "clsx";
 
 export default function PageIndex(): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -79,7 +79,6 @@ export default function PageIndex(): JSX.Element {
             </Link>
           </li>
         </ul>
-
         <p className="mt-4">
           The{" "}
           <strong className="text-brand-primary hover:underline">
@@ -93,41 +92,56 @@ export default function PageIndex(): JSX.Element {
           </Link>
           .
         </p>
-        <p className="mt-4">Take a tour (and more):</p>
-        <ul className="ml-10 list-disc">
-          <li>
-            Profile pages (user and organizations) - ex:
+        <div className={clsx("md:flex")}>
+          <div className={clsx("w-6/12")}>
+            <p className="mt-4">Take a tour (and more):</p>
             <ul className="ml-10 list-disc">
-              {profileLinks.map(([href, label]) => {
-                return (
-                  <li key={href}>
-                    <Link href={href}>
-                      <a className="text-brand-primary hover:underline">
-                        {label}
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
+              <li>
+                Profile pages (user and organizations) - ex:
+                <ul className="ml-10 list-disc">
+                  {profileLinks.map(([href, label]) => {
+                    return (
+                      <li key={href}>
+                        <Link href={href}>
+                          <a className="text-brand-primary hover:underline">
+                            {label}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
+              <li>
+                Repository pages - ex:
+                <ul className="ml-10 list-disc">
+                  {repositoryLinks.map(([href, label]) => {
+                    return (
+                      <li key={href}>
+                        <Link href={href}>
+                          <a className="text-brand-primary hover:underline">
+                            {label}
+                          </a>
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </li>
             </ul>
-          </li>
-          <li>
-            Repository pages - ex:
-            <ul className="ml-10 list-disc">
-              {repositoryLinks.map(([href, label]) => {
-                return (
-                  <li key={href}>
-                    <Link href={href}>
-                      <a className="text-brand-primary hover:underline">
-                        {label}
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </li>
-        </ul>
+          </div>
+          <div className="mt-4 md:mt-0 text-center">
+            <p>Show this QRCode to share the url of the website:</p>
+            <p>
+              <img
+                className="inline-block"
+                src="/qrcode.png"
+                width="300"
+                alt="QRCode to access website"
+              />
+            </p>
+          </div>
+        </div>
       </main>
     </div>
   );
