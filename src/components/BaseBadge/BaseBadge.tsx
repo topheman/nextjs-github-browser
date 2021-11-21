@@ -13,7 +13,7 @@ export default function BaseBadge({
     <span
       {...props}
       className={clsx(
-        "inline-flex justify-center items-center py-1 px-2 text-xs font-bold leading-none text-white bg-brand-primary rounded-full",
+        "inline-flex justify-center items-center py-1 px-2 text-xs font-bold leading-none text-white-always bg-brand-primary rounded-full",
         className
       )}
     >
