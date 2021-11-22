@@ -38,6 +38,7 @@ module.exports = {
       "primary-active": "var(--color-bg-primary-active)",
       "primary-hover": "var(--color-bg-primary-hover)",
       "primary-focus": "var(--color-bg-primary-focus)",
+      "brand-secondary": "var(--color-bg-brand-secondary)",
     },
     borderColor: {
       ...brandColors,
