@@ -4,58 +4,38 @@
  * and finally https://github.com/topheman/nextjs-movie-browser/blob/master/src/components/TwitterButton.tsx
  */
 
+import clsx from "clsx";
 import React from "react";
 
+import TwitterIcon from "../icons/TwitterIcon";
+
 export interface ExternalTwitterButtonProps {
-  size?: "l" | "large";
-  lang?: string;
-  dnt?: boolean; // privacy policy ("dnt" as "do not track")
   text?: string;
   url?: string;
   hashtags?: string;
   via?: string;
   related?: string;
   buttonTitle?: string;
-  style?: React.CSSProperties;
   className?: string;
 }
 
 /**
- * This component renders directly the iframe of twitter without running external script
- * to avoid messing up with react's internal DOM and break react hot loader
- *
- * @param {String} size
- * @param {String} lang
- * @param {Boolean} dnt
- * @param {String} text
- * @param {String} url
- * @param {String} hashtags
- * @param {String} via
- * @param {String} related
- * @param {String} buttonTitle
+ * Not using the iframe because it breaks back button for some reason
  */
-const TwitterButton: React.FunctionComponent<ExternalTwitterButtonProps> = (
+const ExternalTwitterButton: React.FunctionComponent<ExternalTwitterButtonProps> = (
   props
 ) => {
   const {
-    size,
-    lang,
-    dnt,
     text,
     url,
     hashtags,
     via,
     related,
     buttonTitle,
-    style,
     className,
     ...remainingProps
   } = props;
   const params = [
-    `size=${size}`,
-    "count=none",
-    `dnt=${dnt}`,
-    `lang=${lang}`,
     (typeof text !== "undefined" && `text=${encodeURIComponent(text)}`) ||
       undefined,
     (typeof url !== "undefined" && `url=${encodeURIComponent(url)}`) ||
@@ -71,36 +51,31 @@ const TwitterButton: React.FunctionComponent<ExternalTwitterButtonProps> = (
   ]
     .filter((item) => item !== undefined)
     .join("&");
-  const mergedStyles = {
-    border: 0,
-    overflow: "hidden",
-    ...style,
-  };
   return (
-    <iframe
-      width="81px"
-      height="28px"
+    <a
+      href={`https://twitter.com/intent/tweet?${params}`}
+      target="_blank"
+      rel="noreferrer"
+      className={clsx(
+        className,
+        "py-1 px-3 text-sm text-white-always bg-[#049ff5] hover:bg-[#006399] rounded-lg"
+      )}
       title={buttonTitle}
-      style={mergedStyles}
-      scrolling="no"
-      src={`https://platform.twitter.com/widgets/tweet_button.html?${params}`}
-      className={className}
       {...remainingProps}
-    />
+    >
+      <TwitterIcon className="mr-2" />
+      tweet
+    </a>
   );
 };
 
-TwitterButton.defaultProps = {
-  size: "l",
-  lang: "en",
-  dnt: false,
-  buttonTitle: "Twitter Tweet Button",
+ExternalTwitterButton.defaultProps = {
+  buttonTitle: "Tweet about this",
   text: undefined,
   url: undefined,
   hashtags: undefined,
   via: undefined,
   related: undefined,
-  style: undefined,
 };
 
-export default TwitterButton;
+export default ExternalTwitterButton;
