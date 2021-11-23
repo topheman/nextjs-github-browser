@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { SunIcon, MoonIcon } from "@primer/octicons-react";
 import clsx from "clsx";
+
+import { useLocalStorage } from "../../utils/hooks";
 
 export type AppDarkModeSwitchProps = {
   className?: string;
@@ -10,7 +12,7 @@ export default function AppDarkModeSwitch({
   className,
   ...props
 }: AppDarkModeSwitchProps): JSX.Element {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useLocalStorage("DARKMODE", false);
   useEffect(() => {
     if (darkMode) {
       document.body.classList.remove("default-mode");
