@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { RepoIcon } from "@primer/octicons-react";
 
 import AppTagCount from "../AppTagCount/AppTagCount";
@@ -16,12 +17,11 @@ export default function AppPinnedItem({
     <div {...props} className="flex flex-col">
       <div className="flex items-center">
         <RepoIcon className="mr-1 text-secondary" />
-        <a
-          href={`/${repository.nameWithOwner}`}
-          className="font-bold text-brand-primary hover:underline"
-        >
-          {repository.name}
-        </a>
+        <Link href={`/${repository.nameWithOwner}`}>
+          <a className="font-bold text-brand-primary hover:underline">
+            {repository.name}
+          </a>
+        </Link>
       </div>
       <p className="mt-1 mb-1 h-[32px] text-xs text-secondary">
         {repository.description ||
