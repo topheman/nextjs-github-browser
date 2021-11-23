@@ -71,15 +71,16 @@ export const makePage = () => ({
     variables,
   });
   if (repositoryResult.data && repositoryResult.data.repository) {
+    const metaTagsProps = commonMetaTagsExtractProps({
+      pathname: path,
+    });
     return (
       <>
         <BaseMetaTags
-          {...commonMetaTagsExtractProps({
-            pathname: path,
-          })}
+          {...metaTagsProps}
           description={repositoryResult.data.repository.description}
           image={repositoryResult.data.repository.openGraphImageUrl}
-          title={`${process.env.NEXT_PUBLIC_APP_TITLE} - ${repositoryResult.data.repository.nameWithOwner}`}
+          title={`${metaTagsProps.siteName} - ${repositoryResult.data.repository.nameWithOwner}`}
           twitterCard="summary_large_image"
           type="object"
         />

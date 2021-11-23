@@ -20,12 +20,15 @@ export default function PageIndex(): JSX.Element {
     ["/topheman/nextjs-movie-browser", "topheman/nextjs-movie-browser"],
     ["/topheman/nextjs-github-browser", "topheman/nextjs-github-browser"],
   ];
+  const metaTagsProps = commonMetaTagsExtractProps({
+    pathname: "/",
+  });
   return (
     <div>
       <BaseMetaTags
-        {...commonMetaTagsExtractProps({
-          pathname: "/",
-        })}
+        {...metaTagsProps}
+        title={metaTagsProps.siteName}
+        twitterCard="summary_large_image"
       />
 
       <main className="px-2 lg:px-0 mx-auto mt-4 max-w-5xl">
