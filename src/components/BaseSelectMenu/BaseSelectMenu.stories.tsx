@@ -16,6 +16,30 @@ const Template: Story<BaseSelectMenuProps> = (args) => {
   );
 };
 
+const SHORT_LIST = ["Red", "Blue", "Orange"];
+const LONG_LIST = [
+  "black",
+  "red",
+  "green",
+  "yellow",
+  "blue",
+  "magenta",
+  "cyan",
+  "white",
+  "gray",
+  "grey",
+  "d-black",
+  "d-red",
+  "d-green",
+  "d-yellow",
+  "d-blue",
+  "d-magenta",
+  "d-cyan",
+  "d-white",
+  "d-gray",
+  "d-grey",
+];
+
 export const Base = Template.bind({});
 Base.args = {
   buttonLabel: "Type",
@@ -24,9 +48,9 @@ Base.args = {
   children: (
     <div>
       <ul className="p-2">
-        <li>Red</li>
-        <li>Blue</li>
-        <li>Orange</li>
+        {SHORT_LIST.map((color) => (
+          <li key={color}>{color}</li>
+        ))}
       </ul>
     </div>
   ),
@@ -39,9 +63,40 @@ WithoutMenuLabel.args = {
   children: (
     <div>
       <ul className="p-2">
-        <li>Red</li>
-        <li>Blue</li>
-        <li>Orange</li>
+        {SHORT_LIST.map((color) => (
+          <li key={color}>{color}</li>
+        ))}
+      </ul>
+    </div>
+  ),
+};
+
+export const MultipleData = Template.bind({});
+MultipleData.args = {
+  buttonLabel: "Type",
+  menuLabel: "Select Type",
+  alignMenu: "right",
+  children: (
+    <div>
+      <ul className="p-2">
+        {LONG_LIST.map((color) => (
+          <li key={color}>{color}</li>
+        ))}
+      </ul>
+    </div>
+  ),
+};
+
+export const MultipleDataWithoutMenuLabel = Template.bind({});
+MultipleDataWithoutMenuLabel.args = {
+  buttonLabel: "Type",
+  alignMenu: "right",
+  children: (
+    <div>
+      <ul className="p-2">
+        {LONG_LIST.map((color) => (
+          <li key={color}>{color}</li>
+        ))}
       </ul>
     </div>
   ),

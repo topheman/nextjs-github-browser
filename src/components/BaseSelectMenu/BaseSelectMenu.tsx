@@ -57,7 +57,7 @@ export default function BaseSelectMenu({
           <div
             className={clsx(
               !open ? "hidden" : "",
-              "overflow-hidden fixed sm:absolute top-1/2 sm:top-auto sm:right-0 left-1/2 z-50 sm:mt-1 w-11/12 sm:w-72 text-lg sm:text-sm text-primary bg-primary rounded-md border border-light shadow-lg -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0",
+              "fixed sm:absolute top-1/2 sm:top-auto sm:right-0 left-1/2 z-50 sm:mt-1 w-11/12 sm:w-72 text-lg sm:text-sm text-primary bg-primary rounded-md border border-light shadow-lg -translate-x-1/2 sm:translate-x-0 -translate-y-1/2 sm:translate-y-0",
               alignMenu === "right" ? "sm:left-auto" : "sm:left-0"
             )}
           >
@@ -69,7 +69,9 @@ export default function BaseSelectMenu({
                 </button>
               </header>
             ) : null}
-            <div className="mb-[-1px]">{children}</div>
+            <div className="overflow-scroll mb-[-1px] max-h-80 md:max-h-96">
+              {children}
+            </div>
           </div>
         ) : null}
       </div>
