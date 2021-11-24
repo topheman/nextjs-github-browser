@@ -52,7 +52,7 @@ export default function AppRepositoryOverview({
             []
           }
           currentPath={currentPath}
-          className="mt-1"
+          className="mt-2"
           currentRef={resolvedCurrentRef}
         />
       ) : null}
