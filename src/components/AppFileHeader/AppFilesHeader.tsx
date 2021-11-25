@@ -30,7 +30,7 @@ export default function AppFilesHeader({
       <h2 className="sr-only">Latest commit</h2>
       <div
         className={clsx(
-          "flex flex-1 bg-brand-secondary rounded-tl rounded-tr",
+          "flex flex-1 rounded-tl rounded-tr bg-brand-secondary",
           className
         )}
         {...props}

@@ -76,7 +76,7 @@ export default function AppFilesList({
         ) : null}
         {sortedFiles.map((file) => (
           <div
-            className="flex hover:bg-primary-hover"
+            className="flex hover:bg-opacity-50 hover:bg-brand-secondary"
             key={file.name}
             role="row"
           >

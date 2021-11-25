@@ -96,7 +96,12 @@ module.exports = {
       },
     ],
     "tailwindcss/classnames-order": "error",
-    "tailwindcss/no-custom-classname": "warn",
+    "tailwindcss/no-custom-classname": [
+      "warn",
+      {
+        whitelist: ["bg-primary", "bg-brand-primary", "bg-brand-secondary"],
+      },
+    ],
     "tailwindcss/no-contradicting-classname": "error",
     // https://github.com/testing-library/eslint-plugin-jest-dom#usage
     "jest-dom/prefer-checked": "error",

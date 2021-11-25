@@ -1,47 +1,54 @@
+/**
+ * See tailwind.config for explanation about the color formats
+ */
 body,
 body.default-mode {
-  --color-bg-canvas: white;
+  --color-rgb-white: 255, 255, 255; /* white */
+  --color-rgb-white-always: 255, 255, 255; /* white */
+  --color-rgb-brand-primary: 144, 0, 0; /* #900000 */
+  --color-rgb-brand-secondary: 238, 238, 238; /* #eee */
+  --color-raw-gray: rgb(128, 128, 128);
+  --color-raw-white-always: rgb(255, 255, 255); /* white */
+  --color-raw-brand-primary: rgb(144, 0, 0); /* #900000 */
+  --color-raw-brand-secondary: rgb(238, 238, 238); /* #eee */
+  --color-bg-canvas: 255, 255, 255; /* white */
   --color-bg-canvas-inverted: #0d1117;
-  --color-text-white: white;
-  --color-text-white-always: white;
-  --color-brand-primary: #900000;
-  --color-brand-primary-light: #c26f6f;
-  --color-brand-secondary: #eee;
-  --color-bg-brand-secondary: #eee;
+  --color-text-white: var(--color-raw-white); /* white */
+  --color-text-white-always: var(--color-raw-white-always); /* white */
   --color-text-primary: black;
   --color-text-secondary: #586069;
-  --color-text-brand-primary: #900000;
-  --color-bg-primary: white;
-  --color-bg-primary-active: #ebecf0;
-  --color-bg-primary-hover: #f3f4f6;
-  --color-bg-primary-focus: #f3f4f6;
-  --color-border-primary: gray;
-  --color-border-primary-active: gray;
-  --color-border-primary-hover: gray;
-  --color-border-primary-focus: gray;
+  --color-text-brand-primary: var(--color-raw-brand-primary); /* #900000 */
+  --color-bg-primary: var(--color-rgb-white); /* white */
+  --color-border-brand-primary: var(--color-raw-brand-primary);
+  --color-border-primary: var(--color-raw-gray); /* gray */
+  --color-border-primary-active: var(--color-raw-gray); /* gray */
+  --color-border-primary-hover: var(--color-raw-gray); /* gray */
+  --color-border-primary-focus: var(--color-raw-gray); /* gray */
   --color-border-secondary: darkgray;
   --color-border-light: #d8d8d8;
 }
 body.dark-mode {
+  --color-rgb-white: 13, 17, 23; /* #0d1117 */
+  --color-rgb-white-always: 255, 255, 255; /* white */
+  --color-rgb-brand-primary: 144, 0, 0; /* #900000 */
+  --color-rgb-brand-secondary: 54, 54, 54; /* #eee */
+  --color-raw-white: rgb(13, 17, 23); /* #0d1117 */
+  --color-raw-white-always: rgb(255, 255, 255); /* white */
+  --color-raw-brand-primary: rgb(144, 0, 0); /* #900000 */
+  --color-raw-brand-secondary: rgb(238, 238, 238); /* #eee */
   --color-bg-canvas: #0d1117;
-  --color-bg-canvas-inverted: white;
-  --color-text-white: #0d1117;
-  --color-text-white-always: white;
-  --color-brand-primary: #900000;
-  --color-brand-primary-light: #c26f6f;
-  --color-brand-secondary: #eee;
-  --color-bg-brand-secondary: #444444;
-  --color-text-primary: white;
+  --color-bg-canvas-inverted: 255, 255, 255; /* white */
+  --color-text-white: var(--color-raw-white);
+  --color-text-white-always: var(--color-raw-white-always); /* white */
+  --color-text-primary: rgb(255, 255, 255); /* white */
   --color-text-secondary: #8b949e;
   --color-text-brand-primary: #ff3030;
-  --color-bg-primary: #0d1117;
-  --color-bg-primary-active: rgb(63, 63, 63);
-  --color-bg-primary-hover: rgb(63, 63, 63);
-  --color-bg-primary-focus: rgb(63, 63, 63);
-  --color-border-primary: gray;
-  --color-border-primary-active: white;
-  --color-border-primary-hover: white;
-  --color-border-primary-focus: white;
+  --color-bg-primary: var(--color-rgb-white);
+  --color-border-brand-primary: var(--color-raw-brand-primary);
+  --color-border-primary: 128, 128, 128; /* gray */
+  --color-border-primary-active: var(--color-raw-white-always); /* white */
+  --color-border-primary-hover: var(--color-raw-white-always); /* white */
+  --color-border-primary-focus: var(--color-raw-white-always); /* white */
   --color-border-secondary: darkgray;
   --color-border-light: #8b949e;
 }

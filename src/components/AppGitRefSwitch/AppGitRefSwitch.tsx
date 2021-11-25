@@ -110,7 +110,7 @@ export default function AppGitRefSwitch({
                 <li
                   key={ref}
                   className={clsx(
-                    "flex hover:bg-brand-secondary border-b border-light"
+                    "flex border-b border-light hover:bg-brand-secondary"
                   )}
                 >
                   <Link

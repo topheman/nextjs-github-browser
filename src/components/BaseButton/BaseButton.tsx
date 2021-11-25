@@ -31,14 +31,14 @@ export default function BaseButton({
       {...props}
       type="button"
       className={clsx(
-        "font-bold text-primary rounded-md border border-light",
+        "font-bold text-primary rounded-md border border-light hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none hover:bg-brand-secondary focus:bg-brand-secondary active:bg-brand-secondary",
         size === "small" ? "text-sm" : "text-base",
         className
       )}
     >
       <span
         className={clsx(
-          "float-left py-1 px-3 bg-primary hover:bg-primary-hover focus:bg-primary-focus active:bg-primary-active hover:border-primary-hover focus:border-primary-hover active:border-primary-hover focus:outline-none",
+          " float-left py-1 px-3",
           !badge ? "rounded-md" : "rounded-tl-md rounded-bl-md"
         )}
       >

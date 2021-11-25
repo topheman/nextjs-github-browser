@@ -1,8 +1,39 @@
+/**
+ * When customising color in tailwind, use the following in order to
+ * benefit from the opacity utility.
+ * Declare your colors like:
+ * ```
+:root {
+  --color-primary: 37, 99, 235;
+  --color-secondary: 253, 224, 71;
+}
+ *
+ * Source : https://github.com/adamwathan/tailwind-css-variable-text-opacity-demo
+ *
+ * However, colors that are declared that way won't pass the linter,
+ * - so you have to add them to the whitelist in .eslintrc.js
+ * - only use them on background (since it's mainly here you need opacity)
+ * - override the colors on textColor/borderColor with the raw color so
+ *   it will be recognized by linter
+ */
+const makeColorWithOpacity = (cssVarname) => ({
+  opacityVariable,
+  opacityValue,
+}) => {
+  if (opacityValue !== undefined) {
+    return `rgba(var(${cssVarname}), ${opacityValue})`;
+  }
+  if (opacityVariable !== undefined) {
+    return `rgba(var(${cssVarname}), var(${opacityVariable}, 1))`;
+  }
+  return `rgb(var(${cssVarname}))`;
+};
+
 const brandColors = {
-  "brand-primary": {
-    DEFAULT: "var(--color-brand-primary)",
-    light: "var(--color-brand-primary-light)",
-  },
+  white: makeColorWithOpacity("--color-rgb-white"),
+  "white-always": makeColorWithOpacity("--color-rgb-white-always"),
+  "brand-primary": makeColorWithOpacity("--color-rgb-brand-primary"),
+  "brand-secondary": makeColorWithOpacity("--color-rgb-brand-secondary"),
 };
 
 module.exports = {
@@ -24,24 +55,21 @@ module.exports = {
     },
     textColor: {
       ...brandColors,
-      "brand-primary": "var(--color-text-brand-primary)",
       white: "var(--color-text-white)",
       "white-always": "var(--color-text-white-always)",
+      "brand-primary": "var(--color-text-brand-primary)",
       primary: "var(--color-text-primary)",
       secondary: "var(--color-text-secondary)",
     },
     backgroundColor: {
       ...brandColors,
-      canvas: "var(--color-bg-canvas)",
-      "canvas-inverted": "var(--color-bg-canvas-inverted)",
-      primary: "var(--color-bg-primary)",
-      "primary-active": "var(--color-bg-primary-active)",
-      "primary-hover": "var(--color-bg-primary-hover)",
-      "primary-focus": "var(--color-bg-primary-focus)",
-      "brand-secondary": "var(--color-bg-brand-secondary)",
+      canvas: makeColorWithOpacity("--color-bg-canvas"),
+      "canvas-inverted": makeColorWithOpacity("--color-bg-canvas-inverted"),
+      primary: makeColorWithOpacity("--color-bg-primary"),
     },
     borderColor: {
       ...brandColors,
+      "brand-primary": "var(--color-border-brand-primary)",
       primary: "var(--color-border-primary)",
       "primary-active": "var(--color-border-primary-active)",
       "primary-hover": "var(--color-border-primary-hover)",

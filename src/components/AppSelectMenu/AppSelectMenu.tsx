@@ -49,7 +49,7 @@ export default function AppSelectMenu<T extends string | number>({
             key={label}
             role="menuitem"
             onClick={() => internalOnChange(value)}
-            className="flex py-1 pl-4 w-full hover:bg-primary-hover border-b border-light cursor-pointer"
+            className="flex py-1 pl-4 w-full border-b border-light cursor-pointer hover:bg-brand-secondary"
             tabIndex={0}
             onKeyDown={makeHandleKeypress(value)}
           >

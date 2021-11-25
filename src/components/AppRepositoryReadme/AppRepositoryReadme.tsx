@@ -25,7 +25,7 @@ export default function AppRepositoryReadme({
       {...props}
     >
       <h2 className="sr-only">Readme</h2>
-      <div className="p-3 bg-brand-secondary rounded-tl rounded-tr">
+      <div className="p-3 rounded-tl rounded-tr bg-brand-secondary">
         {letterCase === "upper" ? "README.md" : "readme.md"}
       </div>
       <div className="p-3">
