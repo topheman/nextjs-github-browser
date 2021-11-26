@@ -1,9 +1,12 @@
 import Link from "next/link";
 import clsx from "clsx";
 
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/router";
 import BaseMetaTags, {
   commonMetaTagsExtractProps,
 } from "../components/BaseMetaTags/BaseMetaTags";
+import BaseSearchInput from "../components/BaseSearchInput/BaseSearchInput";
 
 export default function PageIndex(): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -23,6 +26,13 @@ export default function PageIndex(): JSX.Element {
   const metaTagsProps = commonMetaTagsExtractProps({
     pathname: "/",
   });
+  const router = useRouter();
+  const searchButtonRef = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (searchButtonRef.current) {
+      searchButtonRef.current.focus();
+    }
+  }, []);
   return (
     <div>
       <BaseMetaTags
@@ -33,6 +43,14 @@ export default function PageIndex(): JSX.Element {
 
       <main className="px-2 lg:px-0 mx-auto mt-4 max-w-5xl">
         <h1 className="text-2xl">Home</h1>
+        <div className="mt-4 text-center">
+          <BaseSearchInput
+            placeholder="Type a username ..."
+            className="max-w-lg"
+            onSubmit={(value) => router.push(`/${value}`)}
+            ref={searchButtonRef}
+          />
+        </div>
         <p className="mt-4">
           This project is a{" "}
           <strong className="text-brand-primary">
