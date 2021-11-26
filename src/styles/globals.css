@@ -69,6 +69,9 @@ body {
 .markdown-body svg {
   display: inline;
 }
+.dark-mode .markdown-body code {
+  color: black;
+}
 
 /** Ensures the drawer goes over if any z-index is set */
 [data-focus-lock-disabled] div {
