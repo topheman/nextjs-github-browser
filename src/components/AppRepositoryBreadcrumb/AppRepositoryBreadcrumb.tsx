@@ -9,7 +9,7 @@ export type AppRepositoryBreadcrumbProps = {
   currentPath: string;
   currentRef: GitRefType;
   className?: string;
-};
+} & React.HTMLProps<HTMLHeadingElement>;
 
 export default function AppRepositoryBreadCrumb({
   nameWithOwner,

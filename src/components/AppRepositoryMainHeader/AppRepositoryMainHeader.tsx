@@ -75,7 +75,10 @@ export default function AppRepositoryMainHeader({
           currentPath={currentPath}
           currentRef={currentRef}
           defaultBranchName={repository.defaultBranchRef?.name as string}
-          className="py-1 ml-3 text-lg"
+          className="flex-1 py-1 ml-3 text-lg"
+          style={{
+            wordBreak: "break-word",
+          }}
         />
       ) : null}
     </div>
