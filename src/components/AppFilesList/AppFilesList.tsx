@@ -83,7 +83,7 @@ export default function AppFilesList({
             <div role="gridcell" className="p-2">
               {file.type === "tree" ? <FileDirectoryFillIcon /> : <FileIcon />}
             </div>
-            <div role="rowheader" className="p-2">
+            <div role="rowheader" className="p-2 truncate">
               <Link
                 href={{
                   pathname: `/${repositoryNameWithOwner}/${file.type}/${currentRef.name}`,
