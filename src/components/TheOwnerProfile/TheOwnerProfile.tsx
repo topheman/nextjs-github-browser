@@ -20,6 +20,7 @@ import AppUserProfileInfos from "../AppUserProfileInfos/AppUserProfileInfos";
 import AppOrganizationProfileInfos from "../AppOrganizationProfileInfos/AppOrganizationProfileInfos";
 import AppProfileRepositories from "../AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCard from "../AppOrganizationCard/AppOrganizationCard";
+import AppNotFound from "../AppNotFound/AppNotFound";
 import BaseMetaTags, {
   commonMetaTagsExtractProps,
 } from "../BaseMetaTags/BaseMetaTags";
@@ -201,5 +202,5 @@ export default function TheOwnerProfile({
       </>
     );
   }
-  return null;
+  return <AppNotFound type="user" />;
 }

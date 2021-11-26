@@ -16,24 +16,30 @@ import AppRepositoryHeader from "../components/AppRepositoryHeader/AppRepository
 import AppRepositoryInfos from "../components/AppRepositoryInfos/AppRepositoryInfos";
 import AppRepositoryInfosAbout from "../components/AppRepositoryInfosAbout/AppRepositoryInfosAbout";
 import AppRepositoryOverview from "../components/AppRepositoryOverview/AppRepositoryOverview";
+import AppNotFound from "../components/AppNotFound/AppNotFound";
 
 export const makeGetServerSideProps = (): GetServerSideProps => async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
   const { owner, repositoryName, branchName, path } = parseQuery(context.query);
   const apolloClient = initializeApollo();
-  await apolloClient.query<GetRepositoryInfosOverviewQuery>({
-    query: GetRepositoryInfosOverviewDocument,
-    variables: getRepositoryVariables({
-      owner,
-      repositoryName,
-      branchName,
-      path,
-    }),
-  });
+  try {
+    await apolloClient.query<GetRepositoryInfosOverviewQuery>({
+      query: GetRepositoryInfosOverviewDocument,
+      variables: getRepositoryVariables({
+        owner,
+        repositoryName,
+        branchName,
+        path,
+      }),
+    });
+  } catch (e) {
+    return { props: { notFound: true } };
+  }
   const resultProps: PageProps = {
     owner,
     repositoryName,
+    notFound: false,
   };
   if (branchName) {
     resultProps.branchName = branchName;
@@ -53,6 +59,7 @@ type PageProps = {
   branchName?: string;
   // eslint-disable-next-line react/require-default-props
   path?: string;
+  notFound: boolean;
 };
 
 export const makePage = () => ({
@@ -60,6 +67,7 @@ export const makePage = () => ({
   repositoryName,
   branchName,
   path,
+  notFound,
 }: PageProps): JSX.Element | null => {
   const variables = getRepositoryVariables({
     owner,
@@ -70,6 +78,9 @@ export const makePage = () => ({
   const repositoryResult = useGetRepositoryInfosOverviewQuery({
     variables,
   });
+  if (notFound) {
+    return <AppNotFound type="repository" className="mx-auto max-w-lg" />;
+  }
   if (repositoryResult.data && repositoryResult.data.repository) {
     const metaTagsProps = commonMetaTagsExtractProps({
       pathname: path,
