@@ -50,10 +50,11 @@ export default function BaseSelectMenu({
           size="medium"
           onClick={toggle}
           icon={icon}
+          className="relative z-10"
         >
           {buttonLabel}
         </BaseButton>
-        {open ? (
+        <>
           <div
             className={clsx(
               !open ? "hidden" : "",
@@ -73,7 +74,13 @@ export default function BaseSelectMenu({
               {children}
             </div>
           </div>
-        ) : null}
+          <div
+            className={clsx(
+              !open ? "hidden" : "sm:hidden bg-opacity-70",
+              "fixed inset-0 z-10 transition-opacity bg-brand-secondary"
+            )}
+          />
+        </>
       </div>
     </>
   );
