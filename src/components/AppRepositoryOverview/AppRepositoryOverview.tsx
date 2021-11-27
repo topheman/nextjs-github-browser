@@ -10,6 +10,7 @@ import {
   TreeEntry,
   Blob,
 } from "../../libs/graphql";
+import AppListRoutePatterns from "../AppListRoutePatterns/AppListRoutePatterns";
 
 export type AppRepositoryOverviewProps = {
   repository?: GetRepositoryInfosOverviewQuery["repository"];
@@ -32,6 +33,15 @@ export default function AppRepositoryOverview({
     },
     defaultBranchName: repository.defaultBranchRef?.name as string,
   });
+  if (!repository.gitInfos) {
+    return (
+      <div>
+        <p className="mb-3 text-lg">Your request couldn't be matched.</p>
+        <p className="mb-3">A little explanation:</p>
+        <AppListRoutePatterns className="overflow-scroll" />;
+      </div>
+    );
+  }
   return (
     <div
       itemScope

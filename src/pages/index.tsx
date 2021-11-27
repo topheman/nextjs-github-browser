@@ -7,6 +7,7 @@ import BaseMetaTags, {
   commonMetaTagsExtractProps,
 } from "../components/BaseMetaTags/BaseMetaTags";
 import BaseSearchInput from "../components/BaseSearchInput/BaseSearchInput";
+import AppListRoutePatterns from "../components/AppListRoutePatterns/AppListRoutePatterns";
 
 export default function PageIndex(): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -165,6 +166,9 @@ export default function PageIndex(): JSX.Element {
               />
             </p>
           </div>
+        </div>
+        <div className="mt-4">
+          <AppListRoutePatterns className="overflow-scroll" />
         </div>
       </main>
     </div>
