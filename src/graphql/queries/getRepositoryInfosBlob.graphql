@@ -12,6 +12,38 @@ query GetRepositoryInfosBlob(
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    id
+    nameWithOwner
+    description
+    homepageUrl
+    stargazerCount
+    forkCount
+    defaultBranchRef {
+      name
+      prefix
+    }
+    openGraphImageUrl
+    # identified what kind of ref was passed
+    currentRef: ref(qualifiedName: $ref) {
+      name
+      prefix
+    }
+    branches: refs(refPrefix: "refs/heads/", first: 10, direction: DESC) {
+      totalCount
+      edges {
+        node {
+          name
+        }
+      }
+    }
+    tags: refs(refPrefix: "refs/tags/", first: 10, direction: DESC) {
+      totalCount
+      edges {
+        node {
+          name
+        }
+      }
+    }
     file: object(expression: $refPath) {
       ... on Blob {
         byteSize

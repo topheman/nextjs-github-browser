@@ -19971,7 +19971,34 @@ export type GetRepositoryInfosBlobQuery = (
     & Pick<RateLimit, 'limit' | 'cost' | 'remaining' | 'resetAt'>
   )>, repository?: Maybe<(
     { __typename?: 'Repository' }
-    & { file?: Maybe<(
+    & Pick<Repository, 'id' | 'nameWithOwner' | 'description' | 'homepageUrl' | 'stargazerCount' | 'forkCount' | 'openGraphImageUrl'>
+    & { defaultBranchRef?: Maybe<(
+      { __typename?: 'Ref' }
+      & Pick<Ref, 'name' | 'prefix'>
+    )>, currentRef?: Maybe<(
+      { __typename?: 'Ref' }
+      & Pick<Ref, 'name' | 'prefix'>
+    )>, branches?: Maybe<(
+      { __typename?: 'RefConnection' }
+      & Pick<RefConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'RefEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      )>>> }
+    )>, tags?: Maybe<(
+      { __typename?: 'RefConnection' }
+      & Pick<RefConnection, 'totalCount'>
+      & { edges?: Maybe<Array<Maybe<(
+        { __typename?: 'RefEdge' }
+        & { node?: Maybe<(
+          { __typename?: 'Ref' }
+          & Pick<Ref, 'name'>
+        )> }
+      )>>> }
+    )>, file?: Maybe<(
       { __typename?: 'Blob' }
       & Pick<Blob, 'byteSize' | 'text'>
     ) | { __typename?: 'Commit' } | { __typename?: 'Tag' } | { __typename?: 'Tree' }>, gitInfos?: Maybe<(
@@ -20531,6 +20558,37 @@ export const GetRepositoryInfosBlobDocument = gql`
     resetAt
   }
   repository(name: $name, owner: $owner) {
+    id
+    nameWithOwner
+    description
+    homepageUrl
+    stargazerCount
+    forkCount
+    defaultBranchRef {
+      name
+      prefix
+    }
+    openGraphImageUrl
+    currentRef: ref(qualifiedName: $ref) {
+      name
+      prefix
+    }
+    branches: refs(refPrefix: "refs/heads/", first: 10, direction: DESC) {
+      totalCount
+      edges {
+        node {
+          name
+        }
+      }
+    }
+    tags: refs(refPrefix: "refs/tags/", first: 10, direction: DESC) {
+      totalCount
+      edges {
+        node {
+          name
+        }
+      }
+    }
     file: object(expression: $refPath) {
       ... on Blob {
         byteSize

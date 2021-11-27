@@ -50,6 +50,7 @@ export function getRepositoryVariables({
   upperCaseReadmeRefPath: string;
   lowerCaseReadmeRefPath: string;
   commit?: string;
+  path?: string;
 } {
   return {
     owner,
@@ -59,6 +60,7 @@ export function getRepositoryVariables({
     upperCaseReadmeRefPath: `${branchName ?? "HEAD"}:README.md`,
     lowerCaseReadmeRefPath: `${branchName ?? "HEAD"}:readme.md`,
     commit: commitId,
+    path,
   };
 }
 
