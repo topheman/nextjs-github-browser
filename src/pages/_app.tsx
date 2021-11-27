@@ -1,6 +1,7 @@
 import React from "react";
 import { AppProps } from "next/app";
 import { ApolloProvider } from "@apollo/client";
+import NextNprogress from "nextjs-progressbar";
 import { useApollo } from "../libs/apollo-client";
 import { parseBooleanEnvVar } from "../../utils";
 
@@ -22,6 +23,7 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   const apolloClient = useApollo(pageProps);
   return (
     <ApolloProvider client={apolloClient}>
+      <NextNprogress color="#ffcdcd" />
       <TheHeader />
       <Component {...pageProps} />
       <TheFooter fromFullYear={2021} toFullYear={new Date().getFullYear()} />
