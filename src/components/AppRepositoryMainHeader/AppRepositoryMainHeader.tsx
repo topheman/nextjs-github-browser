@@ -6,11 +6,14 @@ import AppGitRefSwitch from "../AppGitRefSwitch/AppGitRefSwitch";
 import AppRepositoryBreadcrumb from "../AppRepositoryBreadcrumb/AppRepositoryBreadcrumb";
 import {
   GetRepositoryInfosOverviewQuery,
+  GetRepositoryInfosBlobQuery,
   GitRefType,
 } from "../../libs/graphql";
 
 export type AppRepositoryMainHeaderProps = {
-  repository?: GetRepositoryInfosOverviewQuery["repository"];
+  repository?:
+    | GetRepositoryInfosOverviewQuery["repository"]
+    | GetRepositoryInfosBlobQuery["repository"]; // use abstract interface
   className?: string;
   currentRef: GitRefType;
   currentPath?: string;

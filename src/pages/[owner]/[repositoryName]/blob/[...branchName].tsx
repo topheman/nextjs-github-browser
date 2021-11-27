@@ -21,13 +21,21 @@ import AppMainLayout from "../../../../components/AppMainLayout/AppMainLayout";
 import AppNavBarRepository from "../../../../components/AppNavBarRepository/AppNavBarRepository";
 import AppRepositoryHeader from "../../../../components/AppRepositoryHeader/AppRepositoryHeader";
 import AppRepositoryMainHeader from "../../../../components/AppRepositoryMainHeader/AppRepositoryMainHeader";
+import AppNotFound from "../../../../components/AppNotFound/AppNotFound";
 import { addHttpCacheHeader } from "../../../../utils/server";
 
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
   addHttpCacheHeader(context.res);
-  const { owner, repositoryName, branchName, path } = parseQuery(context.query);
+  const { owner, repositoryName, branchName, path } = parseQuery(
+    context.query
+  ) as {
+    owner: string;
+    repositoryName: string;
+    branchName: string;
+    path: string;
+  };
   const apolloClient = initializeApollo();
   const graphqlVariables = getRepositoryVariables({
     owner,
@@ -47,13 +55,9 @@ export const getServerSideProps: GetServerSideProps = async (
     owner,
     repositoryName,
     notFound: false,
+    branchName,
+    path,
   };
-  if (branchName) {
-    resultProps.branchName = branchName;
-  }
-  if (path) {
-    resultProps.path = path;
-  }
   return addApolloState(apolloClient, {
     props: resultProps,
   });
@@ -62,10 +66,8 @@ export const getServerSideProps: GetServerSideProps = async (
 type PageProps = {
   owner: string;
   repositoryName: string;
-  // eslint-disable-next-line react/require-default-props
-  branchName?: string;
-  // eslint-disable-next-line react/require-default-props
-  path?: string;
+  branchName: string;
+  path: string;
   notFound: boolean;
 };
 
@@ -81,13 +83,19 @@ export default function PageRepositoryBlob({
     repositoryName,
     branchName,
     path,
-  });
+  }) as {
+    owner: string;
+    name: string;
+    ref: string;
+    refPath: string;
+    path: string;
+  };
   const repositoryResult = useGetRepositoryInfosBlobQuery({
     variables,
   });
-  // if (notFound) {
-  //   return <AppNotFound type="repository" className="mx-auto max-w-lg" />;
-  // }
+  if (notFound) {
+    return <AppNotFound type="repository" className="mx-auto max-w-lg" />;
+  }
   if (repositoryResult.data && repositoryResult.data.repository) {
     const metaTagsProps = commonMetaTagsExtractProps({
       pathname: path,
@@ -132,11 +140,18 @@ export default function PageRepositoryBlob({
               />
             ),
             main: (
-              <AppRepositoryMainHeader
-                repository={repositoryResult.data?.repository}
-                currentPath={path}
-                currentRef={resolvedCurrentRef}
-              />
+              <>
+                <AppRepositoryMainHeader
+                  repository={repositoryResult.data?.repository}
+                  currentPath={path}
+                  currentRef={resolvedCurrentRef}
+                />
+                {repositoryResult.data?.repository?.file ? (
+                  <div>Some file content</div>
+                ) : (
+                  <div>File not found</div>
+                )}
+              </>
             ),
           })}
         </AppMainLayout>
