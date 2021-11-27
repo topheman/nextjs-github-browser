@@ -108,11 +108,8 @@ export default function PageIndex(): JSX.Element {
           </li>
         </ul>
         <p className="mt-4">
-          The{" "}
-          <strong className="text-brand-primary hover:underline">
-            storybook
-          </strong>{" "}
-          of the project is also{" "}
+          The <strong className="text-brand-primary">storybook</strong> of the
+          project is also{" "}
           <Link href="/explore/storybook/index.html">
             <a target="_blank" className="text-brand-primary hover:underline">
               available online
