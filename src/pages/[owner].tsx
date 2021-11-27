@@ -14,6 +14,7 @@ import {
   GetProfileReadmeDocument,
 } from "../libs/graphql";
 import type { TheOwnerProfileProps } from "../components/TheOwnerProfile/TheOwnerProfile";
+import { addHttpCacheHeader } from "../utils/server";
 
 type MyPageProps = {
   skipProfileReadme: boolean;
@@ -41,6 +42,7 @@ const parseQuery: ParseQuery<{ tab: TheOwnerProfileProps["tab"] }> = (
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
+  addHttpCacheHeader(context.res);
   const { owner, tab, ...searchUrlParams } = parseQuery(context.query);
   const baseProps: MyPageProps = {
     skipProfileReadme: tab === "repositories",

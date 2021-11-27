@@ -14,6 +14,7 @@ import AppMainLayout from "../../../components/AppMainLayout/AppMainLayout";
 import AppProfileNavTab from "../../../components/AppNavBarProfile/AppNavBarProfile";
 import AppProfileRepositories from "../../../components/AppProfileRepositories/AppProfileRepositories";
 import AppOrganizationCardMini from "../../../components/AppOrganizationCardMini/AppOrganizationCardMini";
+import { addHttpCacheHeader } from "../../../utils/server";
 
 // necessary typeguard as query.owner is of type string | string[]
 const parseQuery: ParseQuery<unknown> = (query) => {
@@ -27,6 +28,7 @@ const parseQuery: ParseQuery<unknown> = (query) => {
 export const getServerSideProps: GetServerSideProps = async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
+  addHttpCacheHeader(context.res);
   const { owner, ...searchUrlParams } = parseQuery(context.query);
   // create a new ApolloClient instance on each request server-side
   const apolloClient = initializeApollo();

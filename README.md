@@ -139,6 +139,25 @@ Each `git push` / `PR` triggers a test suite on [github/actions](https://github.
 
 The end to end test sessions are recorded, you can check them [here](https://dashboard.cypress.io/projects/6ihjj6/runs).
 
+## Http Caching
+
+The `/api/github/graphql` handler is available by `POST` requests to both client and server (because it's needed for both SSR and some use cases where we call directly graphql from the client).
+
+You have the following use cases:
+
+1. full page render: browser -> nextjs(server) -> getServerSideProps -> `/api/github/graphql` -> github graphql api
+   - GET request issued by browser
+2. partial page render: browser(onRouteChange) -> nextjs(getServerSideProps) -> `/api/github/graphql` -> github graphql api
+   - GET request issued by nextjs router
+3. direct call to graphql from client: browser(apollo) -> `/api/github/graphql` -> github graphql api
+   - POST request, cache is manage client side by Apollo
+
+I fixed the problematic of caching for the 2nd case by adding http header `Cache-Control: private, max-age=120, must-revalidate`.
+
+You can activate it in local by using `npm run start:cache`.
+
+A better way would be to use some database like redis and store the payloads indexed by serialized graphql variables - this is a personal project 😉.
+
 ## Next steps
 
 TODO

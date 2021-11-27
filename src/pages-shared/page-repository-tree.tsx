@@ -17,10 +17,12 @@ import AppRepositoryInfos from "../components/AppRepositoryInfos/AppRepositoryIn
 import AppRepositoryInfosAbout from "../components/AppRepositoryInfosAbout/AppRepositoryInfosAbout";
 import AppRepositoryOverview from "../components/AppRepositoryOverview/AppRepositoryOverview";
 import AppNotFound from "../components/AppNotFound/AppNotFound";
+import { addHttpCacheHeader } from "../utils/server";
 
 export const makeGetServerSideProps = (): GetServerSideProps => async (
   context
 ): Promise<GetServerSidePropsResult<Record<string, unknown>>> => {
+  addHttpCacheHeader(context.res);
   const { owner, repositoryName, branchName, path } = parseQuery(context.query);
   const apolloClient = initializeApollo();
   try {
