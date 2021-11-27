@@ -48,7 +48,10 @@ export default function PageIndex(): JSX.Element {
           <BaseSearchInput
             placeholder="Type a username ..."
             className="max-w-lg"
-            onSubmit={(value) => router.push(`/${value}`)}
+            onSearch={(value, { resetValue }) => {
+              resetValue();
+              router.push(`/${value}`);
+            }}
             ref={searchButtonRef}
           />
         </div>

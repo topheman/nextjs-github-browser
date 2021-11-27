@@ -20,7 +20,7 @@ const Template: Story<BaseSearchInputProps> = (args) => {
 
 export const Base = Template.bind({});
 Base.args = {
-  onSubmit(value) {
+  onSearch(value) {
     console.log(value);
   },
   placeholder: "Type a username ...",

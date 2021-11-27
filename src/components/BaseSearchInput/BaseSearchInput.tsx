@@ -1,14 +1,14 @@
 import { forwardRef, useState } from "react";
 import clsx from "clsx";
 
-export type BaseSearchInputProps = {
-  onSubmit: (value: string) => void;
+export type BaseSearchInputProps = React.HTMLProps<HTMLDivElement> & {
+  onSearch: (value: string, { resetValue }: { resetValue: () => void }) => void;
   placeholder: string;
   size?: "normal";
-} & React.HTMLProps<HTMLDivElement>;
+};
 
 const BaseSearchInput = forwardRef<HTMLInputElement, BaseSearchInputProps>(
-  ({ onSubmit, placeholder, className }, ref) => {
+  ({ onSearch, placeholder, className }, ref) => {
     const [value, setValue] = useState("");
     return (
       <form
@@ -16,7 +16,7 @@ const BaseSearchInput = forwardRef<HTMLInputElement, BaseSearchInputProps>(
         action="."
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit(value);
+          onSearch(value, { resetValue: () => setValue("") });
         }}
       >
         <input
