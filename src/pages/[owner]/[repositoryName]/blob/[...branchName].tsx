@@ -23,7 +23,7 @@ import AppNavBarRepository from "../../../../components/AppNavBarRepository/AppN
 import AppRepositoryHeader from "../../../../components/AppRepositoryHeader/AppRepositoryHeader";
 import AppRepositoryMainHeader from "../../../../components/AppRepositoryMainHeader/AppRepositoryMainHeader";
 import AppNotFound from "../../../../components/AppNotFound/AppNotFound";
-import BaseSyntaxHighlighter from "../../../../components/BaseSyntaxHighlighter/BaseSyntaxHighlighter";
+import AppBlobDisplay from "../../../../components/AppBlobDisplay/AppBlobDisplay";
 import { addHttpCacheHeader } from "../../../../utils/server";
 
 export const getServerSideProps: GetServerSideProps = async (
@@ -149,13 +149,22 @@ export default function PageRepositoryBlob({
                   currentRef={resolvedCurrentRef}
                 />
                 {repositoryResult.data?.repository?.file ? (
-                  <BaseSyntaxHighlighter
+                  <AppBlobDisplay
                     code={
                       (repositoryResult.data?.repository?.file as Blob).text ||
                       ""
                     }
                     fileName={path}
-                    className="text-sm"
+                    byteSize={
+                      (repositoryResult.data?.repository?.file as Blob).byteSize
+                    }
+                    rawHref={{
+                      pathname: `/${repositoryResult.data?.repository.nameWithOwner}/raw/${branchName}`,
+                      query: {
+                        path,
+                      },
+                    }}
+                    className="mt-2"
                   />
                 ) : (
                   <div>File not found</div>
