@@ -71,6 +71,7 @@ export default function AppBlobDisplay({
         fileName={fileName}
         language={language}
         className="text-sm"
+        itemProp="text"
       />
     </BaseBoxWithHeader>
   );

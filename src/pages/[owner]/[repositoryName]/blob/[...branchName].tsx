@@ -149,23 +149,29 @@ export default function PageRepositoryBlob({
                   currentRef={resolvedCurrentRef}
                 />
                 {repositoryResult.data?.repository?.file ? (
-                  <AppBlobDisplay
-                    code={
-                      (repositoryResult.data?.repository?.file as Blob).text ||
-                      ""
-                    }
-                    fileName={path}
-                    byteSize={
-                      (repositoryResult.data?.repository?.file as Blob).byteSize
-                    }
-                    rawHref={{
-                      pathname: `/${repositoryResult.data?.repository.nameWithOwner}/raw/${branchName}`,
-                      query: {
-                        path,
-                      },
-                    }}
-                    className="mt-2"
-                  />
+                  <div
+                    itemScope
+                    itemType="http://schema.org/SoftwareSourceCode"
+                  >
+                    <AppBlobDisplay
+                      code={
+                        (repositoryResult.data?.repository?.file as Blob)
+                          .text || ""
+                      }
+                      fileName={path}
+                      byteSize={
+                        (repositoryResult.data?.repository?.file as Blob)
+                          .byteSize
+                      }
+                      rawHref={{
+                        pathname: `/${repositoryResult.data?.repository.nameWithOwner}/raw/${branchName}`,
+                        query: {
+                          path,
+                        },
+                      }}
+                      className="mt-2"
+                    />
+                  </div>
                 ) : (
                   <div>File not found</div>
                 )}
