@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CheckIcon, TagIcon, GitBranchIcon } from "@primer/octicons-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { GitRefType } from "../../libs/graphql";
 import { truncate } from "../../utils/string";
@@ -34,6 +35,13 @@ export default function AppGitRefSwitch({
   tagsTotalCount,
   currentPath,
 }: AppGitRefSwitchProps): JSX.Element | null {
+  const router = useRouter();
+  const [mode, setMode] = useState<"blob" | "tree">(
+    router?.pathname.includes("/blob/") ? "blob" : "tree"
+  );
+  useEffect(() => {
+    setMode(router?.pathname.includes("/blob/") ? "blob" : "tree");
+  }, [router.pathname]);
   const [currentTab, setCurrentTab] = useState<"branches" | "tags">("branches");
   const resolvedBranches = [
     ...new Set(
@@ -115,7 +123,7 @@ export default function AppGitRefSwitch({
                 >
                   <Link
                     href={{
-                      pathname: `/${nameWithOwner}/tree/${ref}`,
+                      pathname: `/${nameWithOwner}/${mode}/${ref}`,
                       query: currentPath
                         ? {
                             path: currentPath,

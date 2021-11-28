@@ -35,6 +35,9 @@ const makeBaseCase = (
   };
 };
 
+// eslint-disable-next-line global-require
+jest.mock("next/router", () => require("next-router-mock"));
+
 describe("components/AppGitRefSwitch", () => {
   it("[Basic] should render", async () => {
     const { container } = makeBaseCase();
