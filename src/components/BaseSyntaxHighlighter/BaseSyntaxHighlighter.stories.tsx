@@ -147,4 +147,6 @@ export function useLocalStorage<T>(
 export const Base = Template.bind({});
 Base.args = {
   code: CODE,
+  fileName: "common.js",
+  className: "text-sm",
 };
