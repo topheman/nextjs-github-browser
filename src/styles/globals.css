@@ -77,3 +77,81 @@ body {
 [data-focus-lock-disabled] div {
   z-index: 1000;
 }
+
+/**
+ * syntax highlighting colors
+ * See src/components/BaseSyntaxHighlighter/BaseSyntaxHighlighter.tsx
+ */
+body,
+body.default-mode {
+  --hljs-color-hljs-comment: #696969;
+  --hljs-color-hljs-quote: #696969;
+  --hljs-color-hljs-variable: #d91e18;
+  --hljs-color-hljs-template-variable: #d91e18;
+  --hljs-color-hljs-tag: #d91e18;
+  --hljs-color-hljs-name: #d91e18;
+  --hljs-color-hljs-selector-id: #d91e18;
+  --hljs-color-hljs-selector-class: #d91e18;
+  --hljs-color-hljs-regexp: #d91e18;
+  --hljs-color-hljs-deletion: #d91e18;
+  --hljs-color-hljs-number: #aa5d00;
+  --hljs-color-hljs-built_in: #aa5d00;
+  --hljs-color-hljs-builtin-name: #aa5d00;
+  --hljs-color-hljs-literal: #aa5d00;
+  --hljs-color-hljs-type: #aa5d00;
+  --hljs-color-hljs-params: #aa5d00;
+  --hljs-color-hljs-meta: #aa5d00;
+  --hljs-color-hljs-link: #aa5d00;
+  --hljs-color-hljs-attribute: #aa5d00;
+  --hljs-color-hljs-string: #008000;
+  --hljs-color-hljs-symbol: #008000;
+  --hljs-color-hljs-bullet: #008000;
+  --hljs-color-hljs-addition: #008000;
+  --hljs-color-hljs-title: #007faa;
+  --hljs-color-hljs-section: #007faa;
+  --hljs-color-hljs-keyword: #7928a1;
+  --hljs-color-hljs-selector-tag: #7928a1;
+  --hljs-display-hljs: block;
+  --hljs-overflowX-hljs: auto;
+  --hljs-background-hljs: #fefefe;
+  --hljs-color-hljs: #545454;
+  --hljs-padding-hljs: 0.5em;
+  --hljs-fontStyle-hljs-emphasis: italic;
+  --hljs-fontWeight-hljs-strong: bold;
+}
+body.dark-mode {
+  --hljs-color-hljs-comment: #d4d0ab;
+  --hljs-color-hljs-quote: #d4d0ab;
+  --hljs-color-hljs-variable: #ffa07a;
+  --hljs-color-hljs-template-variable: #ffa07a;
+  --hljs-color-hljs-tag: #ffa07a;
+  --hljs-color-hljs-name: #ffa07a;
+  --hljs-color-hljs-selector-id: #ffa07a;
+  --hljs-color-hljs-selector-class: #ffa07a;
+  --hljs-color-hljs-regexp: #ffa07a;
+  --hljs-color-hljs-deletion: #ffa07a;
+  --hljs-color-hljs-number: #f5ab35;
+  --hljs-color-hljs-built_in: #f5ab35;
+  --hljs-color-hljs-builtin-name: #f5ab35;
+  --hljs-color-hljs-literal: #f5ab35;
+  --hljs-color-hljs-type: #f5ab35;
+  --hljs-color-hljs-params: #f5ab35;
+  --hljs-color-hljs-meta: #f5ab35;
+  --hljs-color-hljs-link: #f5ab35;
+  --hljs-color-hljs-attribute: #ffd700;
+  --hljs-color-hljs-string: #abe338;
+  --hljs-color-hljs-symbol: #abe338;
+  --hljs-color-hljs-bullet: #abe338;
+  --hljs-color-hljs-addition: #abe338;
+  --hljs-color-hljs-title: #00e0e0;
+  --hljs-color-hljs-section: #00e0e0;
+  --hljs-color-hljs-keyword: #dcc6e0;
+  --hljs-color-hljs-selector-tag: #dcc6e0;
+  --hljs-display-hljs: block;
+  --hljs-overflowX-hljs: auto;
+  --hljs-background-hljs: #2b2b2b;
+  --hljs-color-hljs: #f8f8f2;
+  --hljs-padding-hljs: 0.5em;
+  --hljs-fontStyle-hljs-emphasis: italic;
+  --hljs-fontWeight-hljs-strong: bold;
+}
