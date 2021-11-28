@@ -13,6 +13,7 @@ import {
   useGetRepositoryInfosBlobQuery,
   GetRepositoryInfosBlobQuery,
   GetRepositoryInfosBlobDocument,
+  Blob,
 } from "../../../../libs/graphql";
 import BaseMetaTags, {
   commonMetaTagsExtractProps,
@@ -147,7 +148,9 @@ export default function PageRepositoryBlob({
                   currentRef={resolvedCurrentRef}
                 />
                 {repositoryResult.data?.repository?.file ? (
-                  <div>Some file content</div>
+                  <pre>
+                    {(repositoryResult.data?.repository?.file as Blob).text}
+                  </pre>
                 ) : (
                   <div>File not found</div>
                 )}
