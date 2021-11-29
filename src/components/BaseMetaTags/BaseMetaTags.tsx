@@ -17,7 +17,7 @@ export interface PropsMetaTags {
   title?: string;
   description?: string | null;
   siteName?: string;
-  type?: "profile" | "object";
+  type?: "profile" | "object" | "website";
   url?: string;
   profileUsername?: string;
   keywords?: string;
@@ -45,6 +45,7 @@ export const commonMetaTagsExtractProps = ({
       "Tailwind",
     ].join(", "),
     image: `${basePath}/nextjs-github-browser.png`,
+    type: "website",
   };
 };
 
@@ -65,7 +66,14 @@ const BaseMetaTags: React.FunctionComponent<PropsMetaTags> = ({
       <link rel="icon" href="/favicon.ico" />
       {url && <link rel="canonical" href={url} />}
       {image && (
-        <meta name="twitter:image:src" content={image} key="twitter-image" />
+        <meta name="twitter:image" content={image} key="twitter-image" />
+      )}
+      {image && (
+        <meta
+          name="twitter:image:src"
+          content={image}
+          key="twitter-image-src"
+        />
       )}
       {twitterHandle && (
         <meta name="twitter:site" content={twitterHandle} key="twitter-site" />
@@ -93,7 +101,11 @@ const BaseMetaTags: React.FunctionComponent<PropsMetaTags> = ({
       {url && <meta name="twitter:url" content={url} key="twitter-url" />}
       {image && <meta property="og:image" content={image} key="og-image" />}
       {image && description && (
-        <meta property="og:image:alt" content={description} key="og-image" />
+        <meta
+          property="og:image:alt"
+          content={description}
+          key="og-image-alt"
+        />
       )}
       {siteName && (
         <meta property="og:site_name" content={siteName} key="og-siteName" />
@@ -101,6 +113,13 @@ const BaseMetaTags: React.FunctionComponent<PropsMetaTags> = ({
       {type && <meta property="og:type" content={type} key="og-type" />}
       {title && <meta property="og:title" content={title} key="og-title" />}
       {url && <meta property="og:url" content={url} key="og-url" />}
+      {description && (
+        <meta
+          property="og:description"
+          content={description}
+          key="og-description"
+        />
+      )}
       {description && (
         <meta name="description" content={description} key="description" />
       )}
