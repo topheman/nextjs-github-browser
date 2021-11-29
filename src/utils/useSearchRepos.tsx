@@ -122,7 +122,6 @@ export default function useSearchRepos(
       const searchUrlParamsFromHistory = Object.fromEntries(
         new URLSearchParams(searchUrlQueryString).entries()
       );
-      console.log("url", url);
       // Do not override router if not on the repositories tab
       if (
         (mode === "user" &&
@@ -132,14 +131,6 @@ export default function useSearchRepos(
       ) {
         return true;
       }
-      console.log("manageHistory", url, searchUrlParamsFromHistory, {
-        after: searchUrlParamsFromHistory.after
-          ? atob(searchUrlParamsFromHistory.after)
-          : searchUrlParamsFromHistory.after,
-        before: searchUrlParamsFromHistory.before
-          ? atob(searchUrlParamsFromHistory.before)
-          : searchUrlParamsFromHistory.before,
-      });
       // flag the following state changes as triggered by history change
       // (in order not to add any new entry with `history.pushState`)
       setReplayHistory(true);
@@ -157,7 +148,6 @@ export default function useSearchRepos(
       return false;
     });
     function onRouteChangeComplete(url: string) {
-      console.log("onRouteChangeComplete", url);
       // cleanup state when going back to default page
       if (
         typeof url === "string" &&
@@ -172,7 +162,6 @@ export default function useSearchRepos(
     router.events.on("routeChangeComplete", onRouteChangeComplete);
     return () => {
       // reset Router events
-      console.log("clean effect");
       Router.beforePopState(() => true);
       router.events.off("routeChangeComplete", onRouteChangeComplete);
     };
@@ -240,11 +229,9 @@ export default function useSearchRepos(
       variables: graphqlVariables,
     });
     setData(result.data);
-    console.log("effect", { graphqlVariables, data: result.data });
     setLoading(false);
     // if state change is comming from a history change (e.g. back button), don't add a new entry
     if (!replayHistory) {
-      console.log("replayHistory", newUrl, owner);
       window.history.pushState(
         {
           ...window.history.state,

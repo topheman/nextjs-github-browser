@@ -122,7 +122,9 @@ const { cssVarsDeclaration, styleDeclaration } = hljsStyleToCssVar({
   },
 });
 
+/* eslint-disable no-console */
 console.log("<!-- css var -->");
 console.log(cssVarsDeclaration);
 console.log("// javascript object");
 console.log(styleDeclaration);
+/* eslint-enable no-console */

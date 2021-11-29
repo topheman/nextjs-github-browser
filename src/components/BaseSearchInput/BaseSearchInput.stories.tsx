@@ -21,6 +21,7 @@ const Template: Story<BaseSearchInputProps> = (args) => {
 export const Base = Template.bind({});
 Base.args = {
   onSearch(value) {
+    // eslint-disable-next-line no-console
     console.log(value);
   },
   placeholder: "Type a username ...",
