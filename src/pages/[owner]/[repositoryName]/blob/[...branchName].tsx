@@ -173,7 +173,7 @@ export default function PageRepositoryBlob({
                     />
                   </div>
                 ) : (
-                  <div>File not found</div>
+                  <AppNotFound type="file" className="mx-auto max-w-lg" />
                 )}
               </>
             ),

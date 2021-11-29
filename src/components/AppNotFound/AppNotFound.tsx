@@ -5,6 +5,9 @@ const MAPPING = {
   repository: {
     label: "Repository not found",
   },
+  file: {
+    label: "File not found",
+  },
 };
 
 export type AppNotFoundProps = {
