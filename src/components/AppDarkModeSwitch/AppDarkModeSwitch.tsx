@@ -30,7 +30,15 @@ export default function AppDarkModeSwitch({
       {...props}
     >
       <button type="button" onClick={() => setDarkMode(!darkMode)}>
-        {darkMode ? <MoonIcon /> : <SunIcon className="text-[yellow]" />}
+        {darkMode ? (
+          <MoonIcon aria-hidden="true" />
+        ) : (
+          <SunIcon className="text-[yellow]" aria-hidden="true" />
+        )}
+        <span className="sr-only">{`Switch to ${
+          darkMode ? "light" : "dark"
+        } mode`}</span>
+        <span />
       </button>
     </label>
   );

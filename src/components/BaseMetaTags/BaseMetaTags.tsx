@@ -64,6 +64,7 @@ const BaseMetaTags: React.FunctionComponent<PropsMetaTags> = ({
   return (
     <Head>
       <link rel="icon" href="/favicon.ico" />
+      {title && <title key="title">{title}</title>}
       {url && <link rel="canonical" href={url} />}
       {image && (
         <meta name="twitter:image" content={image} key="twitter-image" />
