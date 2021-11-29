@@ -3,6 +3,8 @@ import { TagIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 
 import AppRepositoryInfosAbout from "../AppRepositoryInfosAbout/AppRepositoryInfosAbout";
+import AppLanguagesGraph from "../AppLanguagesGraph/AppLanguagesGraph";
+import AppLanguagesList from "../AppLanguagesList/AppLanguagesList";
 import { GetRepositoryInfosOverviewQuery } from "../../libs/graphql";
 import BaseBadge from "../BaseBadge/BaseBadge";
 import { formatDate } from "../../utils/date";
@@ -100,11 +102,18 @@ export default function AppRepositoryInfos({
             ) : null}
           </div>
         </div>
-        <div className="py-4 border-t border-light">
-          <div>
-            <h2 className="mb-2 font-bold">Languages</h2>
+        {repository.languages?.edges ? (
+          <div className="py-4 border-t border-light">
+            <div>
+              <h2 className="mb-2 font-bold">Languages</h2>
+              <AppLanguagesGraph languages={repository.languages?.edges} />
+              <AppLanguagesList
+                languages={repository.languages?.edges}
+                className="mt-2 text-sm"
+              />
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );
