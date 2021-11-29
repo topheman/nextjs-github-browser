@@ -66,6 +66,28 @@ export default async (
     });
     if (result.ok) {
       const response = await result.text();
+      res.setHeader(
+        "x-ratelimit-limit",
+        result.headers.get("x-ratelimit-limit") as string
+      );
+      res.setHeader(
+        "x-ratelimit-remaining",
+        result.headers.get("x-ratelimit-remaining") as string
+      );
+      res.setHeader(
+        "x-ratelimit-reset",
+        result.headers.get("x-ratelimit-reset") as string
+      );
+      res.setHeader(
+        "x-ratelimit-reset-iso",
+        new Date(
+          Number(`${result.headers.get("x-ratelimit-reset")}000`)
+        ).toISOString()
+      );
+      res.setHeader(
+        "x-ratelimit-used",
+        result.headers.get("x-ratelimit-used") as string
+      );
       if (recordMocks) {
         // eslint-disable-next-line global-require,@typescript-eslint/no-var-requires
         const mockFilePath = await saveMock(
