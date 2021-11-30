@@ -7,6 +7,7 @@ import AppRepositoryListItem from "../AppRepositoryListItem/AppRepositoryListIte
 import AppSearchSummary from "../AppSearchSummary/AppSearchSummary";
 import { extractSearchUrlParams } from "../../utils/github/searchRepos";
 import useSearchRepos from "../../utils/useSearchRepos";
+import { useEffectSkipFirst } from "../../utils/hooks";
 
 export type AppProfileRepositoriesProps = {
   mode: "user" | "organization";
@@ -27,6 +28,13 @@ export default function AppProfileRepositories({
     extractSearchUrlParams(router.asPath),
     mode
   );
+  useEffectSkipFirst(() => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [data]);
   return (
     <div>
       <div>
