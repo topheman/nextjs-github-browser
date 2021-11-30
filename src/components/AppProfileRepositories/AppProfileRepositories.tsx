@@ -70,7 +70,7 @@ export default function AppProfileRepositories({
       </div>
       {data?.searchRepos.edges ? (
         <>
-          <ul data-testid="repository-list">
+          <ul data-testid="repository-list" className="mt-2">
             {data?.searchRepos.edges.map((repo) => (
               <li key={(repo?.node as Repository).name}>
                 <AppRepositoryListItem repository={repo?.node as Repository} />
