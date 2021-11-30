@@ -51,7 +51,12 @@ export default function AppRepositoryInfosAbout({
       {repository.licenseInfo ? (
         <div className="mb-1 md:mb-2 text-secondary hover:text-brand-primary">
           <Link
-            href={`/${repository.nameWithOwner}/blob/${repository.defaultBranchRef?.name}/LICENSE.txt`}
+            href={{
+              pathname: `/${repository.nameWithOwner}/blob/${repository.defaultBranchRef?.name}`,
+              query: {
+                path: "LICENSE.txt",
+              },
+            }}
           >
             <a>
               <LawIcon className="mr-2" />
