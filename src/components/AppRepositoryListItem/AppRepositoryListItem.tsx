@@ -36,13 +36,11 @@ export default function AppRepositoryListItem({
           <ul className="my-2 text-sm text-brand-primary">
             {repository.repositoryTopics?.edges?.filter(Boolean).map((edge) => {
               return (
-                <BaseTag
-                  key={edge.node?.topic.name}
-                  color="brand-primary"
-                  className="mr-1"
-                >
-                  {edge.node?.topic.name}
-                </BaseTag>
+                <li className="inline-block" key={edge.node?.topic.name}>
+                  <BaseTag color="brand-primary" className="mr-1">
+                    {edge.node?.topic.name}
+                  </BaseTag>
+                </li>
               );
             })}
           </ul>
