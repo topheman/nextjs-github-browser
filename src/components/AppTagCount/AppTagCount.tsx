@@ -39,7 +39,7 @@ export default function AppTagCount({
       <a
         {...props}
         className={clsx(
-          "text-xs text-secondary hover:text-brand-primary",
+          "text-xs text-secondary hover:text-brand-primary whitespace-nowrap",
           className
         )}
       >

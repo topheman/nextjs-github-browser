@@ -42,7 +42,7 @@ export default function AppTagDate({
   }
   const { formattedDate, isRelative } = formatDate(innerDate);
   return (
-    <span {...props} className={clsx(className)}>
+    <span {...props} className={clsx(className, "whitespace-nowrap")}>
       {MAPPING_MODE[mode]}
       {!isRelative ? "on " : ""}
       <time dateTime={date.toISOString()}>{formattedDate}</time>

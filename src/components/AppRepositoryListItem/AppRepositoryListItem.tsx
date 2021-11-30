@@ -45,14 +45,14 @@ export default function AppRepositoryListItem({
             })}
           </ul>
         ) : null}
-        <ul className="flex mt-3 text-sm text-secondary">
+        <ul className="mt-3 w-full text-sm text-secondary">
           {repository.primaryLanguage ? (
-            <li className="mr-4">
+            <li className="inline mr-4">
               <AppTagLanguage primaryLanguage={repository.primaryLanguage} />
             </li>
           ) : null}
           {repository.stargazerCount > 0 ? (
-            <li>
+            <li className="inline">
               <AppTagCount
                 nameWithOwner={repository.nameWithOwner}
                 type="stargazers"
@@ -62,7 +62,7 @@ export default function AppRepositoryListItem({
             </li>
           ) : null}
           {repository.forkCount > 0 ? (
-            <li>
+            <li className="inline">
               <AppTagCount
                 nameWithOwner={repository.nameWithOwner}
                 type="forks"
@@ -72,12 +72,12 @@ export default function AppRepositoryListItem({
             </li>
           ) : null}
           {repository.licenseInfo ? (
-            <li className="mr-4">
+            <li className="inline mr-4">
               <AppTagLicense license={repository.licenseInfo} />
             </li>
           ) : null}
           {repository.updatedAt ? (
-            <li className="mr-4">
+            <li className="inline mr-4">
               <AppTagDate
                 date={new Date(repository.updatedAt)}
                 mode="updated"
