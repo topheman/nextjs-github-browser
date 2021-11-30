@@ -65,7 +65,7 @@ export default function PageIndex(): JSX.Element {
           partial implementation of the github website, based on their GraphQL
           api.
         </p>
-        <p>
+        <p className="mt-4">
           The goal of this project is not to replace the github ui in any way
           but to get better in the following:
         </p>
