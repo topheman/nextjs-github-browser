@@ -25,7 +25,11 @@ export default function AppLanguagesList({
           if (!language) {
             return null;
           }
-          const percentage = (100 * language.size) / fullSize;
+          const percentage = ((100 * language.size) / fullSize).toFixed(1);
+          // dont display languages at 0.0%
+          if (!Number(percentage)) {
+            return null;
+          }
           return (
             <li
               key={language.node.name}
@@ -37,7 +41,7 @@ export default function AppLanguagesList({
               <DotFillIcon className="h-5" />{" "}
               <span className="text-primary">
                 <strong className="font-bold">{language.node.name}</strong>{" "}
-                <span className="text-secondary">{percentage.toFixed(1)}%</span>
+                <span className="text-secondary">{percentage}%</span>
               </span>
             </li>
           );

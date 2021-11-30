@@ -27,7 +27,11 @@ export default function AppLanguagesGraph({
           if (!language) {
             return null;
           }
-          const percentage = (100 * language.size) / fullSize;
+          const percentage = ((100 * language.size) / fullSize).toFixed(1);
+          // dont display languages at 0.0%
+          if (!Number(percentage)) {
+            return null;
+          }
           return (
             <span
               key={language.node.name}
