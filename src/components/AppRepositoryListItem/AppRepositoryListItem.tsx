@@ -5,7 +5,7 @@ import AppTagLanguage from "../AppTagLanguage/AppTagLanguage";
 import AppTagCount from "../AppTagCount/AppTagCount";
 import AppTagLicense from "../AppTagLicense/AppTagLicense";
 import AppTagDate from "../AppTagDate/AppTagDate";
-import BaseTag from "../BaseTag/BaseTag";
+import AppTopicsTagList from "../AppTopicsTagList/AppTopicsTagList";
 
 export type AppRepositoryListItemProps = {
   repository: Repository;
@@ -32,19 +32,12 @@ export default function AppRepositoryListItem({
           </Link>
         </h3>
         <p className="text-sm text-secondary">{repository.description}</p>
-        {(repository.repositoryTopics?.edges?.length || 0) > 0 ? (
-          <ul className="my-2 text-sm text-brand-primary">
-            {repository.repositoryTopics?.edges?.filter(Boolean).map((edge) => {
-              return (
-                <li className="inline-block" key={edge.node?.topic.name}>
-                  <BaseTag color="brand-primary" className="mr-1">
-                    {edge.node?.topic.name}
-                  </BaseTag>
-                </li>
-              );
-            })}
-          </ul>
-        ) : null}
+        <AppTopicsTagList
+          className="my-2 text-sm"
+          topics={repository.repositoryTopics?.edges
+            ?.filter(Boolean)
+            .map(({ node }) => node)}
+        />
         <ul className="mt-3 w-full text-sm text-secondary">
           {repository.primaryLanguage ? (
             <li className="inline mr-4">

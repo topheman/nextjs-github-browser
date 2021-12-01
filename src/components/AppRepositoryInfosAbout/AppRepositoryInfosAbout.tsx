@@ -2,6 +2,7 @@ import Link from "next/link";
 import { LinkIcon, BookIcon, LawIcon } from "@primer/octicons-react";
 import clsx from "clsx";
 
+import AppTopicsTagList from "../AppTopicsTagList/AppTopicsTagList";
 import { GetRepositoryInfosOverviewQuery } from "../../libs/graphql";
 import { formatUrl } from "../../utils/string";
 
@@ -36,6 +37,10 @@ export default function AppRepositoryInfosAbout({
         </div>
       ) : null}
       <h3 className="sr-only">Topics</h3>
+      <AppTopicsTagList
+        className="hidden md:block my-2 text-sm"
+        topics={repository.repositoryTopics?.nodes}
+      />
       <h3 className="sr-only">Resources</h3>
       {repository.readmeLowercase || repository.readmeUppercase ? (
         <div className="mb-1 md:mb-2 text-secondary hover:text-brand-primary">
