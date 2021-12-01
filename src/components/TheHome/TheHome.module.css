@@ -1,0 +1,22 @@
+.right {
+  position: relative;
+}
+.right::after {
+  position: relative;
+  content: attr(data-help);
+  position: absolute;
+  top: 20px;
+  left: 140px;
+  font-style: italic;
+}
+.top {
+  position: relative;
+}
+.top::before {
+  position: relative;
+  content: attr(data-help);
+  position: absolute;
+  top: -25px;
+  left: 40%;
+  font-style: italic;
+}

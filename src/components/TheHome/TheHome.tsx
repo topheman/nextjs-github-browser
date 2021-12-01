@@ -1,7 +1,7 @@
 import Link from "next/link";
 import clsx from "clsx";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import BaseMetaTags, {
   commonMetaTagsExtractProps,
@@ -9,10 +9,17 @@ import BaseMetaTags, {
 import BaseSearchInput from "../BaseSearchInput/BaseSearchInput";
 import AppListRoutePatterns from "../AppListRoutePatterns/AppListRoutePatterns";
 
-export type TheHomeProps = React.HTMLProps<HTMLDivElement>;
+import style from "./TheHome.module.css";
+
+export type TheHomeProps = {
+  helpActive: boolean;
+  onExit?: () => void;
+} & React.HTMLProps<HTMLDivElement>;
 
 export default function TheHome({
   className,
+  helpActive,
+  onExit,
   ...props
 }: TheHomeProps): JSX.Element {
   const profileLinks: [string, string][] = [
@@ -33,12 +40,40 @@ export default function TheHome({
     pathname: "/",
   });
   const router = useRouter();
+
   const searchButtonRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     if (searchButtonRef.current) {
       searchButtonRef.current.focus();
     }
   }, []);
+
+  const [helpIndex, setHelpIndex] = useState(-1);
+  useEffect(() => {
+    const timer = setTimeout(
+      () => {
+        if (!helpActive) {
+          return;
+        }
+        if (helpIndex > 1) {
+          setHelpIndex(-1);
+        } else {
+          setHelpIndex((s) => s + 1);
+        }
+      },
+      helpIndex === -1 ? 800 : 3000
+    );
+    return () => clearTimeout(timer);
+  }, [helpIndex, helpActive]);
+  useEffect(() => {
+    router.events.on("routeChangeStart", () => {
+      if (typeof onExit === "function") {
+        onExit();
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onExit]);
+
   return (
     <div className={className} {...props}>
       <BaseMetaTags
@@ -49,7 +84,10 @@ export default function TheHome({
 
       <main className="px-2 lg:px-0 mx-auto mt-4 max-w-5xl">
         <h1 className="text-2xl">Home</h1>
-        <div className="mt-4 text-center">
+        <div
+          className={clsx("mt-4 text-center", helpIndex === 0 && style.top)}
+          data-help="👇 Search for a user"
+        >
           <BaseSearchInput
             placeholder="Type a username ..."
             className="max-w-lg"
@@ -74,7 +112,10 @@ export default function TheHome({
           The goal of this project is not to replace the github ui in any way
           but to get better in the following:
         </p>
-        <ul className="ml-10 list-disc">
+        <ul
+          className={clsx("ml-10 list-disc", helpIndex === 1 && style.right)}
+          data-help="👈 Or follow one of these links"
+        >
           <li>
             <Link href="/apollographql/apollo-client">
               <a

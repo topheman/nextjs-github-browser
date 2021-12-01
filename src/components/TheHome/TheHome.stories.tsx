@@ -11,3 +11,11 @@ export default {
 const Template: Story<TheHomeProps> = (args) => <TheHome {...args} />;
 
 export const Base = Template.bind({});
+Base.args = {
+  helpActive: false,
+};
+
+export const BaseHelpActive = Template.bind({});
+BaseHelpActive.args = {
+  helpActive: true,
+};
