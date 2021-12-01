@@ -52,7 +52,7 @@ export default function TheFooter({
           <ExternalTwitterButton
             url={currentUrl}
             text="A #NextJS implementation of the github website by @topheman
-#SSR #TypeScript #GraphQL #apollographql #tailwind #ReactJS"
+#SSR #TypeScript #GraphQL #apollographql #tailwindcss #ReactJS"
             className="inline-block"
           />
         </p>
