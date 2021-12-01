@@ -106,6 +106,8 @@ Then start the cypress test either:
 - In gui mode: `npm run cy:open`
 - In headless mode: `npm run cy:run`
 
+<p align="center"><a href="https://raw.githubusercontent.com/topheman/nextjs-github-browser/master/public/cypress-video-user.repositories.mp4"><img src="https://raw.githubusercontent.com/topheman/nextjs-github-browser/master/public/cypress-thumbnail-user.repositories.png" width="300" /></a></p>
+
 ## Linter
 
 Please checkout [eslintrc.js](./.eslintrc.js) for the linting configuration:
