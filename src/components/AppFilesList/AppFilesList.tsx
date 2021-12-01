@@ -1,3 +1,4 @@
+import { useState } from "react";
 import clsx from "clsx";
 import { FileDirectoryFillIcon, FileIcon } from "@primer/octicons-react";
 import Link from "next/link";
@@ -23,6 +24,9 @@ export default function AppFilesList({
   className,
   ...props
 }: AppFilesListProps): JSX.Element | null {
+  const [showListInMobile, setShowListInMobile] = useState<boolean>(
+    Boolean(currentPath)
+  );
   const author = gitInfos.history.edges?.[0]?.node?.author?.user;
   const lastCommit = gitInfos.history.edges?.[0]?.node;
   const sortedFiles = [...files].sort((a, b) => {
@@ -50,7 +54,11 @@ export default function AppFilesList({
       <h2 className="sr-only" id="files" aria-labelledby="files">
         Files
       </h2>
-      <div className="" role="grid">
+      <div
+        className={clsx("md:block", showListInMobile ? "block" : "hidden")}
+        role="grid"
+        data-testid="app-files-file-list"
+      >
         <div className="sr-only" role="row">
           <div role="columnheader">Type</div>
           <div role="columnheader">Name</div>
@@ -99,6 +107,22 @@ export default function AppFilesList({
             </div>
           </div>
         ))}
+      </div>
+      <div>
+        <button
+          className={clsx(
+            "py-2 w-full text-brand-primary cursor-pointer",
+            "md:hidden",
+            showListInMobile ? "hidden" : "block"
+          )}
+          type="button"
+          aria-hidden={showListInMobile}
+          aria-expanded={showListInMobile}
+          onClick={() => setShowListInMobile(true)}
+          data-testid="app-files-view-code-button"
+        >
+          View code
+        </button>
       </div>
     </div>
   );
