@@ -23,7 +23,7 @@ export default function AppPinnedItem({
           </a>
         </Link>
       </div>
-      <p className="mt-1 mb-1 h-[32px] text-xs text-secondary">
+      <p className="mt-1 mb-1 h-full text-xs text-secondary">
         {repository.description ||
           (repository.parent?.nameWithOwner &&
             `Forked from ${repository.parent?.nameWithOwner}`)}
