@@ -171,17 +171,6 @@ export default function PageIndex(): JSX.Element {
         <div className="mt-4">
           <AppListRoutePatterns className="overflow-scroll" />
         </div>
-        <p className="mt-4">
-          Feel free to share urls accross social media (thanks to SSR and meta
-          tags, you'll get a pretty preview,{" "}
-          <a
-            href="https://www.opengraph.xyz/url/https%3A%2F%2Fnextjs-github-browser.vercel.app%2F/"
-            className="text-brand-primary hover:underline"
-          >
-            check it out
-          </a>
-          )
-        </p>
       </main>
     </div>
   );
