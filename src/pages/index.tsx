@@ -162,6 +162,7 @@ export default function PageIndex(): JSX.Element {
                 className="inline-block"
                 src="/qrcode.png"
                 width="300"
+                height="300"
                 alt="QRCode to access website"
               />
             </p>

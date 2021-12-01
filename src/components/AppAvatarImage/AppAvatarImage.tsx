@@ -6,7 +6,8 @@ export type AppAvatarImageProps = {
   avatarUrl: string;
   rounded: "full" | "medium";
   className?: string;
-} & typeof defaultProps;
+} & typeof defaultProps &
+  Pick<React.HTMLProps<HTMLImageElement>, "width" | "height">;
 
 const defaultProps = {
   alt: "Avatar",

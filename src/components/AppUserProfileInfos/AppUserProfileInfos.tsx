@@ -29,6 +29,8 @@ export default function AppUserProfileInfos({
               avatarUrl={user.avatarUrl}
               alt={user.name || "Avatar"}
               rounded="full"
+              width="260"
+              height="260"
             />
           </a>
         </div>
