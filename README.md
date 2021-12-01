@@ -2,15 +2,20 @@
 
 [![ci](https://github.com/topheman/nextjs-github-browser/actions/workflows/ci.yml/badge.svg)](https://github.com/topheman/nextjs-github-browser/actions/workflows/ci.yml)
 [![e2e](https://github.com/topheman/nextjs-github-browser/actions/workflows/e2e.yml/badge.svg)](https://github.com/topheman/nextjs-github-browser/actions/workflows/e2e.yml)
-[![Demo](https://img.shields.io/badge/demo-online-blue.svg)](http://nextjs-github-browser.vercel.app/)
+[![nextjs-github-browser](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/simple/6ihjj6&style=flat&logo=cypress)](https://dashboard.cypress.io/projects/6ihjj6/runs)
 [![Storybook](https://img.shields.io/badge/storybook-online-ff4785.svg)](https://nextjs-github-browser.vercel.app/explore/storybook/index.html)
+[![Demo](https://img.shields.io/badge/demo-online-blue.svg)](http://nextjs-github-browser.vercel.app/)
 
 This project is a reimplementation of the main features of the [github.com](https://github.com) website in **NextJS**.
 
+- Checkout the **demo** on **[nextjs-github-browser.vercel.app](https://nextjs-github-browser.vercel.app)**
+- Browse the [online storybook](https://nextjs-github-browser.vercel.app/explore/storybook/index.html)
+- Browse the [Cypress Dashboard](https://dashboard.cypress.io/projects/6ihjj6) (with the reports of the e2e tests run on CI)
+
 ## Prerequisites
 
-- Nodejs v14
-- npm
+- Nodejs >=14
+- npm >=6
 
 ## Install
 
@@ -47,21 +52,6 @@ This project is shipped with built-in mocking for the graphql layer. It works fo
 You can use `MOCKS_MODE` with `record` / `replay` also on `npm start`.
 
 You can override the target of the folder where the mocks are recorded by using `MOCKS_TARGET=./tmp/my/specific/folder` for example.
-
-## GraphQL Schema in TypeScript
-
-Thanks to [@octokit/graphql-schema](https://github.com/octokit/graphql-schema) and [@graphql-codegen/cli](https://www.graphql-code-generator.com), we can generate type definitions for the GraphQL queries we use.
-
-The queries used in this project are in [src/graphql](./src/graphql).
-
-The generated types and utils are in [src/generated/graphql.ts](./src/generated/graphql.ts).
-
-When you modify/add a query/fragment, run `npm run graphql-codegen` to generate the types and utils.
-
-- See [this commit for the setup](https://github.com/topheman/nextjs-github-browser/commit/4921b6b026fc34b7daeecce77858c035d619ec52)
-- Thanks for the following resources:
-  - https://benlimmer.com/2020/05/16/adding-typescript-types-github-graphql-api/
-  - https://blog.logrocket.com/build-a-graphql-react-app-with-typescript/
 
 ## Storybook
 
@@ -139,7 +129,24 @@ Each `git push` / `PR` triggers a test suite on [github/actions](https://github.
 
 The end to end test sessions are recorded, you can check them [here](https://dashboard.cypress.io/projects/6ihjj6/runs).
 
-## Http Caching
+## FAQ
+
+### GraphQL Schema in TypeScript
+
+Thanks to [@octokit/graphql-schema](https://github.com/octokit/graphql-schema) and [@graphql-codegen/cli](https://www.graphql-code-generator.com), we can generate type definitions for the GraphQL queries we use.
+
+The queries used in this project are in [src/graphql](./src/graphql).
+
+The generated types and utils are in [src/generated/graphql.ts](./src/generated/graphql.ts).
+
+When you modify/add a query/fragment, run `npm run graphql-codegen` to generate the types and utils.
+
+- See [this commit for the setup](https://github.com/topheman/nextjs-github-browser/commit/4921b6b026fc34b7daeecce77858c035d619ec52)
+- Thanks for the following resources:
+  - https://benlimmer.com/2020/05/16/adding-typescript-types-github-graphql-api/
+  - https://blog.logrocket.com/build-a-graphql-react-app-with-typescript/
+
+### Http Caching
 
 The `/api/github/graphql` handler is available by `POST` requests to both client and server (because it's needed for both SSR and some use cases where we call directly graphql from the client).
 
@@ -158,11 +165,14 @@ You can activate it in local by using `npm run start:cache`.
 
 A better way would be to use some database like redis and store the payloads indexed by serialized graphql variables - this is a personal project 😉.
 
-## Next steps
-
-TODO
-
 ## Resources
+
+- Setup apollo-client in NextJS: [src/libs/apollo-client.ts](./src/libs/apollo-client.ts) (links to resources in source code)
+  - [Doc Apollo](https://www.apollographql.com/docs/react/performance/server-side-rendering/)
+- [Github advanced search](https://github.com/search/advanced)
+- [useHooks(🐠)](https://usehooks.com)
+- [cypress-io/github-action](https://github.com/cypress-io/github-action)
+- github actions - [Building and testing Node.js](https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs)
 
 This project is based on previous work:
 
