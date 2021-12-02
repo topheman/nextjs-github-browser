@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import clsx from "clsx";
 
 import ExternalTwitterButton from "../ExternalTwitterButton/ExternalTwitterButton";
 
 export type TheFooterProps = {
   fromFullYear: number;
   toFullYear?: number;
+  className?: string;
 };
 
 export default function TheFooter({
   fromFullYear,
   toFullYear,
+  className,
   ...remainingProps
 }: TheFooterProps): JSX.Element | null {
   const [currentUrl, setCurrentUrl] = useState<null | string>(null);
@@ -19,7 +22,7 @@ export default function TheFooter({
     setCurrentUrl(window.location.href);
   }, [router.asPath]);
   return (
-    <footer {...remainingProps} className="text-center">
+    <footer {...remainingProps} className={clsx("text-center", className)}>
       <p className="pt-2">
         ©
         {fromFullYear === toFullYear

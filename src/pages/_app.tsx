@@ -18,7 +18,11 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
       <NextNprogress color="#ffcdcd" />
       <TheHeader />
       <Component {...pageProps} />
-      <TheFooter fromFullYear={2021} toFullYear={new Date().getFullYear()} />
+      <TheFooter
+        fromFullYear={2021}
+        toFullYear={new Date().getFullYear()}
+        className="pt-5 pb-6 mx-auto mt-9 max-w-screen-xl border-t border-light"
+      />
     </ApolloProvider>
   );
 }
