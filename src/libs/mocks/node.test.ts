@@ -55,7 +55,7 @@ describe("libs/mocks/node", () => {
   });
   describe("saveMock", () => {
     beforeAll(async () => {
-      await require("fs/promises").rmdir(rootMockDirectory(), {
+      await require("fs/promises").rm(rootMockDirectory(), {
         recursive: true,
       });
     });
@@ -75,7 +75,7 @@ describe("libs/mocks/node", () => {
   });
   describe("loadMock", () => {
     beforeAll(async () => {
-      await require("fs/promises").rmdir(rootMockDirectory(), {
+      await require("fs/promises").rm(rootMockDirectory(), {
         recursive: true,
       });
       await saveMock(
@@ -163,7 +163,7 @@ describe("libs/mocks/node", () => {
   });
   describe("loadAllMocks & Mocks Map", () => {
     beforeAll(async () => {
-      await require("fs/promises").rmdir(rootMockDirectory(), {
+      await require("fs/promises").rm(rootMockDirectory(), {
         recursive: true,
       });
       // create a bunch of files
