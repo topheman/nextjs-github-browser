@@ -11,6 +11,11 @@ const baseOptions = {
 };
 
 describe("libs/mocks/node", () => {
+  beforeAll(async () => {
+    await require("fs/promises").mkdir(rootMockDirectory(), {
+      recursive: true,
+    });
+  });
   describe("getMockFilePath", () => {
     it("should correctly hash variables", () => {
       const result = getMockFilePath(
