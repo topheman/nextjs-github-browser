@@ -110,8 +110,5 @@
     "tailwindcss": "^2.2.16",
     "typescript": "^4.5.2",
     "webpack": "^4.46.0"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }
