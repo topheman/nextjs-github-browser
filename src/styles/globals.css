@@ -155,3 +155,21 @@ body.dark-mode {
   --hljs-fontStyle-hljs-emphasis: italic;
   --hljs-fontWeight-hljs-strong: bold;
 }
+
+/**
+ * CSS for Darkmod switcher
+ */
+.react-toggle-track {
+  background-color: #ffe500;
+}
+.react-toggle:hover:not(.react-toggle--disabled) .react-toggle-track {
+  background-color: #ffd400;
+}
+.react-toggle--checked .react-toggle-track {
+  color: white;
+  background-color: #1403a8;
+}
+.react-toggle--checked:hover:not(.react-toggle--disabled) .react-toggle-track {
+  color: white;
+  background-color: #0a0060;
+}

@@ -10,7 +10,7 @@ export default function TheHeader(): JSX.Element {
           <h1 className="m-2 text-white-always">
             <Link href="/">nextjs-github-browser</Link>
           </h1>
-          <AppDarkModeSwitch className="text-white" />
+          <AppDarkModeSwitch className="mt-1" />
         </div>
       </header>
     </>

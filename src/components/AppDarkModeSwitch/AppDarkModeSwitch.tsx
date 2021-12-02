@@ -1,6 +1,6 @@
+import Toggle from "react-toggle";
 import { useEffect } from "react";
 import { SunIcon, MoonIcon } from "@primer/octicons-react";
-import clsx from "clsx";
 
 import { useLocalStorage } from "../../utils/hooks";
 
@@ -24,22 +24,23 @@ export default function AppDarkModeSwitch({
   }, [darkMode]);
   return (
     <label
-      htmlFor="dark-mode-switch"
-      className={clsx(className, "cursor-pointer")}
-      title={`Switch to ${darkMode ? "light" : "dark"} mode`}
+      className={className}
       {...props}
+      htmlFor="dark-mode-switch"
+      title={`Switch to ${darkMode ? "light" : "dark"} mode`}
     >
-      <button type="button" onClick={() => setDarkMode(!darkMode)}>
-        {darkMode ? (
-          <MoonIcon aria-hidden="true" />
-        ) : (
-          <SunIcon className="text-[yellow]" aria-hidden="true" />
-        )}
-        <span className="sr-only">{`Switch to ${
-          darkMode ? "light" : "dark"
-        } mode`}</span>
-        <span />
-      </button>
+      <Toggle
+        id="dark-mode-switch"
+        defaultChecked={darkMode}
+        onChange={() => setDarkMode((mode) => !mode)}
+        icons={{
+          checked: <MoonIcon className="absolute top-[-3px] left-[-1px]" />,
+          unchecked: <SunIcon className="absolute top-[-3px] left-[-2px]" />,
+        }}
+      />
+      <span className="sr-only">{`Switch to ${
+        darkMode ? "light" : "dark"
+      } mode`}</span>
     </label>
   );
 }

@@ -5,6 +5,7 @@ import NextNprogress from "nextjs-progressbar";
 import { useApollo } from "../libs/apollo-client";
 
 import "tailwindcss/tailwind.css";
+import "react-toggle/style.css";
 import "../styles/globals.css";
 import "github-markdown-css";
 import TheHeader from "../components/TheHeader/TheHeader";
