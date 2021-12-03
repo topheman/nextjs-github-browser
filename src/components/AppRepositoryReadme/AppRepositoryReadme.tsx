@@ -21,6 +21,7 @@ export default function AppRepositoryReadme({
   if (!markdown) return null;
   return (
     <BaseBoxWithHeader
+      id="readme"
       header={
         <>
           <h2 className="sr-only">Readme</h2>

@@ -5,7 +5,7 @@ export type BaseBoxWithHeaderProps = {
   children: React.ReactChild | React.ReactChild[];
   header: JSX.Element | string;
   className?: string;
-};
+} & React.HTMLProps<HTMLDivElement>;
 
 export default function BaseBoxWithHeader({
   children,
