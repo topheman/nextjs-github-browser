@@ -22,6 +22,8 @@ const BaseSearchInput = forwardRef<HTMLInputElement, BaseSearchInputProps>(
         <input
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          autoComplete="off"
+          name="search"
           ref={ref}
           type="text"
           placeholder={placeholder}
