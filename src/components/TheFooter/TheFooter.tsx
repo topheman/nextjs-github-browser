@@ -38,7 +38,7 @@ export default function TheFooter({
       </p>
       <p className="pt-2 text-sm">
         <a
-          href="https://github.com/topheman"
+          href="https://github.com/topheman/nextjs-github-browser"
           className="text-brand-primary hover:underline"
         >
           Github
