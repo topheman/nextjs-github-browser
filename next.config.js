@@ -9,4 +9,6 @@ module.exports = {
       },
     ];
   },
+  // faster minification directly with swc (currently rc will be default in next@12.2.0) - https://nextjs.org/blog/next-12-1#faster-minification-with-swc
+  swcMinify: true,
 };
