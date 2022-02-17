@@ -38,7 +38,7 @@
     "hash.js": "^1.1.7",
     "human-readable-numbers": "^0.9.5",
     "human-time": "0.0.2",
-    "next": "^12.0.2",
+    "next": "^12.1.0",
     "nextjs-progressbar": "0.0.13",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
