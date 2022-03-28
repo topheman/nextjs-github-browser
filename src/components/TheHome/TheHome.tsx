@@ -84,8 +84,20 @@ export default function TheHome({
 
       <main className="px-2 lg:px-0 mx-auto mt-4 max-w-5xl">
         <h1 className="text-2xl">Home</h1>
+        <p className="-mt-8 text-right">
+          <a
+            href="https://github.com/topheman/nextjs-github-browser"
+            className="p-2 text-white-always hover:text-brand-primary rounded border border-brand-primary bg-brand-primary hover:bg-white-always"
+            title="View source code directly on github"
+          >
+            Source code on github
+          </a>
+        </p>
         <div
-          className={clsx("mt-4 text-center", helpIndex === 0 && style.top)}
+          className={clsx(
+            "mt-10 lg:mt-4 text-center",
+            helpIndex === 0 && style.top
+          )}
           data-help="👇 Search for a user"
         >
           <BaseSearchInput
